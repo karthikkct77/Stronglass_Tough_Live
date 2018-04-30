@@ -351,7 +351,7 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
         $this->load->view('Admin/left');
-        $this->load->view('Admin/Edit_Stronglass');
+        $this->load->view('Admin/Edit_Stornglass');
         $this->load->view('Admin/footer');
     }
 
@@ -405,6 +405,7 @@ class Admin_Controller extends CI_Controller
         $customer_id = $this->input->post('id',true);
         $data= $this->admin_model->get_customer_details($customer_id);
         echo  json_encode($data);
+
 
     }
     /** Proforma_Invoice */
