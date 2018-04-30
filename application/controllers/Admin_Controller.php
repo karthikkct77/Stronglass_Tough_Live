@@ -387,7 +387,7 @@ class Admin_Controller extends CI_Controller
             $this->db->update('tax_details', $datas);
             if($insert == 1)
             {
-                redirect('Admin_Controller/Add_Address');
+                redirect('Admin_Controller/View_Stronglass');
                 $this->session->set_flashdata('message', 'Update Success..');
             }
             else{
