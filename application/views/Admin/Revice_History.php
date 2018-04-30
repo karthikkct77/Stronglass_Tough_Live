@@ -77,13 +77,13 @@
                         foreach ($stock as $val)
                         {
                             ?>
-                        <tr>
-                            <td><?php echo $i; ?></td>
-                            <td><?php echo $val['Material_Name']; ?></td>
-                            <td><?php echo $val['Material_Current_Price']; ?></td>
-                            <td><button class="btn btn-info" onclick="edit_material('<?php echo $val['Material_Icode']; ?> ')">Edit</button></td>
-                        </tr>
-                        <?php
+                            <tr>
+                                <td><?php echo $i; ?></td>
+                                <td><?php echo $val['Material_Name']; ?></td>
+                                <td><?php echo $val['Material_Current_Price']; ?></td>
+                                <td><button class="btn btn-info" onclick="edit_material('<?php echo $val['Material_Icode']; ?> ')">Edit</button></td>
+                            </tr>
+                            <?php
                             $i++;
                         }
                         ?>

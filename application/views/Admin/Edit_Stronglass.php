@@ -14,13 +14,13 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-edit"></i>Add ST</h1>
+            <h1><i class="fa fa-edit"></i>Edit ST</h1>
 
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
             <li class="breadcrumb-item">Our Entry</li>
-            <li class="breadcrumb-item"><a href="#">Add ST</a></li>
+            <li class="breadcrumb-item"><a href="#">Edit ST</a></li>
         </ul>
     </div>
     <div class="row">
