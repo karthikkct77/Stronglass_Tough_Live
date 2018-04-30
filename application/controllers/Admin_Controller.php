@@ -351,7 +351,7 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
         $this->load->view('Admin/left');
-        $this->load->view('Admin/Edit_Stornglass',$data,false);
+        $this->load->view('Admin/Edit_Stronglass',$data,false);
         $this->load->view('Admin/footer');
     }
 
@@ -387,7 +387,7 @@ class Admin_Controller extends CI_Controller
             $this->db->update('tax_details', $datas);
             if($insert == 1)
             {
-                redirect('Admin_Controller/Add_Address');
+                redirect('Admin_Controller/View_Stronglass');
                 $this->session->set_flashdata('message', 'Update Success..');
             }
             else{

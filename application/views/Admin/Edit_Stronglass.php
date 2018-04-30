@@ -44,11 +44,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Our Address  </label>
-                                    <textarea class="form-control" name="address" value="<?php echo $st[0]['ST_Address_1'] ?>"  required></textarea>
+                                    <textarea class="form-control" name="address" value="<?php echo $st[0]['ST_Address_1'] ?>"  required><?php echo $st[0]['ST_Address_1'] ?></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Our Address1  </label>
-                                    <textarea class="form-control" name="address1" value="<?php echo $st[0]['ST_Address_2'] ?>" ></textarea>
+                                    <textarea class="form-control" name="address1" value="<?php echo $st[0]['ST_Address_2'] ?>" ><?php echo $st[0]['ST_Address_2'] ?></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Area</label>
@@ -100,11 +100,11 @@
 
                                 <div class="form-group">
                                     <label class="control-label">SGST % </label>
-                                    <input class="form-control" name="sgst" type="text" required value="<?php echo $st[0]['ST_Icode'] ?>" >
+                                    <input class="form-control" name="sgst" type="text" required value="<?php echo $tax[0]['SGST%'] ?>" >
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">CGST % </label>
-                                    <input class="form-control" name="cgst" type="text" required value="<?php echo $st[0]['ST_Icode'] ?>">
+                                    <input class="form-control" name="cgst" type="text" required value="<?php echo $tax[0]['CGST%'] ?>">
                                 </div>
 
                                 <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>
