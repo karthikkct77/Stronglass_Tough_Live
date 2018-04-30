@@ -29,7 +29,6 @@
                 <h3 class="tile-title">Edit ST</h3>
                 <div class="tile-body">
                     <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Update_ST'); ?>" name="data_register">
-
                         <input type="hidden" name="st_id" value="<?php echo $st[0]['ST_Icode'] ?>">
                         <input type="hidden" name="tax_id" value="<?php echo $tax[0]['Tax_Icode'] ?>">
                         <div class="row">
