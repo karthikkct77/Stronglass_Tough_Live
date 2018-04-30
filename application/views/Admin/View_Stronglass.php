@@ -24,45 +24,46 @@
                             ?>
                             <tr>
                                 <td align="right">NAME</td><td><?php echo $key['ST_Name']; ?></td>
-                            <tr>
+                            </tr>
                             <tr>
                                 <td align="right">GSTIN</td><td><?php echo $key['ST_GSTIN']; ?></td>
-                            <tr>
+                            </tr>
                             <tr>
                                 <td align="right">Address</td><td><?php echo $key['ST_Address_1']; ?>, <?php echo $key['ST_Address_2']; ?></td>
-                            <tr>
+                            </tr>
                             <tr>
                                 <td align="right">Area</td><td><?php echo $key['ST_Area']; ?></td>
-                            <tr>   <tr>
-                                <td align="right">City</td><td><?php echo $key['ST_City']; ?></td>
+                            </tr>
                             <tr>
+                                <td align="right">City</td><td><?php echo $key['ST_City']; ?></td>
+                            </tr>
                             <tr>
                                 <td align="right">State</td><td><?php echo $key['ST_State']; ?></td>
-                            <tr>
+                            </tr>
                             <tr>
                                 <td align="right">Phone</td><td><?php echo $key['ST_Phone']; ?></td>
+                            </tr>
                             <tr>
-                            <tr>
-                                <td align="right">Alternate Phone</td><td><?php echo $key['ST_Phone1']; ?></td>
-                            <tr>
+                                <td align="right">Alternate Phone</td><td><?php echo $key['ST_Alternate_Phone']; ?></td>
+                            </tr>
                             <tr>
                                 <td align="right">Email</td><td><?php echo $key['ST_Email_ID1']; ?></td>
-                            <tr>
+                            </tr>
                             <tr>
                                 <td align="right">Email 2</td><td><?php echo $key['ST_Email_ID2']; ?></td>
-                            <tr>
+                            </tr>
                             <tr>
                                 <td align="right">Bank Name</td><td><?php echo $key['ST_Bank']; ?></td>
-                            <tr>
+                            </tr>
                             <tr>
                                 <td align="right">Account Type</td><td><?php echo $key['ST_Bank_Account_Type']; ?></td>
-                            <tr>
+                            </tr>
                             <tr>
                                 <td align="right">Account Number</td><td><?php echo $key['ST_Bank_Account_Number']; ?></td>
-                            <tr>
+                            </tr>
                             <tr>
                                 <td align="right">IFSC</td><td><?php echo $key['ST_Bank_Account_IFSC_Code']; ?></td>
-                            <tr>
+                            </tr>
                             <?php }
 
                                 foreach ($tax as $key)
@@ -71,10 +72,10 @@
 
                             <tr>
                                 <td align="right">SGST%</td><td><?php echo $key['SGST%']; ?></td>
-                            <tr>
+                            </tr>
                             <tr>
                                 <td align="right">CGST%</td><td><?php echo $key['CGST%']; ?></td>
-                            <tr>
+                            </tr>
                             <?php } ?>
 
 
