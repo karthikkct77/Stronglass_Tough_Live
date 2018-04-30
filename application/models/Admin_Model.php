@@ -116,11 +116,25 @@ class Admin_Model extends CI_Model
         $this->db->insert('stronglasstough_details', $data);
         return 1;
     }
+
+    /** Update stronglass details */
+    public function update_stronglass($data,$id)
+    {
+        $this->db->where('ST_Icode',$id);
+        $this->db->update('stronglasstough_details', $data);
+        return 1;
+    }
     /** save tat details */
     public function save_tax($data)
     {
         $this->db->insert('tax_details', $data);
         return 1;
+    }
+
+    /*Get Last inserted Tax*/
+    public function get_last_Tax(){
+        $query = $this->db->query("Select * from tax_details ORDER BY Tax_Icode DESC LIMIT 1");
+        return $query->result_array();
     }
     //** Get Stronglass Details */
     public function get_ST()
