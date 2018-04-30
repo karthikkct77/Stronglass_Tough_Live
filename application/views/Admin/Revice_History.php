@@ -82,11 +82,11 @@
             success:function(server_response){
                 $("#View").show();
                 var data = $.parseJSON(server_response);
-                var old_price = data[]['Material_Old_Price'];
+                var old_price = data[0]['Material_Old_Price'];
                 document.getElementById('old_price').innerHTML = old_price;
-                var price = data[]['Material_Current_Price'];
+                var price = data[0]['Material_Current_Price'];
                 document.getElementById('price').innerHTML = price;
-                var rdate = data[]['Material_Price_Updated_On'];
+                var rdate = data[0]['Material_Price_Updated_On'];
                 document.getElementById('rdate').innerHTML = rdate;
             }
         });
