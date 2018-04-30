@@ -61,7 +61,7 @@
 
                                 foreach ($tax as $key)
                                 {
-                                    ?>
+                                ?>
 
                             <tr>
                                 <td align="right">SGST%</td><td><?php echo $key['SGST%']; ?></td>
