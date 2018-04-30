@@ -351,7 +351,7 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
         $this->load->view('Admin/left');
-        $this->load->view('Admin/Edit_Stornglass');
+        $this->load->view('Admin/Edit_Stornglass',$data,false);
         $this->load->view('Admin/footer');
     }
 
