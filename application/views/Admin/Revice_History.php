@@ -86,8 +86,6 @@
                 document.getElementById('old_price').innerHTML = old_price;
                 var price = data[0]['Material_Current_Price'];
                 document.getElementById('price').innerHTML = price;
-                var icode =data[0]['Material_Icode'];
-                document.getElementById('material_icode').innerHTML = icode;
                 var rdate = data[0]['Material_Price_Updated_On'];
                 document.getElementById('rdate').innerHTML = rdate;
             }
