@@ -478,6 +478,8 @@ class Admin_Controller extends CI_Controller
 
     /*Material Revise History*/
     public function Revice_History(){
+        $data['inventary']= $this->admin_model->get_all_inventary();
+        $data['stock']= $this->admin_model->get_all_item();
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
         $this->load->view('Admin/left');
