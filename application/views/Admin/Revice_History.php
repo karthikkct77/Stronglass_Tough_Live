@@ -83,13 +83,13 @@
                 $("#View").show();
                 var data = $.parseJSON(server_response);
                 var old_price = data[0]['Material_Old_Price'];
-                document.getElementById('material').value = charges_name;
-                var price = data[0]['Material_Current_Price'];
+                document.getElementById('old_price').value = old_price;
+                var price = data[0]['price'];
                 document.getElementById('price').value = price;
                 var icode =data[0]['Material_Icode'];
                 document.getElementById('material_icode').value = icode;
                 var rdate = data[0]['Material_Price_Updated_On'];
-                document.getElementById('material_date').value = rdate;
+                document.getElementById('rdate').value = rdate;
             }
         });
     }
