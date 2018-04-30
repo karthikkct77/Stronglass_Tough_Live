@@ -487,4 +487,11 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/footer');
     }
 
+    /*View Material Revice History*/
+    public function View_Material_Revice_History(){
+        $material_id = $this->input->post('id',true);
+        $data = $this->admin_model->get_revised_material($material_id);
+        echo  json_encode($data);
+    }
+
 }

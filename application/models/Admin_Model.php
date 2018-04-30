@@ -155,7 +155,13 @@ class Admin_Model extends CI_Model
         return $query->result_array();
 
     }
+    //** Get perticular revised material */
+    public function get_revised_material($material_icode)
+    {
+        $query = $this->db->query("Select * from material_price_history WHERE Material_Icode = '$material_icode' ");
+        return $query->result_array();
 
+    }
 
 
 

@@ -34,7 +34,7 @@
                                 <td><?php echo $i; ?></td>
                                 <td><?php echo $val['Material_Name']; ?></td>
                                 <td><?php echo $val['Material_Current_Price']; ?></td>
-                                <td><button class="btn btn-info" onclick="edit_material('<?php echo $val['Material_Icode']; ?> ')">View</button></td>
+                                <td><button class="btn btn-info" onclick="view_reviced_material('<?php echo $val['Material_Icode']; ?> ')">View</button></td>
                             </tr>
                             <?php
                             $i++;
@@ -45,26 +45,51 @@
                 </div>
             </div>
         </div>
+        <div class="col-md-6" id="View" style="display:none;">
+            <table class="table table-hover table-bordered" id="sampleTable">
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Material Old Price</th>
+                    <th>Material Changed Price</th>
+                    <th>Updated ON</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php $i=1; ?>
+                    <tr>
+                        <td><?php echo $i; ?></td>
+                        <td id="old_price"></td>
+                        <td id="price"></td>
+                        <td id="rdate"></td>
+                    </tr>
+                    <?php
+                    $i++;
+                ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </main>
 <script>$('#sampleTable').DataTable();</script>
 <script>
-    function edit_material (id) {
+    function view_reviced_material (id) {
         $.ajax({
-            url:"<?php echo site_url('Admin_Controller/Edit_Material'); ?>",
+            url:"<?php echo site_url('Admin_Controller/View_Material_Revice_History'); ?>",
             data: {id: id},
             type: "POST",
             cache: false,
             success:function(server_response){
-                $("#update").show();
-                $("#add").hide();
+                $("#View").show();
                 var data = $.parseJSON(server_response);
-                var charges_name = data[0]['Material_Name'];
+                var old_price = data[0]['Material_Old_Price'];
                 document.getElementById('material').value = charges_name;
                 var price = data[0]['Material_Current_Price'];
                 document.getElementById('price').value = price;
                 var icode =data[0]['Material_Icode'];
                 document.getElementById('material_icode').value = icode;
+                var rdate = data[0]['Material_Price_Updated_On'];
+                document.getElementById('material_date').value = rdate;
             }
         });
     }
