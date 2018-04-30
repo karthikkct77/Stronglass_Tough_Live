@@ -7,13 +7,13 @@
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
             <li class="breadcrumb-item">ST Entry</li>
-            <li class="breadcrumb-item"><a href="<?php echo site_url('Admin_Controller/Edit_Stornglass'); ?>">EDIT</a></li>
+
             <li class="breadcrumb-item"><a href="#">View Stronglass</a></li>
         </ul>
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="tile">  <h3 class="tile-title">Stronglass Tough</h3>
+            <div class="tile">  <h3 class="tile-title">Stronglass Tough</h3><a href="<?php echo site_url('Admin_Controller/Edit_Stornglass'); ?>">EDIT</a>
                 <div class="tile-body">
                     <table class="table table-hover table-bordered" id="size_table">
                         <tbody>
