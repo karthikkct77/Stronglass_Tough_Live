@@ -43,7 +43,13 @@
                                 <td align="right">Phone</td><td><?php echo $key['ST_Phone']; ?></td>
                             <tr>
                             <tr>
+                                <td align="right">Alternate Phone</td><td><?php echo $key['ST_Phone1']; ?></td>
+                            <tr>
+                            <tr>
                                 <td align="right">Email</td><td><?php echo $key['ST_Email_ID1']; ?></td>
+                            <tr>
+                            <tr>
+                                <td align="right">Email 2</td><td><?php echo $key['ST_Email_ID2']; ?></td>
                             <tr>
                             <tr>
                                 <td align="right">Bank Name</td><td><?php echo $key['ST_Bank']; ?></td>
