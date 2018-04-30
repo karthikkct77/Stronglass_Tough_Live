@@ -13,7 +13,7 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-            <div class="tile">  <h3 class="tile-title">Stronglass Tough</h3><a href="<?php echo site_url('Admin_Controller/Edit_Stornglass'); ?>">EDIT</a>
+            <div class="tile">  <h3 class="tile-title">Stronglass Tough</h3><a class="bts btn-success pull-right" href="<?php echo site_url('Admin_Controller/Edit_Stornglass'); ?>">EDIT</a>
                 <div class="tile-body">
                     <table class="table table-hover table-bordered" id="size_table">
                         <tbody>
