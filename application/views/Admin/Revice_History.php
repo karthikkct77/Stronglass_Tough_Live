@@ -59,8 +59,8 @@
                 <?php $i=1; ?>
                     <tr>
                         <td><?php echo $i; ?></td>
-                        <td id="old_prices"></td>
-                        <td id="prices"></td>
+                        <td id="old_price"></td>
+                        <td id="price"></td>
                         <td id="rdate"></td>
                     </tr>
                     <?php
@@ -83,8 +83,8 @@
                 $("#View").show();
                 var data = $.parseJSON(server_response);
                 var old_price = data[0]['Material_Old_Price'];
-                document.getElementById('old_prices').innerHTML = old_price;
-                var price = data[0]['prices'];
+                document.getElementById('old_price').innerHTML = old_price;
+                var price = data[0]['price'];
                 document.getElementById('price').innerHTML = price;
                 var icode =data[0]['Material_Icode'];
                 document.getElementById('material_icode').innerHTML = icode;
