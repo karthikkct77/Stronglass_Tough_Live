@@ -1,63 +1,16 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-edit"></i> Material Entry</h1>
+            <h1><i class="fa fa-edit"></i> Material Revice History List</h1>
 
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
             <li class="breadcrumb-item">Master Entry</li>
-            <li class="breadcrumb-item"><a href="#">Material Entry</a></li>
+            <li class="breadcrumb-item"><a href="#">Material Revice History</a></li>
         </ul>
     </div>
     <div class="row">
-        <div class="col-md-6" id="add">
-            <div class="tile">
-                <?php if($this->session->flashdata('message')){?>
-                    <div class="alert alert-success">
-                        <?php echo $this->session->flashdata('message')?>
-                    </div>
-                <?php } ?>
-                <h3 class="tile-title">Material</h3>
-                <div class="tile-body">
-                    <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Stock'); ?>" name="data_register">
-                        <div class="form-group">
-                            <label class="control-label">Material Name</label>
-                            <input class="form-control" type="text" name="stock_name" placeholder="Enter stock name" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Material Price</label>
-                            <input class="form-control" type="number" name="stock_price"  placeholder="Enter Amount" min="0" step="1" required>
-                        </div>
-                        <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>&nbsp;
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <!-- Update  Details -->
-        <div class="col-md-6" id="update" style="display: none">
-            <div class="tile">
-                <h3 class="tile-title pull-left">Edit Material</h3>
-                <a class="btn btn-success pull-right" href="<?php echo site_url('Admin_Controller/Revice_History'); ?>">Revising History</a>
-                <div class="tile-body">
-                    <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Update_Material'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Update The Material Datas?');">
-                        <div class="form-group">
-                            <label class="control-label">Material Name</label>
-                            <input class="form-control" type="text" name="material_name" id="material" placeholder="Enter Charges name" readonly required>
-                            <input type="hidden" name="material_icode" id="material_icode">
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label">Material Price</label>
-                            <input class="form-control" type="number" name="material_price" id="price" placeholder="Enter Amount" min="0" step="1" required>
-                        </div>
-                        <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>&nbsp;
-                        <button class="btn btn-danger" type="button" onClick="window.location.reload();">Close</button>
-                    </form>
-
-                </div>
-            </div>
-        </div>
         <!-- view Stock Details -->
         <div class="col-md-6">
             <div class="tile">
@@ -81,7 +34,7 @@
                                 <td><?php echo $i; ?></td>
                                 <td><?php echo $val['Material_Name']; ?></td>
                                 <td><?php echo $val['Material_Current_Price']; ?></td>
-                                <td><button class="btn btn-info" onclick="edit_material('<?php echo $val['Material_Icode']; ?> ')">Edit</button></td>
+                                <td><button class="btn btn-info" onclick="edit_material('<?php echo $val['Material_Icode']; ?> ')">View</button></td>
                             </tr>
                             <?php
                             $i++;
