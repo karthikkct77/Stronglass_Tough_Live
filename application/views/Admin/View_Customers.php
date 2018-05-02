@@ -10,6 +10,19 @@
         </ul>
     </div>
     <div class="row">
+        <?php if($this->session->flashdata('feedback')): ?>
+            <script>
+                var ssd = "<?php echo $this->session->flashdata('feedback'); ?>";
+                swal({
+                        title: "Success!",
+                        text: ssd,
+                        type: "success"
+                    },
+                    function(){
+                        location.reload();
+                    });
+            </script>
+        <?php endif; ?>
         <!-- view Stock Details -->
         <div class="col-md-12">
             <div class="tile">

@@ -607,9 +607,41 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/left');
         $this->load->view('Admin/View_Single_Customers',$data,false);
         $this->load->view('Admin/footer');
-
-
+    }
+    /** Edit Customers */
+    public function Edit_Customers ($id)
+    {
+        $customer_id = $this->uri->segment(3);
+        $data['customers'] = $this->admin_model->get_single_Customer_details($customer_id);
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Edit_Customers',$data,false);
+        $this->load->view('Admin/footer');
+    }
+    /** Update Customers */
+    public function Update_Customer()
+    {
+        $id = $this->input->post('customer_id');
+        $data = array(
+            'Customer_Name' => $this->input->post('company_name'),
+            'Customer_GSTIN' =>$this->input->post('gstin_number'),
+            'Customer_Address_1' =>$this->input->post('address'),
+            'Customer_Address_2' =>$this->input->post('address1'),
+            'Customer_Area' =>$this->input->post('area'),
+            'Customer_City' =>$this->input->post('city'),
+            'Customer_State' =>$this->input->post('state'),
+            'Customer_Phone' =>$this->input->post('phone'),
+            'Customer_Alternate_Phone' =>$this->input->post('alternate_phone'),
+            'Customer_Email_ID1' =>$this->input->post('email_1'),
+            'Customer_Email_ID2' =>$this->input->post('email_2'),
+            'ST_created_by' => $this->session->userdata['userid']);
+            $this->db->where('Customer_Icode',$id);
+           $this->db->update('customer_master', $data);
+        $this->session->set_flashdata('feedback', 'Data Updated..');
+        redirect('Admin_Controller/View_Customers');
 
     }
+
 
 }

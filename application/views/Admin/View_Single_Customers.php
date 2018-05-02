@@ -28,7 +28,7 @@
                 </script>
             <?php endif; ?>
             <div class="tile">  <h3 class="tile-title pull-left">View Customers</h3>
-                <a class="btn btn-success pull-right" href="<?php echo site_url('Admin_Controller/Edit_Stornglass'); ?>">EDIT</a>
+                <a class="btn btn-success pull-right" href="<?php echo site_url('Admin_Controller/Edit_Customers/').$customers[0]['Customer_Icode']; ?>">EDIT</a>
                 <div class="tile-body">
                     <table class="table table-hover table-bordered" id="size_table">
                         <tbody>
@@ -43,7 +43,10 @@
                                 <td align="right">GSTIN</td><td><?php echo $key['Customer_GSTIN']; ?></td>
                             </tr>
                             <tr>
-                                <td align="right">Address</td><td><?php echo $key['Customer_Address_1']; ?>, <?php echo $key['Customer_Address_2']; ?></td>
+                                <td align="right">Address</td><td><?php echo $key['Customer_Address_1']; ?></td>
+                            </tr>
+                            <tr>
+                                <td align="right">Address1</td><td><?php echo $key['Customer_Address_2']; ?></td>
                             </tr>
                             <tr>
                                 <td align="right">Area</td><td><?php echo $key['Customer_Area']; ?></td>
