@@ -624,7 +624,7 @@ class Admin_Controller extends CI_Controller
     {
         $id = $this->input->post('customer_id');
         $data = array(
-            'Customer_Name' => $this->input->post('company_name'),
+            'Customer_Company_Name' => $this->input->post('company_name'),
             'Customer_GSTIN' =>$this->input->post('gstin_number'),
             'Customer_Address_1' =>$this->input->post('address'),
             'Customer_Address_2' =>$this->input->post('address1'),
@@ -633,9 +633,9 @@ class Admin_Controller extends CI_Controller
             'Customer_State' =>$this->input->post('state'),
             'Customer_Phone' =>$this->input->post('phone'),
             'Customer_Alternate_Phone' =>$this->input->post('alternate_phone'),
-            'Customer_Email_ID1' =>$this->input->post('email_1'),
-            'Customer_Email_ID2' =>$this->input->post('email_2'),
-            'ST_created_by' => $this->session->userdata['userid']);
+            'Customer_Email_Id_1' =>$this->input->post('email_1'),
+            'Customer_Email_Id_2' =>$this->input->post('email_2'),
+            'Customer_Created_By' => $this->session->userdata['userid']);
             $this->db->where('Customer_Icode',$id);
            $this->db->update('customer_master', $data);
         $this->session->set_flashdata('feedback', 'Data Updated..');

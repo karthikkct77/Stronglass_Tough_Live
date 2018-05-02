@@ -42,12 +42,15 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Our Address  </label>
-                                    <textarea class="form-control" name="address" value="<?php echo $customers[0]['Customer_Address_1'] ?>"  required><?php echo $customer[0]['Customer_Address_1'] ?></textarea>
+                                    <textarea class="form-control" name="address" value="<?php echo $customers[0]['Customer_Address_1'] ?>"  required><?php echo $customers[0]['Customer_Address_1'] ?></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Our Address1  </label>
-                                    <textarea class="form-control" name="address1" value="<?php echo $customers[0]['Customer_Address_2'] ?>" ><?php echo $customer[0]['Customer_Address_2'] ?></textarea>
+                                    <textarea class="form-control" name="address1" value="<?php echo $customers[0]['Customer_Address_2'] ?>" ><?php echo $customers[0]['Customer_Address_2'] ?></textarea>
                                 </div>
+
+                            </div>
+                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Area</label>
                                     <input class="form-control" name="area" type="text" value="<?php echo $customers[0]['Customer_Area'] ?>" >
@@ -68,16 +71,14 @@
                                     <label class="control-label">Alternate Phone</label>
                                     <input class="form-control" name="alternate_phone" type="text" value="<?php echo $customers[0]['Customer_Alternate_Phone'] ?>" >
                                 </div>
-                            </div>
-                            <div class="col-md-6">
 
                                 <div class="form-group">
                                     <label class="control-label">Email Id 1</label>
-                                    <input class="form-control" name="email_1" type="email" required value="<?php echo $customers[0]['Customer_Email_ID1'] ?>" >
+                                    <input class="form-control" name="email_1" type="email" required value="<?php echo $customers[0]['Customer_Email_Id_1'] ?>" >
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Email Id 2</label>
-                                    <input class="form-control" name="email_2" type="email" value="<?php echo $customers[0]['Customer_Email_ID2'] ?>">
+                                    <input class="form-control" name="email_2" type="email" value="<?php echo $customers[0]['Customer_Email_Id_2'] ?>">
                                 </div>
                                 <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>
                             </div>
