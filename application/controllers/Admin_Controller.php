@@ -539,12 +539,53 @@ class Admin_Controller extends CI_Controller
     /** Inward History */
     public function Inward_History()
     {
-        $data['charges']= $this->admin_model->get_all_Revised_Charges();
+        $data['inventary']= $this->admin_model->get_all_inventary();
+        $data['stock']= $this->admin_model->get_all_item();
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
         $this->load->view('Admin/left');
         $this->load->view('Admin/Inventry_History',$data,false);
         $this->load->view('Admin/footer');
+    }
+    //** get date rage inventry history details */
+    public function Get_Date_inventry_history()
+    {
+        $from_date = $this->input->post('from_date',true);
+        $to_date = $this->input->post('to_date',true);
+        $data = $this->admin_model->get_Date_inventary($from_date,$to_date);
+        $i=1;
+        $output =null;
+        foreach ($data as $key)
+        {
+            $output .="<tr>";
+            $output .="<td>".$i ."</td>";
+            $output .="<td>".$key['Material_Name']."</td>";
+            $output .="<td>".$key['Counts']."</td>";
+            $output .="</tr>";
+            $i++;
+        }
+        echo $output;
+    }
+    /** Get material Based History */
+    public function Get_Material_inventry_history()
+    {
+        $from_date = $this->input->post('from_date',true);
+        $to_date = $this->input->post('to_date',true);
+        $material = $this->input->post('Material',true);
+        $data = $this->admin_model->get_material_inventary($from_date,$to_date,$material);
+        $i=1;
+        $output =null;
+        foreach ($data as $key)
+        {
+            $output .="<tr>";
+            $output .="<td>".$i ."</td>";
+            $output .="<td>".$key['Material_Name']."</td>";
+            $output .="<td>".$key['Counts']."</td>";
+            $output .="</tr>";
+            $i++;
+        }
+        echo $output;
+
     }
 
 }

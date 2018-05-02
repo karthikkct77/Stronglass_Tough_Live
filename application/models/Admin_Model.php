@@ -178,7 +178,21 @@ class Admin_Model extends CI_Model
     {
         $query = $this->db->query("SELECT * FROM processing_charges_history WHERE charge_icode='$id' ORDER BY charge_revised_on DESC");
         return $query->result_array();
-
+    }
+    //** get date wise inventry */
+    public function get_Date_inventary($from_date,$to_date)
+    {
+        $query = $this->db->query("SELECT SUM(A.Material_Quantity_Added) as Counts, B.Material_Name FROM material_inventory_inward_history A INNER JOIN material_master B on A.Material_ICode=B.Material_Icode
+                                    WHERE  date(A.Material_Qty_Last_Added_Date) >= '$from_date' and date(A.Material_Qty_Last_Added_Date) <= '$to_date' GROUP by A.Material_ICode");
+        return $query->result_array();
+    }
+    /** get material baed inventry histrory */
+    public function get_material_inventary($from_date,$to_date,$material)
+    {
+        $query = $this->db->query("SELECT A.Material_Quantity_Added, A.Material_Qty_Last_Added_Date FROM material_inventory_inward_history A INNER JOIN material_master B on A.Material_ICode=B.Material_Icode 
+                                   WHERE date(A.Material_Qty_Last_Added_Date) >= '$from_date' and date(A.Material_Qty_Last_Added_Date) <= '$to_date' 
+                                    and A.Material_ICode='$material'");
+        return $query->result_array();
     }
 
 
