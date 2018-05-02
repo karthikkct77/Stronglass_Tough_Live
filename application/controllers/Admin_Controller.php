@@ -387,14 +387,16 @@ class Admin_Controller extends CI_Controller
             $this->db->update('tax_details', $datas);
             if($insert == 1)
             {
+                $this->session->set_flashdata('feedback', 'Update Successfully...');
                 redirect('Admin_Controller/View_Stronglass');
-                $this->session->set_flashdata('message', 'Update Success..');
+
             }
             else{
                 $this->session->set_flashdata('message', 'Update Failed..');
             }
         }
-        else{
+        else
+            {
             $this->session->set_flashdata('message', 'Update Failed..');
         }
     }

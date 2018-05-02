@@ -1,3 +1,4 @@
+
 <main class="app-content">
     <div class="app-title">
         <div>
@@ -11,8 +12,22 @@
             <li class="breadcrumb-item"><a href="#">View Stronglass</a></li>
         </ul>
     </div>
+
     <div class="row">
         <div class="col-md-6">
+            <?php if($this->session->flashdata('feedback')): ?>
+                <script>
+                    var ssd = "<?php echo $this->session->flashdata('feedback'); ?>";
+                    swal({
+                            title: "Success!",
+                            text: ssd,
+                            type: "success"
+                        },
+                        function(){
+                            location.reload();
+                        });
+                </script>
+            <?php endif; ?>
             <div class="tile">  <h3 class="tile-title pull-left">Stronglass Tough</h3>
                 <a class="btn btn-success pull-right" href="<?php echo site_url('Admin_Controller/Edit_Stornglass'); ?>">EDIT</a>
                 <div class="tile-body">
