@@ -257,6 +257,12 @@ class Admin_Model extends CI_Model
     {
         $query = $this->db->query("SELECT A.*, COUNT(B.Customer_Icode) as locations FROM customer_master A LEFT JOIN customer_add_address B on A.Customer_Icode=B.Customer_Icode GROUP By A.Customer_Icode");
         return $query->result_array();
+    }
+    /** Get Single Customers */
+    public function get_single_Customer_details($id)
+    {
+        $query = $this->db->query("Select * from customer_master WHERE Customer_Icode = '$id' ");
+        return $query->result_array();
 
     }
 

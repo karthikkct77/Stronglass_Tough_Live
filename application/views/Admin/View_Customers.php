@@ -39,7 +39,7 @@
                                 <td><?php echo $val['Customer_Phone']; ?></td>
                                 <td><?php echo $val['Customer_Email_Id_1']; ?></td>
                                 <td><h3><a href="<?php echo site_url('Admin_Controller/Locations/') . $val['Customer_Icode'];  ?>"> <?php echo $val['locations']; ?></a></h3></td>
-                                <td><button class="btn btn-info" onclick="view_reviced_material('<?php echo $val['Customer_Icode']; ?> ')">View</button></td>
+                                <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/single_customer/') . $val['Customer_Icode']; ?>">View</a></td>
                             </tr>
                             <?php
                             $i++;

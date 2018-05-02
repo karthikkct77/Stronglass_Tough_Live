@@ -596,6 +596,19 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/left');
         $this->load->view('Admin/View_Customers',$data,false);
         $this->load->view('Admin/footer');
+    }
+    /** get Single Customer Details */
+    public function single_customer($id)
+    {
+        $customer_id = $this->uri->segment(3);
+        $data['customers'] = $this->admin_model->get_single_Customer_details($customer_id);
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/View_Single_Customers',$data,false);
+        $this->load->view('Admin/footer');
+
+
 
     }
 
