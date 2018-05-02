@@ -53,7 +53,6 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Material Current Price</th>
                             <th>Material old Price</th>
                             <th>Updated ON</th>
                         </tr>

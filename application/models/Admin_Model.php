@@ -155,12 +155,17 @@ class Admin_Model extends CI_Model
         return $query->result_array();
 
     }
+    /** Get All Revised Items */
+    public function get_all_Revised_item()
+    {
+        $query = $this->db->query("SELECT A.* FROM material_master A INNER JOIN material_price_history B ON A.Material_Icode=B.Material_Icode GROUP by A.Material_Icode ");
+        return $query->result_array();
+    }
     //** Get perticular revised material */
     public function get_revised_material($material_icode)
     {
-        $query = $this->db->query("Select * from material_price_history WHERE Material_Icode = '$material_icode' ");
+        $query = $this->db->query("Select * from material_price_history WHERE Material_Icode = '$material_icode' ORDER BY Material_Price_Revised_Date DESC ");
         return $query->result_array();
-
     }
 
 
