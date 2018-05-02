@@ -29,4 +29,5 @@
     <!-- Data table plugin-->
     <script src="<?php echo base_url('js/plugins/jquery.dataTables.min.js'); ?>"></script>
     <script src="<?php echo base_url('js/plugins/dataTables.bootstrap.min.js'); ?>"></script>
+    <script src="<?php echo base_url('js/plugins/bootstrap-datepicker.min.js'); ?>"></script>
 </head>

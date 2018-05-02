@@ -8,8 +8,6 @@
 
 <!-- Page specific javascripts-->
 <script type="text/javascript" src="<?php echo base_url('js/plugins/chart.js');?>"></script>
-
-
 <script>
     var data = {
         labels: ["January", "February", "March", "April", "May"],

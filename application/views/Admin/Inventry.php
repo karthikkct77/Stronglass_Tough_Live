@@ -67,6 +67,7 @@
         </div>
         <div class="col-md-5">
             <div class="tile">  <h3 class="tile-title">Material Inventory List</h3>
+                <a class="btn btn-success pull-right" href="<?php echo site_url('Admin_Controller/Inward_History'); ?>">Inward History</a>
                 <div class="tile-body">
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>

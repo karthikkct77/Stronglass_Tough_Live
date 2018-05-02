@@ -535,7 +535,16 @@ class Admin_Controller extends CI_Controller
             $i++;
         }
         echo $output;
-
+    }
+    /** Inward History */
+    public function Inward_History()
+    {
+        $data['charges']= $this->admin_model->get_all_Revised_Charges();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Inventry_History',$data,false);
+        $this->load->view('Admin/footer');
     }
 
 }
