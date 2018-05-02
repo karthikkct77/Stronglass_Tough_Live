@@ -11,16 +11,24 @@
         </ul>
     </div>
     <div class="row">
+        <?php if($this->session->flashdata('feedback')): ?>
+            <script>
+                var res = "<?php echo $this->session->flashdata('feedback'); ?>";
+                swal({
+                        title: "Success!",
+                        text: res,
+                        type: "success"
+                    },
+                    function(){
+                        location.reload();
+                    });
+            </script>
+        <?php endif; ?>
         <div class="col-md-6" id="add">
             <div class="tile">
                 <h3 class="tile-title">Charges</h3>
-                <?php if($this->session->flashdata('message')){?>
-                    <div class="alert alert-success">
-                        <?php echo $this->session->flashdata('message')?>
-                    </div>
-                <?php } ?>
                 <div class="tile-body">
-                    <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Charges'); ?>" name="data_register">
+                    <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Charges'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save?');">
                         <div class="form-group">
                             <label class="control-label">Charges Name</label>
                             <input class="form-control" type="text" name="charges_name" placeholder="Enter Charges name" required>
@@ -39,10 +47,10 @@
             <div class="tile">
                 <h3 class="tile-title">Edit Charges</h3>
                 <div class="tile-body">
-                    <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Update_Charges'); ?>" name="data_register">
+                    <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Update_Charges'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Update?');">
                         <div class="form-group">
                             <label class="control-label">Charges Name</label>
-                            <input class="form-control" type="text" name="charges_name" id="charge" placeholder="Enter Charges name" required>
+                            <input class="form-control" type="text" name="charges_name" id="charge" placeholder="Enter Charges name"  readonly required>
                             <input type="hidden" name="charges_icode" id="charges_icode">
                         </div>
                         <div class="form-group">
@@ -58,6 +66,7 @@
         <div class="col-md-6">
             <div class="tile">
                 <h3 class="tile-title">Charges List</h3>
+                <a class="btn btn-success pull-right" href="<?php echo site_url('Admin_Controller/Revice_Charge_History'); ?>">Revising History</a>
                 <div class="tile-body">
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>

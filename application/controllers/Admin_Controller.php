@@ -109,6 +109,7 @@ class Admin_Controller extends CI_Controller
         $insert = $this->admin_model->insert_charges($data);
         if($insert == 1)
         {
+            $this->session->set_flashdata('feedback', 'Successfully Saved..');
             redirect('Admin_Controller/Charges_Entry');
         }
         else{
@@ -140,10 +141,11 @@ class Admin_Controller extends CI_Controller
                 'modified_on' => date('Y-m-d H:i:s'));
             $this->db->where('charge_icode',$charges_id);
             $this->db->update('processing_charges_master', $data);
+            $this->session->set_flashdata('feedback', 'Data Updated..');
             redirect('Admin_Controller/Charges_Entry');
         }
         else{
-            $this->session->set_flashdata('message', 'Insert Failed..');
+            $this->session->set_flashdata('feedback', 'Insert Failed..');
         }
     }
 
@@ -479,7 +481,6 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/View_Invoice',$data,false);
         $this->load->view('Admin/footer');
     }
-
     /*Material Revise History*/
     public function Revice_History(){
         $data['inventary']= $this->admin_model->get_all_inventary();
@@ -490,7 +491,6 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/Revice_History',$data,false);
         $this->load->view('Admin/footer');
     }
-
     /*View Material Revice History*/
     public function View_Material_Revice_History(){
         $material_id = $this->input->post('id',true);
@@ -503,6 +503,34 @@ class Admin_Controller extends CI_Controller
             $output .="<td>".$i ."</td>";
             $output .="<td>".$key['Material_Old_Price']."</td>";
             $output .="<td>".$key['Material_Price_Revised_Date']."</td>";
+            $output .="</tr>";
+            $i++;
+        }
+        echo $output;
+    }
+    /** Revise Charge History */
+    public function Revice_Charge_History()
+    {
+        $data['charges']= $this->admin_model->get_all_Revised_Charges();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Revice_Charges_History',$data,false);
+        $this->load->view('Admin/footer');
+    }
+    /** View Charges History */
+    public function View_Charges_Revice_History()
+    {
+        $charges_id = $this->input->post('id',true);
+        $data = $this->admin_model->get_revised_charges($charges_id);
+        $i=1;
+        $output =null;
+        foreach ($data as $key)
+        {
+            $output .="<tr>";
+            $output .="<td>".$i ."</td>";
+            $output .="<td>".$key['charge_old_price']."</td>";
+            $output .="<td>".$key['charge_revised_on']."</td>";
             $output .="</tr>";
             $i++;
         }

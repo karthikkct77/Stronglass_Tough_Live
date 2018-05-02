@@ -167,6 +167,19 @@ class Admin_Model extends CI_Model
         $query = $this->db->query("Select * from material_price_history WHERE Material_Icode = '$material_icode' ORDER BY Material_Price_Revised_Date DESC ");
         return $query->result_array();
     }
+    //** Get Revice Charges History */
+    public function get_all_Revised_Charges()
+    {
+        $query = $this->db->query("SELECT A.* FROM processing_charges_master A INNER JOIN processing_charges_history B on A.charge_icode=B.charge_icode GROUP by A.charge_icode");
+        return $query->result_array();
+    }
+    /** get revised charges */
+    public function get_revised_charges($id)
+    {
+        $query = $this->db->query("SELECT * FROM processing_charges_history WHERE charge_icode='$id' ORDER BY charge_revised_on DESC");
+        return $query->result_array();
+
+    }
 
 
 
