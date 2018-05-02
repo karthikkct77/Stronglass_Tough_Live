@@ -590,7 +590,7 @@ class Admin_Controller extends CI_Controller
     /** View Customer Details */
     public function View_Customers()
     {
-        $data['customers']= $this->admin_model->get_all_Customers();
+        $data['customers']= $this->admin_model->get_all_Customer_details();
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
         $this->load->view('Admin/left');

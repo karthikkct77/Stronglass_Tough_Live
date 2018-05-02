@@ -227,7 +227,6 @@ class Admin_Model extends CI_Model
 
         }else
         {
-
             $query=$this->db->query("SELECT A.Material_Quantity_Added, A.Material_Qty_Last_Added_Date FROM material_inventory_inward_history A INNER JOIN material_master B on A.Material_ICode=B.Material_Icode 
                                    WHERE $main_string ");
             if ($res = $query->num_rows())
@@ -251,6 +250,14 @@ class Admin_Model extends CI_Model
             }
         }
         $res = null;
+    }
+
+    /** get all Customers Details */
+    public function get_all_Customer_details()
+    {
+        $query = $this->db->query("SELECT A.*, COUNT(B.Customer_Icode) as locations FROM customer_master A LEFT JOIN customer_add_address B on A.Customer_Icode=B.Customer_Icode GROUP By A.Customer_Icode");
+        return $query->result_array();
+
     }
 
 
