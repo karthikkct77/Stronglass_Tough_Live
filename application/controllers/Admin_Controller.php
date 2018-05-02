@@ -573,14 +573,15 @@ class Admin_Controller extends CI_Controller
         $to_date = $this->input->post('to_date',true);
         $material = $this->input->post('Material',true);
         $data = $this->admin_model->get_material_inventary($from_date,$to_date,$material);
+        print_r($data);
         $i=1;
         $output =null;
         foreach ($data as $key)
         {
             $output .="<tr>";
             $output .="<td>".$i ."</td>";
-            $output .="<td>".$key['Material_Name']."</td>";
-            $output .="<td>".$key['Counts']."</td>";
+            $output .="<td>".date('Y-m-d',strtotime($key['Material_Qty_Last_Added_Date']))."</td>";
+            $output .="<td>".$key['Material_Quantity_Added']."</td>";
             $output .="</tr>";
             $i++;
         }

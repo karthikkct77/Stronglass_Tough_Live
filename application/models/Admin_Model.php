@@ -189,10 +189,68 @@ class Admin_Model extends CI_Model
     /** get material baed inventry histrory */
     public function get_material_inventary($from_date,$to_date,$material)
     {
-        $query = $this->db->query("SELECT A.Material_Quantity_Added, A.Material_Qty_Last_Added_Date FROM material_inventory_inward_history A INNER JOIN material_master B on A.Material_ICode=B.Material_Icode 
-                                   WHERE date(A.Material_Qty_Last_Added_Date) >= '$from_date' and date(A.Material_Qty_Last_Added_Date) <= '$to_date' 
-                                    and A.Material_ICode='$material'");
-        return $query->result_array();
+
+        if(!empty($from_date))
+        {
+            $data1 = "date(A.Material_Qty_Last_Added_Date) >= '$from_date' AND";
+        }else{
+            $data1 = "";
+        }
+        if(!empty($to_date))
+        {
+            $data2 = "date(A.Material_Qty_Last_Added_Date) <= '$to_date' AND";
+        }else{
+            $data2 = "";
+        }
+        if(!empty($material))
+        {
+            $data3 = "A.Material_ICode = '$material' ";
+        }else{
+            $data3 = "";
+        }
+        $main_string = " $data1 $data2 $data3 "; //All details
+        $stringAnd = "AND"; //And
+        $main_string = trim($main_string); //Remove whitespaces from the beginning and end of the main string
+        $endAnd = substr($main_string, -3); //Gets the AND at the end
+
+        if($stringAnd == $endAnd)
+        {
+            $main_string = substr($main_string, 0, -3);
+        }else if($main_string == "AND"){
+            $main_string = "";
+        }
+        else{
+            $main_string = " $data1 $data2 $data3 ";
+        }
+
+        if($main_string == ""){ //Doesn't show all the products
+
+        }else
+        {
+
+            $query=$this->db->query("SELECT A.Material_Quantity_Added, A.Material_Qty_Last_Added_Date FROM material_inventory_inward_history A INNER JOIN material_master B on A.Material_ICode=B.Material_Icode 
+                                   WHERE $main_string ");
+            if ($res = $query->num_rows())
+            {
+                // echo $res;
+                /* Check the number of rows that match the SELECT statement */
+                if ($res > 0)
+                {
+                    // $query=$this->db->query("SELECT * FROM ibt_prospect_data WHERE Prospect_Status ='Cold' and Current_BDE_User_Code = '$id' and Prospect_DND = 'No' and Prospect_CNE='No' $main_string LIMIT 0,1");
+
+                    $query=$this->db->query("SELECT A.Material_Quantity_Added, A.Material_Qty_Last_Added_Date FROM material_inventory_inward_history A INNER JOIN material_master B on A.Material_ICode=B.Material_Icode 
+                                   WHERE $main_string");
+                    // echo $this->db->last_query();
+                    return $query->result_array();
+                }    /* No rows matched -- do something else */
+                else
+                {
+                    return 0;
+
+                }
+            }
+        }
+        $res = null;
     }
 
 

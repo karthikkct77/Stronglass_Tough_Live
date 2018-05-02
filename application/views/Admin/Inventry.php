@@ -276,8 +276,8 @@
                     if(server_response == 1)
                     {
                         swal({
-                                title: "Good job!",
-                                text: "You clicked the button!",
+                                title: "Success!",
+                                text: "Data Saved!",
                                 type: "success"
                             },
                             function(){

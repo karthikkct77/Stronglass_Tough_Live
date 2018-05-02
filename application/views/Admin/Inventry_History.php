@@ -123,11 +123,11 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Charges old Price</th>
-                            <th>Updated ON</th>
+                            <th>Date</th>
+                            <th>Count</th>
                         </tr>
                         </thead>
-                        <tbody id="result">
+                        <tbody id="result_material">
                         </tbody>
                     </table>
                 </div>
@@ -193,27 +193,20 @@
         location.reload();
     }
     function search_material() {
-        var start_date = $('#demoDate').val();
-        var end_date = $('#todate').val();
+        var start_date = $('#demoDate1').val();
+        var end_date = $('#todate1').val();
         var material =$('#material').val();
-        if(start_date == "" || end_date == "" || material == "")
-        {
-            alert("Please Select All Fields...");
-        }
-        else
-        {
+
             $.ajax({ url: "<?php echo site_url('Admin_Controller/Get_Material_inventry_history'); ?>",
                 data: {from_date: start_date,to_date: end_date, Material: material },
                 type: "POST",
                 context: document.body,
                 success: function(data){
-                    $("#old").hide();
-                    $("#search").show();
-                    $("#result_count").html(data);
-                    $('#sampleTable1').dataTable();
+                    $("#result_material").html(data);
+                    $('#sampleTable3').dataTable();
                 }});
 
-        }
+
 
     }
 </script>
