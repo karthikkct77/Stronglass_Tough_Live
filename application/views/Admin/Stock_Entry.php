@@ -29,7 +29,7 @@
             <div class="tile">
                 <h3 class="tile-title">Material</h3>
                 <div class="tile-body">
-                    <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Stock'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save  The Material ?');">
+                    <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Stock'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save?');">
                         <div class="form-group">
                             <label class="control-label">Material Name</label>
                             <input class="form-control" type="text" name="stock_name" placeholder="Enter stock name" required>
