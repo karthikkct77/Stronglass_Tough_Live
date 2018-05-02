@@ -11,16 +11,25 @@
         </ul>
     </div>
     <div class="row">
+        <?php if($this->session->flashdata('feedback')): ?>
+            <script>
+                var ssd = "<?php echo $this->session->flashdata('feedback'); ?>";
+                swal({
+                        title: "Success!",
+                        text: ssd,
+                        type: "success"
+                    },
+                    function(){
+                        location.reload();
+                    });
+            </script>
+        <?php endif; ?>
+
         <div class="col-md-6" id="add">
             <div class="tile">
-                <?php if($this->session->flashdata('message')){?>
-                    <div class="alert alert-success">
-                        <?php echo $this->session->flashdata('message')?>
-                    </div>
-                <?php } ?>
                 <h3 class="tile-title">Material</h3>
                 <div class="tile-body">
-                    <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Stock'); ?>" name="data_register">
+                    <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Stock'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save  The Material ?');">
                         <div class="form-group">
                             <label class="control-label">Material Name</label>
                             <input class="form-control" type="text" name="stock_name" placeholder="Enter stock name" required>

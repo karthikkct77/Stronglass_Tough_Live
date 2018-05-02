@@ -49,10 +49,11 @@ class Admin_Controller extends CI_Controller
         $insert = $this->admin_model->insert_item($data);
         if($insert == 1)
         {
+            $this->session->set_flashdata('feedback', 'Insert Successfully ..');
             redirect('Admin_Controller/Stock_Entry');
         }
         else{
-            $this->session->set_flashdata('message', 'Insert Failed..');
+            $this->session->set_flashdata('feedback', 'Insert Failed..');
         }
     }
 
@@ -80,11 +81,12 @@ class Admin_Controller extends CI_Controller
                 'Material_Current_Price' =>$this->input->post('material_price'));
             $this->db->where('material_icode',$material_icode);
             $this->db->update('material_master', $data);
+            $this->session->set_flashdata('feedback', 'Successfully Updated..');
             redirect('Admin_Controller/Stock_Entry');
-            $this->session->set_flashdata('message', 'Successs..');
+
         }
         else{
-            $this->session->set_flashdata('message', 'Insert Failed..');
+            $this->session->set_flashdata('feedback', 'Insert Failed..');
         }
     }
     //** Item Charges */
@@ -110,7 +112,7 @@ class Admin_Controller extends CI_Controller
             redirect('Admin_Controller/Charges_Entry');
         }
         else{
-            $this->session->set_flashdata('message', 'Insert Failed..');
+            $this->session->set_flashdata('feedback', 'Insert Failed..');
         }
     }
    //** Edit Charges */
@@ -239,10 +241,10 @@ class Admin_Controller extends CI_Controller
         if($insert == 1)
         {
             redirect('Admin_Controller/Add_Customers');
-            $this->session->set_flashdata('message', 'Insert Success..');
+            $this->session->set_flashdata('feedback', 'Insert Success..');
         }
         else{
-            $this->session->set_flashdata('message', 'Insert Failed..');
+            $this->session->set_flashdata('feedback', 'Insert Failed..');
         }
     }
 
@@ -276,10 +278,10 @@ class Admin_Controller extends CI_Controller
         if($insert == 1)
         {
             redirect('Admin_Controller/Add_Address');
-            $this->session->set_flashdata('message', 'Insert Success..');
+            $this->session->set_flashdata('feedback', 'Insert Success..');
         }
         else{
-            $this->session->set_flashdata('message', 'Insert Failed..');
+            $this->session->set_flashdata('feedback', 'Insert Failed..');
         }
     }
 
@@ -322,14 +324,14 @@ class Admin_Controller extends CI_Controller
             if($insert == 1)
             {
                 redirect('Admin_Controller/Add_Address');
-                $this->session->set_flashdata('message', 'Insert Success..');
+                $this->session->set_flashdata('feedback', 'Insert Success..');
             }
             else{
-                $this->session->set_flashdata('message', 'Insert Failed..');
+                $this->session->set_flashdata('feedback', 'Insert Failed..');
             }
         }
         else{
-            $this->session->set_flashdata('message', 'Insert Failed..');
+            $this->session->set_flashdata('feedback', 'Insert Failed..');
         }
     }
     /** View Stronglass */
@@ -392,12 +394,12 @@ class Admin_Controller extends CI_Controller
 
             }
             else{
-                $this->session->set_flashdata('message', 'Update Failed..');
+                $this->session->set_flashdata('feedback', 'Update Failed..');
             }
         }
         else
             {
-            $this->session->set_flashdata('message', 'Update Failed..');
+            $this->session->set_flashdata('feedback', 'Update Failed..');
         }
     }
 
@@ -493,7 +495,20 @@ class Admin_Controller extends CI_Controller
     public function View_Material_Revice_History(){
         $material_id = $this->input->post('id',true);
         $data = $this->admin_model->get_revised_material($material_id);
-        echo  json_encode($data);
+        $i=1;
+        $output =null;
+        foreach ($data as $key)
+        {
+            $output .="<tr>";
+            $output .="<td>".$i ."</td>";
+            $output .="<td>".$key['Material_Current_Price']."</td>";
+            $output .="<td>".$key['Material_Old_Price']."</td>";
+            $output .="<td>".$key['Material_Price_Revised_Date']."</td>";
+            $output .="</tr>";
+            $i++;
+        }
+        echo $output;
+
     }
 
 }

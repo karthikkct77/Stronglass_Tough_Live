@@ -6,7 +6,7 @@
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item">Master Entry</li>
+            <li class="breadcrumb-item"><a href="<?php echo site_url('Admin_Controller/Stock_Entry'); ?>">Material Entry</a></li>
             <li class="breadcrumb-item"><a href="#">Material Revice History</a></li>
         </ul>
     </div>
@@ -46,28 +46,23 @@
             </div>
         </div>
         <div class="col-md-6" id="View" style="display:none;">
-            <table class="table table-hover table-bordered" id="sampleTable">
-                <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Material Old Price</th>
-                    <th>Material Changed Price</th>
-                    <th>Updated ON</th>
-                </tr>
-                </thead>
-                <tbody>
-                <?php $i=1; ?>
-                    <tr>
-                        <td><?php echo $i; ?></td>
-                        <td id="old_price"></td>
-                        <td id="price"></td>
-                        <td id="rdate"></td>
-                    </tr>
-                    <?php
-                    $i++;
-                ?>
-                </tbody>
-            </table>
+            <div class="tile">
+                <h3 class="tile-title">Changed Price List</h3>
+                <div class="tile-body">
+                    <table class="table table-hover table-bordered" id="sampleTable">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Material Current Price</th>
+                            <th>Material old Price</th>
+                            <th>Updated ON</th>
+                        </tr>
+                        </thead>
+                        <tbody id="result">
+                        </tbody>
+                    </table>
+                </div>
+        </div>
         </div>
     </div>
 </main>
@@ -81,13 +76,7 @@
             cache: false,
             success:function(server_response){
                 $("#View").show();
-                var data = $.parseJSON(server_response);
-                var old_price = data[0]['Material_Old_Price'];
-                document.getElementById('old_price').innerHTML = old_price;
-                var price = data[0]['Material_Current_Price'];
-                document.getElementById('price').innerHTML = price;
-                var rdate = data[0]['Material_Price_Updated_On'];
-                document.getElementById('rdate').innerHTML = rdate;
+                $("#result").html(server_response);
             }
         });
     }
