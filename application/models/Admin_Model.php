@@ -155,6 +155,12 @@ class Admin_Model extends CI_Model
         return $query->result_array();
 
     }
+    public function get_Customer_Address_Details($id)
+    {
+        $query = $this->db->query("Select * from customer_add_address WHERE Customer_Icode ='$id'");
+        return $query->result_array();
+
+    }
     /** Get All Revised Items */
     public function get_all_Revised_item()
     {
@@ -305,9 +311,13 @@ class Admin_Model extends CI_Model
         }
         else{
             return 0;
-
         }
-
+    }
+    /** Get customer Address */
+    public function get_Customer_Address($id)
+    {
+        $query = $this->db->query("Select * from customer_add_address WHERE Customer_Icode = '$id' ");
+        return $query->result_array();
 
     }
 

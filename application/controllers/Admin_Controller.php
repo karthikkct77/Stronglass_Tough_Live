@@ -411,7 +411,24 @@ class Admin_Controller extends CI_Controller
         $customer_id = $this->input->post('id',true);
         $data= $this->admin_model->get_customer_details($customer_id);
         echo  json_encode($data);
-
+    }
+    public function get_Customer_Address_Details()
+    {
+        $customer_id = $this->input->post('id',true);
+        $data= $this->admin_model->get_single_Customer_Locations($customer_id);
+        echo  json_encode($data);
+    }
+    /** Get customer more address */
+    public function get_Customer_Address()
+    {
+        $customer_id = $this->input->post('id',true);
+        $data= $this->admin_model->get_Customer_Address($customer_id);
+        $output =null;
+        foreach ($data as $row)
+        {
+            $output .= "<option value='".$row['Customer_Address_Icode']."'>".$row['Customer_Add_City']."</option>";
+        }
+        echo  $output;
 
     }
     /** Proforma_Invoice */

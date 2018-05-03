@@ -54,12 +54,12 @@
                         <div class="form-group ">
                             <label class="control-label">Customer Name </label>
                             <select name="company_address" class="form-control" id="company_name2" >
-                                <option value="" >Select Company</option>
-                                <?php foreach ($customer as $row):
-                                {
-                                    echo '<option value= "'.$row['Customer_Icode'].'">' . $row['Customer_Company_Name'] . '</option>';
-                                }
-                                endforeach; ?>
+<!--                                <option value="" >Select Company</option>-->
+<!--                                --><?php //foreach ($customer as $row):
+//                                {
+//                                    echo '<option value= "'.$row['Customer_Icode'].'">' . $row['Customer_Company_Name'] . '</option>';
+//                                }
+//                                endforeach; ?>
                             </select>
                         </div>
                         <div id="Buyer">
@@ -280,10 +280,21 @@
             }
         });
     });
+    $("#company_name1").change(function () {
+        $.ajax({
+            url:"<?php echo site_url('Admin_Controller/get_Customer_Address'); ?>",
+            data: {id:
+                $(this).val()},
+            type: "POST",
+            success:function(server_response){
+                $("#company_name2").html(server_response);
+            }
+        });
+    });
 
     $("#company_name2").change(function () {
         $.ajax({
-            url:"<?php echo site_url('Admin_Controller/get_Customer_Details'); ?>",
+            url:"<?php echo site_url('Admin_Controller/get_Customer_Address_Details'); ?>",
             data: {id:
                 $(this).val()},
             type: "POST",
@@ -291,9 +302,9 @@
                 var data = $.parseJSON(server_response);
                 $('#Buyer').show();
                 document.getElementById('coustomer1').innerHTML = data[0]['Customer_Company_Name'];
-                document.getElementById('address1').innerHTML = data[0]['Customer_Address_1'] + data[0]['Customer_Area'] + data[0]['Customer_City'] ;
-                document.getElementById('phone1').innerHTML = "Mob :" + data[0]['Customer_Phone'];
-                document.getElementById('gstn1').innerHTML = "GSTIN :" + data[0]['Customer_GSTIN'];
+                document.getElementById('address1').innerHTML = data[0]['Customer_Add_Address_1'] + data[0]['Customer_Add_Area'] + data[0]['Customer_Add_City'] ;
+                document.getElementById('phone1').innerHTML = "Mob :" + data[0]['Customer_Add_Phone'];
+                document.getElementById('gstn1').innerHTML = "GSTIN :" + data[0]['Customer_Add_GSTIN'];
             }
         });
     });
