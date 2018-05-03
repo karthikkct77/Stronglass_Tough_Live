@@ -49,7 +49,7 @@
                                 <td><?php echo $val['Customer_Company_Name']; ?></td>
                                 <td><?php echo $val['Customer_Add_City']; ?></td>
                                 <td><?php echo $val['Customer_Add_Phone']; ?></td>
-                                <td><?php echo $val['Customer_Add_Email_ID_1']; ?></td>
+                                <td><?php echo $val['Customer_Add_Email_Id_1']; ?></td>
                                 <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/single_Locations/') . $val['Customer_Address_Icode']; ?>">View</a></td>
                             </tr>
                             <?php
