@@ -28,7 +28,7 @@
             <div class="tile">
                 <h3 class="tile-title">Add Customers</h3>
                 <div class="tile-body">
-                    <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Customer'); ?>" name="data_register">
+                    <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Customer'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
                         <div class="row">
                         <div class="col-md-6">
                         <div class="form-group ">

@@ -242,7 +242,7 @@ class Admin_Controller extends CI_Controller
         $insert = $this->admin_model->save_customer($data);
         if($insert == 1)
         {
-            redirect('Admin_Controller/Add_Customers');
+            redirect('Admin_Controller/View_Customers');
             $this->session->set_flashdata('feedback', 'Insert Success..');
         }
         else{
@@ -279,7 +279,7 @@ class Admin_Controller extends CI_Controller
         $insert = $this->admin_model->save_address($data);
         if($insert == 1)
         {
-            redirect('Admin_Controller/Add_Address');
+            redirect('Admin_Controller/View_Customers');
             $this->session->set_flashdata('feedback', 'Insert Success..');
         }
         else{
