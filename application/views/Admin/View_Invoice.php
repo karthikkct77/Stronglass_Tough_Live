@@ -19,7 +19,7 @@
     <div class="row">
         <div class="col-md-12" >
             <div class="tile">
-                <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Invoice'); ?>" name="data_register">
+                <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Invoice'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
                 <div class="row">
                     <div class="col-md-4">
                         <h4>Consignee</h4>

@@ -700,11 +700,19 @@ class Admin_Controller extends CI_Controller
     /** Save Invoice */
     public function Save_Invoice()
     {
+        $address =$this->input->post('company_address');
+        if($address == 0)
+        {
+            $profoma_address= $this->input->post('company_name');
+        }
+        else{
+            $profoma_address= $this->input->post('company_address');
+        }
         $data = array(
             'Proforma_Number' => $this->input->post('invoice_no'),
             'Proforma_Date' => $this->input->post('invoice_date'),
             'Proforma_Customer_Icode' => $this->input->post('company_name'),
-            'Proforma_Delivery_Address_Icode' => $this->input->post('company_address'),
+            'Proforma_Delivery_Address_Icode' =>$profoma_address ,
             'Sub_Total' => $this->input->post('sub_tot'),
             'Insurance_Value' => $this->input->post('insurance'),
             'SGST_Value' => $this->input->post('sgst'),
