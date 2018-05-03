@@ -4,6 +4,12 @@
             <h1><i class="fa fa-edit"></i>Invoice</h1>
 
         </div>
+        <div class="row invoice">
+            <h2><?php echo $st[0]['ST_Name']; ?></h2>
+            <h4><?php echo $st[0]['ST_Address_1']; ?>,<?php echo $st[0]['ST_Area']; ?>,<?php echo $st[0]['ST_City']; ?></h4>
+            <h4>Mob: <?php echo $st[0]['ST_Phone']; ?></h4>
+            <h4>Email :<?php echo $st[0]['ST_Email_ID1']; ?></h4>
+        </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
             <li class="breadcrumb-item">Profoma_invoice</li>
@@ -13,16 +19,9 @@
     <div class="row">
         <div class="col-md-12" >
             <div class="tile">
-                <div class="row invoice">
-                    <h2><?php echo $st[0]['ST_Name']; ?></h2>
-                    <h4><?php echo $st[0]['ST_Address_1']; ?>,<?php echo $st[0]['ST_Area']; ?>,<?php echo $st[0]['ST_City']; ?></h4>
-                    <h4>Mob: <?php echo $st[0]['ST_Phone']; ?></h4>
-                    <h4>Email :<?php echo $st[0]['ST_Email_ID1']; ?></h4>
-                </div>
-                <hr>
                 <div class="row">
                     <div class="col-md-4">
-                        <h3>Consignee</h3>
+                        <h4>Consignee</h4>
                         <div class="form-group ">
                             <label class="control-label">Customer Name </label>
                             <select name="company_name" class="form-control" id="company_name1" required >
@@ -35,7 +34,7 @@
                             </select>
                         </div>
                         <div id="consign">
-                            <h3 id="coustomer"></h3>
+                            <h5 id="coustomer"></h5>
                             <h5 id="address"></h5>
                             <h5 id="phone"></h5>
                             <h5 id="gstn"></h5>
@@ -50,7 +49,7 @@
 
                     </div>
                     <div class="col-md-4">
-                        <h3>Buyer (if other than consignee)</h3>
+                        <h4>Buyer (if other than consignee)</h4>
                         <div class="form-group ">
                             <label class="control-label">Customer Name </label>
                             <select name="company_name" class="form-control" id="company_name2" required >
@@ -63,7 +62,7 @@
                             </select>
                         </div>
                         <div id="Buyer">
-                            <h3 id="coustomer1"></h3>
+                            <h5 id="coustomer1"></h5>
                             <h5 id="address1"></h5>
                             <h5 id="phone1"></h5>
                             <h5 id="gstn1"></h5>
@@ -129,13 +128,13 @@
                             <td></td>
                             <td></td>
                             <td></td>
+                            <td><input type="text" class="form-control pull-right" id="total_pic" value="0"   readonly/></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
                             <td></td>
-                            <td></td>
-                            <td></td>
+                            <td><input type="text" class="form-control pull-right" id="total_area" value="0"   readonly/></td>
                             <td></td>
                             <td> <input type="text" class="form-control pull-right" id="grand_total" value="0"   readonly/></td>
                         </tr>
@@ -431,9 +430,40 @@
                     var total = pcs * area * amount;
                     document.getElementById('total'+id).value = total.toFixed(2);
                     document.getElementById('rate'+id).value = amount;
-//                    var tot =  document.getElementById('grand_total').value;
-//                    var new_tot = parseInt(tot)  + parseInt(total);
-//                    document.getElementById('grand_total').value =new_tot;
+                    // Grand Total
+                    var totals =document.getElementsByName("total[]");
+                    var sum = 0;
+                    for (var j = 0, iLen = totals.length; j < iLen; j++) {
+                        if (totals[j].value!==""){
+                            val=parseFloat(totals[j].value);
+                            sum +=val;
+                        }
+                    }
+                    document.getElementById('grand_total').value = parseFloat(sum).toFixed(2);
+
+                    // total pices
+                    var pices =document.getElementsByName("pics[]");
+                    var sum_pic = 0;
+                    for (var j = 0, iLen = pices.length; j < iLen; j++) {
+                        if (pices[j].value!==""){
+                            val=parseFloat(pices[j].value);
+                            sum_pic +=val;
+                        }
+                    }
+                    document.getElementById('total_pic').value = parseInt(sum_pic);
+
+                    //total area
+
+                    var areas =document.getElementsByName("area[]");
+                    var sum_area = 0;
+                    for (var j = 0, iLen = areas.length; j < iLen; j++) {
+                        if (areas[j].value!==""){
+                            val=parseFloat(areas[j].value);
+                            sum_area +=val;
+                        }
+                    }
+                    document.getElementById('total_area').value = parseFloat(sum_area).toFixed(2);
+
                 }
             });
         });
