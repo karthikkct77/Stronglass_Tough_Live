@@ -19,6 +19,7 @@
     <div class="row">
         <div class="col-md-12" >
             <div class="tile">
+                <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Invoice'); ?>" name="data_register">
                 <div class="row">
                     <div class="col-md-4">
                         <h4>Consignee</h4>
@@ -52,7 +53,7 @@
                         <h4>Buyer (if other than consignee)</h4>
                         <div class="form-group ">
                             <label class="control-label">Customer Name </label>
-                            <select name="company_name" class="form-control" id="company_name2" required >
+                            <select name="company_address" class="form-control" id="company_name2" >
                                 <option value="" >Select Company</option>
                                 <?php foreach ($customer as $row):
                                 {
@@ -155,6 +156,14 @@
                <div class="row">
 
                        <div class="col-md-6">
+                           <h3>Terms & Conditions</h3>
+                           <p>
+                               We Shall not be responsible for any type of Breakage/Loss in Transit.
+                               At the time of transit Breakage/Loss insurance claim will be done by
+                               the customer and not by the company.
+                               Any discrepancies observed in the supply like quantity,specification,
+                               quality, etc.
+                           </p>
 
                        </div>
                        <div class="col-md-6">
@@ -180,25 +189,25 @@
                                        </div></td>
                                    <td><input class="form-control" type="text" name="no_holes[]" id="no_holes" ></td>
                                    <td><input class="form-control" type="text" name="charge_amt[]" id="charge_amt" ></td>
-                                   <td><input class="form-control" type="text" name="tot_charge_amt[]" id="tot_charge_amt" ></td>
+                                   <td><input class="form-control" type="text" name="tot_charge_amt[]" id="tot_charge_amt"  readonly></td>
                                    <td><input type="button" onclick="Add_one()" value="Add" id="Add" /></td>
                                </tr>
                                <tr>
                                   <td colspan="3" align="right">SUB-TOTAL</td>
 
-                                   <td><input class="form-control" type="text" name="sub_tot" id="sub_tot" ></td>
+                                   <td><input class="form-control" type="text" name="sub_tot" id="sub_tot" readonly ></td>
                                    <td></td>
                                </tr>
                                <tr>
                                    <td colspan="3" align="right">INSURANCE</td>
 
-                                   <td><input class="form-control" type="text" name="insurance" id="insurance" ></td>
+                                   <td><input class="form-control" type="text" name="insurance" id="insurance" required></td>
                                    <td></td>
                                </tr>
                                <tr>
                                    <td colspan="3" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
 
-                                   <td><input class="form-control" type="text" name="sgst" id="sgst" value="" ></td>
+                                   <td><input class="form-control" type="text" name="sgst" id="sgst" value="" readonly ></td>
                                    <td></td>
                                </tr>
                                <tr>
@@ -207,7 +216,7 @@
                                    </td>
 
 
-                                   <td><input class="form-control" type="text" name="cgst" id="cgst" value="" ></td>
+                                   <td><input class="form-control" type="text" name="cgst" id="cgst" value="" readonly ></td>
                                    <td></td>
                                </tr>
                                <tr>
@@ -221,40 +230,36 @@
                        </div>
 
                    <script>
-                       $("#sub_tot").on('click', function() {
-                           var total =document.getElementsByName("tot_charge_amt[]");
-                           var sum = 0;
-                           for (var j = 0, iLen = total.length; j < iLen; j++) {
-                               val=parseFloat(total[j].value);
-                               sum +=val;
-                           }
-                           var grant_tot = document.getElementById('grand_total').value;
-                           var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
-                           document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
-                       });
-                       $("#sgst").on('click', function() {
+
+                       $("#insurance").on('change keyup paste', function() {
                            var sub_tot =document.getElementById('sub_tot').value;
                            var insurance =document.getElementById('insurance').value;
                            var gst = document.getElementById('gst').value;
                            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)) * gst / 100 );
                            document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
                            document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
-                       });
-                       $("#gross_tot").on('click', function() {
-                           var sub_tot =document.getElementById('sub_tot').value;
-                           var insurance =document.getElementById('insurance').value;
                            var sgst = document.getElementById('sgst').value;
                            var cgst = document.getElementById('cgst').value;
-                           var sum = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst));
-                           document.getElementById('gross_tot').value = parseInt(sum);
+                           var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst));
+                           document.getElementById('gross_tot').value = parseInt(grant);
                        });
                    </script>
 
                </div>
+                <hr>
                 <div class="row">
-                    <button class="btn btn-primary" type="submit" onclick="Save_invoice()"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>&nbsp;
-
+                    <div class="col-md-6">
+                        <h4>Bank Details</h4>
+                        <h5>Stronglass Tough</h5>
+                        <h5>A/C Type: <?php echo $st[0]['ST_Bank_Account_Type']; ?></h5>
+                        <h5>A/C Number: <?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
+                        <h5>Name: <?php echo $st[0]['ST_Bank']; ?></h5>
+                        <h5>IFSC: <?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
+                    </div>
+                    <div class="col-md-6"></div>
                 </div>
+                    <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>
+                </form>
             </div>
         </div>
     </div>
@@ -298,6 +303,18 @@
         var amt = parseInt($('#charge_amt').val());
         var total =  parseInt(holes * amt);
         document.getElementById('tot_charge_amt').value = total;
+
+        var totals =document.getElementsByName("tot_charge_amt[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+        var grant_tot = document.getElementById('grand_total').value;
+        var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
+        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
     });
 
     $("#charges").change(function () {
@@ -453,7 +470,6 @@
                     document.getElementById('total_pic').value = parseInt(sum_pic);
 
                     //total area
-
                     var areas =document.getElementsByName("area[]");
                     var sum_area = 0;
                     for (var j = 0, iLen = areas.length; j < iLen; j++) {
@@ -481,6 +497,13 @@
     function Save_invoice() {
         var invoice =  document.getElementById('invoice_no').value;
         var invoice_date =  document.getElementById('invoice_date').value;
+        var customer_id = document.getElementById('company_name1').value;
+        var subtotal = document.getElementById('sub_tot').value;
+        var insurance = document.getElementById('insurance').value;
+        var sgst = document.getElementById('sgst').value;
+        var cgst = document.getElementById('cgst').value;
+        var gross_total = document.getElementById('gross_tot').value;
+
 
 
     }

@@ -275,7 +275,25 @@ class Admin_Model extends CI_Model
     {
         $query = $this->db->query("Select * from customer_add_address A INNER  JOIN customer_master B on A.Customer_Icode=B.Customer_Icode  WHERE A.Customer_Address_Icode = '$id' ");
         return $query->result_array();
+    }
 
+    /** Insert profoma invoice */
+    public function Insert_Profoma_Invoice($data)
+    {
+        $this->db->insert('proforma_invoice', $data);
+        return $this->db->insert_id();
+    }
+    /** Inseret profoma item */
+    public function Insert_Profoma_Item($data)
+    {
+        $this->db->insert('proforma_invoice_items', $data);
+        return 1;
+    }
+    /** Insert profoma charges */
+    public function Insert_Profoma_Charges($data)
+    {
+        $this->db->insert('proforma_material_processing_charges', $data);
+        return 1;
     }
 
 

@@ -695,6 +695,71 @@ class Admin_Controller extends CI_Controller
         $this->db->update('customer_add_address', $data);
         $this->session->set_flashdata('feedback', 'Data Updated..');
         redirect('Admin_Controller/View_Customers');
+    }
+
+    /** Save Invoice */
+    public function Save_Invoice()
+    {
+        $data = array(
+            'Proforma_Number' => $this->input->post('invoice_no'),
+            'Proforma_Date' => $this->input->post('invoice_date'),
+            'Proforma_Customer_Icode' => $this->input->post('company_name'),
+            'Proforma_Delivery_Address_Icode' => $this->input->post('company_address'),
+            'Sub_Total' => $this->input->post('sub_tot'),
+            'Insurance_Value' => $this->input->post('insurance'),
+            'SGST_Value' => $this->input->post('sgst'),
+            'CGST_Value' => $this->input->post('cgst'),
+            'GrossTotal_Value' => $this->input->post('gross_tot'),
+            'Proforma_Generated_By' => $this->session->userdata['userid']);
+        $insert = $this->admin_model->Insert_Profoma_Invoice($data);
+        if($insert != 0)
+        {
+            $material_id = $this->input->post('material');
+            $hsn = $this->input->post('hsn');
+            $special = $this->input->post('type');
+            $actual_W = $this->input->post('width');
+            $actual_H = $this->input->post('height');
+            $Charge_W = $this->input->post('ch_weight');
+            $Charge_H = $this->input->post('ch_height');
+            $Area = $this->input->post('area');
+            $Rate = $this->input->post('rate');
+            $cost = $this->input->post('total');
+            $count = sizeof($material_id);
+            for($i=0; $i<$count; $i++)
+            {
+                $full_data =array( 'Proforma_Icode' => $insert,
+                    'Proforma_Date' => $this->input->post('invoice_date'),
+                    'Proforma_Material_Icode' => $material_id[$i],
+                    'Proforma_HSNCode' => $hsn[$i],
+                    'Proforma_Special' => $special[$i],
+                    'Proforma_Actual_Size_Width' => $actual_W[$i],
+                    'Proforma_Actual_Size_Height' => $actual_H[$i],
+                    'Proforma_Chargeable_Size_Width' =>$Charge_W[$i],
+                    'Proforma_Chargeable_Size_Height' => $Charge_H[$i],
+                    'Proforma_Area_SQMTR' => $Area[$i],
+                    'Proforma_Material_Rate' => $Rate[$i],
+                    'Proforma_Material_Cost' => $cost[$i],
+                    'created_by' => $this->session->userdata['userid']);
+                $insert_item = $this->admin_model->Insert_Profoma_Item($full_data);
+            }
+            $charges_id = $this->input->post('charges');
+            $charges_count = $this->input->post('no_holes');
+            $charges_value = $this->input->post('charge_amt');
+            $charges_cost = $this->input->post('tot_charge_amt');
+            $count1 = sizeof($charges_id);
+            for($i=0; $i<$count1; $i++)
+            {
+                $full_data1 =array( 'Proforma_Icode' => $insert,
+                    'Proforma_Charge_Icode' => $charges_id[$i],
+                    'Proforma_Charge_Count' => $charges_count[$i],
+                    'Proforma_Charge_Value' => $charges_value[$i],
+                    'Proforma_Charge_Cost' => $charges_cost[$i],
+                    'created_by' => $this->session->userdata['userid']);
+                $insert_charges = $this->admin_model->Insert_Profoma_Charges($full_data1);
+            }
+            $this->session->set_flashdata('feedback', 'Profoma Generated ..');
+            redirect('Admin_Controller/Proforma_Invoice');
+        }
 
     }
 
