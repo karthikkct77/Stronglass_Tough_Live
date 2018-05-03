@@ -42,12 +42,12 @@
                         </thead>
                         <tbody>
                         <?php $i=1;
-                        foreach ($customers as $val)
+                        foreach ($invoice as $val)
                         {
                             ?>
                             <tr>
                                 <td><?php echo $i; ?></td>
-                                <td><?php echo $val['Customer_Company_Name']; ?></td>
+                                <td><?php echo $val['Proforma_Number']; ?></td>
                                 <td><?php echo $val['Customer_City']; ?></td>
                                 <td><?php echo $val['Customer_Phone']; ?></td>
                                 <td><?php echo $val['Customer_Email_Id_1']; ?></td>
