@@ -34,7 +34,13 @@
 
             </ul>
         </li>
-        <li><a class="app-menu__item" href="<?php echo site_url('Admin_Controller/Proforma_Invoice'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Proforma_Invoice</span></a></li>
+        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Invoice</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+            <ul class="treeview-menu">
+                <!--<li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Size_Master'); ?><!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>-->
+                <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Proforma_Invoice'); ?>"><i class="icon fa fa-circle-o"></i> Add Profoma Invoice</a></li>
+                <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Invoice_List'); ?>"><i class="icon fa fa-circle-o"></i>View Invoice</a></li>
+            </ul>
+        </li>
 
     </ul>
 </aside>
