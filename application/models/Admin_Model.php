@@ -263,6 +263,18 @@ class Admin_Model extends CI_Model
     {
         $query = $this->db->query("Select * from customer_master WHERE Customer_Icode = '$id' ");
         return $query->result_array();
+    }
+    /** Get customer Locations */
+    public function get_location_details($id)
+    {
+        $query = $this->db->query("Select * from customer_add_address A INNER  JOIN customer_master B on A.Customer_Icode=B.Customer_Icode  WHERE A.Customer_Icode = '$id' ");
+        return $query->result_array();
+    }
+    /** get single customer locations */
+    public function get_single_Customer_Locations($id)
+    {
+        $query = $this->db->query("Select * from customer_add_address A INNER  JOIN customer_master B on A.Customer_Icode=B.Customer_Icode  WHERE A.Customer_Address_Icode = '$id' ");
+        return $query->result_array();
 
     }
 

@@ -273,7 +273,7 @@ class Admin_Controller extends CI_Controller
             'Customer_Add_State' =>$this->input->post('state'),
             'Customer_Add_Phone' =>$this->input->post('phone'),
             'Customer_Add_Alternate_Phone' =>$this->input->post('alternate_phone'),
-            'Customer_Add_Email_ID_1' =>$this->input->post('email_1'),
+            'Customer_Add_Email_Id_1' =>$this->input->post('email_1'),
             'Customer_Add_Email_Id_2' =>$this->input->post('email_2'),
             'Customer_Add_Created_By' => $this->session->userdata['userid']);
         $insert = $this->admin_model->save_address($data);
@@ -640,8 +640,64 @@ class Admin_Controller extends CI_Controller
            $this->db->update('customer_master', $data);
         $this->session->set_flashdata('feedback', 'Data Updated..');
         redirect('Admin_Controller/View_Customers');
+    }
+    /** locations */
+    public function Locations($id)
+    {
+        $customer_id = $this->uri->segment(3);
+        $data['customers'] = $this->admin_model->get_location_details($customer_id);
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Customer_Locations',$data,false);
+        $this->load->view('Admin/footer');
+    }
+    /** Single locations Details */
+    public function single_Locations($id)
+    {
+        $customer_id = $this->uri->segment(3);
+        $data['customers'] = $this->admin_model->get_single_Customer_Locations($customer_id);
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/View_Single_Locations',$data,false);
+        $this->load->view('Admin/footer');
+    }
+    /** Edit Customer locations */
+    public function Edit_Locations($id)
+    {
+        $customer_id = $this->uri->segment(3);
+        $data['customers'] = $this->admin_model->get_single_Customer_Locations($customer_id);
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Edit_Locations',$data,false);
+        $this->load->view('Admin/footer');
+    }
+    /** Update Locations */
+    public function Update_Locations()
+    {
+        $id = $this->input->post('customer_Address_id');
+        $data = array(
+            'Customer_Icode' => $this->input->post('customer_icode'),
+            'Customer_GSTIN' =>$this->input->post('gstin_number'),
+            'Customer_Add_Address_1' =>$this->input->post('address'),
+            'Customer_Add_Address_2' =>$this->input->post('address1'),
+            'Customer_Add_Area' =>$this->input->post('area'),
+            'Customer_Add_City' =>$this->input->post('city'),
+            'Customer_Add_State' =>$this->input->post('state'),
+            'Customer_Add_Phone' =>$this->input->post('phone'),
+            'Customer_Add_Alternate_Phone' =>$this->input->post('alternate_phone'),
+            'Customer_Add_Email_Id_1' =>$this->input->post('email_1'),
+            'Customer_Add_Email_Id_2' =>$this->input->post('email_2'),
+            'Customer_Add_Created_By' => $this->session->userdata['userid']);
+        $this->db->where('Customer_Address_Icode',$id);
+        $this->db->update('customer_add_address', $data);
+        $this->session->set_flashdata('feedback', 'Data Updated..');
+        redirect('Admin_Controller/View_Customers');
 
     }
+
 
 
 }
