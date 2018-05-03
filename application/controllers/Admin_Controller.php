@@ -417,8 +417,6 @@ class Admin_Controller extends CI_Controller
     /** Proforma_Invoice */
     public function Proforma_Invoice()
     {
-        $this->load->helper('string');
-        echo random_string('alnum',5);
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
         $this->load->view('Admin/left');
@@ -468,13 +466,26 @@ class Admin_Controller extends CI_Controller
                 'ch_weight'=>$charge_weigth,
                 'area'=>$area );
         }
+        $month =date('m');
         $data['invoice'] =  $data_user;
         $data['st']= $this->admin_model->get_ST();
         $data['customer']= $this->admin_model->get_all_customers();
         $data['stock']= $this->admin_model->get_all_item();
         $data['charges']= $this->admin_model->get_all_charges();
         $data['tax']= $this->admin_model->get_Tax();
-//        $perfoma = $this->admin_model->get_profoma_number();
+        $perfoma = $this->admin_model->get_profoma_number($month);
+        if($perfoma == 0)
+        {
+            $data['profoma_number'] = $month .'-101';
+        }
+        else
+        {
+            $myString = $perfoma[0]['Proforma_Number'];
+            $myArray = explode('-', $myString);
+            $increment = $myArray[1] + 1;
+            $data['profoma_number'] = $month .'-'. $increment;
+
+        }
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
         $this->load->view('Admin/left');

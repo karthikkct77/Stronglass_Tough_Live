@@ -295,6 +295,21 @@ class Admin_Model extends CI_Model
         $this->db->insert('proforma_material_processing_charges', $data);
         return 1;
     }
+    /** Get profoma number */
+    public function get_profoma_number($month)
+    {
+        $query= $this->db->query("SELECT Proforma_Number FROM `proforma_invoice` WHERE `Proforma_Number` LIKE '%$month%' ORDER by Proforma_Icode DESC LIMIT 1  ");
+        if($query->num_rows() == 1)
+        {
+            return $query->result_array();
+        }
+        else{
+            return 0;
+
+        }
+
+
+    }
 
 
 
