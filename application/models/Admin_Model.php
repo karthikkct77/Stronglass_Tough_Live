@@ -318,7 +318,12 @@ class Admin_Model extends CI_Model
     {
         $query = $this->db->query("Select * from customer_add_address WHERE Customer_Icode = '$id' ");
         return $query->result_array();
-
+    }
+    /** Get All Invoice */
+    public function get_All_Invoice()
+    {
+        $query = $this->db->query("Select * from proforma_invoice A INNER JOIN  customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode ");
+        return $query->result_array();
     }
 
 

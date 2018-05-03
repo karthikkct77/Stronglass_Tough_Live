@@ -796,6 +796,16 @@ class Admin_Controller extends CI_Controller
             $this->session->set_flashdata('feedback', 'Profoma Generated ..');
             redirect('Admin_Controller/Proforma_Invoice');
         }
+    }
+    /** Invoice List */
+    public function Invoice_List()
+    {
+        $data['invoice'] = $this->admin_model->get_All_Invoice();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Invoice_List',$data,false);
+        $this->load->view('Admin/footer');
 
     }
 
