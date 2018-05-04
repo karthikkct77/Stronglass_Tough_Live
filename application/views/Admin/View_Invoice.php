@@ -73,7 +73,6 @@
                         <h4>Date:<input type="text" name="invoice_date" id="invoice_date" value="<?php echo date('Y-m-d'); ?>" readonly> </h4>
                     </div>
                 </div>
-
                 <div class="row">
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
@@ -153,7 +152,6 @@
                     </script>
                 </div>
                <div class="row">
-
                        <div class="col-md-6">
                            <h3>Terms & Conditions</h3>
                            <p style="font-size: 16px;text-align: justify;">
@@ -227,9 +225,7 @@
                                </tfoot>
                            </table>
                        </div>
-
                    <script>
-
                        $("#insurance").on('change keyup paste', function() {
                            var sub_tot =document.getElementById('sub_tot').value;
                            var insurance =document.getElementById('insurance').value;
@@ -243,7 +239,6 @@
                            document.getElementById('gross_tot').value = parseInt(grant);
                        });
                    </script>
-
                </div>
                 <hr>
                 <div class="row">
@@ -290,7 +285,6 @@
             }
         });
     });
-
     $("#company_name2").change(function () {
         $.ajax({
             url:"<?php echo site_url('Admin_Controller/get_Customer_Address_Details'); ?>",
@@ -307,7 +301,6 @@
             }
         });
     });
-
     $("#no_holes").on('change keyup paste', function() {
         var holes = parseInt($(this).val());
         var amt = parseInt($('#charge_amt').val());
@@ -326,7 +319,6 @@
         var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
         document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
     });
-
     $("#charges").change(function () {
         $.ajax({
             url:"<?php echo site_url('Admin_Controller/Edit_Charges'); ?>",
@@ -341,7 +333,6 @@
         });
     });
     $("#Add").click(function () {
-
         if($('#charges').val() == "")
         {
             alert("Please Select Charges...");
@@ -359,7 +350,6 @@
             $("#tot_charge_amt").val("");
         }
     });
-
     function AddRow(charges,no_holes,charge_amt,tot_charge_amt,chrgs) {
         var tBody = $("#sampleTable1 > TBODY")[0];
         //Add Row.
