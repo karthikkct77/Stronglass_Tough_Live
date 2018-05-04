@@ -150,7 +150,7 @@
                             document.getElementById('grand_total').value = parseFloat(sum).toFixed(2);
                         });
                     </script>
-                </div>  
+                </div>
                <div class="row">
                        <div class="col-md-6">
                            <h3>Terms & Conditions</h3>
@@ -159,7 +159,7 @@
                                At the time of transit Breakage/Loss insurance claim will be done by
                                the customer and not by the company.
                                Any discrepancies observed in the supply like quantity,specification,
-                               quality,etc.
+                               quality, etc.
                            </p>
 
                        </div>
@@ -465,6 +465,7 @@
                         }
                     }
                     document.getElementById('grand_total').value = parseFloat(sum).toFixed(2);
+
                     // total pices
                     var pices =document.getElementsByName("pics[]");
                     var sum_pic = 0;
@@ -486,6 +487,7 @@
                         }
                     }
                     document.getElementById('total_area').value = parseFloat(sum_area).toFixed(2);
+
                 }
             });
         });
@@ -498,5 +500,5 @@
         var total = (pcs * area * rate);
         document.getElementById('total'+id).value = total;
     }
-    </ >
+    </script>
 
