@@ -487,7 +487,6 @@
                         }
                     }
                     document.getElementById('total_area').value = parseFloat(sum_area).toFixed(2);
-
                 }
             });
         });
