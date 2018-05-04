@@ -426,7 +426,6 @@
             document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
         }
     };
-
     function FillBilling() {
         if($('#check').is(":checked"))
         {
@@ -501,5 +500,5 @@
         var total = (pcs * area * rate);
         document.getElementById('total'+id).value = total;
     }
-    </script>
+    </ >
 
