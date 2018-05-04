@@ -752,6 +752,7 @@ class Admin_Controller extends CI_Controller
         {
             $material_id = $this->input->post('material');
             $hsn = $this->input->post('hsn');
+            $qty = $this->input->post('pics');
             $special = $this->input->post('type');
             $actual_W = $this->input->post('width');
             $actual_H = $this->input->post('height');
@@ -768,6 +769,7 @@ class Admin_Controller extends CI_Controller
                     'Proforma_Material_Icode' => $material_id[$i],
                     'Proforma_HSNCode' => $hsn[$i],
                     'Proforma_Special' => $special[$i],
+                    'Profoma_Qty' => $qty[$i],
                     'Proforma_Actual_Size_Width' => $actual_W[$i],
                     'Proforma_Actual_Size_Height' => $actual_H[$i],
                     'Proforma_Chargeable_Size_Width' =>$Charge_W[$i],
