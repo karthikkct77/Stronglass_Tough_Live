@@ -13044,9 +13044,18 @@ be a descendant of the grid when it is being dragged.
   text-align: center;
   width: 100%;
 }
+/*Vignesh css*/
 .row.invoice h6 span{
   display: inline-block;
   text-align: center;
+}
+#consign h5{
+  font-size: 12px;
+  font-weight: normal;
+}
+#Buyer h5{
+  font-size: 12px;
+  font-weight: normal;
 }
 
 @media (min-width: 768px) {

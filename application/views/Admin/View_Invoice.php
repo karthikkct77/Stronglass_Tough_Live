@@ -21,7 +21,7 @@
                 <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Invoice'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
                 <div class="row">
                     <div class="col-md-4">
-                        <h4>Consignee</h4>
+                        <h5>Consignee</h5>
                         <div class="form-group ">
                             <label class="control-label">Customer Name </label>
                             <select name="company_name" class="form-control" id="company_name1" required >
@@ -49,7 +49,7 @@
 
                     </div>
                     <div class="col-md-4">
-                        <h4>Buyer (if other than consignee)</h4>
+                        <h5>Buyer (if other than consignee)</h5>
                         <div class="form-group ">
                             <label class="control-label">Customer Name </label>
                             <select name="company_address" class="form-control" id="company_name2" >
@@ -69,8 +69,8 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <h2>Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $profoma_number; ?>"></h2>
-                        <h3>Date:<input type="text" name="invoice_date" id="invoice_date" value="<?php echo date('Y-m-d'); ?>"> </h3>
+                        <h4>Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $profoma_number; ?>" readonly></h4>
+                        <h4>Date:<input type="text" name="invoice_date" id="invoice_date" value="<?php echo date('Y-m-d'); ?>" readonly> </h4>
                     </div>
                 </div>
 
@@ -156,7 +156,7 @@
 
                        <div class="col-md-6">
                            <h3>Terms & Conditions</h3>
-                           <p>
+                           <p style="font-size: 16px;text-align: justify;">
                                We Shall not be responsible for any type of Breakage/Loss in Transit.
                                At the time of transit Breakage/Loss insurance claim will be done by
                                the customer and not by the company.
@@ -250,10 +250,10 @@
                     <div class="col-md-6">
                         <h4>Bank Details</h4>
                         <h5>Stronglass Tough</h5>
-                        <h5>A/C Type: <?php echo $st[0]['ST_Bank_Account_Type']; ?></h5>
-                        <h5>A/C Number: <?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
-                        <h5>Name: <?php echo $st[0]['ST_Bank']; ?></h5>
-                        <h5>IFSC: <?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
+                        <h5>A/C Type: <span><?php echo $st[0]['ST_Bank_Account_Type']; ?></span></h5>
+                        <h5>A/C Number: <span><?php echo $st[0]['ST_Bank_Account_Number']; ?></span></h5>
+                        <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
+                        <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
                     </div>
                     <div class="col-md-6"></div>
                 </div>
@@ -273,7 +273,7 @@
             success:function(server_response){
                 var data = $.parseJSON(server_response);
                     document.getElementById('coustomer').innerHTML = data[0]['Customer_Company_Name'];
-                    document.getElementById('address').innerHTML = data[0]['Customer_Address_1'] + data[0]['Customer_Area'] + data[0]['Customer_City'] ;
+                    document.getElementById('address').innerHTML = data[0]['Customer_Address_1'] + data[0]['Customer_Area']  + data[0]['Customer_City'];
                     document.getElementById('phone').innerHTML = "Mob :" + data[0]['Customer_Phone'];
                     document.getElementById('gstn').innerHTML = "GSTIN :" + data[0]['Customer_GSTIN'];
             }
