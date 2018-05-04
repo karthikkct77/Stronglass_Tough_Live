@@ -5,10 +5,9 @@
 
         </div>
         <div class="row invoice">
-            <h2><?php echo $st[0]['ST_Name']; ?></h2>
-            <h4><?php echo $st[0]['ST_Address_1']; ?>,<?php echo $st[0]['ST_Area']; ?>,<?php echo $st[0]['ST_City']; ?></h4>
-            <h4>Mob: <?php echo $st[0]['ST_Phone']; ?></h4>
-            <h4>Email :<?php echo $st[0]['ST_Email_ID1']; ?></h4>
+            <h4><?php echo $st[0]['ST_Name']; ?></h4>
+            <h5><?php echo $st[0]['ST_Address_1']; ?>,<?php echo $st[0]['ST_Area']; ?>,<?php echo $st[0]['ST_City']; ?></h5>
+            <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
@@ -420,12 +419,21 @@
         var row = $(button).closest("TR");
         var name = $("TD", row).eq(0).html();
         if (confirm("Do you want to delete: ")) {
-
             //Get the reference of the Table.
             var table = $("#sampleTable1")[0];
-
             //Delete the Table row using it's Index.
             table.deleteRow(row[0].rowIndex);
+            var totals =document.getElementsByName("tot_charge_amt[]");
+            var sum = 0;
+            for (var j = 0, iLen = totals.length; j < iLen; j++) {
+                if (totals[j].value!==""){
+                    val=parseFloat(totals[j].value);
+                    sum +=val;
+                }
+            }
+            var grant_tot = document.getElementById('grand_total').value;
+            var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
+            document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
         }
     };
 
@@ -502,21 +510,6 @@
         var rate = document.getElementById('rate'+id).value;
         var total = (pcs * area * rate);
         document.getElementById('total'+id).value = total;
-    }
-
-
-    function Save_invoice() {
-        var invoice =  document.getElementById('invoice_no').value;
-        var invoice_date =  document.getElementById('invoice_date').value;
-        var customer_id = document.getElementById('company_name1').value;
-        var subtotal = document.getElementById('sub_tot').value;
-        var insurance = document.getElementById('insurance').value;
-        var sgst = document.getElementById('sgst').value;
-        var cgst = document.getElementById('cgst').value;
-        var gross_total = document.getElementById('gross_tot').value;
-
-
-
     }
     </script>
 
