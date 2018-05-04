@@ -465,7 +465,6 @@
                         }
                     }
                     document.getElementById('grand_total').value = parseFloat(sum).toFixed(2);
-
                     // total pices
                     var pices =document.getElementsByName("pics[]");
                     var sum_pic = 0;
