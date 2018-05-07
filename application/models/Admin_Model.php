@@ -328,7 +328,7 @@ class Admin_Model extends CI_Model
 
     /*Get Company Name*/
     public function GetRow($keyword) {
-        $this->db->order_by('id', 'DESC');
+        $this->db->order_by('Customer_Icode', 'DESC');
         $this->db->like("Customer_Company_Name", $keyword);
         return $this->db->get('customer_master')->result_array();
     }
