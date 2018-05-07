@@ -32,7 +32,7 @@
                                     $("#country").keyup(function () {
                                         $.ajax({
                                             type: "POST",
-                                            url: "http://localhost/autocomplete/autocomplete/GetCountryName",
+                                            url:"<?php echo site_url('Admin_Controller/GetCountryName'); ?>",
                                             data: {
                                                 keyword: $("#country").val()
                                             },
