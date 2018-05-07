@@ -48,7 +48,7 @@
                                                 }
                                                 $.each(data, function (key,value) {
                                                     if (data.length >= 0)
-                                                        $('#DropdownCountry').append('<li role="displayCountries" ><a role="menuitem dropdownCountryli" class="dropdownlivalue">' + value['name'] + '</a></li>');
+                                                        $('#DropdownCountry').append('<li role="displayCountries" ><a role="menuitem dropdownCountryli" class="dropdownlivalue">' + value['Customer_Company_Name'] + '</a></li>');
                                                 });
                                             }
                                         });
@@ -59,14 +59,14 @@
                                 });
                             </script>
 
-                            <select name="company_name" class="form-control" id="company_name1" required >
+                            <!--<select name="company_name" class="form-control" id="company_name1" required >
                                 <option value="" >Select Company</option>
-                                <?php foreach ($customer as $row):
+                                <?php /*foreach ($customer as $row):
                                 {
                                     echo '<option value= "'.$row['Customer_Icode'].'">' . $row['Customer_Company_Name'] . '</option>';
                                 }
-                                endforeach; ?>
-                            </select>
+                                endforeach; */?>
+                            </select>-->
                         </div>
                         <div id="consign">
                             <h5 id="coustomer"></h5>
