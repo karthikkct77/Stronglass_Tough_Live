@@ -24,6 +24,41 @@
                         <h5>Consignee</h5>
                         <div class="form-group ">
                             <label class="control-label">Customer Name </label>
+                            <input style="height:70px" type="text" id="country" autocomplete="off" name="country" class="form-control" placeholder="Type to get an Ajax call of Countries">
+                            <ul class="dropdown-menu txtcountry" style="margin-left:15px;margin-right:0px;" role="menu" aria-labelledby="dropdownMenu"  id="DropdownCountry"></ul>
+
+                            <script>
+                                $(document).ready(function () {
+                                    $("#country").keyup(function () {
+                                        $.ajax({
+                                            type: "POST",
+                                            url: "http://localhost/autocomplete/autocomplete/GetCountryName",
+                                            data: {
+                                                keyword: $("#country").val()
+                                            },
+                                            dataType: "json",
+                                            success: function (data) {
+                                                if (data.length > 0) {
+                                                    $('#DropdownCountry').empty();
+                                                    $('#country').attr("data-toggle", "dropdown");
+                                                    $('#DropdownCountry').dropdown('toggle');
+                                                }
+                                                else if (data.length == 0) {
+                                                    $('#country').attr("data-toggle", "");
+                                                }
+                                                $.each(data, function (key,value) {
+                                                    if (data.length >= 0)
+                                                        $('#DropdownCountry').append('<li role="displayCountries" ><a role="menuitem dropdownCountryli" class="dropdownlivalue">' + value['name'] + '</a></li>');
+                                                });
+                                            }
+                                        });
+                                    });
+                                    $('ul.txtcountry').on('click', 'li a', function () {
+                                        $('#country').val($(this).text());
+                                    });
+                                });
+                            </script>
+
                             <select name="company_name" class="form-control" id="company_name1" required >
                                 <option value="" >Select Company</option>
                                 <?php foreach ($customer as $row):
@@ -258,6 +293,8 @@
         </div>
     </div>
 </main>
+
+
 <script>
     $("#company_name1").change(function () {
         $.ajax({
