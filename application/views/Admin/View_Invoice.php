@@ -24,49 +24,10 @@
                         <h5>Consignee</h5>
                         <div class="form-group ">
                             <label class="control-label">Customer Name </label>
-                            <input style="height:70px" type="text" id="country" autocomplete="off" name="country" class="form-control" placeholder="Type to get an Ajax call of Countries">
-                            <ul class="dropdown-menu txtcountry" style="margin-left:15px;margin-right:0px;" role="menu" aria-labelledby="dropdownMenu"  id="DropdownCountry"></ul>
-
-                            <script>
-                                $(document).ready(function () {
-                                    $("#country").keyup(function () {
-                                        $.ajax({
-                                            type: "POST",
-                                            url:"<?php echo site_url('Admin_Controller/GetCountryName'); ?>",
-                                            data: {
-                                                keyword: $("#country").val()
-                                            },
-                                            dataType: "json",
-                                            success: function (data) {
-                                                if (data.length > 0) {
-                                                    $('#DropdownCountry').empty();
-                                                    $('#country').attr("data-toggle", "dropdown");
-                                                    $('#DropdownCountry').dropdown('toggle');
-                                                }
-                                                else if (data.length == 0) {
-                                                    $('#country').attr("data-toggle", "");
-                                                }
-                                                $.each(data, function (key,value) {
-                                                    if (data.length >= 0)
-                                                        $('#DropdownCountry').append('<li role="displayCountries" ><a role="menuitem dropdownCountryli" class="dropdownlivalue">' + value['Customer_Company_Name'] + '</a></li>');
-                                                });
-                                            }
-                                        });
-                                    });
-                                    $('ul.txtcountry').on('click', 'li a', function () {
-                                        $('#country').val($(this).text());
-                                    });
-                                });
-                            </script>
-
-                            <!--<select name="company_name" class="form-control" id="company_name1" required >
-                                <option value="" >Select Company</option>
-                                <?php /*foreach ($customer as $row):
-                                {
-                                    echo '<option value= "'.$row['Customer_Icode'].'">' . $row['Customer_Company_Name'] . '</option>';
-                                }
-                                endforeach; */?>
-                            </select>-->
+                            <input  class="form-control" name="search_data" id="search_data" type="text"   onkeyup="ajaxSearch();">
+                        </div>
+                        <div id="suggestions">
+                            <div id="autoSuggestionsList"></div>
                         </div>
                         <div id="consign">
                             <h5 id="coustomer"></h5>
@@ -78,7 +39,7 @@
                     </div>
                     <div class="col-md-1">
                         <div class="form-group">
-                            <input type="checkbox" name="check" id="check" onclick="FillBilling()">
+                            <input type="checkbox" name="check" id="check" checked onclick="FillBilling()">
                             <em>Check this box if Current Address and Mailing permanent are the same.</em>
                         </div>
 
@@ -293,35 +254,66 @@
         </div>
     </div>
 </main>
+<style>
+    #search_data {
+        width: 200px;
+        padding: 5px;
+        margin: 5px 0;
+        box-sizing: border-box;
+    }
+    #autoSuggestionsList > li {
+        background: none repeat scroll 0 0 #F3F3F3;
+        border-bottom: 1px solid #E3E3E3;
+        list-style: none outside none;
+        padding: 3px 15px 3px 15px;
+        text-align: left;
+    }
+
+    #autoSuggestionsList > li a { color: #800000; }
+
+    .auto_list {
+        border: 1px solid #E3E3E3;
+        border-radius: 5px 5px 5px 5px;
+        position: absolute;
+    }
+</style>
 
 
 <script>
-    $("#company_name1").change(function () {
-        $.ajax({
-            url:"<?php echo site_url('Admin_Controller/get_Customer_Details'); ?>",
-            data: {id:
-                $(this).val()},
-            type: "POST",
-            success:function(server_response){
-                var data = $.parseJSON(server_response);
-                    document.getElementById('coustomer').innerHTML = data[0]['Customer_Company_Name'];
-                    document.getElementById('address').innerHTML = data[0]['Customer_Address_1'] + data[0]['Customer_Area']  + data[0]['Customer_City'];
-                    document.getElementById('phone').innerHTML = "Mob :" + data[0]['Customer_Phone'];
-                    document.getElementById('gstn').innerHTML = "GSTIN :" + data[0]['Customer_GSTIN'];
-            }
-        });
-    });
-    $("#company_name1").change(function () {
+
+    function get_row(id) {
         $.ajax({
             url:"<?php echo site_url('Admin_Controller/get_Customer_Address'); ?>",
             data: {id:
-                $(this).val()},
+                id},
             type: "POST",
             success:function(server_response){
                 $("#company_name2").html(server_response);
+                $('#suggestions').hide();
+                $('#Buyer').show();
+                document.getElementById('coustomer1').innerHTML =  document.getElementById('coustomer').innerHTML;
+                document.getElementById('address1').innerHTML  = document.getElementById('address').innerHTML;
+                document.getElementById('phone1').innerHTML =  document.getElementById('phone').innerHTML
+                document.getElementById('gstn1').innerHTML =  document.getElementById('gstn').innerHTML;
             }
         });
-    });
+        $.ajax({
+            url:"<?php echo site_url('Admin_Controller/get_Customer_Details'); ?>",
+            data: {id:
+            id},
+            type: "POST",
+            success:function(server_response){
+                $('#suggestions').hide();
+                var data = $.parseJSON(server_response);
+                document.getElementById('search_data').value = data[0]['Customer_Company_Name'];
+                document.getElementById('coustomer').innerHTML = data[0]['Customer_Company_Name'];
+                document.getElementById('address').innerHTML = data[0]['Customer_Address_1'] + data[0]['Customer_Area']  + data[0]['Customer_City'];
+                document.getElementById('phone').innerHTML = "Mob :" + data[0]['Customer_Phone'];
+                document.getElementById('gstn').innerHTML = "GSTIN :" + data[0]['Customer_GSTIN'];
+            }
+        });
+    }
+
     $("#company_name2").change(function () {
         $.ajax({
             url:"<?php echo site_url('Admin_Controller/get_Customer_Address_Details'); ?>",
@@ -536,6 +528,40 @@
         var rate = document.getElementById('rate'+id).value;
         var total = (pcs * area * rate);
         document.getElementById('total'+id).value = total;
+    }
+
+    function ajaxSearch()
+    {
+        var input_data = $('#search_data').val();
+
+        if (input_data.length === 0)
+        {
+            $('#suggestions').hide();
+        }
+        else
+        {
+
+            var post_data = {
+                'search_data': input_data,
+                '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
+            };
+
+            $.ajax({
+                type: "POST",
+
+                url:"<?php echo site_url('Admin_Controller/GetCountryName'); ?>",
+                data: post_data,
+                success: function (data) {
+                    // return success
+                    if (data.length > 0) {
+                        $('#suggestions').show();
+                        $('#autoSuggestionsList').addClass('auto_list');
+                        $('#autoSuggestionsList').html(data);
+                    }
+                }
+            });
+
+        }
     }
     </script>
 

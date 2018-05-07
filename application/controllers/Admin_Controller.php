@@ -813,9 +813,22 @@ class Admin_Controller extends CI_Controller
 
     /*Get Company Name*/
     public function GetCountryName(){
-        $keyword=$this->input->post('keyword');
-        $data=$this->admin_model->GetRow($keyword);
-        echo json_encode($data);
+
+        $search_data = $this->input->post('search_data');
+
+        $result = $this->admin_model->GetRow($search_data);
+
+        if (!empty($result))
+        {
+            foreach ($result as $row):
+                echo "<li><a href='javascript:;'  onclick='get_row(". $row['Customer_Icode'] .")' >" . $row['Customer_Company_Name'] . "</a></li>";
+            endforeach;
+        }
+        else
+        {
+            echo "<li> <em> Not found ... </em> </li>";
+        }
+
     }
     /*Get Company Name*/
 
