@@ -811,6 +811,12 @@ class Admin_Controller extends CI_Controller
 //
 //    }
 
-
+    /*Get Company Name*/
+    public function GetCountryName(){
+        $keyword=$this->input->post('keyword');
+        $data=$this->admin_model->GetRow($keyword);
+        echo json_encode($data);
+    }
+    /*Get Company Name*/
 
 }
