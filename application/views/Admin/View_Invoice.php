@@ -6,7 +6,7 @@
         </div>
         <div class="row invoice">
             <h4><?php echo $st[0]['ST_Name']; ?></h4>
-            <h5><?php echo $st[0]['ST_Address_1']; ?>,<?php echo $st[0]['ST_Area']; ?>,<?php echo $st[0]['ST_City']; ?></h5>
+            <h5><?php echo $st[0]['ST_Address_1']; ?>,  <?php echo $st[0]['ST_Area']; ?>,  <?php echo $st[0]['ST_City']; ?></h5>
             <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
         </div>
         <ul class="app-breadcrumb breadcrumb">
@@ -310,6 +310,12 @@
                 document.getElementById('address').innerHTML = data[0]['Customer_Address_1'] + data[0]['Customer_Area']  + data[0]['Customer_City'];
                 document.getElementById('phone').innerHTML = "Mob :" + data[0]['Customer_Phone'];
                 document.getElementById('gstn').innerHTML = "GSTIN :" + data[0]['Customer_GSTIN'];
+                $('#Buyer').show();
+                $('#company_name2').hide();
+                document.getElementById('coustomer1').innerHTML =  document.getElementById('coustomer').innerHTML;
+                document.getElementById('address1').innerHTML  = document.getElementById('address').innerHTML;
+                document.getElementById('phone1').innerHTML =  document.getElementById('phone').innerHTML
+                document.getElementById('gstn1').innerHTML =  document.getElementById('gstn').innerHTML;
             }
         });
     }
@@ -459,6 +465,7 @@
         if($('#check').is(":checked"))
         {
             $('#Buyer').show();
+            $('#company_name2').hide();
             document.getElementById('coustomer1').innerHTML =  document.getElementById('coustomer').innerHTML;
             document.getElementById('address1').innerHTML  = document.getElementById('address').innerHTML;
             document.getElementById('phone1').innerHTML =  document.getElementById('phone').innerHTML
@@ -467,6 +474,7 @@
         else
         {
             $('#Buyer').hide();
+            $('#company_name2').show();
         }
     }
     function get_result(id) {
