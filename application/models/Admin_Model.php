@@ -326,7 +326,12 @@ class Admin_Model extends CI_Model
 //        return $query->result_array();
 //    }
 
-
+    /*Get Company Name*/
+    public function GetRow($keyword) {
+        $this->db->order_by('id', 'DESC');
+        $this->db->like("Customer_Company_Name", $keyword);
+        return $this->db->get('customer_master')->result_array();
+    }
 
 
 }
