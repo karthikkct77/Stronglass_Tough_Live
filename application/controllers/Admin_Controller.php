@@ -708,7 +708,7 @@ class Admin_Controller extends CI_Controller
         $id = $this->input->post('customer_Address_id');
         $data = array(
             'Customer_Icode' => $this->input->post('customer_icode'),
-            'Customer_GSTIN' =>$this->input->post('gstin_number'),
+            'Customer_Add_GSTIN' =>$this->input->post('gstin_number'),
             'Customer_Add_Address_1' =>$this->input->post('address'),
             'Customer_Add_Address_2' =>$this->input->post('address1'),
             'Customer_Add_Area' =>$this->input->post('area'),
@@ -873,7 +873,7 @@ class Admin_Controller extends CI_Controller
         if($insert != 0)
         {
             $item_icode =  $this->input->post('material');
-            $Qty =  $this->input->post('qty');
+            $Qty =  $this->input->post('pics');
             $count = sizeof($item_icode);
             for($i=0; $i<$count; $i++)
             {
@@ -893,7 +893,7 @@ class Admin_Controller extends CI_Controller
             $this->db->update('proforma_invoice', $update);
 
             $this->session->set_flashdata('feedback', 'Work Order Generated ..');
-           // redirect('Admin_Controller/Proforma_Invoice');
+            redirect('Admin_Controller/Invoice_List');
         }
     }
     /** Edit Profroma Invoice */
@@ -906,6 +906,7 @@ class Admin_Controller extends CI_Controller
         $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
         $data['tax']= $this->admin_model->get_Tax();
         $data['st']= $this->admin_model->get_ST();
+        $data['charges']= $this->admin_model->get_all_charges();
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
         $this->load->view('Admin/left');

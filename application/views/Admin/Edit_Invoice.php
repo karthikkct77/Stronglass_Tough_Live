@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-md-12" >
             <div class="tile">
-                <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Work_Order'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
+                <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Update_Invoice'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
                     <div class="row">
                         <div class="col-md-4">
                             <h5>Consignee</h5>
@@ -108,16 +108,15 @@
                                     <td><?php echo $key['Material_Name']; ?></td>
                                     <td><?php echo $key['Proforma_HSNCode']; ?></td>
                                     <td><?php echo $key['Proforma_Special']; ?></td>
-                                    <td><input class="form-control" type="text" name="qty[]"  value="<?php echo $key['Proforma_Qty']; ?>" ></td>
+                                    <td><input class="form-control" type="text" id="pics<?php echo $i; ?>"  name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
                                     <td><input class="form-control" type="text" name="holes[]"  value="<?php echo $key['Proforma_Holes']; ?>" ></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
                                     <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Chargeable_Size_Height']; ?></td>
-                                    <td><input class="form-control" type="text" name="area[]" id="area" value="<?php echo $key['Proforma_Area_SQMTR']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="rate[]" value="<?php echo $key['Proforma_Material_Rate']; ?>" id="rate" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
-
-                                    <td><?php echo $key['Proforma_Material_Cost']; ?></td>
+                                    <td><input class="form-control" type="text" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['Proforma_Area_SQMTR']; ?>" readonly></td>
+                                    <td><input class="form-control" type="text" name="rate[]" value="<?php echo $key['Proforma_Material_Rate']; ?>" id="rate<?php echo $i; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
+                                    <td><input class="form-control" type="text" name="total[]" value="<?php echo $key['Proforma_Material_Cost']; ?>" id="total<?php echo $i; ?>" ></td>
                                 </tr>
                                 <?php $i++; } ?>
                             <tr>
@@ -164,49 +163,65 @@
                         <div class="col-md-6">
                             <table class="table table-hover table-bordered" id="sampleTable1">
                                 <thead>
-                                <th>#</th>
                                 <th>Select Charges</th>
                                 <th>No.of pieces</th>
                                 <th>Price</th>
                                 <th>Total</th>
                                 </thead>
-                                <tbody></tbody>
-                                <tfoot>
+                                <tbody>
                                 <?php
                                 $i=1;
                                 foreach ($invoice_Charges as $key) {
                                     ?>
                                     <tr>
-                                        <td><?php echo $i; ?></td>
                                         <td><?php echo $key['charge_name']; ?></td>
                                         <td><?php echo $key['Proforma_Charge_Count']; ?></td>
                                         <td><?php echo $key['Proforma_Charge_Value']; ?></td>
-                                        <td><?php echo $key['Proforma_Charge_Cost']; ?></td>
+                                        <td><input class="form-control" type="text" name="tot_charge_amt[]" id="tot_charge_amt" value="<?php echo $key['Proforma_Charge_Cost']; ?>"  readonly></td>
                                     </tr>
                                     <?php
                                     $i++;
                                 }
                                 ?>
                                 <tr>
-                                    <td colspan="4" align="right">SUB-TOTAL</td>
+                                </tbody>
+                                <tfoot>
+
+                                    <td><div class="form-group">
+                                            <select name="charges[]" class="form-control" id="charges"  required >
+                                                <option value="" >Select Charges</option>
+                                                <?php foreach ($charges as $row):
+                                                {
+                                                    echo '<option value= "'.$row['charge_icode'].'">' . $row['charge_name'] . '</option>';
+                                                }
+                                                endforeach; ?>
+                                            </select>
+                                        </div></td>
+                                    <td><input class="form-control" type="text" name="no_holes[]" id="no_holes" ></td>
+                                    <td><input class="form-control" type="text" name="charge_amt[]" id="charge_amt" ></td>
+                                    <td><input class="form-control" type="text" name="tot_charge_amt[]" id="tot_charge_amt1"  readonly></td>
+                                    <td><input type="button" onclick="Add_one()" value="Add" id="Add" /></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" align="right">SUB-TOTAL</td>
 
                                     <td><input class="form-control" type="text" name="sub_tot" id="sub_tot" value="<?php echo $invoice[0]['Sub_Total']; ?>" readonly ></td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" align="right">INSURANCE</td>
+                                    <td colspan="3" align="right">INSURANCE</td>
 
                                     <td><input class="form-control" type="text" name="insurance" id="insurance" value="<?php echo $invoice[0]['Insurance_Value']; ?>" required readonly></td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
+                                    <td colspan="3" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
 
                                     <td><input class="form-control" type="text" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ></td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
+                                    <td colspan="3" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
                                         <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
                                     </td>
 
@@ -216,7 +231,7 @@
                                 </tr>
                                 <tr>
 
-                                    <td colspan="4" align="right">GROSS TOTAL</td>
+                                    <td colspan="3" align="right">GROSS TOTAL</td>
                                     <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" ></td>
                                     <td></td>
                                 </tr>
@@ -249,8 +264,7 @@
                             <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
                         </div>
                         <div class="col-md-6">
-                            <a class="btn btn-success pull-right" href="<?php echo site_url('Admin_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT</a>
-                            <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Generate WO</button>
+                            <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>
                         </div>
                     </div>
 
@@ -306,19 +320,29 @@
         var holes = parseInt($(this).val());
         var amt = parseInt($('#charge_amt').val());
         var total =  parseInt(holes * amt);
-        document.getElementById('tot_charge_amt').value = total;
+        document.getElementById('tot_charge_amt1').value = total;
 
         var totals =document.getElementsByName("tot_charge_amt[]");
-        var sum = 0;
+        var sum1 = 0;
         for (var j = 0, iLen = totals.length; j < iLen; j++) {
             if (totals[j].value!==""){
                 val=parseFloat(totals[j].value);
-                sum +=val;
+                sum1 +=val;
             }
         }
         var grant_tot = document.getElementById('grand_total').value;
-        var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
-        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+        var sub_tot1 = parseFloat(sum1) + parseFloat(grant_tot);
+        document.getElementById('sub_tot').value = parseFloat(sub_tot1).toFixed(2);
+        var sub_tot =document.getElementById('sub_tot').value;
+        var insurance =document.getElementById('insurance').value;
+        var gst = document.getElementById('gst').value;
+        var sum = ((parseFloat(sub_tot) + parseFloat(insurance)) * gst / 100 );
+        document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+        document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+        var sgst = document.getElementById('sgst').value;
+        var cgst = document.getElementById('cgst').value;
+        var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst));
+        document.getElementById('gross_tot').value = parseInt(grant);
     });
     $("#charges").change(function () {
         $.ajax({
@@ -344,11 +368,11 @@
         else
         {
             var chrgs = $("#charges option:selected").text();
-            AddRow($('#charges').val(), $("#no_holes").val(),$("#charge_amt").val(),$("#tot_charge_amt").val(),chrgs);
+            AddRow($('#charges').val(), $("#no_holes").val(),$("#charge_amt").val(),$("#tot_charge_amt1").val(),chrgs);
             $("#charges").val("");
             $("#no_holes").val("");
             $("#charge_amt").val("");
-            $("#tot_charge_amt").val("");
+            $("#tot_charge_amt1").val("");
         }
     });
     function AddRow(charges,no_holes,charge_amt,tot_charge_amt,chrgs) {
@@ -415,16 +439,26 @@
             //Delete the Table row using it's Index.
             table.deleteRow(row[0].rowIndex);
             var totals =document.getElementsByName("tot_charge_amt[]");
-            var sum = 0;
+            var sum1 = 0;
             for (var j = 0, iLen = totals.length; j < iLen; j++) {
                 if (totals[j].value!==""){
                     val=parseFloat(totals[j].value);
-                    sum +=val;
+                    sum1 +=val;
                 }
             }
             var grant_tot = document.getElementById('grand_total').value;
-            var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
-            document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+            var sub_tot1 = parseFloat(sum1) + parseFloat(grant_tot);
+            document.getElementById('sub_tot').value = parseFloat(sub_tot1).toFixed(2);
+            var sub_tot =document.getElementById('sub_tot').value;
+            var insurance =document.getElementById('insurance').value;
+            var gst = document.getElementById('gst').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)) * gst / 100 );
+            document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+            document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+            var sgst = document.getElementById('sgst').value;
+            var cgst = document.getElementById('cgst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst));
+            document.getElementById('gross_tot').value = parseInt(grant);
         }
     };
     function FillBilling() {
@@ -501,7 +535,49 @@
         var area = document.getElementById('area'+id).value;
         var rate = document.getElementById('rate'+id).value;
         var total = (pcs * area * rate);
-        document.getElementById('total'+id).value = total;
+        document.getElementById('total'+id).value =  parseFloat(total).toFixed(2);
+        // Grand Total
+        var totals =document.getElementsByName("total[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+        document.getElementById('grand_total').value = parseFloat(sum).toFixed(2);
+        // total pices
+        var pices =document.getElementsByName("pics[]");
+        var sum_pic = 0;
+        for (var j = 0, iLen = pices.length; j < iLen; j++) {
+            if (pices[j].value!==""){
+                val=parseFloat(pices[j].value);
+                sum_pic +=val;
+            }
+        }
+        document.getElementById('total_pic').value = parseInt(sum_pic);
+        var totals =document.getElementsByName("tot_charge_amt[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+        var grant_tot = document.getElementById('grand_total').value;
+        var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
+        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+
+        var sub_tot =document.getElementById('sub_tot').value;
+        var insurance =document.getElementById('insurance').value;
+        var gst = document.getElementById('gst').value;
+        var sum = ((parseFloat(sub_tot) + parseFloat(insurance)) * gst / 100 );
+        document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+        document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+        var sgst = document.getElementById('sgst').value;
+        var cgst = document.getElementById('cgst').value;
+        var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst));
+        document.getElementById('gross_tot').value = parseInt(grant);
     }
 
     function ajaxSearch()
