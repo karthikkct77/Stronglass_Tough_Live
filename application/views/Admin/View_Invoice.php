@@ -25,6 +25,7 @@
                         <div class="form-group ">
                             <label class="control-label">Customer Name </label>
                             <input  class="form-control" name="search_data" id="search_data" type="text"   onkeyup="ajaxSearch();">
+                            <input  class="form-control" name="company_name" id="company_name" type="hidden"   ">
                         </div>
                         <div id="suggestions">
                             <div id="autoSuggestionsList"></div>
@@ -60,8 +61,8 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <h4>Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $profoma_number; ?>" readonly></h4>
-                        <h4>Date:<input type="text" name="invoice_date" id="invoice_date" value="<?php echo date('Y-m-d'); ?>" readonly> </h4>
+                        <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $profoma_number; ?>" readonly></h4>
+                        <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo date('Y-m-d'); ?>" readonly></h4>
                     </div>
                 </div>
                 <div class="row">
@@ -74,13 +75,13 @@
                         <th>Special</th>
                         <th>No.of Pieces</th>
                         <th>No.of Holes</th>
-                        <th>Actucal Size(H)</th>
-                        <th>Actucal Size(W)</th>
-                        <th>Chargable Size(H)</th>
-                        <th>Chargable Size(W)</th>
-                        <th>Area</th>
-                        <th>Rate</th>
-                        <th>Total</th>
+                        <th>Actucal Size(H)(MM)</th>
+                        <th>Actucal Size(W)(MM)</th>
+                        <th>Chargable Size(H)(MM)</th>
+                        <th>Chargable Size(W)(MM)</th>
+                        <th>Area(SQMTR)</th>
+                        <th>Rate(SQMTR)</th>
+                        <th>Total(INR)</th>
                         </thead>
                         <tbody>
                         <?php $i=1; foreach ($invoice as $key) { ?>
@@ -126,7 +127,7 @@
                             <td></td>
                             <td><input type="text" class="form-control pull-right" id="total_area" value="0"   readonly/></td>
                             <td></td>
-                            <td> <input type="text" class="form-control pull-right" id="grand_total" value="0"   readonly/></td>
+                            <td> <input type="text" class="form-control pull-right" id="grand_total" value="0"   readonly/>(INR)</td>
                         </tr>
                         </tbody>
                     </table>
@@ -243,7 +244,7 @@
                     </div>
                     <div class="col-md-6"></div>
                 </div>
-                    <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>
+                    <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Confirm PI</button>
                 </form>
             </div>
         </div>
@@ -553,6 +554,7 @@
                 $('#suggestions').hide();
                 var data = $.parseJSON(server_response);
                 document.getElementById('search_data').value = data[0]['Customer_Company_Name'];
+                document.getElementById('company_name').value = data[0]['Customer_Icode'];
                 document.getElementById('coustomer').innerHTML = data[0]['Customer_Company_Name'];
                 document.getElementById('address').innerHTML = data[0]['Customer_Address_1'] + data[0]['Customer_Area']  + data[0]['Customer_City'];
                 document.getElementById('phone').innerHTML = "Mob :" + data[0]['Customer_Phone'];
