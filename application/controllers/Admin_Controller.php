@@ -887,9 +887,30 @@ class Admin_Controller extends CI_Controller
                     'Dispatch_Remaining_Qty' =>'0');
                 $insert_process = $this->admin_model->Insert_WO_Process($data1);
             }
+            $id=$this->input->post('PI_Icode');
+            $update = array('WO_Confirm' => '1');
+            $this->db->where('Proforma_Icode',$id);
+            $this->db->update('proforma_invoice', $update);
+
             $this->session->set_flashdata('feedback', 'Work Order Generated ..');
            // redirect('Admin_Controller/Proforma_Invoice');
         }
+    }
+    /** Edit Profroma Invoice */
+    public function Edit_Invoice($id)
+    {
+        $pi_icode = $this->uri->segment(3);
+        $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
+        $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
+        $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
+        $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
+        $data['tax']= $this->admin_model->get_Tax();
+        $data['st']= $this->admin_model->get_ST();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Edit_Invoice',$data,false);
+        $this->load->view('Admin/footer');
     }
 
 }

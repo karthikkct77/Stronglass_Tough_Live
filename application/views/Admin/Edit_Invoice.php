@@ -22,6 +22,11 @@
                     <div class="row">
                         <div class="col-md-4">
                             <h5>Consignee</h5>
+                            <input  class="form-control" name="search_data" id="search_data" type="text" value="<?php echo $invoice[0]['Customer_Company_Name']; ?>"   onkeyup="ajaxSearch();">
+                            <input  class="form-control" name="company_name" id="company_name" type="hidden"   ">
+                            <div id="suggestions">
+                                <div id="autoSuggestionsList"></div>
+                            </div>
                             <div id="consign">
                                 <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
                                 <h5 id="address"><?php echo $invoice[0]['Customer_Company_Name']; ?>$nbsn;<?php echo $invoice[0]['Customer_Address_1']; ?>$nbsn;<?php echo $invoice[0]['Customer_Address_2']; ?></h5>
@@ -39,6 +44,12 @@
                         </div>
                         <div class="col-md-4">
                             <h5>Buyer (if other than consignee)</h5>
+                            <div class="form-group" >
+                                <label class="control-label">Customer Name </label>
+                                <select name="company_address" class="form-control" id="company_name2" style="display: none" >
+                                    <option>Select Another Address</option>
+                                </select>
+                            </div>
                             <div id="Buyer">
                                 <?php
                                 if($invoice[0]['Customer_Address_Icode'] == "")
@@ -49,7 +60,7 @@
                                     <h5 id="phone">City: <?php echo $invoice[0]['Customer_City']; ?></h5>
                                     <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
                                     <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
-                                <?php
+                                    <?php
                                 }
                                 else
                                 {
@@ -59,7 +70,7 @@
                                     <h5 id="phone">City: <?php echo $invoice[0]['Customer_Add_City']; ?></h5>
                                     <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Add_Phone']; ?></h5>
                                     <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_Add_Email_Id_1']; ?></h5>
-                                <?php
+                                    <?php
                                 }
                                 ?>
 
@@ -97,14 +108,15 @@
                                     <td><?php echo $key['Material_Name']; ?></td>
                                     <td><?php echo $key['Proforma_HSNCode']; ?></td>
                                     <td><?php echo $key['Proforma_Special']; ?></td>
-                                    <td><?php echo $key['Proforma_Qty']; ?></td>
-                                    <td><?php echo $key['Proforma_Holes']; ?></td>
+                                    <td><input class="form-control" type="text" name="qty[]"  value="<?php echo $key['Proforma_Qty']; ?>" ></td>
+                                    <td><input class="form-control" type="text" name="holes[]"  value="<?php echo $key['Proforma_Holes']; ?>" ></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
                                     <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Chargeable_Size_Height']; ?></td>
-                                    <td><?php echo $key['Proforma_Area_SQMTR']; ?></td>
-                                    <td><?php echo $key['Proforma_Material_Rate']; ?></td>
+                                    <td><input class="form-control" type="text" name="area[]" id="area" value="<?php echo $key['Proforma_Area_SQMTR']; ?>" readonly></td>
+                                    <td><input class="form-control" type="text" name="rate[]" value="<?php echo $key['Proforma_Material_Rate']; ?>" id="rate" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
+
                                     <td><?php echo $key['Proforma_Material_Cost']; ?></td>
                                 </tr>
                                 <?php $i++; } ?>
