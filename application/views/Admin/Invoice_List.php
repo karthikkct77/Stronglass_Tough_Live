@@ -1,12 +1,12 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-edit"></i> View Customer Details</h1>
+            <h1><i class="fa fa-edit"></i> Proforma Invoice List</h1>
         </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item"><a href="<?php echo site_url('Admin_Controller/Add_Customers'); ?>">Add Customer</a></li>
-            <li class="breadcrumb-item"><a href="#">View Customers</a></li>
+            <li class="breadcrumb-item"><a href="<?php echo site_url('Admin_Controller/Proforma_Invoice'); ?>">Add Invoice</a></li>
+            <li class="breadcrumb-item"><a href="#">Proforma Invoice List</a></li>
         </ul>
     </div>
     <div class="row">
@@ -26,7 +26,7 @@
         <!-- view Stock Details -->
         <div class="col-md-12">
             <div class="tile">
-                <h3 class="tile-title">Customers List</h3>
+                <h3 class="tile-title">Proforma Invoice List</h3>
                 <div class="tile-body">
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
@@ -34,9 +34,8 @@
                             <th>#</th>
                             <th>PI- Number</th>
                             <th>Customer</th>
-                            <th>Phone</th>
-                            <th>Email</th>
-                            <th>Locations</th>
+                            <th>PI- Date</th>
+                            <th>Total Amount</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -48,11 +47,10 @@
                             <tr>
                                 <td><?php echo $i; ?></td>
                                 <td><?php echo $val['Proforma_Number']; ?></td>
-                                <td><?php echo $val['Customer_City']; ?></td>
-                                <td><?php echo $val['Customer_Phone']; ?></td>
-                                <td><?php echo $val['Customer_Email_Id_1']; ?></td>
-                                <td><h3><a href="<?php echo site_url('Admin_Controller/Locations/') . $val['Customer_Icode'];  ?>"> <?php echo $val['locations']; ?></a></h3></td>
-                                <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/single_customer/') . $val['Customer_Icode']; ?>">View</a></td>
+                                <td><?php echo $val['Customer_Company_Name']; ?></td>
+                                <td><?php echo $val['Proforma_Date']; ?></td>
+                                <td><?php echo $val['GrossTotal_Value']; ?></td>
+                                <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/single_Invoice/') . $val['Proforma_Icode']; ?>">View</a></td>
                             </tr>
                             <?php
                             $i++;

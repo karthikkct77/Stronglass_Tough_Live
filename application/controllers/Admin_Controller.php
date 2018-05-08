@@ -731,7 +731,7 @@ class Admin_Controller extends CI_Controller
         $address =$this->input->post('company_address');
         if($address == 0)
         {
-            $profoma_address= $this->input->post('company_name');
+            $profoma_address= '0';
         }
         else{
             $profoma_address= $this->input->post('company_address');
@@ -800,24 +800,20 @@ class Admin_Controller extends CI_Controller
         }
     }
     /** Invoice List */
-//    public function Invoice_List()
-//    {
-//        $data['invoice'] = $this->admin_model->get_All_Invoice();
-//        $this->load->view('Admin/header');
-//        $this->load->view('Admin/top');
-//        $this->load->view('Admin/left');
-//        $this->load->view('Admin/Invoice_List',$data,false);
-//        $this->load->view('Admin/footer');
-//
-//    }
+    public function Invoice_List()
+    {
+        $data['invoice'] = $this->admin_model->get_All_Invoice();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Invoice_List',$data,false);
+        $this->load->view('Admin/footer');
 
+    }
     /*Get Company Name*/
     public function GetCountryName(){
-
         $search_data = $this->input->post('search_data');
-
         $result = $this->admin_model->GetRow($search_data);
-
         if (!empty($result))
         {
             foreach ($result as $row):
@@ -828,8 +824,24 @@ class Admin_Controller extends CI_Controller
         {
             echo "<li> <em> Not found ... </em> </li>";
         }
-
     }
     /*Get Company Name*/
+    /** Get Single Invoice Details */
+    public function single_Invoice($id)
+    {
+        $pi_icode = $this->uri->segment(3);
+        $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
+        $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
+        $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
+        $data['st']= $this->admin_model->get_ST();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/View_Single_Invoice',$data,false);
+        $this->load->view('Admin/footer');
+
+
+    }
+    /** Get Single Invoice Details */
 
 }

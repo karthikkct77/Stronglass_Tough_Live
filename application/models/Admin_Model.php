@@ -320,11 +320,11 @@ class Admin_Model extends CI_Model
         return $query->result_array();
     }
     /** Get All Invoice */
-//    public function get_All_Invoice()
-//    {
-//        $query = $this->db->query("Select * from proforma_invoice A INNER JOIN  customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode ");
-//        return $query->result_array();
-//    }
+    public function get_All_Invoice()
+    {
+        $query = $this->db->query("Select * from proforma_invoice A INNER JOIN  customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode WHERE  A.WO_Confirm='0' ");
+        return $query->result_array();
+    }
 
     /*Get Company Name*/
     public function GetRow($keyword) {
@@ -332,6 +332,25 @@ class Admin_Model extends CI_Model
         $this->db->like("Customer_Company_Name", $keyword);
         return $this->db->get('customer_master')->result_array();
     }
+    /** Get Single Invoice */
+    public function Get_Single_Invoice($pi_id)
+    {
+        $query = $this->db->query("SELECT * FROM proforma_invoice A INNER JOIN customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode 
+                                   LEFT JOIN customer_add_address C ON A.Proforma_Delivery_Address_Icode=C.Customer_Icode WHERE A.Proforma_Icode='$pi_id'");
+        return $query->result_array();
+    }
+   /** Get single Perfoma invoice single item */
+   public function Get_Single_Invoice_Item($pi_id)
+   {
+       $query = $this->db->query("SELECT * FROM proforma_invoice_items A INNER JOIN material_master B on A.Proforma_Material_Icode=B.Material_Icode WHERE A.Proforma_Icode='$pi_id'");
+       return $query->result_array();
+   }
+   /** Get single invoice charges */
+   public function Get_Single_Invoice_Charges($pi_id)
+   {
+       $query = $this->db->query("SELECT * FROM proforma_material_processing_charges A INNER JOIN processing_charges_master B on A.Proforma_Charge_Icode=B.charge_icode WHERE A.Proforma_Icode='$pi_id'");
+       return $query->result_array();
 
+   }
 
 }
