@@ -754,6 +754,7 @@ class Admin_Controller extends CI_Controller
             $hsn = $this->input->post('hsn');
             $qty = $this->input->post('pics');
             $special = $this->input->post('type');
+            $holes = $this->input->post('holes');
             $actual_W = $this->input->post('width');
             $actual_H = $this->input->post('height');
             $Charge_W = $this->input->post('ch_weight');
@@ -769,7 +770,8 @@ class Admin_Controller extends CI_Controller
                     'Proforma_Material_Icode' => $material_id[$i],
                     'Proforma_HSNCode' => $hsn[$i],
                     'Proforma_Special' => $special[$i],
-                    'Profoma_Qty' => $qty[$i],
+                    'Proforma_Holes' => $holes[$i],
+                    'Proforma_Qty' => $qty[$i],
                     'Proforma_Actual_Size_Width' => $actual_W[$i],
                     'Proforma_Actual_Size_Height' => $actual_H[$i],
                     'Proforma_Chargeable_Size_Width' =>$Charge_W[$i],
@@ -833,15 +835,61 @@ class Admin_Controller extends CI_Controller
         $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
         $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
         $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
+        $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
+        $data['tax']= $this->admin_model->get_Tax();
         $data['st']= $this->admin_model->get_ST();
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
         $this->load->view('Admin/left');
         $this->load->view('Admin/View_Single_Invoice',$data,false);
         $this->load->view('Admin/footer');
-
-
     }
     /** Get Single Invoice Details */
+    /** Save Work Order */
+    public function Save_Work_Order()
+    {
+        $month =date('m');
+        $perfoma = $this->admin_model->get_WO_number($month);
+        if($perfoma == 0)
+        {
+            $WO_Number = $month .'-101';
+        }
+        else
+        {
+            $myString = $perfoma[0]['WO_Number'];
+            $myArray = explode('-', $myString);
+            $increment = $myArray[1] + 1;
+            $WO_Number = $month .'-'. $increment;
+
+        }
+
+        $data = array(
+            'WO_Number' => $WO_Number,
+            'Proforma_Icode' => $this->input->post('PI_Icode'),
+            'Proforma_Number' => $this->input->post('invoice_no'),
+            'WO_Confirm_Date' =>date('Y-m-d') ,
+            'WO_Created_By' => $this->session->userdata['userid']);
+        $insert = $this->admin_model->Insert_WO($data);
+        if($insert != 0)
+        {
+            $item_icode =  $this->input->post('material');
+            $Qty =  $this->input->post('qty');
+            $count = sizeof($item_icode);
+            for($i=0; $i<$count; $i++)
+            {
+                $data1 = array(
+                    'WO_Icode' =>  $insert,
+                    'Proforma_Icode' => $this->input->post('PI_Icode'),
+                    'Proforma_Invoice_Item_Icode' => $item_icode[$i],
+                    'Total_Qty' =>$Qty[$i] ,
+                    'Cutting_Remaining_Qty' =>'0',
+                    'Furnace_Remaining_Qty' =>'0',
+                    'Dispatch_Remaining_Qty' =>'0');
+                $insert_process = $this->admin_model->Insert_WO_Process($data1);
+            }
+            $this->session->set_flashdata('feedback', 'Work Order Generated ..');
+           // redirect('Admin_Controller/Proforma_Invoice');
+        }
+    }
 
 }

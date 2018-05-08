@@ -350,7 +350,35 @@ class Admin_Model extends CI_Model
    {
        $query = $this->db->query("SELECT * FROM proforma_material_processing_charges A INNER JOIN processing_charges_master B on A.Proforma_Charge_Icode=B.charge_icode WHERE A.Proforma_Icode='$pi_id'");
        return $query->result_array();
-
    }
-
+   /** Get Invoice Item Total */
+   public function Get_Single_Invoice_Item_Total($pi_id)
+   {
+       $query = $this->db->query("SELECT SUM(A.Proforma_Qty) as qty, SUM(A.Proforma_Area_SQMTR) as area, SUM(A.Proforma_Material_Cost) as rate FROM proforma_invoice_items A INNER JOIN material_master B on A.Proforma_Material_Icode=B.Material_Icode
+                                  WHERE A.Proforma_Icode='$pi_id'");
+       return $query->result_array();
+   }
+    /** Get Work Order number */
+    public function get_WO_number($month)
+    {
+        $query= $this->db->query("SELECT WO_Number FROM work_order WHERE `WO_Number` LIKE '%$month%' ORDER by WO_Icode DESC LIMIT 1  ");
+        if($query->num_rows() == 1)
+        {
+            return $query->result_array();
+        }
+        else{
+            return 0;
+        }
+    }
+    /** Insert Work Order */
+    public function Insert_WO($data)
+    {
+        $this->db->insert('work_order', $data);
+        return $this->db->insert_id();
+    }
+    public function Insert_WO_Process($data)
+    {
+        $this->db->insert('WO_Processing', $data);
+        return 1;
+    }
 }

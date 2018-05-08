@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-md-12" >
             <div class="tile">
-                <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Invoice'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
+                <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Work_Order'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
                     <div class="row">
                         <div class="col-md-4">
                             <h5>Consignee</h5>
@@ -66,6 +66,7 @@
                             </div>
                         </div>
                         <div class="col-md-3">
+                            <input class="form-control" type="hidden" name="PI_Icode"  value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
                             <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly></h4>
                             <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly></h4>
                         </div>
@@ -90,19 +91,21 @@
                             <tbody>
                             <?php $i=1; foreach ($invoice_item as $key) { ?>
                                 <tr id="row<?php echo $i; ?>">
+                                    <input class="form-control" type="hidden" name="material[]"  value="<?php echo $key['Proforma_Invoice_Items_Icode']; ?>" >
+                                    <input class="form-control" type="hidden" name="qty[]"  value="<?php echo $key['Proforma_Qty']; ?>" >
                                     <td><?php echo $i; ?></td>
                                     <td><?php echo $key['Material_Name']; ?></td>
                                     <td><?php echo $key['Proforma_HSNCode']; ?></td>
                                     <td><?php echo $key['Proforma_Special']; ?></td>
-                                    <td><?php echo $key['Profoma_Qty']; ?></td>
-                                    <td><?php echo $key['']; ?></td>
+                                    <td><?php echo $key['Proforma_Qty']; ?></td>
+                                    <td><?php echo $key['Proforma_Holes']; ?></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
                                     <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Chargeable_Size_Height']; ?></td>
                                     <td><?php echo $key['Proforma_Area_SQMTR']; ?></td>
-                                    <td><input class="form-control" type="text" name="rate[]" id="rate<?php echo $i; ?>" value="<?php echo $key['Proforma_Material_Rate']; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
-                                    <td><input class="form-control" type="text" name="total[]" id="total<?php echo $i; ?>" value="<?php echo $key['Proforma_Material_Cost']; ?>" ></td>
+                                    <td><?php echo $key['Proforma_Material_Rate']; ?></td>
+                                    <td><?php echo $key['Proforma_Material_Cost']; ?></td>
                                 </tr>
                                 <?php $i++; } ?>
                             <tr>
@@ -110,16 +113,15 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td><input type="text" class="form-control pull-right" id="total_pic" value="0"   readonly/></td>
-                                <td></td>
+                                <td><input type="text" class="form-control pull-right" id="total_pic" value="<?php echo $invoice_total[0]['qty']; ?>"   readonly/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td><input type="text" class="form-control pull-right" id="total_area" value="0"   readonly/></td>
                                 <td></td>
-                                <td> <input type="text" class="form-control pull-right" id="grand_total" value="0"   readonly/>(INR)</td>
+                                <td><input type="text" class="form-control pull-right" id="total_area" value="<?php echo round($invoice_total[0]['area'], 2); ?>"   readonly/></td>
+                                <td></td>
+                                <td> <input type="text" class="form-control pull-right" id="grand_total" value="<?php echo round($invoice_total[0]['rate'],2); ?>"   readonly/>(INR)</td>
                             </tr>
                             </tbody>
                         </table>
@@ -150,6 +152,7 @@
                         <div class="col-md-6">
                             <table class="table table-hover table-bordered" id="sampleTable1">
                                 <thead>
+                                <th>#</th>
                                 <th>Select Charges</th>
                                 <th>No.of pieces</th>
                                 <th>Price</th>
@@ -157,53 +160,52 @@
                                 </thead>
                                 <tbody></tbody>
                                 <tfoot>
+                                <?php
+                                $i=1;
+                                foreach ($invoice_Charges as $key) {
+                                    ?>
+                                    <tr>
+                                        <td><?php echo $i; ?></td>
+                                        <td><?php echo $key['charge_name']; ?></td>
+                                        <td><?php echo $key['Proforma_Charge_Count']; ?></td>
+                                        <td><?php echo $key['Proforma_Charge_Value']; ?></td>
+                                        <td><?php echo $key['Proforma_Charge_Cost']; ?></td>
+                                    </tr>
+                                    <?php
+                                    $i++;
+                                }
+                                ?>
                                 <tr>
-                                    <td><div class="form-group">
-                                            <select name="charges[]" class="form-control" id="charges"  required >
-                                                <option value="" >Select Charges</option>
-                                                <?php foreach ($charges as $row):
-                                                {
-                                                    echo '<option value= "'.$row['charge_icode'].'">' . $row['charge_name'] . '</option>';
-                                                }
-                                                endforeach; ?>
-                                            </select>
-                                        </div></td>
-                                    <td><input class="form-control" type="text" name="no_holes[]" id="no_holes" ></td>
-                                    <td><input class="form-control" type="text" name="charge_amt[]" id="charge_amt" ></td>
-                                    <td><input class="form-control" type="text" name="tot_charge_amt[]" id="tot_charge_amt"  readonly></td>
-                                    <td><input type="button" onclick="Add_one()" value="Add" id="Add" /></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="3" align="right">SUB-TOTAL</td>
+                                    <td colspan="4" align="right">SUB-TOTAL</td>
 
-                                    <td><input class="form-control" type="text" name="sub_tot" id="sub_tot" readonly ></td>
+                                    <td><input class="form-control" type="text" name="sub_tot" id="sub_tot" value="<?php echo $invoice[0]['Sub_Total']; ?>" readonly ></td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3" align="right">INSURANCE</td>
+                                    <td colspan="4" align="right">INSURANCE</td>
 
-                                    <td><input class="form-control" type="text" name="insurance" id="insurance" required></td>
+                                    <td><input class="form-control" type="text" name="insurance" id="insurance" value="<?php echo $invoice[0]['Insurance_Value']; ?>" required readonly></td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
+                                    <td colspan="4" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
 
-                                    <td><input class="form-control" type="text" name="sgst" id="sgst" value="" readonly ></td>
+                                    <td><input class="form-control" type="text" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ></td>
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
+                                    <td colspan="4" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
                                         <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
                                     </td>
 
 
-                                    <td><input class="form-control" type="text" name="cgst" id="cgst" value="" readonly ></td>
+                                    <td><input class="form-control" type="text" name="cgst" id="cgst" value="<?php echo $invoice[0]['CGST_Value']; ?>" readonly ></td>
                                     <td></td>
                                 </tr>
                                 <tr>
 
-                                    <td colspan="3" align="right">GROSS TOTAL</td>
-                                    <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly ></td>
+                                    <td colspan="4" align="right">GROSS TOTAL</td>
+                                    <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" ></td>
                                     <td></td>
                                 </tr>
                                 </tfoot>
@@ -234,9 +236,12 @@
                             <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
                             <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
                         </div>
-                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
+                            <button class="btn btn-info pull-right" type="button"><i class="fa fa-fw fa-lg fa-check-circle"></i>Edit</button>
+                            <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Generate WO</button>
+                        </div>
                     </div>
-                    <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Confirm PI</button>
+
                 </form>
             </div>
         </div>
