@@ -22,19 +22,11 @@
                     <div class="row">
                         <div class="col-md-4">
                             <h5>Consignee</h5>
-                            <div class="form-group ">
-                                <label class="control-label">Customer Name </label>
-                                <input  class="form-control" name="search_data" id="search_data" type="text"   onkeyup="ajaxSearch();">
-                                <input  class="form-control" name="company_name" id="company_name" type="hidden"   ">
-                            </div>
-                            <div id="suggestions">
-                                <div id="autoSuggestionsList"></div>
-                            </div>
                             <div id="consign">
-                                <h5 id="coustomer"></h5>
-                                <h5 id="address"></h5>
-                                <h5 id="phone"></h5>
-                                <h5 id="gstn"></h5>
+                                <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
+                                <h5 id="address"><?php echo $invoice[0]['Customer_Company_Name']; ?>$nbsn;<?php echo $invoice[0]['Customer_Address_1']; ?>$nbsn;<?php echo $invoice[0]['Customer_Address_2']; ?></h5>
+                                <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
+                                <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
                             </div>
 
                         </div>
@@ -47,22 +39,35 @@
                         </div>
                         <div class="col-md-4">
                             <h5>Buyer (if other than consignee)</h5>
-                            <div class="form-group ">
-                                <label class="control-label">Customer Name </label>
-                                <select name="company_address" class="form-control" id="company_name2" >
-                                    <option>Select Another Address</option>
-                                </select>
-                            </div>
                             <div id="Buyer">
-                                <h5 id="coustomer1"></h5>
-                                <h5 id="address1"></h5>
-                                <h5 id="phone1"></h5>
-                                <h5 id="gstn1"></h5>
+                                <?php
+                                if($invoice[0]['Customer_Address_Icode'] == "")
+                                {
+                                    ?>
+                                    <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
+                                    <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; ?>$nbsn;<?php echo $invoice[0]['Customer_Address_2']; ?></h5>
+                                    <h5 id="phone">City: <?php echo $invoice[0]['Customer_City']; ?></h5>
+                                    <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
+                                    <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
+                                <?php
+                                }
+                                else
+                                {
+                                    ?>
+                                    <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
+                                    <h5 id="address"><?php echo $invoice[0]['Customer_Add_Address_1']; ?>$nbsn;<?php echo $invoice[0]['Customer_Add_Address_2']; ?></h5>
+                                    <h5 id="phone">City: <?php echo $invoice[0]['Customer_Add_City']; ?></h5>
+                                    <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Add_Phone']; ?></h5>
+                                    <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_Add_Email_Id_1']; ?></h5>
+                                <?php
+                                }
+                                ?>
+
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $profoma_number; ?>" readonly></h4>
-                            <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo date('Y-m-d'); ?>" readonly></h4>
+                            <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly></h4>
+                            <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly></h4>
                         </div>
                     </div>
                     <div class="row">
@@ -70,47 +75,34 @@
                             <thead>
                             <th>#</th>
                             <th>Material</th>
-                            <th>Thickness</th>
                             <th>Hsn code</th>
                             <th>Special</th>
                             <th>No.of Pieces</th>
                             <th>No.of Holes</th>
-                            <th>Actucal Size(H)(MM)</th>
                             <th>Actucal Size(W)(MM)</th>
-                            <th>Chargable Size(H)(MM)</th>
+                            <th>Actucal Size(H)(MM)</th>
                             <th>Chargable Size(W)(MM)</th>
+                            <th>Chargable Size(H)(MM)</th>
                             <th>Area(SQMTR)</th>
                             <th>Rate(SQMTR)</th>
                             <th>Total(INR)</th>
                             </thead>
                             <tbody>
-                            <?php $i=1; foreach ($invoice as $key) { ?>
+                            <?php $i=1; foreach ($invoice_item as $key) { ?>
                                 <tr id="row<?php echo $i; ?>">
                                     <td><?php echo $i; ?></td>
-                                    <td>     <div class="form-group">
-                                            <select name="material[]" class="form-control" id="material<?php echo $i; ?>" onclick="get_result('<?php echo $i; ?>')" required >
-                                                <option value="" >Select material</option>
-                                                <?php foreach ($stock as $row):
-                                                {
-                                                    echo '<option value= "'.$row['Material_Icode'].'">' . $row['Material_Name'] . '</option>';
-                                                }
-                                                endforeach; ?>
-                                            </select>
-                                        </div>
-                                    </td>
-                                    <td> <input class="form-control" type="text" name="thickness[]" id="thckness<?php echo $i; ?>" value="<?php echo $key['Thickness']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="hsn[]" id="hsn<?php echo $i; ?>" value="" ></td>
-                                    <td><input class="form-control" type="text" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['pics']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['holes']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="height[]" id="height<?php echo $i; ?>" value="<?php echo $key['height']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['width']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="ch_height[]" id="ch_height<?php echo $i; ?>" value="<?php echo $key['ch_height']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="ch_weight[]" id="ch_weight<?php echo $i; ?>" value="<?php echo $key['ch_weight']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['area']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="rate[]" id="rate<?php echo $i; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
-                                    <td><input class="form-control" type="text" name="total[]" id="total<?php echo $i; ?>" ></td>
-
+                                    <td><?php echo $key['Material_Name']; ?></td>
+                                    <td><?php echo $key['Proforma_HSNCode']; ?></td>
+                                    <td><?php echo $key['Proforma_Special']; ?></td>
+                                    <td><?php echo $key['Profoma_Qty']; ?></td>
+                                    <td><?php echo $key['']; ?></td>
+                                    <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
+                                    <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
+                                    <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
+                                    <td><?php echo $key['Proforma_Chargeable_Size_Height']; ?></td>
+                                    <td><?php echo $key['Proforma_Area_SQMTR']; ?></td>
+                                    <td><input class="form-control" type="text" name="rate[]" id="rate<?php echo $i; ?>" value="<?php echo $key['Proforma_Material_Rate']; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
+                                    <td><input class="form-control" type="text" name="total[]" id="total<?php echo $i; ?>" value="<?php echo $key['Proforma_Material_Cost']; ?>" ></td>
                                 </tr>
                                 <?php $i++; } ?>
                             <tr>
