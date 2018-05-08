@@ -19,231 +19,231 @@
         <div class="col-md-12" >
             <div class="tile">
                 <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Invoice'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
-                <div class="row">
-                    <div class="col-md-4">
-                        <h5>Consignee</h5>
-                        <div class="form-group ">
-                            <label class="control-label">Customer Name </label>
-                            <input  class="form-control" name="search_data" id="search_data" type="text"   onkeyup="ajaxSearch();">
-                            <input  class="form-control" name="company_name" id="company_name" type="hidden"   ">
-                        </div>
-                        <div id="suggestions">
-                            <div id="autoSuggestionsList"></div>
-                        </div>
-                        <div id="consign">
-                            <h5 id="coustomer"></h5>
-                            <h5 id="address"></h5>
-                            <h5 id="phone"></h5>
-                            <h5 id="gstn"></h5>
-                        </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <h5>Consignee</h5>
+                            <div class="form-group ">
+                                <label class="control-label">Customer Name </label>
+                                <input  class="form-control" name="search_data" id="search_data" type="text"   onkeyup="ajaxSearch();">
+                                <input  class="form-control" name="company_name" id="company_name" type="hidden"   ">
+                            </div>
+                            <div id="suggestions">
+                                <div id="autoSuggestionsList"></div>
+                            </div>
+                            <div id="consign">
+                                <h5 id="coustomer"></h5>
+                                <h5 id="address"></h5>
+                                <h5 id="phone"></h5>
+                                <h5 id="gstn"></h5>
+                            </div>
 
-                    </div>
-                    <div class="col-md-1">
-                        <div class="form-group">
-                            <input type="checkbox" name="check" id="check" checked onclick="FillBilling()">
-                            <em>Check this box if Current Address and Mailing permanent are the same.</em>
                         </div>
+                        <div class="col-md-1">
+                            <div class="form-group">
+                                <input type="checkbox" name="check" id="check" checked onclick="FillBilling()">
+                                <em>Check this box if Current Address and Mailing permanent are the same.</em>
+                            </div>
 
-                    </div>
-                    <div class="col-md-4">
-                        <h5>Buyer (if other than consignee)</h5>
-                        <div class="form-group ">
-                            <label class="control-label">Customer Name </label>
-                            <select name="company_address" class="form-control" id="company_name2" >
-                                <option>Select Another Address</option>
-                            </select>
                         </div>
-                        <div id="Buyer">
-                            <h5 id="coustomer1"></h5>
-                            <h5 id="address1"></h5>
-                            <h5 id="phone1"></h5>
-                            <h5 id="gstn1"></h5>
+                        <div class="col-md-4">
+                            <h5>Buyer (if other than consignee)</h5>
+                            <div class="form-group ">
+                                <label class="control-label">Customer Name </label>
+                                <select name="company_address" class="form-control" id="company_name2" >
+                                    <option>Select Another Address</option>
+                                </select>
+                            </div>
+                            <div id="Buyer">
+                                <h5 id="coustomer1"></h5>
+                                <h5 id="address1"></h5>
+                                <h5 id="phone1"></h5>
+                                <h5 id="gstn1"></h5>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $profoma_number; ?>" readonly></h4>
+                            <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo date('Y-m-d'); ?>" readonly></h4>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $profoma_number; ?>" readonly></h4>
-                        <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo date('Y-m-d'); ?>" readonly></h4>
-                    </div>
-                </div>
-                <div class="row">
-                    <table class="table table-hover table-bordered" id="sampleTable">
-                        <thead>
-                        <th>#</th>
-                        <th>Material</th>
-                        <th>Thickness</th>
-                        <th>Hsn code</th>
-                        <th>Special</th>
-                        <th>No.of Pieces</th>
-                        <th>No.of Holes</th>
-                        <th>Actucal Size(H)(MM)</th>
-                        <th>Actucal Size(W)(MM)</th>
-                        <th>Chargable Size(H)(MM)</th>
-                        <th>Chargable Size(W)(MM)</th>
-                        <th>Area(SQMTR)</th>
-                        <th>Rate(SQMTR)</th>
-                        <th>Total(INR)</th>
-                        </thead>
-                        <tbody>
-                        <?php $i=1; foreach ($invoice as $key) { ?>
-                            <tr id="row<?php echo $i; ?>">
-                                <td><?php echo $i; ?></td>
-                                <td>     <div class="form-group">
-                                        <select name="material[]" class="form-control" id="material<?php echo $i; ?>" onclick="get_result('<?php echo $i; ?>')" required >
-                                            <option value="" >Select material</option>
-                                            <?php foreach ($stock as $row):
-                                            {
-                                                echo '<option value= "'.$row['Material_Icode'].'">' . $row['Material_Name'] . '</option>';
-                                            }
-                                            endforeach; ?>
-                                        </select>
-                                    </div>
-                                </td>
-                                <td> <input class="form-control" type="text" name="thickness[]" id="thckness<?php echo $i; ?>" value="<?php echo $key['Thickness']; ?>" readonly></td>
-                                <td><input class="form-control" type="text" name="hsn[]" id="hsn<?php echo $i; ?>" value="" ></td>
-                                <td><input class="form-control" type="text" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly></td>
-                                <td><input class="form-control" type="text" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['pics']; ?>" readonly></td>
-                                <td><input class="form-control" type="text" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['holes']; ?>" readonly></td>
-                                <td><input class="form-control" type="text" name="height[]" id="height<?php echo $i; ?>" value="<?php echo $key['height']; ?>" readonly></td>
-                                <td><input class="form-control" type="text" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['width']; ?>" readonly></td>
-                                <td><input class="form-control" type="text" name="ch_height[]" id="ch_height<?php echo $i; ?>" value="<?php echo $key['ch_height']; ?>" readonly></td>
-                                <td><input class="form-control" type="text" name="ch_weight[]" id="ch_weight<?php echo $i; ?>" value="<?php echo $key['ch_weight']; ?>" readonly></td>
-                                <td><input class="form-control" type="text" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['area']; ?>" readonly></td>
-                                <td><input class="form-control" type="text" name="rate[]" id="rate<?php echo $i; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
-                                <td><input class="form-control" type="text" name="total[]" id="total<?php echo $i; ?>" ></td>
+                    <div class="row">
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                            <th>#</th>
+                            <th>Material</th>
+                            <th>Thickness</th>
+                            <th>Hsn code</th>
+                            <th>Special</th>
+                            <th>No.of Pieces</th>
+                            <th>No.of Holes</th>
+                            <th>Actucal Size(H)(MM)</th>
+                            <th>Actucal Size(W)(MM)</th>
+                            <th>Chargable Size(H)(MM)</th>
+                            <th>Chargable Size(W)(MM)</th>
+                            <th>Area(SQMTR)</th>
+                            <th>Rate(SQMTR)</th>
+                            <th>Total(INR)</th>
+                            </thead>
+                            <tbody>
+                            <?php $i=1; foreach ($invoice as $key) { ?>
+                                <tr id="row<?php echo $i; ?>">
+                                    <td><?php echo $i; ?></td>
+                                    <td>     <div class="form-group">
+                                            <select name="material[]" class="form-control" id="material<?php echo $i; ?>" onclick="get_result('<?php echo $i; ?>')" required >
+                                                <option value="" >Select material</option>
+                                                <?php foreach ($stock as $row):
+                                                {
+                                                    echo '<option value= "'.$row['Material_Icode'].'">' . $row['Material_Name'] . '</option>';
+                                                }
+                                                endforeach; ?>
+                                            </select>
+                                        </div>
+                                    </td>
+                                    <td> <input class="form-control" type="text" name="thickness[]" id="thckness<?php echo $i; ?>" value="<?php echo $key['Thickness']; ?>" readonly></td>
+                                    <td><input class="form-control" type="text" name="hsn[]" id="hsn<?php echo $i; ?>" value="" ></td>
+                                    <td><input class="form-control" type="text" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly></td>
+                                    <td><input class="form-control" type="text" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['pics']; ?>" readonly></td>
+                                    <td><input class="form-control" type="text" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['holes']; ?>" readonly></td>
+                                    <td><input class="form-control" type="text" name="height[]" id="height<?php echo $i; ?>" value="<?php echo $key['height']; ?>" readonly></td>
+                                    <td><input class="form-control" type="text" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['width']; ?>" readonly></td>
+                                    <td><input class="form-control" type="text" name="ch_height[]" id="ch_height<?php echo $i; ?>" value="<?php echo $key['ch_height']; ?>" readonly></td>
+                                    <td><input class="form-control" type="text" name="ch_weight[]" id="ch_weight<?php echo $i; ?>" value="<?php echo $key['ch_weight']; ?>" readonly></td>
+                                    <td><input class="form-control" type="text" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['area']; ?>" readonly></td>
+                                    <td><input class="form-control" type="text" name="rate[]" id="rate<?php echo $i; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
+                                    <td><input class="form-control" type="text" name="total[]" id="total<?php echo $i; ?>" ></td>
 
+                                </tr>
+                                <?php $i++; } ?>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><input type="text" class="form-control pull-right" id="total_pic" value="0"   readonly/></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><input type="text" class="form-control pull-right" id="total_area" value="0"   readonly/></td>
+                                <td></td>
+                                <td> <input type="text" class="form-control pull-right" id="grand_total" value="0"   readonly/>(INR)</td>
                             </tr>
-                        <?php $i++; } ?>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><input type="text" class="form-control pull-right" id="total_pic" value="0"   readonly/></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td><input type="text" class="form-control pull-right" id="total_area" value="0"   readonly/></td>
-                            <td></td>
-                            <td> <input type="text" class="form-control pull-right" id="grand_total" value="0"   readonly/>(INR)</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <script>
-                        $("#grand_total").on('click', function() {
-                            var total =document.getElementsByName("total[]");
-                            var sum = 0;
-                            for (var j = 0, iLen = total.length; j < iLen; j++) {
-                                val=parseFloat(total[j].value);
-                                sum +=val;
-                            }
-                            document.getElementById('grand_total').value = parseFloat(sum).toFixed(2);
-                        });
-                    </script>
-                </div>
-               <div class="row">
-                       <div class="col-md-6">
-                           <h3>Terms & Conditions</h3>
-                           <p style="font-size: 16px;text-align: justify;">
-                               We Shall not be responsible for any type of Breakage/Loss in Transit.
-                               At the time of transit Breakage/Loss insurance claim will be done by
-                               the customer and not by the company.
-                               Any discrepancies observed in the supply like quantity,specification,
-                               quality, etc.
-                           </p>
-
-                       </div>
-                       <div class="col-md-6">
-                           <table class="table table-hover table-bordered" id="sampleTable1">
-                               <thead>
-                               <th>Select Charges</th>
-                               <th>No.of pieces</th>
-                               <th>Price</th>
-                               <th>Total</th>
-                               </thead>
-                               <tbody></tbody>
-                               <tfoot>
-                               <tr>
-                                   <td><div class="form-group">
-                                           <select name="charges[]" class="form-control" id="charges"  required >
-                                               <option value="" >Select Charges</option>
-                                               <?php foreach ($charges as $row):
-                                               {
-                                                   echo '<option value= "'.$row['charge_icode'].'">' . $row['charge_name'] . '</option>';
-                                               }
-                                               endforeach; ?>
-                                           </select>
-                                       </div></td>
-                                   <td><input class="form-control" type="text" name="no_holes[]" id="no_holes" ></td>
-                                   <td><input class="form-control" type="text" name="charge_amt[]" id="charge_amt" ></td>
-                                   <td><input class="form-control" type="text" name="tot_charge_amt[]" id="tot_charge_amt"  readonly></td>
-                                   <td><input type="button" onclick="Add_one()" value="Add" id="Add" /></td>
-                               </tr>
-                               <tr>
-                                  <td colspan="3" align="right">SUB-TOTAL</td>
-
-                                   <td><input class="form-control" type="text" name="sub_tot" id="sub_tot" readonly ></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td colspan="3" align="right">INSURANCE</td>
-
-                                   <td><input class="form-control" type="text" name="insurance" id="insurance" required></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td colspan="3" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
-
-                                   <td><input class="form-control" type="text" name="sgst" id="sgst" value="" readonly ></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-                                   <td colspan="3" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
-                                       <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
-                                   </td>
-
-
-                                   <td><input class="form-control" type="text" name="cgst" id="cgst" value="" readonly ></td>
-                                   <td></td>
-                               </tr>
-                               <tr>
-
-                                   <td colspan="3" align="right">GROSS TOTAL</td>
-                                   <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly ></td>
-                                   <td></td>
-                               </tr>
-                               </tfoot>
-                           </table>
-                       </div>
-                   <script>
-                       $("#insurance").on('change keyup paste', function() {
-                           var sub_tot =document.getElementById('sub_tot').value;
-                           var insurance =document.getElementById('insurance').value;
-                           var gst = document.getElementById('gst').value;
-                           var sum = ((parseFloat(sub_tot) + parseFloat(insurance)) * gst / 100 );
-                           document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
-                           document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
-                           var sgst = document.getElementById('sgst').value;
-                           var cgst = document.getElementById('cgst').value;
-                           var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst));
-                           document.getElementById('gross_tot').value = parseInt(grant);
-                       });
-                   </script>
-               </div>
-                <hr>
-                <div class="row">
-                    <div class="col-md-6">
-                        <h4>Bank Details</h4>
-                        <h5>Stronglass Tough</h5>
-                        <h5>A/C Type: <span><?php echo $st[0]['ST_Bank_Account_Type']; ?></span></h5>
-                        <h5>A/C Number: <span><?php echo $st[0]['ST_Bank_Account_Number']; ?></span></h5>
-                        <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
-                        <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
+                            </tbody>
+                        </table>
+                        <script>
+                            $("#grand_total").on('click', function() {
+                                var total =document.getElementsByName("total[]");
+                                var sum = 0;
+                                for (var j = 0, iLen = total.length; j < iLen; j++) {
+                                    val=parseFloat(total[j].value);
+                                    sum +=val;
+                                }
+                                document.getElementById('grand_total').value = parseFloat(sum).toFixed(2);
+                            });
+                        </script>
                     </div>
-                    <div class="col-md-6"></div>
-                </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Terms & Conditions</h3>
+                            <p style="font-size: 16px;text-align: justify;">
+                                We Shall not be responsible for any type of Breakage/Loss in Transit.
+                                At the time of transit Breakage/Loss insurance claim will be done by
+                                the customer and not by the company.
+                                Any discrepancies observed in the supply like quantity,specification,
+                                quality, etc.
+                            </p>
+
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table table-hover table-bordered" id="sampleTable1">
+                                <thead>
+                                <th>Select Charges</th>
+                                <th>No.of pieces</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot>
+                                <tr>
+                                    <td><div class="form-group">
+                                            <select name="charges[]" class="form-control" id="charges"  required >
+                                                <option value="" >Select Charges</option>
+                                                <?php foreach ($charges as $row):
+                                                {
+                                                    echo '<option value= "'.$row['charge_icode'].'">' . $row['charge_name'] . '</option>';
+                                                }
+                                                endforeach; ?>
+                                            </select>
+                                        </div></td>
+                                    <td><input class="form-control" type="text" name="no_holes[]" id="no_holes" ></td>
+                                    <td><input class="form-control" type="text" name="charge_amt[]" id="charge_amt" ></td>
+                                    <td><input class="form-control" type="text" name="tot_charge_amt[]" id="tot_charge_amt"  readonly></td>
+                                    <td><input type="button" onclick="Add_one()" value="Add" id="Add" /></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" align="right">SUB-TOTAL</td>
+
+                                    <td><input class="form-control" type="text" name="sub_tot" id="sub_tot" readonly ></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" align="right">INSURANCE</td>
+
+                                    <td><input class="form-control" type="text" name="insurance" id="insurance" required></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
+
+                                    <td><input class="form-control" type="text" name="sgst" id="sgst" value="" readonly ></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
+                                        <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
+                                    </td>
+
+
+                                    <td><input class="form-control" type="text" name="cgst" id="cgst" value="" readonly ></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+
+                                    <td colspan="3" align="right">GROSS TOTAL</td>
+                                    <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly ></td>
+                                    <td></td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <script>
+                            $("#insurance").on('change keyup paste', function() {
+                                var sub_tot =document.getElementById('sub_tot').value;
+                                var insurance =document.getElementById('insurance').value;
+                                var gst = document.getElementById('gst').value;
+                                var sum = ((parseFloat(sub_tot) + parseFloat(insurance)) * gst / 100 );
+                                document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+                                document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+                                var sgst = document.getElementById('sgst').value;
+                                var cgst = document.getElementById('cgst').value;
+                                var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst));
+                                document.getElementById('gross_tot').value = parseInt(grant);
+                            });
+                        </script>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4>Bank Details</h4>
+                            <h5>Stronglass Tough</h5>
+                            <h5>A/C Type: <span><?php echo $st[0]['ST_Bank_Account_Type']; ?></span></h5>
+                            <h5>A/C Number: <span><?php echo $st[0]['ST_Bank_Account_Number']; ?></span></h5>
+                            <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
+                            <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
+                        </div>
+                        <div class="col-md-6"></div>
+                    </div>
                     <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Confirm PI</button>
                 </form>
             </div>
@@ -568,5 +568,5 @@
             }
         });
     }
-    </script>
+</script>
 
