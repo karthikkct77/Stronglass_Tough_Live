@@ -21,6 +21,7 @@
                 <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Update_Invoice'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
                     <div class="row">
                         <div class="col-md-4">
+
                             <h5>Consignee</h5>
                             <input  class="form-control" name="search_data" id="search_data" type="text" value="<?php echo $invoice[0]['Customer_Company_Name']; ?>"   onkeyup="ajaxSearch();">
                             <input  class="form-control" name="company_name" id="company_name" type="hidden"   ">
