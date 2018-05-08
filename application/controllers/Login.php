@@ -44,6 +44,10 @@ class Login extends CI_Controller {
         {
             redirect('Admin_Controller/dashboard');
         }
+        elseif ($check_login == 2)
+        {
+            redirect('User_Controller/dashboard');
+        }
 
     }
     //** logout */

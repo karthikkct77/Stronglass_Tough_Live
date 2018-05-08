@@ -24,6 +24,25 @@ class Login_model extends CI_Model
         }
         else
         {
+            $query= $this->db->query("SELECT * FROM st_user_details  WHERE User_Name = '".$user_name."'  AND Password = '".$password."' ");
+            if($query->num_rows() == 1)
+            {
+                $row = $query->row();
+                $data = array(
+                    'userid' => $row->User_Icode,
+                    'user_name' => $row->User_Name,
+                    'role' => $row->Role_Icode,
+                    'active' =>$row->User_Leave_Approval_Rights,
+                    'gender' =>$row->User_Gender,
+                    'validated' => true
+                );
+                $this->session->set_userdata($data);
+                return 2;
+            }
+            else
+            {
+                return 0;
+            }
 
         }
 
