@@ -335,7 +335,7 @@ class Admin_Model extends CI_Model
     /** Get Single Invoice */
     public function Get_Single_Invoice($pi_id)
     {
-        $query = $this->db->query("SELECT * FROM proforma_invoice A INNER JOIN customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode 
+        $query = $this->db->query("SELECT C.*,A.*,B.* FROM proforma_invoice A INNER JOIN customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode 
                                    LEFT JOIN customer_add_address C ON A.Proforma_Delivery_Address_Icode=C.Customer_Icode WHERE A.Proforma_Icode='$pi_id'");
         return $query->result_array();
     }

@@ -953,24 +953,29 @@ class Admin_Controller extends CI_Controller
                     'Proforma_Material_Cost' => $cost[$i],
                     'created_by' => $this->session->userdata['userid']);
                 $this->db->where('Proforma_Invoice_Items_Icode',$material_id[$i]);
-                $this->db->update('proforma_invoice', $full_data);
+                $this->db->update('proforma_invoice_items', $full_data);
             }
             $charges_id = $this->input->post('charges');
-            $charges_count = $this->input->post('no_holes');
-            $charges_value = $this->input->post('charge_amt');
-            $charges_cost = $this->input->post('tot_charge_amt');
-            $count1 = sizeof($charges_id);
-            for($i=0; $i<$count1; $i++)
-            {
-                $full_data1 =array( 'Proforma_Icode' => $picode,
-                    'Proforma_Charge_Icode' => $charges_id[$i],
-                    'Proforma_Charge_Count' => $charges_count[$i],
-                    'Proforma_Charge_Value' => $charges_value[$i],
-                    'Proforma_Charge_Cost' => $charges_cost[$i],
-                    'created_by' => $this->session->userdata['userid']);
-                $insert_charges = $this->admin_model->Insert_Profoma_Charges($full_data1);
+            if (empty($charges_id)) {
             }
-            $this->session->set_flashdata('feedback', 'Profoma Generated ..');
+            else{
+
+                $charges_count = $this->input->post('no_holes');
+                $charges_value = $this->input->post('charge_amt');
+                $charges_cost = $this->input->post('tot_charge_amt');
+                $count1 = sizeof($charges_id);
+                for($i=0; $i<$count1; $i++)
+                {
+                    $full_data1 =array( 'Proforma_Icode' => $picode,
+                        'Proforma_Charge_Icode' => $charges_id[$i],
+                        'Proforma_Charge_Count' => $charges_count[$i],
+                        'Proforma_Charge_Value' => $charges_value[$i],
+                        'Proforma_Charge_Cost' => $charges_cost[$i],
+                        'created_by' => $this->session->userdata['userid']);
+                    $insert_charges = $this->admin_model->Insert_Profoma_Charges($full_data1);
+                }
+            }
+            $this->session->set_flashdata('feedback', 'Updated Invoice..');
             redirect('Admin_Controller/Invoice_List');
         }
 

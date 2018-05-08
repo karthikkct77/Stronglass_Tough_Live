@@ -24,13 +24,13 @@
 
                             <h5>Consignee</h5>
                             <input  class="form-control" name="search_data" id="search_data" type="text" value="<?php echo $invoice[0]['Customer_Company_Name']; ?>"   onkeyup="ajaxSearch();">
-                            <input  class="form-control" name="company_name" id="company_name" type="hidden"   ">
+                            <input  class="form-control" name="company_name" id="company_name" type="text" value="<?php echo $invoice[0]['Customer_Icode']; ?>">
                             <div id="suggestions">
                                 <div id="autoSuggestionsList"></div>
                             </div>
                             <div id="consign">
                                 <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                <h5 id="address"><?php echo $invoice[0]['Customer_Company_Name']; ?>$nbsn;<?php echo $invoice[0]['Customer_Address_1']; ?>$nbsn;<?php echo $invoice[0]['Customer_Address_2']; ?></h5>
+                                <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; ?>$nbsn;<?php echo $invoice[0]['Customer_Address_2']; ?></h5>
                                 <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
                                 <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
                             </div>
@@ -189,7 +189,7 @@
                                 <tfoot>
 
                                     <td><div class="form-group">
-                                            <select name="charges[]" class="form-control" id="charges"  required >
+                                            <select name="charges[]" class="form-control" id="charges"   >
                                                 <option value="" >Select Charges</option>
                                                 <?php foreach ($charges as $row):
                                                 {

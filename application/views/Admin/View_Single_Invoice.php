@@ -92,7 +92,7 @@
                             <?php $i=1; foreach ($invoice_item as $key) { ?>
                                 <tr id="row<?php echo $i; ?>">
                                     <input class="form-control" type="hidden" name="material[]"  value="<?php echo $key['Proforma_Invoice_Items_Icode']; ?>" >
-                                    <input class="form-control" type="hidden" name="qty[]"  value="<?php echo $key['Proforma_Qty']; ?>" >
+                                    <input class="form-control" type="hidden" name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" >
                                     <td><?php echo $i; ?></td>
                                     <td><?php echo $key['Material_Name']; ?></td>
                                     <td><?php echo $key['Proforma_HSNCode']; ?></td>
