@@ -40,5 +40,7 @@
                 <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Invoice_List'); ?>"><i class="icon fa fa-circle-o"></i>View Invoice</a></li>
             </ul>
         </li>
+        <li><a class="app-menu__item" href="<?php echo site_url('Admin_Controller/Work_Order'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Work Order</span></a></li>
+
     </ul>
 </aside>
