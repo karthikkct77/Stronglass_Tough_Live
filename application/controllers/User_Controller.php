@@ -26,4 +26,26 @@ class User_Controller extends CI_Controller
         $this->load->view('User/dashboard');
         $this->load->view('User/footer');
     }
+
+    /** Get Work Order */
+    public function Work_Order()
+    {
+        $data['work_order']= $this->user_model->get_all_Work_Order();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/Work_Order',$data, FALSE);
+        $this->load->view('User/footer');
+    }
+    /** Start Work Order */
+    public function Start_Work_Order($id)
+    {
+        $wo_id = $this->uri->segment(3);
+        $data['work_order_desc']= $this->user_model->get_Work_Order_Details($wo_id);
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/View_Work_Order',$data, FALSE);
+        $this->load->view('User/footer');
+    }
 }
