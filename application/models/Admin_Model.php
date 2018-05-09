@@ -381,4 +381,9 @@ class Admin_Model extends CI_Model
         $this->db->insert('WO_Processing', $data);
         return 1;
     }
+    /** Get all work order */
+    public function get_all_work_order()
+    {
+        
+    }
 }

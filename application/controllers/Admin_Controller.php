@@ -980,6 +980,15 @@ class Admin_Controller extends CI_Controller
         }
 
         /** Work Order */
+        public function Work_Order()
+        {
+            $data['charges']= $this->admin_model->get_all_work_order();
+            $this->load->view('Admin/header');
+            $this->load->view('Admin/top');
+            $this->load->view('Admin/left');
+            $this->load->view('Admin/Work_Order',$data,false);
+            $this->load->view('Admin/footer');
+        }
 
 
 
