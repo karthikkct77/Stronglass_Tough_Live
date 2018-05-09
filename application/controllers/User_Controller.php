@@ -42,10 +42,93 @@ class User_Controller extends CI_Controller
     {
         $wo_id = $this->uri->segment(3);
         $data['work_order_desc']= $this->user_model->get_Work_Order_Details($wo_id);
+        $data['work_order']= $this->user_model->get_Single_Work_Order($wo_id);
         $this->load->view('User/header');
         $this->load->view('User/top');
         $this->load->view('User/left');
         $this->load->view('User/View_Work_Order',$data, FALSE);
         $this->load->view('User/footer');
+    }
+    /** Save WO  */
+    public function Save_WO_Item()
+    {
+        $role =  $this->session->userdata['role'];
+
+        if($role == 2) //  Cutting
+        {
+            $wo_icode = $this->input->post('Process_Icode',true);
+            $data =array('WO_Icode' => $this->input->post('Wo_Icode',true),
+                'WO_Process_Icode' => $this->input->post('Process_Icode',true),
+                'Proforma_Invoice_Items_Icode' => $this->input->post('Item_Icode',true),
+                'Cutting_Remaining_Qty  ' => $this->input->post('Qty',true),
+                'Remaining_Comments' => $this->input->post('Comments',true),
+                'Cutting_Status' => $this->input->post('Status',true),
+                'Created_By' => $this->session->userdata['userid']);
+            $insert = $this->user_model->Insert_Cutting($data);
+            if($insert == 1)
+            {
+                $update = array('Cutting_Remaining_Qty' => $this->input->post('Qty',true),
+                    'Cutting_Status' => $this->input->post('Status',true) );
+                $this->db->where('WO_Process_Icode',$wo_icode);
+                $this->db->update('wo_processing', $update);
+                echo 1;
+            }
+            else{
+                echo 0;
+            }
+
+        }
+        elseif ($role == 3) // Fornace
+        {
+            $wo_icode = $this->input->post('Process_Icode',true);
+            $data =array('WO_Icode' => $this->input->post('Wo_Icode',true),
+                'WO_Process_Icode' => $this->input->post('Process_Icode',true),
+                'Proforma_Invoice_Items_Icode' => $this->input->post('Item_Icode',true),
+                'Furnace_Remaining_Qty  ' => $this->input->post('Qty',true),
+                'Remaining_Comments' => $this->input->post('Comments',true),
+                'Furnace_Status' => $this->input->post('Status',true),
+                'Created_By' => $this->session->userdata['userid']);
+            $insert = $this->user_model->Insert_Furnace($data);
+            if($insert == 1)
+            {
+                $update = array('Furnace_Remaining_Qty' => $this->input->post('Qty',true),
+                    'Furnace_Status' => $this->input->post('Status',true) );
+                $this->db->where('WO_Process_Icode',$wo_icode);
+                $this->db->update('wo_processing', $update);
+                echo 1;
+            }
+            else{
+                echo 0;
+            }
+
+        }
+        elseif ($role == 4) // Dispatch
+        {
+            $wo_icode = $this->input->post('Process_Icode',true);
+            $data =array('WO_Icode' => $this->input->post('Wo_Icode',true),
+                'WO_Process_Icode' => $this->input->post('Process_Icode',true),
+                'Proforma_Invoice_Items_Icode' => $this->input->post('Item_Icode',true),
+                'Dispatch_Remaining_Qty  ' => $this->input->post('Qty',true),
+                'Remaining_Comments' => $this->input->post('Comments',true),
+                'Dispatch_Status' => $this->input->post('Status',true),
+                'Created_By' => $this->session->userdata['userid']);
+            $insert = $this->user_model->Insert_Dispatch($data);
+            if($insert == 1)
+            {
+                $update = array('Dispatch_Remaining_Qty' => $this->input->post('Qty',true),
+                    'Dispatch_Status' => $this->input->post('Status',true) );
+                $this->db->where('WO_Process_Icode',$wo_icode);
+                $this->db->update('wo_processing', $update);
+
+                $work_order = $this->input->post('Wo_Icode',true);
+              //  $success = $this->user_model->find_WO_Finished($work_order);
+            }
+            else{
+                echo 0;
+            }
+        }
+
+
+
     }
 }
