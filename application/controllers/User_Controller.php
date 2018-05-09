@@ -17,4 +17,13 @@ class User_Controller extends CI_Controller
         $this->load->library('excel');
         $this->session->set_flashdata('message');
     }
+    /** User Dashboard */
+    public function dashboard()
+    {
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/dashboard');
+        $this->load->view('User/footer');
+    }
 }
