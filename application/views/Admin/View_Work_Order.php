@@ -168,11 +168,8 @@
 <script>
     function Save_Status(id)
     {
-
         var wo_icode = document.getElementById('wo_icode').value;
-
         var remaining_qty = document.getElementById('remain_qty'+id).value;
-
         var remaining_comments = document.getElementById('comments'+id).value;
         var status = document.getElementById('status'+id).value;
         var profoma_item_icode = document.getElementById('profoma_item_icode'+id).value;
@@ -204,7 +201,6 @@
 
                     }
                 }});
-
         }
     }
 
