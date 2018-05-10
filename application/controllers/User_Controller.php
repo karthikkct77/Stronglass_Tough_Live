@@ -57,7 +57,9 @@ class User_Controller extends CI_Controller
 
         if($role == 2) //  Cutting
         {
-            $total_qty =
+            $total_qty = $this->input->post('Total_Qty',true);
+            $remain = $this->input->post('Qty',true);
+            $Income = $total_qty - $remain;
             $wo_icode = $this->input->post('Process_Icode',true);
             $data =array('WO_Icode' => $this->input->post('Wo_Icode',true),
                 'WO_Process_Icode' => $this->input->post('Process_Icode',true),
@@ -70,6 +72,8 @@ class User_Controller extends CI_Controller
             if($insert == 1)
             {
                 $update = array('Cutting_Remaining_Qty' => $this->input->post('Qty',true),
+                    'Furnace_Incoming' => $Income,
+                    'Furnace_Status' => '2',
                     'Cutting_Status' => $this->input->post('Status',true) );
                 $this->db->where('WO_Process_Icode',$wo_icode);
                 $this->db->update('wo_processing', $update);
@@ -82,6 +86,9 @@ class User_Controller extends CI_Controller
         }
         elseif ($role == 3) // Fornace
         {
+            $Furnace_income = $this->input->post('Furnace_Income',true);
+            $remain = $this->input->post('Qty',true);
+            $Disptach_Income = $Furnace_income - $remain;
             $wo_icode = $this->input->post('Process_Icode',true);
             $data =array('WO_Icode' => $this->input->post('Wo_Icode',true),
                 'WO_Process_Icode' => $this->input->post('Process_Icode',true),
@@ -94,6 +101,8 @@ class User_Controller extends CI_Controller
             if($insert == 1)
             {
                 $update = array('Furnace_Remaining_Qty' => $this->input->post('Qty',true),
+                    'Dispatch_Incoming' => $Disptach_Income,
+                    'Dispatch_Status' => '2',
                     'Furnace_Status' => $this->input->post('Status',true) );
                 $this->db->where('WO_Process_Icode',$wo_icode);
                 $this->db->update('wo_processing', $update);
