@@ -122,8 +122,9 @@
                         foreach ($work_order_desc as $val)
                         {
                             ?>
-                            <input type="text" name="profoma_item_icode" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Proforma_Invoice_Item_Icode']; ?>">
+
                             <tr>
+
                                 <td><?php echo $i; ?></td>
                                 <td><?php echo $val['Material_Name']; ?></td>
                                 <td><?php echo $val['Proforma_Actual_Size_Height']; ?></td>
@@ -148,8 +149,9 @@
                                         <option value="2">Completed with Remaining </option>
                                         <option value="3">Fully Completed</option>
                                     </select></td>
-                                <td> <button class="btn btn-success" onclick="Save_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button></td>
+                                <td> <button class="btn btn-success" onclick="Save_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button><input type="hidden" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Proforma_Invoice_Item_Icode']; ?>"></td>
                             </tr>
+
                             <?php
                             $i++;
                         }
@@ -174,7 +176,6 @@
         var remaining_comments = document.getElementById('comments'+id).value;
         var status = document.getElementById('status'+id).value;
         var profoma_item_icode = document.getElementById('profoma_item_icode'+id).value;
-        alert(profoma_item_icode);
         if(remaining_qty =="" || status =="")
         {
             alert("Please Select Remaining qty and Status");
