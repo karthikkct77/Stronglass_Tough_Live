@@ -386,6 +386,18 @@ class Admin_Model extends CI_Model
     {
         $query = $this->db->query("SELECT * FROM work_order");
         return $query->result_array();
-        
     }
+    public function get_Work_Order_Details($id)
+    {
+        $query = $this->db->query("SELECT * FROM wo_processing A INNER JOIN proforma_invoice_items B ON A.Proforma_Invoice_Item_Icode=B.Proforma_Invoice_Items_Icode 
+                                        INNER JOIN material_master C on B.Proforma_Material_Icode=C.Material_Icode WHERE A.WO_Icode='$id'");
+        return $query->result_array();
+    }
+    /** Get single work ordetr */
+    public function get_Single_Work_Order($wo_id)
+    {
+        $query = $this->db->query("SELECT * FROM `work_order` WHERE WO_Icode='$wo_id'");
+        return $query->result_array();
+    }
+
 }

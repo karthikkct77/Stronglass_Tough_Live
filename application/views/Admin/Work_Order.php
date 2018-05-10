@@ -59,7 +59,7 @@
                                 <?php } else {?>
                                     <td>On Progress</td>
                                 <?php } ?>
-                                <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/Start_Work_Order/') . $val['WO_Icode']; ?>">View</a></td>
+                                <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/View_Work_Order/') . $val['WO_Icode']; ?>">View</a></td>
                             </tr>
                             <?php
                             $i++;

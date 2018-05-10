@@ -989,5 +989,17 @@ class Admin_Controller extends CI_Controller
             $this->load->view('Admin/Work_Order',$data,false);
             $this->load->view('Admin/footer');
         }
+        /** View Work Order */
+        public function View_Work_Order($id)
+        {
+            $wo_icode = $this->uri->segment(3);
+            $data['work_order_desc']= $this->admin_model->get_Work_Order_Details($wo_icode);
+            $data['work_order']= $this->admin_model->get_Single_Work_Order($wo_icode);
+            $this->load->view('User/header');
+            $this->load->view('User/top');
+            $this->load->view('User/left');
+            $this->load->view('User/View_Work_Order',$data, FALSE);
+            $this->load->view('User/footer');
+        }
 
 }
