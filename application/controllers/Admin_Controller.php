@@ -995,11 +995,11 @@ class Admin_Controller extends CI_Controller
             $wo_icode = $this->uri->segment(3);
             $data['work_order_desc']= $this->admin_model->get_Work_Order_Details($wo_icode);
             $data['work_order']= $this->admin_model->get_Single_Work_Order($wo_icode);
-            $this->load->view('User/header');
-            $this->load->view('User/top');
-            $this->load->view('User/left');
-            $this->load->view('User/View_Work_Order',$data, FALSE);
-            $this->load->view('User/footer');
+            $this->load->view('Admin/header');
+            $this->load->view('Admin/top');
+            $this->load->view('Admin/left');
+            $this->load->view('Admin/View_Work_Order',$data, FALSE);
+            $this->load->view('Admin/footer');
         }
 
 }

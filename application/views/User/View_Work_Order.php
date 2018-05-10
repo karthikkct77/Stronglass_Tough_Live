@@ -149,7 +149,9 @@
                                         <option value="2">Completed with Remaining </option>
                                         <option value="3">Fully Completed</option>
                                     </select></td>
-                                <td> <button class="btn btn-success" onclick="Save_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button><input type="hidden" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Proforma_Invoice_Item_Icode']; ?>"></td>
+                                <td> <button class="btn btn-success" onclick="Save_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
+                                    <input type="hidden" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Proforma_Invoice_Item_Icode']; ?>"
+                                    "></td>
                             </tr>
 
                             <?php

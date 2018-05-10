@@ -104,17 +104,11 @@
                             <th>Colour</th>
                             <th>Other</th>
                             <th>Cutting Remaining Qty</th>
-                            <?php if($_SESSION['role'] == 3)
-                            { ?>
-                                <th>Furnance Remaining Qty</th>
-                            <?php } elseif($_SESSION['role'] == 4) {?>
-                                <th>Furnance Remaining Qty</th>
-                                <th>Dispatch Remaining Qty</th>
-                            <?php } ?>
-                            <th>Remaining Qty</th>
-                            <th>Remaining Reason</th>
-                            <th>Status</th>
-                            <th></th>
+                            <th>Cutting Status</th>
+                             <th>Furnance Remaining Qty</th>
+                            <th>Furnace Status</th>
+                            <th>Dispatch Remaining Qty</th>
+                            <th>Dispatch Status</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -135,21 +129,20 @@
                                 <td><?php echo $val['Proforma_Special']; ?></td>
                                 <td></td>
                                 <td><?php echo $val['Cutting_Remaining_Qty']; ?></td>
-                                <?php if($_SESSION['role'] == 3)
-                                { ?>
-                                    <td><?php echo $val['Furnace_Remaining_Qty']; ?></td>
-                                <?php } elseif($_SESSION['role'] == 4) {?>
-                                    <td><?php echo $val['Furnace_Remaining_Qty']; ?></td>
-                                    <td><?php echo $val['Dispatch_Remaining_Qty']; ?></td>
-                                <?php } ?>
-                                <td><input type="number" class="form-control" name="remain_qty" id="remain_qty<?php echo $val['WO_Process_Icode']; ?>" required ></td>
-                                <td><textarea name="comments" class="form-control" id="comments<?php echo $val['WO_Process_Icode']; ?>"></textarea></td>
-                                <td><select name="status" class="form-control" id="status<?php echo $val['WO_Process_Icode']; ?>">
-                                        <option value="">Select Status</option>
-                                        <option value="2">Completed with Remaining </option>
-                                        <option value="3">Fully Completed</option>
-                                    </select></td>
-                                <td> <button class="btn btn-success" onclick="Save_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button><input type="hidden" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Proforma_Invoice_Item_Icode']; ?>"></td>
+                                <?php if($val['Cutting_Status'] == '3') {?>
+                                <td>Completed</td>
+                                <?php } else {?> <td>Pending</td> <?php } ?>
+                                <td><?php echo $val['Furnace_Remaining_Qty']; ?></td>
+                                <?php if($val['Furnace_Status'] == '3') {?>
+                                    <td>Completed</td>
+                                <?php } else {?> <td>Pending</td> <?php } ?>
+
+                                <td><?php echo $val['Dispatch_Remaining_Qty']; ?></td>
+                                <?php if($val['Dispatch_Status'] == '3') {?>
+                                    <td>Completed</td>
+                                <?php } else {?> <td>Pending</td> <?php } ?>
+
+
                             </tr>
 
                             <?php

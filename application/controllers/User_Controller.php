@@ -54,8 +54,10 @@ class User_Controller extends CI_Controller
     {
         $role =  $this->session->userdata['role'];
 
+
         if($role == 2) //  Cutting
         {
+            $total_qty =
             $wo_icode = $this->input->post('Process_Icode',true);
             $data =array('WO_Icode' => $this->input->post('Wo_Icode',true),
                 'WO_Process_Icode' => $this->input->post('Process_Icode',true),
