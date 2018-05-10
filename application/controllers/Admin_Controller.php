@@ -990,6 +990,4 @@ class Admin_Controller extends CI_Controller
             $this->load->view('Admin/footer');
         }
 
-
-
 }
