@@ -384,6 +384,8 @@ class Admin_Model extends CI_Model
     /** Get all work order */
     public function get_all_work_order()
     {
+        $query = $this->db->query("SELECT * FROM work_order");
+        return $query->result_array();
         
     }
 }
