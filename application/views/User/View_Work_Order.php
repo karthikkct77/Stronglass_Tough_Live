@@ -103,15 +103,20 @@
                             <th>Cutout</th>
                             <th>Colour</th>
                             <th>Other</th>
-                            <th>Cutting Remaining Qty</th>
-                           <?php if($_SESSION['role'] == 3)
+
+                           <?php
+                           if($_SESSION['role'] == 2)
+                           {
+                             ?>
+                                <th>Balance Qty</th>
+                          <?php }
+                           elseif($_SESSION['role'] == 3)
                            { ?>
-                               <th>Cutting Income</th>
-                            <th>Furnance Remaining Qty</th>
+                               <th>Incoming Qty</th>
+                               <th>Balance</th>
                           <?php } elseif($_SESSION['role'] == 4) {?>
-                            <th>Furnance Remaining Qty</th>
-                               <th>Furnance Income Qty</th>
-                            <th>Dispatch Remaining Qty</th>
+                               <th>Incoming Qty</th>
+                                <th>Balance Qty</th>
                             <?php } ?>
                             <th>Remaining Qty</th>
                             <th>Remaining Reason</th>
@@ -127,28 +132,34 @@
 
                             <tr>
 
-                                <td><?php echo $i; ?></td>
+                                <td><?php echo $i; ?>
+                                    <input type="hidden" id="tot_qty<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Total_Qty']; ?>">
+                                    <input type="hidden" id="Fur_income<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Furnace_Incoming']; ?>">
+                                    <input type="hidden" id="dis_income<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Dispatch_Incoming']; ?>"></td>
                                 <td><?php echo $val['Material_Name']; ?></td>
                                 <td><?php echo $val['Proforma_Actual_Size_Height']; ?></td>
                                 <td><?php echo $val['Proforma_Actual_Size_Width']; ?></td>
                                 <td><?php echo $val['Total_Qty']; ?></td>
                                 <td><?php echo $val['Proforma_Holes']; ?></td>
-                                <td></td>
+                                <td>cutout</td>
                                 <td><?php echo $val['Proforma_Special']; ?></td>
-                                <td></td>
-                                <td><?php echo $val['Cutting_Remaining_Qty']; ?>
-                                    <input type="hidden" id="tot_qty<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Total_Qty']; ?>"></td>
-                                <?php if($_SESSION['role'] == 3)
+                                <td>other</td>
+                                <?php
+                                if($_SESSION['role'] == 2)
+                                {
+                                    ?>
+                                    <td><?php echo $val['Cutting_Remaining_Qty']; ?></td>
+                                <?php }
+                                elseif($_SESSION['role'] == 3)
                                 { ?>
-                                    <td><?php echo $val['Furnace_Remaining_Qty']; ?>
-                                        <input type="hidden" id="Fur_income<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Furnace_Incoming']; ?>">
-                                       </td>
                                     <td><?php echo $val['Furnace_Incoming']; ?></td>
-                                <?php } elseif($_SESSION['role'] == 4) {?>
-                                <td><?php echo $val['Furnace_Remaining_Qty']; ?></td>
-                                    <td><?php echo $val['Dispatch_Incoming']; ?>  <input type="hidden" id="dis_income<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Dispatch_Incoming']; ?>"></td>
-                                <td><?php echo $val['Dispatch_Remaining_Qty']; ?></td>
-                                <?php } ?>
+                                    <td><?php echo $val['Furnace_Remaining_Qty']; ?></td>
+                                <?php }
+                                elseif($_SESSION['role'] == 4) {?>
+                                    <td><?php echo $val['Dispatch_Incoming']; ?> </td>
+                                    <td><?php echo $val['Dispatch_Remaining_Qty']; ?></td>
+                                <?php }?>
+
                                 <td><input type="number" class="form-control" name="remain_qty" id="remain_qty<?php echo $val['WO_Process_Icode']; ?>" required ></td>
                                 <td><textarea name="comments" class="form-control" id="comments<?php echo $val['WO_Process_Icode']; ?>"></textarea></td>
                                 <td><select name="status" class="form-control" id="status<?php echo $val['WO_Process_Icode']; ?>">
@@ -184,8 +195,11 @@
         var profoma_item_icode = document.getElementById('profoma_item_icode'+id).value;
 
         var total_qty = document.getElementById('tot_qty'+id).value;
+
         var furnace_income = document.getElementById('Fur_income'+id).value;
+        alert(furnace_income);
         var dispatch_income = document.getElementById('dis_income'+id).value;
+
 
 
         if(remaining_qty =="" || status =="")

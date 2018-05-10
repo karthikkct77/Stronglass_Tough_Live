@@ -73,7 +73,7 @@ class User_Controller extends CI_Controller
             {
                 $update = array('Cutting_Remaining_Qty' => $this->input->post('Qty',true),
                     'Furnace_Incoming' => $Income,
-                    'Furnace_Status' => '2',
+                    'Furnace_Status' => '1',
                     'Cutting_Status' => $this->input->post('Status',true) );
                 $this->db->where('WO_Process_Icode',$wo_icode);
                 $this->db->update('wo_processing', $update);
@@ -93,6 +93,7 @@ class User_Controller extends CI_Controller
             $data =array('WO_Icode' => $this->input->post('Wo_Icode',true),
                 'WO_Process_Icode' => $this->input->post('Process_Icode',true),
                 'Proforma_Invoice_Items_Icode' => $this->input->post('Item_Icode',true),
+                'Cutting_Income' => $this->input->post('Furnace_Income',true),
                 'Furnace_Remaining_Qty  ' => $this->input->post('Qty',true),
                 'Remaining_Comments' => $this->input->post('Comments',true),
                 'Furnace_Status' => $this->input->post('Status',true),
@@ -102,7 +103,8 @@ class User_Controller extends CI_Controller
             {
                 $update = array('Furnace_Remaining_Qty' => $this->input->post('Qty',true),
                     'Dispatch_Incoming' => $Disptach_Income,
-                    'Dispatch_Status' => '2',
+                    'Furnace_Incoming' => '0',
+                    'Dispatch_Status' => '1',
                     'Furnace_Status' => $this->input->post('Status',true) );
                 $this->db->where('WO_Process_Icode',$wo_icode);
                 $this->db->update('wo_processing', $update);
@@ -120,6 +122,7 @@ class User_Controller extends CI_Controller
                 'WO_Process_Icode' => $this->input->post('Process_Icode',true),
                 'Proforma_Invoice_Items_Icode' => $this->input->post('Item_Icode',true),
                 'Dispatch_Remaining_Qty  ' => $this->input->post('Qty',true),
+                'Furnace_Income' => $this->input->post('Dispatch_Income',true),
                 'Remaining_Comments' => $this->input->post('Comments',true),
                 'Dispatch_Status' => $this->input->post('Status',true),
                 'Created_By' => $this->session->userdata['userid']);
@@ -127,11 +130,12 @@ class User_Controller extends CI_Controller
             if($insert == 1)
             {
                 $update = array('Dispatch_Remaining_Qty' => $this->input->post('Qty',true),
+                    'Dispatch_Incoming' => '0',
                     'Dispatch_Status' => $this->input->post('Status',true) );
                 $this->db->where('WO_Process_Icode',$wo_icode);
                 $this->db->update('wo_processing', $update);
-
-                $work_order = $this->input->post('Wo_Icode',true);
+                echo 1;
+                //$work_order = $this->input->post('Wo_Icode',true);
               //  $success = $this->user_model->find_WO_Finished($work_order);
             }
             else{
