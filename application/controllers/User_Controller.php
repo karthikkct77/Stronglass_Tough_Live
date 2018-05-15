@@ -53,8 +53,6 @@ class User_Controller extends CI_Controller
     public function Save_WO_Item()
     {
         $role =  $this->session->userdata['role'];
-
-
         if($role == 2) //  Cutting
         {
             $total_qty = $this->input->post('Total_Qty',true);
