@@ -322,7 +322,8 @@ class Admin_Model extends CI_Model
     /** Get All Invoice */
     public function get_All_Invoice()
     {
-        $query = $this->db->query("Select * from proforma_invoice A INNER JOIN  customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode WHERE  A.WO_Confirm='0' ");
+        $user_icode =$this->session->userdata['userid'];
+        $query = $this->db->query("Select * from proforma_invoice A INNER JOIN  customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode WHERE  A.WO_Confirm='0' and A.Proforma_Generated_By ='$user_icode'  ");
         return $query->result_array();
     }
 

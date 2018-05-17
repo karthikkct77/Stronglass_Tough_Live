@@ -412,7 +412,7 @@ class User_Controller extends CI_Controller
             'WO_Number' => $WO_Number,
             'Proforma_Icode' => $this->input->post('PI_Icode'),
             'Proforma_Number' => $this->input->post('invoice_no'),
-            'WO_Confirm_Date' =>date('Y-m-d') ,
+            'WO_Date' =>date('Y-m-d') ,
             'WO_Created_By' => $this->session->userdata['userid']);
         $insert = $this->admin_model->Insert_WO($data);
         if($insert != 0)
@@ -524,6 +524,17 @@ class User_Controller extends CI_Controller
         }
         $this->session->set_flashdata('feedback', 'Updated Invoice..');
         redirect('User_Controller/Generate_WO');
+    }
+
+    /** Get WO LIST */
+    public function View_WO()
+    {
+        $data['wo'] = $this->user_model->get_All_WO();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/WO_List',$data,false);
+        $this->load->view('User/footer');
     }
 
 }

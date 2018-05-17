@@ -84,4 +84,12 @@ class User_Model extends CI_Model
         $query = $this->db->query("Select * from proforma_invoice A INNER JOIN  customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode INNER  JOIN  st_user_details C on A.Proforma_Generated_By =C. User_Icode WHERE  A.WO_Confirm='0' ");
         return $query->result_array();
     }
+    /** GEt WORK ORDER LIST */
+    public function get_All_WO()
+    {
+        $user_icode =$this->session->userdata['userid'];
+        $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode WHERE A.WO_Created_By='$user_icode' and A.WO_Confirm_Status= '0'");
+        return $query->result_array();
+
+    }
 }
