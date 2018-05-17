@@ -18,19 +18,19 @@
     <div class="row">
         <div class="col-md-12" >
             <div class="tile">
-                <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Update_Invoice'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
+                <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Update_Invoice'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
                     <div class="row">
                         <div class="col-md-4">
 
                             <h5>Consignee</h5>
                             <input  class="form-control" name="search_data" id="search_data" type="text" value="<?php echo $invoice[0]['Customer_Company_Name']; ?>"   onkeyup="ajaxSearch();">
-                            <input  class="form-control" name="company_name" id="company_name" type="text" value="<?php echo $invoice[0]['Customer_Icode']; ?>">
+                            <input  class="form-control" name="company_name" id="company_name" type="hidden" value="<?php echo $invoice[0]['Customer_Icode']; ?>">
                             <div id="suggestions">
                                 <div id="autoSuggestionsList"></div>
                             </div>
                             <div id="consign">
                                 <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; ?>$nbsn;<?php echo $invoice[0]['Customer_Address_2']; ?></h5>
+                                <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; ?><?php echo $invoice[0]['Customer_Address_2']; ?></h5>
                                 <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
                                 <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
                             </div>
@@ -303,7 +303,7 @@
     $("#company_name2").change(function () {
         alert("gdsgdsg");
         $.ajax({
-            url:"<?php echo site_url('Admin_Controller/get_Customer_Address_Details'); ?>",
+            url:"<?php echo site_url('User_Controller/get_Customer_Address_Details'); ?>",
             data: {id:
                 $(this).val()},
             type: "POST",
@@ -347,7 +347,7 @@
     });
     $("#charges").change(function () {
         $.ajax({
-            url:"<?php echo site_url('Admin_Controller/Edit_Charges'); ?>",
+            url:"<?php echo site_url('User_Controller/Edit_Charges'); ?>",
             data: {id:
                 $(this).val()},
             type: "POST",
@@ -483,7 +483,7 @@
         var area = document.getElementById('area'+id).value;
         $("#material"+id).change(function () {
             $.ajax({
-                url:"<?php echo site_url('Admin_Controller/Edit_Material'); ?>",
+                url:"<?php echo site_url('User_Controller/Edit_Material'); ?>",
                 data: {id:
                     $(this).val()},
                 type: "POST",
@@ -600,7 +600,7 @@
             $.ajax({
                 type: "POST",
 
-                url:"<?php echo site_url('Admin_Controller/GetCountryName'); ?>",
+                url:"<?php echo site_url('User_Controller/GetCountryName'); ?>",
                 data: post_data,
                 success: function (data) {
                     // return success
@@ -617,7 +617,7 @@
 
     function get_row(id) {
         $.ajax({
-            url:"<?php echo site_url('Admin_Controller/get_Customer_Address'); ?>",
+            url:"<?php echo site_url('User_Controller/get_Customer_Address'); ?>",
             data: {id:
             id},
             type: "POST",
@@ -632,7 +632,7 @@
             }
         });
         $.ajax({
-            url:"<?php echo site_url('Admin_Controller/get_Customer_Details'); ?>",
+            url:"<?php echo site_url('User_Controller/get_Customer_Details'); ?>",
             data: {id:
             id},
             type: "POST",
