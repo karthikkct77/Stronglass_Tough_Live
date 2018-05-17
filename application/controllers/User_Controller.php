@@ -140,8 +140,161 @@ class User_Controller extends CI_Controller
                 echo 0;
             }
         }
+    }
 
+    //** PROFOMA INVOICE */
+    /** Proforma_Invoice */
+    public function Proforma_Invoice()
+    {
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/Invoice');
+        $this->load->view('User/footer');
+    }
+    /** Upload excel data to list */
+    public function Upload_Invoice()
+    {
+        $configUpload['upload_path'] = FCPATH.'uploads/excel/';
+        $configUpload['allowed_types'] = 'xls|xlsx|csv';
+        $configUpload['max_size'] = '5000';
+        $this->load->library('upload', $configUpload);
+        $this->upload->do_upload('userfile');
+        $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
+        $file_name = $upload_data['file_name']; //uploded file name
+        $extension=$upload_data['file_ext'];    // uploded file extension
 
+        //$objReader =PHPExcel_IOFactory::createReader('Excel5');     //For excel 2003
+        $objReader= PHPExcel_IOFactory::createReader('Excel2007'); // For excel 2007
+        //Set to read only
+        $objReader->setReadDataOnly(true);
+        //Load excel file
+        $objPHPExcel=$objReader->load(FCPATH.'uploads/excel/'.$file_name);
+        $totalrows=$objPHPExcel->setActiveSheetIndex(0)->getHighestRow();   //Count Numbe of rows avalable in excel
+        $objWorksheet=$objPHPExcel->setActiveSheetIndex(0);
+        //loop from first data untill last data
+        for($i=2;$i<=$totalrows;$i++)
+        {
+            $thickness=$objWorksheet->getCellByColumnAndRow(0,$i)->getValue();
+            $height=$objWorksheet->getCellByColumnAndRow(1,$i)->getValue();
+            $width=$objWorksheet->getCellByColumnAndRow(2,$i)->getValue();
+            $pics=$objWorksheet->getCellByColumnAndRow(3,$i)->getValue();
+            $holes=$objWorksheet->getCellByColumnAndRow(4,$i)->getValue();
+            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
+            $charge_height = $height + 30;
+            $charge_weigth = $width + 30;
+            $area = $charge_height/1000 * $charge_weigth/1000;
+            $data_user[]=array(
+                'Thickness'=>$thickness,
+                'height'=>$height,
+                'width'=>$width,
+                'pics'=>$pics,
+                'holes'=>$holes,
+                'type'=>$types,
+                'ch_height'=>$charge_height,
+                'ch_weight'=>$charge_weigth,
+                'area'=>$area );
+        }
+        $month =date('m');
+        $data['invoice'] =  $data_user;
+        $data['st']= $this->admin_model->get_ST();
+        $data['customer']= $this->admin_model->get_all_customers();
+        $data['stock']= $this->admin_model->get_all_item();
+        $data['charges']= $this->admin_model->get_all_charges();
+        $data['tax']= $this->admin_model->get_Tax();
+        $perfoma = $this->admin_model->get_profoma_number($month);
+        if($perfoma == 0)
+        {
+            $data['profoma_number'] = $month .'-101';
+        }
+        else
+        {
+            $myString = $perfoma[0]['Proforma_Number'];
+            $myArray = explode('-', $myString);
+            $increment = $myArray[1] + 1;
+            $data['profoma_number'] = $month .'-'. $increment;
 
+        }
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/View_Invoice',$data,false);
+        $this->load->view('User/footer');
+    }
+    /** Save Invoice */
+    public function Save_Invoice()
+    {
+        $address =$this->input->post('company_address');
+        if($address == 0)
+        {
+            $profoma_address= '0';
+        }
+        else{
+            $profoma_address= $this->input->post('company_address');
+        }
+        $data = array(
+            'Proforma_Number' => $this->input->post('invoice_no'),
+            'Proforma_Date' => $this->input->post('invoice_date'),
+            'Proforma_Customer_Icode' => $this->input->post('company_name'),
+            'Proforma_Delivery_Address_Icode' =>$profoma_address ,
+            'Sub_Total' => $this->input->post('sub_tot'),
+            'Insurance_Value' => $this->input->post('insurance'),
+            'SGST_Value' => $this->input->post('sgst'),
+            'CGST_Value' => $this->input->post('cgst'),
+            'GrossTotal_Value' => $this->input->post('gross_tot'),
+            'Proforma_Generated_By' => $this->session->userdata['userid']);
+        $insert = $this->admin_model->Insert_Profoma_Invoice($data);
+        if($insert != 0)
+        {
+            $material_id = $this->input->post('material');
+            $hsn = $this->input->post('hsn');
+            $qty = $this->input->post('pics');
+            $special = $this->input->post('type');
+            $holes = $this->input->post('holes');
+            $actual_W = $this->input->post('width');
+            $actual_H = $this->input->post('height');
+            $Charge_W = $this->input->post('ch_weight');
+            $Charge_H = $this->input->post('ch_height');
+            $Area = $this->input->post('area');
+            $Rate = $this->input->post('rate');
+            $cost = $this->input->post('total');
+            $count = sizeof($material_id);
+            for($i=0; $i<$count; $i++)
+            {
+                $full_data =array( 'Proforma_Icode' => $insert,
+                    'Proforma_Date' => $this->input->post('invoice_date'),
+                    'Proforma_Material_Icode' => $material_id[$i],
+                    'Proforma_HSNCode' => $hsn[$i],
+                    'Proforma_Special' => $special[$i],
+                    'Proforma_Holes' => $holes[$i],
+                    'Proforma_Qty' => $qty[$i],
+                    'Proforma_Actual_Size_Width' => $actual_W[$i],
+                    'Proforma_Actual_Size_Height' => $actual_H[$i],
+                    'Proforma_Chargeable_Size_Width' =>$Charge_W[$i],
+                    'Proforma_Chargeable_Size_Height' => $Charge_H[$i],
+                    'Proforma_Area_SQMTR' => $Area[$i],
+                    'Proforma_Material_Rate' => $Rate[$i],
+                    'Proforma_Material_Cost' => $cost[$i],
+                    'created_by' => $this->session->userdata['userid']);
+                $insert_item = $this->admin_model->Insert_Profoma_Item($full_data);
+            }
+            $charges_id = $this->input->post('charges');
+            $charges_count = $this->input->post('no_holes');
+            $charges_value = $this->input->post('charge_amt');
+            $charges_cost = $this->input->post('tot_charge_amt');
+            $count1 = sizeof($charges_id);
+            for($i=0; $i<$count1; $i++)
+            {
+                $full_data1 =array( 'Proforma_Icode' => $insert,
+                    'Proforma_Charge_Icode' => $charges_id[$i],
+                    'Proforma_Charge_Count' => $charges_count[$i],
+                    'Proforma_Charge_Value' => $charges_value[$i],
+                    'Proforma_Charge_Cost' => $charges_cost[$i],
+                    'created_by' => $this->session->userdata['userid']);
+                $insert_charges = $this->admin_model->Insert_Profoma_Charges($full_data1);
+            }
+            $this->session->set_flashdata('feedback', 'Profoma Generated ..');
+            redirect('Admin_Controller/Proforma_Invoice');
+        }
     }
 }
