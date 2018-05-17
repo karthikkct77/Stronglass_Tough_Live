@@ -99,7 +99,7 @@
                                         </div>
                                     </td>
                                     <td> <input class="form-control" type="text" name="thickness[]" id="thckness<?php echo $i; ?>" value="<?php echo $key['Thickness']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="hsn[]" id="hsn<?php echo $i; ?>" value="" ></td>
+                                    <td><input class="form-control" type="text" name="hsn[]" id="hsn<?php echo $i; ?>"  ></td>
                                     <td><input class="form-control" type="text" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly></td>
                                     <td><input class="form-control" type="text" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['pics']; ?>" readonly></td>
                                     <td><input class="form-control" type="text" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['holes']; ?>" readonly></td>
@@ -448,6 +448,9 @@
                     var total = pcs * area * amount;
                     document.getElementById('total'+id).value = total.toFixed(2);
                     document.getElementById('rate'+id).value = amount;
+
+                    var hsn = data[0]['HSN_Code'];
+                    document.getElementById('hsn'+id).value = hsn;
                     // Grand Total
                     var totals =document.getElementsByName("total[]");
                     var sum = 0;
