@@ -297,4 +297,60 @@ class User_Controller extends CI_Controller
             redirect('Admin_Controller/Proforma_Invoice');
         }
     }
+    /** Get PErticular customer details */
+    public function get_Customer_Details()
+    {
+        $customer_id = $this->input->post('id',true);
+        $data= $this->admin_model->get_customer_details($customer_id);
+        echo  json_encode($data);
+    }
+    public function get_Customer_Address_Details()
+    {
+        $customer_id = $this->input->post('id',true);
+        $data= $this->admin_model->get_single_Customer_Locations($customer_id);
+        echo  json_encode($data);
+    }
+    //** Edit Charges */
+    public function Edit_Charges()
+    {
+        $charges_id = $this->input->post('id',true);
+        $data = $this->admin_model->get_charges($charges_id);
+        echo  json_encode($data);
+    }
+    //** Edit Material */
+    public function Edit_Material()
+    {
+        $material_id = $this->input->post('id',true);
+        $data = $this->admin_model->get_material($material_id);
+        echo  json_encode($data);
+    }
+    /*Get Company Name*/
+    public function GetCountryName(){
+        $search_data = $this->input->post('search_data');
+        $result = $this->admin_model->GetRow($search_data);
+        if (!empty($result))
+        {
+            foreach ($result as $row):
+                echo "<li><a href='javascript:;'  onclick='get_row(". $row['Customer_Icode'] .")' >" . $row['Customer_Company_Name'] . "</a></li>";
+            endforeach;
+        }
+        else
+        {
+            echo "<li> <em> Not found ... </em> </li>";
+        }
+    }
+    /*Get Company Name*/
+    /** Get customer more address */
+    public function get_Customer_Address()
+    {
+        $customer_id = $this->input->post('id',true);
+        $data= $this->admin_model->get_Customer_Address($customer_id);
+        $output =null;
+        foreach ($data as $row)
+        {
+            $output .= "<option value='".$row['Customer_Address_Icode']."'>".$row['Customer_Add_City']."</option>";
+        }
+        echo  $output;
+
+    }
 }

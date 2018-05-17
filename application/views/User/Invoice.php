@@ -32,7 +32,7 @@
                 <?php } ?>
                 <h3 class="tile-title">Upload Invoice Data</h3>
                 <div class="tile-body">
-                    <form method="post" enctype="multipart/form-data" class="login-form" action="<?php echo site_url('Admin_Controller/Upload_Invoice'); ?>" name="data_register">
+                    <form method="post" enctype="multipart/form-data" class="login-form" action="<?php echo site_url('User_Controller/Upload_Invoice'); ?>" name="data_register">
                         <div class="form-group">
                             <label class="control-label">Upload Invoice</label>
                             <input type="file" id="exampleInputFile" name="userfile" required>
