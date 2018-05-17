@@ -45,6 +45,7 @@ class Admin_Controller extends CI_Controller
     {
         $data = array( 'Material_Name' => $this->input->post('stock_name'),
                        'Material_Current_Price' => $this->input->post('stock_price'),
+                       'HSN_Code' => $this->input->post('HSN'),
                        'Material_Created_By' => $this->session->userdata['userid']);
         $insert = $this->admin_model->insert_item($data);
         if($insert == 1)
@@ -78,7 +79,8 @@ class Admin_Controller extends CI_Controller
         if($insert == 1)
         {
             $data = array(  'Material_Name' => $this->input->post('material_name'),
-                'Material_Current_Price' =>$this->input->post('material_price'));
+                'Material_Current_Price' =>$this->input->post('material_price'),
+                'HSN_Code' => $this->input->post('HSN'));
             $this->db->where('material_icode',$material_icode);
             $this->db->update('material_master', $data);
             $this->session->set_flashdata('feedback', 'Successfully Updated..');

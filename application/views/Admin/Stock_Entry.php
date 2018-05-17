@@ -38,6 +38,10 @@
                             <label class="control-label">Material Price</label>
                             <input class="form-control" type="number" name="stock_price"  placeholder="Enter Amount" min="0" step="1" required>
                         </div>
+                        <div class="form-group">
+                            <label class="control-label">HSN Code</label>
+                            <input class="form-control" type="number" name="HSN"  placeholder="Enter HSN Code"  required>
+                        </div>
                         <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>&nbsp;
                     </form>
                 </div>
@@ -59,6 +63,10 @@
                             <label class="control-label">Material Price</label>
                             <input class="form-control" type="number" name="material_price" id="price" placeholder="Enter Amount" min="0" step="1" required>
                         </div>
+                        <div class="form-group">
+                            <label class="control-label">HSN Code</label>
+                            <input class="form-control" type="number" name="HSN" id="HSN" placeholder="Enter HSN Code"  required>
+                        </div>
                         <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>&nbsp;
                         <button class="btn btn-danger" type="button" onClick="window.location.reload();">Close</button>
                     </form>
@@ -78,6 +86,7 @@
                             <th>#</th>
                             <th>Stock Name</th>
                             <th>Stock Price</th>
+                            <th>HSN Code</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -90,6 +99,7 @@
                             <td><?php echo $i; ?></td>
                             <td><?php echo $val['Material_Name']; ?></td>
                             <td><?php echo $val['Material_Current_Price']; ?></td>
+                            <td><?php echo $val['HSN_Code']; ?></td>
                             <td><button class="btn btn-info" onclick="edit_material('<?php echo $val['Material_Icode']; ?> ')">Edit</button></td>
                         </tr>
                         <?php
@@ -121,6 +131,8 @@
                 document.getElementById('price').value = price;
                 var icode =data[0]['Material_Icode'];
                 document.getElementById('material_icode').value = icode;
+                var hsn =data[0]['HSN Code'];
+                document.getElementById('HSN').value = icode;
             }
         });
     }
