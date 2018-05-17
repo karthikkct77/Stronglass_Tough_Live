@@ -85,7 +85,7 @@
 
                             </div>
                             <div class="col-md-3 wo_right">
-                                <h4><?php echo $work_order[0]['WO_Confirm_Date']; ?></h4>
+                                <h4><?php echo $work_order[0]['WO_Date']; ?></h4>
 
                             </div>
                             </div>
@@ -100,7 +100,7 @@
                             <th>Width</th>
                             <th>Qty</th>
                             <th>Holes</th>
-                            <th>Cutout</th>
+                           s
                             <th>Colour</th>
                             <th>Other</th>
 

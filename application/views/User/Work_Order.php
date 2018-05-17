@@ -47,7 +47,7 @@
                                 <td><?php echo $i; ?></td>
                                 <td></td>
                                 <td><?php echo $val['WO_Number']; ?></td>
-                                <td><?php echo $val['WO_Confirm_Date']; ?></td>
+                                <td><?php echo $val['WO_Date']; ?></td>
                                 <td><?php echo $val['Proforma_Number']; ?></td>
                                 <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/Start_Work_Order/') . $val['WO_Icode']; ?>">Start</a></td>
                             </tr>
