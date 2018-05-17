@@ -13,6 +13,7 @@ class User_Controller extends CI_Controller
         $this->load->helper('url');
         /***** LOADING HELPER TO AVOID PHP ERROR ****/
         $this->load->model('User_Model', 'user_model'); /* LOADING MODEL * User_Model as user_model */
+        $this->load->model('Admin_Model','admin_model');
         $this->load->library('session');
         $this->load->library('excel');
         $this->session->set_flashdata('message');
@@ -294,7 +295,7 @@ class User_Controller extends CI_Controller
                 $insert_charges = $this->admin_model->Insert_Profoma_Charges($full_data1);
             }
             $this->session->set_flashdata('feedback', 'Profoma Generated ..');
-            redirect('Admin_Controller/Proforma_Invoice');
+            redirect('User_Controller/Invoice_List');
         }
     }
     /** Get PErticular customer details */
@@ -351,6 +352,17 @@ class User_Controller extends CI_Controller
             $output .= "<option value='".$row['Customer_Address_Icode']."'>".$row['Customer_Add_City']."</option>";
         }
         echo  $output;
+    }
+    /** Invoice List */
+    public function Invoice_List()
+    {
+        $data['invoice'] = $this->admin_model->get_All_Invoice();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/Invoice_List',$data,false);
+        $this->load->view('User/footer');
 
     }
+    /*Get Company Name*/
 }
