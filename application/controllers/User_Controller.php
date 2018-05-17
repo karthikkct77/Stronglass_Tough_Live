@@ -362,7 +362,15 @@ class User_Controller extends CI_Controller
         $this->load->view('User/left');
         $this->load->view('User/Invoice_List',$data,false);
         $this->load->view('User/footer');
-
     }
     /*Get Company Name*/
+    public function Generate_WO()
+    {
+        $data['invoice'] = $this->user_model->get_All_Invoice();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/Create_WO',$data,false);
+        $this->load->view('User/footer');
+    }
 }
