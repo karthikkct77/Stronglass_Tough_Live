@@ -373,4 +373,89 @@ class User_Controller extends CI_Controller
         $this->load->view('User/Create_WO',$data,false);
         $this->load->view('User/footer');
     }
+    /** Get Single Invoice Details */
+    public function single_Invoice($id)
+    {
+        $pi_icode = $this->uri->segment(3);
+        $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
+        $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
+        $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
+        $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
+        $data['tax']= $this->admin_model->get_Tax();
+        $data['st']= $this->admin_model->get_ST();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/View_Single_Invoice',$data,false);
+        $this->load->view('User/footer');
+    }
+    /** Get Single Invoice Details */
+    /** Save Work Order */
+    public function Save_Work_Order()
+    {
+        $month =date('m');
+        $perfoma = $this->admin_model->get_WO_number($month);
+        if($perfoma == 0)
+        {
+            $WO_Number = $month .'-101';
+        }
+        else
+        {
+            $myString = $perfoma[0]['WO_Number'];
+            $myArray = explode('-', $myString);
+            $increment = $myArray[1] + 1;
+            $WO_Number = $month .'-'. $increment;
+
+        }
+
+        $data = array(
+            'WO_Number' => $WO_Number,
+            'Proforma_Icode' => $this->input->post('PI_Icode'),
+            'Proforma_Number' => $this->input->post('invoice_no'),
+            'WO_Confirm_Date' =>date('Y-m-d') ,
+            'WO_Created_By' => $this->session->userdata['userid']);
+        $insert = $this->admin_model->Insert_WO($data);
+        if($insert != 0)
+        {
+            $item_icode =  $this->input->post('material');
+            $Qty =  $this->input->post('pics');
+            $count = sizeof($item_icode);
+            for($i=0; $i<$count; $i++)
+            {
+                $data1 = array(
+                    'WO_Icode' =>  $insert,
+                    'Proforma_Icode' => $this->input->post('PI_Icode'),
+                    'Proforma_Invoice_Item_Icode' => $item_icode[$i],
+                    'Total_Qty' =>$Qty[$i] ,
+                    'Cutting_Remaining_Qty' =>'0',
+                    'Furnace_Remaining_Qty' =>'0',
+                    'Dispatch_Remaining_Qty' =>'0');
+                $insert_process = $this->admin_model->Insert_WO_Process($data1);
+            }
+            $id=$this->input->post('PI_Icode');
+            $update = array('WO_Confirm' => '1');
+            $this->db->where('Proforma_Icode',$id);
+            $this->db->update('proforma_invoice', $update);
+
+            $this->session->set_flashdata('feedback', 'Work Order Generated ..');
+            redirect('User_Controller/Generate_WO');
+        }
+    }
+    /** Edit Profroma Invoice */
+    public function Edit_Invoice($id)
+    {
+        $pi_icode = $this->uri->segment(3);
+        $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
+        $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
+        $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
+        $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
+        $data['tax']= $this->admin_model->get_Tax();
+        $data['st']= $this->admin_model->get_ST();
+        $data['charges']= $this->admin_model->get_all_charges();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/Edit_Invoice',$data,false);
+        $this->load->view('User/footer');
+    }
 }

@@ -52,7 +52,7 @@
                                 <td><?php echo $val['Proforma_Date']; ?></td>
                                 <td><?php echo $val['GrossTotal_Value']; ?></td>
                                 <td><?php echo $val['User_Name']; ?></td>
-                                <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/single_Invoice/') . $val['Proforma_Icode']; ?>">View</a></td>
+                                <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/single_Invoice/') . $val['Proforma_Icode']; ?>">Generate WO</a></td>
                             </tr>
                             <?php
                             $i++;
