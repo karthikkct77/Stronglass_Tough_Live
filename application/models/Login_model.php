@@ -17,6 +17,7 @@ class Login_model extends CI_Model
             $data = array(
                 'userid' => $row->admin_icode,
                 'user_name' => $row->admin_name,
+                'role' => $row->Admin_Role,
                 'validated' => true
             );
             $this->session->set_userdata($data);
