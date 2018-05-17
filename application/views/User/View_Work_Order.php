@@ -99,22 +99,26 @@
                             <th>Height</th>
                             <th>Width</th>
                             <th>Qty</th>
-                            <th>Holes</th>
-                           s
-                            <th>Colour</th>
-                            <th>Other</th>
-
                            <?php
                            if($_SESSION['role'] == 2)
                            {
                              ?>
+
                                 <th>Balance Qty</th>
                           <?php }
                            elseif($_SESSION['role'] == 3)
                            { ?>
+                               <th>Holes</th>
+                               <th>Cutout</th>
+                               <th>Colour</th>
+                               <th>Other</th>
                                <th>Incoming Qty</th>
                                <th>Balance</th>
                           <?php } elseif($_SESSION['role'] == 4) {?>
+                               <th>Holes</th>
+                               <th>Cutout</th>
+                               <th>Colour</th>
+                               <th>Other</th>
                                <th>Incoming Qty</th>
                                 <th>Balance Qty</th>
                             <?php } ?>
@@ -140,10 +144,7 @@
                                 <td><?php echo $val['Proforma_Actual_Size_Height']; ?></td>
                                 <td><?php echo $val['Proforma_Actual_Size_Width']; ?></td>
                                 <td><?php echo $val['Total_Qty']; ?></td>
-                                <td><?php echo $val['Proforma_Holes']; ?></td>
-                                <td>cutout</td>
-                                <td><?php echo $val['Proforma_Special']; ?></td>
-                                <td>other</td>
+
                                 <?php
                                 if($_SESSION['role'] == 2)
                                 {
@@ -152,10 +153,18 @@
                                 <?php }
                                 elseif($_SESSION['role'] == 3)
                                 { ?>
+                                    <td><?php echo $val['Proforma_Holes']; ?></td>
+                                    <td>cutout</td>
+                                    <td><?php echo $val['Proforma_Special']; ?></td>
+                                    <td>other</td>
                                     <td><?php echo $val['Furnace_Incoming']; ?></td>
                                     <td><?php echo $val['Furnace_Remaining_Qty']; ?></td>
                                 <?php }
                                 elseif($_SESSION['role'] == 4) {?>
+                                    <td><?php echo $val['Proforma_Holes']; ?></td>
+                                    <td>cutout</td>
+                                    <td><?php echo $val['Proforma_Special']; ?></td>
+                                    <td>other</td>
                                     <td><?php echo $val['Dispatch_Incoming']; ?> </td>
                                     <td><?php echo $val['Dispatch_Remaining_Qty']; ?></td>
                                 <?php }?>
@@ -197,7 +206,6 @@
         var total_qty = document.getElementById('tot_qty'+id).value;
 
         var furnace_income = document.getElementById('Fur_income'+id).value;
-        alert(furnace_income);
         var dispatch_income = document.getElementById('dis_income'+id).value;
 
 
