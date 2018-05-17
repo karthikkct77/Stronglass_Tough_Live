@@ -29,6 +29,8 @@
                             </div>
 
                         </div>
+                        <input type="hidden" name="wo_icode" value="<?php echo $wo[0]['WO_Icode']; ?>">
+                        <input type="text" name="wo_number" value="<?php echo $wo[0]['WO_Number']; ?>">
                         <div class="col-md-1">
                             <div class="form-group">
                                 <input type="checkbox" name="check" id="check" checked onclick="FillBilling()">
@@ -48,7 +50,7 @@
                                     <h5 id="phone">City: <?php echo $invoice[0]['Customer_City']; ?></h5>
                                     <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
                                     <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
-                                <?php
+                                    <?php
                                 }
                                 else
                                 {
@@ -58,7 +60,7 @@
                                     <h5 id="phone">City: <?php echo $invoice[0]['Customer_Add_City']; ?></h5>
                                     <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Add_Phone']; ?></h5>
                                     <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_Add_Email_Id_1']; ?></h5>
-                                <?php
+                                    <?php
                                 }
                                 ?>
 
@@ -239,7 +241,7 @@
                             <a class="btn btn-success pull-right" href="<?php echo site_url('User_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT</a>
                             <?php if($_SESSION['role'] == 6) { ?>
                                 <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Generate WO</button>
-                             <?php } elseif($_SESSION['role'] == 7){
+                            <?php } elseif($_SESSION['role'] == 7){
                                 ?>
                                 <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Approve WO</button>
                             <?php } ?>

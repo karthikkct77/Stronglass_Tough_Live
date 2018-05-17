@@ -25,7 +25,7 @@
             { ?>
                 <p class="app-sidebar__user-designation">WO ENTRY</p>
             <?php  }
-            elseif ($_SESSION['role'] == 6)
+            elseif ($_SESSION['role'] == 7)
             { ?>
                 <p class="app-sidebar__user-designation">QA</p>
             <?php  }
@@ -69,7 +69,7 @@
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/View_WO'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">View WO</span></a></li>
 
         <?php  }
-        elseif ($_SESSION['role'] == 6)
+        elseif ($_SESSION['role'] == 7)
         { ?>
             <li><a class="app-menu__item " href="<?php echo site_url('User_Controller/dashboard'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Check_WO'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">CHECK WO</span></a></li>

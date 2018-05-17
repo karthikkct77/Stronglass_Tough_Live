@@ -88,8 +88,25 @@ class User_Model extends CI_Model
     public function get_All_WO()
     {
         $user_icode =$this->session->userdata['userid'];
-        $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode WHERE A.WO_Created_By='$user_icode' and A.WO_Confirm_Status= '0'");
+        $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                  INNER JOIN st_user_details C on A.WO_Created_By = C.User_Icode  WHERE A.WO_Created_By='$user_icode' and A.WO_Confirm_Status= '0'");
         return $query->result_array();
-
+    }
+    public function get_All_WO_Details()
+    {
+        $user_icode =$this->session->userdata['userid'];
+        $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                  INNER JOIN st_user_details C on A.WO_Created_By = C.User_Icode  WHERE A.WO_Confirm_Status= '0'");
+        return $query->result_array();
+    }
+    public function Get_Single_wo($pi_icode)
+    {
+        $query = $this->db->query("SELECT * FROM work_order  WHERE Proforma_Icode= '$pi_icode'");
+        return $query->result_array();
+    }
+    public function Approve_Work_Order($data)
+    {
+        $this->db->insert('wo_approve', $data);
+        return 1;
     }
 }
