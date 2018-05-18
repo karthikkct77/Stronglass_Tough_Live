@@ -8,7 +8,10 @@
         </div>
     </div>
     <ul class="app-menu">
-        <li><a class="app-menu__item active" href="<?php echo site_url('Admin_Controller/dashboard'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+
+       <?php if($_SESSION['role'] == 'Admin')
+       { ?>
+           <li><a class="app-menu__item active" href="<?php echo site_url('Admin_Controller/dashboard'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-building"></i><span class="app-menu__label">Stronglass Tough</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <!-- <li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Size_Master'); ?><!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>-->
@@ -33,6 +36,16 @@
 
             </ul>
         </li>
+
+        <?php }
+        elseif($_SESSION['role'] == 'MD')
+        { ?>
+            <li><a class="app-menu__item active" href="<?php echo site_url('Admin_Controller/dashboard'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+
+        <?php }
+        ?>
+
+
 <!--        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Invoice</span><i class="treeview-indicator fa fa-angle-right"></i></a>-->
 <!--            <ul class="treeview-menu">-->
 <!--                <!--<li><a class="treeview-item" href="-->--><?php ////echo site_url('Admin_Controller/Size_Master'); ?><!--<!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>-->-->
