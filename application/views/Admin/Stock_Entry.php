@@ -78,7 +78,7 @@
         <div class="col-md-6">
             <div class="tile">
                 <h3 class="tile-title ">Material List</h3>
-                <a class="btn btn-success pull-right" href="<?php echo site_url('Admin_Controller/Revice_History'); ?>">Revising History</a>
+                <a class="btn btn-success pull-right" href="<?php echo site_url('Admin_Controller/Revice_HistoryRevice_History'); ?>">Revising History</a>
                 <div class="tile-body">
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
