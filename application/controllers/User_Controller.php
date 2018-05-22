@@ -584,7 +584,6 @@ class User_Controller extends CI_Controller
         $this->load->view('User/left');
         $this->load->view('User/View_Single_WO',$data,false);
         $this->load->view('User/footer');
-
     }
 
 }

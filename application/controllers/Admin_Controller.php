@@ -1004,4 +1004,21 @@ class Admin_Controller extends CI_Controller
             $this->load->view('Admin/footer');
         }
 
+
+        /** Manual Create Work Order */
+        public function  Create_Work_Order()
+        {
+            $data['st']= $this->admin_model->get_ST();
+            $data['customer']= $this->admin_model->get_all_customers();
+            $data['stock']= $this->admin_model->get_all_item();
+            $data['charges']= $this->admin_model->get_all_charges();
+            $data['tax']= $this->admin_model->get_Tax();
+            $this->load->view('Admin/header');
+            $this->load->view('Admin/top');
+            $this->load->view('Admin/left');
+            $this->load->view('Admin/Create_Work_Order',$data, FALSE);
+            $this->load->view('Admin/footer');
+        }
+        /** Manual Create Work Order */
+
 }
