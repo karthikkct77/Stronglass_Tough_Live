@@ -169,8 +169,7 @@
                                     <td><?php echo $val['Dispatch_Remaining_Qty']; ?></td>
                                 <?php }?>
 
-                                <td><input type="number" class="form-control" name="remain_qty" id="remain_qty<?php echo $val['WO_Process_Icode']; ?>" required ></td>
-
+                                <td><input type="number" class="form-control" name="remain_qty" id="remain_qty<?php echo $val['WO_Process_Icode']; ?>" required min="0" ></td>
                                 <td><select name="comments" class="form-control" id="comments<?php echo $val['WO_Process_Icode']; ?>">
                                         <option value="">Select Reason</option>
                                         <option value="Out_of_Stock">Out of Stock </option>
@@ -203,48 +202,56 @@
 <script>
     function Save_Status(id)
     {
-        var wo_icode = document.getElementById('wo_icode').value;
-        var remaining_qty = document.getElementById('remain_qty'+id).value;
-        var remaining_comments = document.getElementById('comments'+id).value;
-        var status = document.getElementById('status'+id).value;
-        var profoma_item_icode = document.getElementById('profoma_item_icode'+id).value;
+        if (confirm("Do you want to Save ")) {
+            var wo_icode = document.getElementById('wo_icode').value;
+            var remaining_qty = document.getElementById('remain_qty' + id).value;
+            var remaining_comments = document.getElementById('comments' + id).value;
+            var status = document.getElementById('status' + id).value;
+            var profoma_item_icode = document.getElementById('profoma_item_icode' + id).value;
 
-        var total_qty = document.getElementById('tot_qty'+id).value;
+            var total_qty = document.getElementById('tot_qty' + id).value;
 
-        var furnace_income = document.getElementById('Fur_income'+id).value;
-        var dispatch_income = document.getElementById('dis_income'+id).value;
+            var furnace_income = document.getElementById('Fur_income' + id).value;
+            var dispatch_income = document.getElementById('dis_income' + id).value;
 
 
+            if (remaining_qty == "" || status == "") {
+                alert("Please Select Remaining qty and Status");
+            }
+            else if (remaining_qty != 0 && remaining_comments == "") {
+                alert("Please Type Reason for Remaining Qty");
+            }
+            else {
+                $.ajax({
+                    url: "<?php echo site_url('User_Controller/Save_WO_Item'); ?>",
+                    data: {
+                        Qty: remaining_qty,
+                        Comments: remaining_comments,
+                        Status: status,
+                        Item_Icode: profoma_item_icode,
+                        Wo_Icode: wo_icode,
+                        Process_Icode: id,
+                        Total_Qty: total_qty,
+                        Furnace_Income: furnace_income,
+                        Dispatch_Income: dispatch_income
+                    },
+                    type: "POST",
+                    context: document.body,
+                    success: function (data) {
+                        if (data == 1) {
+                            swal({
+                                    title: "Success!",
+                                    text: "Data Saved..",
+                                    type: "success"
+                                },
+                                function () {
+                                    location.reload();
+                                });
 
-        if(remaining_qty =="" || status =="")
-        {
-            alert("Please Select Remaining qty and Status");
-        }
-        else if(remaining_qty != 0 && remaining_comments == "" )
-        {
-            alert("Please Type Reason for Remaining Qty");
-        }
-        else
-        {
-            $.ajax({ url: "<?php echo site_url('User_Controller/Save_WO_Item'); ?>",
-                data: {Qty: remaining_qty,Comments: remaining_comments, Status: status, Item_Icode: profoma_item_icode, Wo_Icode: wo_icode,
-                       Process_Icode: id, Total_Qty: total_qty, Furnace_Income: furnace_income, Dispatch_Income: dispatch_income    },
-                type: "POST",
-                context: document.body,
-                success: function(data){
-                   if(data == 1)
-                   {
-                       swal({
-                               title: "Success!",
-                               text: "Data Saved..",
-                               type: "success"
-                           },
-                           function(){
-                               location.reload();
-                           });
-
-                   }
-                }});
+                        }
+                    }
+                });
+            }
         }
     }
 
