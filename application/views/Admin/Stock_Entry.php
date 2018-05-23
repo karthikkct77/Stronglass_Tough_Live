@@ -36,11 +36,11 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Material Price</label>
-                            <input class="form-control" type="number" name="stock_price"  placeholder="Enter Amount" min="0" step="1" required>
+                            <input class="form-control" type="number" name="stock_price"  placeholder="Enter Amount" min="0"  required>
                         </div>
                         <div class="form-group">
                             <label class="control-label">HSN Code</label>
-                            <input class="form-control" type="number" name="HSN"  placeholder="Enter HSN Code"  required>
+                            <input class="form-control" type="number" name="HSN"  value="70071900"  required>
                         </div>
                         <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>&nbsp;
                     </form>
