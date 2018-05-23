@@ -170,7 +170,13 @@
                                 <?php }?>
 
                                 <td><input type="number" class="form-control" name="remain_qty" id="remain_qty<?php echo $val['WO_Process_Icode']; ?>" required ></td>
-                                <td><textarea name="comments" class="form-control" id="comments<?php echo $val['WO_Process_Icode']; ?>"></textarea></td>
+
+                                <td><select name="comments" class="form-control" id="comments<?php echo $val['WO_Process_Icode']; ?>">
+                                        <option value="">Select Reason</option>
+                                        <option value="Out_of_Stock">Out of Stock </option>
+                                        <option value="optimize">optimize Issue</option>
+                                        <option value="Handling">Handling Issue</option>
+                                    </select></td>
                                 <td><select name="status" class="form-control" id="status<?php echo $val['WO_Process_Icode']; ?>">
                                         <option value="">Select Status</option>
                                         <option value="2">Completed with Remaining </option>
