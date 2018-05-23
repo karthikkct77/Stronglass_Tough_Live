@@ -242,6 +242,8 @@ class User_Controller extends CI_Controller
             'Insurance_Value' => $this->input->post('insurance'),
             'SGST_Value' => $this->input->post('sgst'),
             'CGST_Value' => $this->input->post('cgst'),
+            'IGST_Value' => $this->input->post('igst'),
+            'Transport' => $this->input->post('transport'),
             'GrossTotal_Value' => $this->input->post('gross_tot'),
             'Proforma_Generated_By' => $this->session->userdata['userid']);
         $insert = $this->admin_model->Insert_Profoma_Invoice($data);
