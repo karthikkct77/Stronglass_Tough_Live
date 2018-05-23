@@ -194,18 +194,37 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
+                                    <td colspan="3" align="right">TRANSPORT</td>
 
-                                    <td><input class="form-control" type="text" name="sgst" id="sgst" value="" readonly ></td>
+                                    <td><input class="form-control" type="text" name="transport" id="transport"  ></td>
                                     <td></td>
                                 </tr>
                                 <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input  type="radio" id="ptype" name="tax"  required onclick="isgt()"> IGST</td>
+                                    <td>
+                                        <input  type="radio" id="ptype" name="tax" onclick="GST()" required> SGST/CGST
+                                    </td>
+                                </tr>
+                                <tr id="sgst1" style="display: none">
+                                    <td colspan="3" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
+
+                                    <td><input class="form-control" type="text" name="sgst" id="sgst"  readonly ></td>
+                                    <td></td>
+                                </tr>
+                                <tr id="cgst1" style="display: none">
                                     <td colspan="3" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
                                         <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
                                     </td>
+                                    <td><input class="form-control" type="text" name="cgst" id="cgst"  readonly ></td>
+                                    <td></td>
+                                </tr>
+                                <tr id="igst1" style="display: none">
+                                    <td colspan="3" align="right">IGST @18%
 
-
-                                    <td><input class="form-control" type="text" name="cgst" id="cgst" value="" readonly ></td>
+                                    </td>
+                                    <td><input class="form-control" type="text" name="igst" id="igst" readonly ></td>
                                     <td></td>
                                 </tr>
                                 <tr>
@@ -218,18 +237,24 @@
                             </table>
                         </div>
                         <script>
-                            $("#insurance").on('change keyup paste', function() {
-                                var sub_tot =document.getElementById('sub_tot').value;
-                                var insurance =document.getElementById('insurance').value;
-                                var gst = document.getElementById('gst').value;
-                                var sum = ((parseFloat(sub_tot) + parseFloat(insurance)) * gst / 100 );
-                                document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
-                                document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
-                                var sgst = document.getElementById('sgst').value;
-                                var cgst = document.getElementById('cgst').value;
-                                var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst));
-                                document.getElementById('gross_tot').value = parseInt(grant);
-                            });
+//                            $("#insurance").on('change keyup paste', function() {
+//                                var sub_tot =document.getElementById('sub_tot').value;
+//                                var insurance =document.getElementById('insurance').value;
+//                                var gst = document.getElementById('gst').value;
+//                                var sum = ((parseFloat(sub_tot) + parseFloat(insurance)) * gst / 100 );
+//                                document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+//                                document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+//                                var sgst = document.getElementById('sgst').value;
+//                                var cgst = document.getElementById('cgst').value;
+//                                var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst));
+//                                document.getElementById('gross_tot').value = parseInt(grant);
+//                            });
+                                $('#insurance').click(function () {
+                                    var sub_tot =document.getElementById('sub_tot').value;
+                                    var tax = 2.42;
+                                    var total = parseFloat (sub_tot * tax / 100);
+                                    document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+                                });
                         </script>
                     </div>
                     <hr>
@@ -569,6 +594,34 @@
                 document.getElementById('gstn1').innerHTML =  document.getElementById('gstn').innerHTML;
             }
         });
+    }
+    function isgt() {
+        $('#igst1').show();
+        $('#sgst1').hide();
+        $('#cgst1').hide();
+        var sub_tot =document.getElementById('sub_tot').value;
+        var insurance =document.getElementById('insurance').value;
+        var trans =document.getElementById('transport').value;
+        var sum = ((parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(trans) ) * 18 / 100 );
+        document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+        var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(trans) + parseFloat(sum));
+        document.getElementById('gross_tot').value = parseInt(grant);
+    }
+    function GST() {
+        $('#igst1').hide();
+        $('#sgst1').show();
+        $('#cgst1').show();
+        var sub_tot =document.getElementById('sub_tot').value;
+        var insurance =document.getElementById('insurance').value;
+        var gst = document.getElementById('gst').value;
+        var trans =document.getElementById('transport').value;
+        var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+        document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+        document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+        var sgst = document.getElementById('sgst').value;
+        var cgst = document.getElementById('cgst').value;
+        var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) + parseFloat(trans));
+        document.getElementById('gross_tot').value = parseInt(grant);
     }
 </script>
 
