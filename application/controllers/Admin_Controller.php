@@ -1019,6 +1019,44 @@ class Admin_Controller extends CI_Controller
             $this->load->view('Admin/Create_Work_Order',$data, FALSE);
             $this->load->view('Admin/footer');
         }
+
+        /** insert work order */
+        public function Insert_WO()
+        {
+
+            $data = array(
+                'WO_Number' => $this->input->post('wo_number'),
+                'Proforma_Icode' => $this->input->post('PI_Icode'),
+                'Proforma_Number' => $this->input->post('invoice_no'),
+                'WO_Confirm_Date' =>date('Y-m-d') ,
+                'WO_Created_By' => $this->session->userdata['userid']);
+            $insert = $this->admin_model->Insert_WO($data);
+            if($insert != 0)
+            {
+                $item_icode =  $this->input->post('material');
+                $Qty =  $this->input->post('pics');
+                $count = sizeof($item_icode);
+                for($i=0; $i<$count; $i++)
+                {
+                    $data1 = array(
+                        'WO_Icode' =>  $insert,
+                        'Proforma_Icode' => $this->input->post('PI_Icode'),
+                        'Proforma_Invoice_Item_Icode' => $item_icode[$i],
+                        'Total_Qty' =>$Qty[$i] ,
+                        'Cutting_Remaining_Qty' =>'0',
+                        'Furnace_Remaining_Qty' =>'0',
+                        'Dispatch_Remaining_Qty' =>'0');
+                    $insert_process = $this->admin_model->Insert_WO_Process($data1);
+                }
+                $id=$this->input->post('PI_Icode');
+                $update = array('WO_Confirm' => '1');
+                $this->db->where('Proforma_Icode',$id);
+                $this->db->update('proforma_invoice', $update);
+
+                $this->session->set_flashdata('feedback', 'Work Order Generated ..');
+                redirect('Admin_Controller/Invoice_List');
+            }
+        }
         /** Manual Create Work Order */
 
 }

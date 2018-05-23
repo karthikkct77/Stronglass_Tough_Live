@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-md-12" >
             <div class="tile">
-                <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Invoice'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
+                <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Insert_WO'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
                     <div class="row">
                         <div class="col-md-4">
                             <h5>Consignee</h5>
@@ -209,24 +209,24 @@
                                     <input  type="radio" id="ptype" name="tax" onclick="GST()" required> SGST/CGST
                                     </td>
                                 </tr>
-                                <tr id="sgst" style="display: none">
+                                <tr id="sgst1" style="display: none">
                                     <td colspan="3" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
 
-                                    <td><input class="form-control" type="text" name="sgst" id="sgst" value="" readonly ></td>
+                                    <td><input class="form-control" type="text" name="sgst" id="sgst"  readonly ></td>
                                     <td></td>
                                 </tr>
-                                <tr id="cgst" style="display: none">
+                                <tr id="cgst1" style="display: none">
                                     <td colspan="3" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
                                         <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
                                     </td>
-                                    <td><input class="form-control" type="text" name="cgst" id="cgst" value="" readonly ></td>
+                                    <td><input class="form-control" type="text" name="cgst" id="cgst"  readonly ></td>
                                     <td></td>
                                 </tr>
-                                <tr id="igst" style="display: none">
+                                <tr id="igst1" style="display: none">
                                     <td colspan="3" align="right">IGST @18%
-                                        <input type="hidden" id="igst" value="18">
+
                                     </td>
-                                    <td><input class="form-control" type="text" name="igst" id="igst" value="" readonly ></td>
+                                    <td><input class="form-control" type="text" name="igst" id="igst" readonly ></td>
                                     <td></td>
                                 </tr>
                                 <tr>
@@ -823,21 +823,21 @@
     }
 
     function isgt() {
-        $('#igst').show();
-        $('#sgst').hide();
-        $('#cgst').hide();
+        $('#igst1').show();
+        $('#sgst1').hide();
+        $('#cgst1').hide();
         var sub_tot =document.getElementById('sub_tot').value;
         var insurance =document.getElementById('insurance').value;
         var trans =document.getElementById('transport').value;
         var sum = ((parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(trans) ) * 18 / 100 );
-        document.getElementById('igst').value = parseFloat(sum).toFixed(3);
+        document.getElementById('igst').value = parseFloat(sum).toFixed(2);
         var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(trans) + parseFloat(sum));
         document.getElementById('gross_tot').value = parseInt(grant);
     }
     function GST() {
-        $('#igst').hide();
-        $('#sgst').show();
-        $('#cgst').show();
+        $('#igst1').hide();
+        $('#sgst1').show();
+        $('#cgst1').show();
         var sub_tot =document.getElementById('sub_tot').value;
         var insurance =document.getElementById('insurance').value;
         var gst = document.getElementById('gst').value;
