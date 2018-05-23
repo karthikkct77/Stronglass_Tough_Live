@@ -196,18 +196,37 @@
                                     <td></td>
                                 </tr>
                                 <tr>
+                                    <td colspan="3" align="right">TRANSPORT</td>
+
+                                    <td><input class="form-control" type="text" name="transport" id="transport"  ></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td><input  type="radio" id="ptype" name="tax"  required onclick="isgt()"> IGST</td>
+                                    <td>
+                                    <input  type="radio" id="ptype" name="tax" onclick="GST()" required> SGST/CGST
+                                    </td>
+                                </tr>
+                                <tr id="sgst" style="display: none">
                                     <td colspan="3" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
 
                                     <td><input class="form-control" type="text" name="sgst" id="sgst" value="" readonly ></td>
                                     <td></td>
                                 </tr>
-                                <tr>
+                                <tr id="cgst" style="display: none">
                                     <td colspan="3" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
                                         <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
                                     </td>
-
-
                                     <td><input class="form-control" type="text" name="cgst" id="cgst" value="" readonly ></td>
+                                    <td></td>
+                                </tr>
+                                <tr id="igst" style="display: none">
+                                    <td colspan="3" align="right">IGST @18%
+                                        <input type="hidden" id="igst" value="18">
+                                    </td>
+                                    <td><input class="form-control" type="text" name="igst" id="igst" value="" readonly ></td>
                                     <td></td>
                                 </tr>
                                 <tr>
@@ -794,6 +813,17 @@
                 document.getElementById('gstn1').innerHTML =  document.getElementById('gstn').innerHTML;
             }
         });
+    }
+
+    function isgt() {
+        $('#igst').show();
+        $('#sgst').hide();
+        $('#cgst').hide();
+    }
+    function GST() {
+        $('#igst').hide();
+        $('#sgst').show();
+        $('#cgst').show();
     }
 </script>
 
