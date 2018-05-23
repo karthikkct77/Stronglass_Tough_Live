@@ -103,10 +103,20 @@
                             <tbody>
                             <?php $i=1; foreach ($invoice_item as $key) { ?>
                                 <tr id="row<?php echo $i; ?>">
-                                    <input class="form-control" type="hidden" name="material[]"  value="<?php echo $key['Proforma_Invoice_Items_Icode']; ?>" >
+<!--                                    <input class="form-control" type="hidden" name="material[]"  value="" >-->
                                     <input class="form-control" type="hidden" name="qty[]"  value="<?php echo $key['Proforma_Qty']; ?>" >
                                     <td><?php echo $i; ?></td>
-                                    <td><?php echo $key['Material_Name']; ?></td>
+                                    <td>
+                                        <div class="form-group">
+                                            <select name="material[]" class="form-control" id="material"  required >
+                                                <option value="<?php echo $key['Proforma_Invoice_Items_Icode']; ?>" ><?php echo $key['Material_Name']; ?></option>
+                                                <?php foreach ($stock as $row):
+                                                {
+                                                    echo '<option value= "'.$row['Material_Icode'].'">' . $row['Material_Name'] . '</option>';
+                                                }
+                                                endforeach; ?>
+                                            </select>
+                                        </div></td>
                                     <td><?php echo $key['Proforma_HSNCode']; ?></td>
                                     <td><?php echo $key['Proforma_Special']; ?></td>
                                     <td><input class="form-control" type="text" id="pics<?php echo $i; ?>"  name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
