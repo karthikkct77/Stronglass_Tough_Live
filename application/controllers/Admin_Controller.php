@@ -1102,19 +1102,20 @@ class Admin_Controller extends CI_Controller
                     'Proforma_Icode' => $insert,
                     'Proforma_Number' => $this->input->post('invoice_no'),
                     'WO_Date' =>date('Y-m-d') ,
+                    'WO_Confirm_Status' =>'1',
                     'WO_Created_By' => $this->session->userdata['userid']);
-                $insert = $this->admin_model->Insert_WO($data);
-                if($insert != 0)
+                $insert_wo = $this->admin_model->Insert_WO($data);
+                if($insert_wo != 0)
                 {
-                    $item_icode =  $this->input->post('material');
+                    $item =  $this->admin_model->get_invoice_item($insert);
                     $Qty =  $this->input->post('pics');
-                    $count = sizeof($item_icode);
-                    for($i=0; $i<$count; $i++)
+
+                    foreach ($item as $item_icode )
                     {
                         $data1 = array(
-                            'WO_Icode' =>  $insert,
+                            'WO_Icode' =>  $insert_wo,
                             'Proforma_Icode' => $insert,
-                            'Proforma_Invoice_Item_Icode' => $item_icode[$i],
+                            'Proforma_Invoice_Item_Icode' => $item_icode['Proforma_Invoice_Items_Icode'],
                             'Total_Qty' =>$Qty[$i] ,
                             'Cutting_Remaining_Qty' =>'0',
                             'Furnace_Remaining_Qty' =>'0',

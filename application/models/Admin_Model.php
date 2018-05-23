@@ -400,5 +400,11 @@ class Admin_Model extends CI_Model
         $query = $this->db->query("SELECT * FROM `work_order` WHERE WO_Icode='$wo_id'");
         return $query->result_array();
     }
+    /** Get Invoice item */
+    public function get_invoice_item($pi)
+    {
+        $query = $this->db->query("SELECT * FROM `proforma_invoice_items` WHERE Proforma_Icode='$pi'");
+        return $query->result_array();
+    }
 
 }
