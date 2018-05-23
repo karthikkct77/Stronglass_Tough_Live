@@ -249,6 +249,7 @@
                                 </tfoot>
                             </table>
                         </div>
+                        <div>Amount in Words: <span id="word"></span></div>
                         <script>
 //                            $("#insurance").on('change keyup paste', function() {
 //                                var sub_tot =document.getElementById('sub_tot').value;
