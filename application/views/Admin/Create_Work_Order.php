@@ -239,18 +239,18 @@
                             </table>
                         </div>
                         <script>
-                            $("#insurance").on('change keyup paste', function() {
-                                var sub_tot =document.getElementById('sub_tot').value;
-                                var insurance =document.getElementById('insurance').value;
-                                var gst = document.getElementById('gst').value;
-                                var sum = ((parseFloat(sub_tot) + parseFloat(insurance)) * gst / 100 );
-                                document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
-                                document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
-                                var sgst = document.getElementById('sgst').value;
-                                var cgst = document.getElementById('cgst').value;
-                                var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst));
-                                document.getElementById('gross_tot').value = parseInt(grant);
-                            });
+//                            $("#insurance").on('change keyup paste', function() {
+//                                var sub_tot =document.getElementById('sub_tot').value;
+//                                var insurance =document.getElementById('insurance').value;
+//                                var gst = document.getElementById('gst').value;
+//                                var sum = ((parseFloat(sub_tot) + parseFloat(insurance)) * gst / 100 );
+//                                document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+//                                document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+//                                var sgst = document.getElementById('sgst').value;
+//                                var cgst = document.getElementById('cgst').value;
+//                                var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst));
+//                                document.getElementById('gross_tot').value = parseInt(grant);
+//                            });
                         </script>
                     </div>
                     <hr>
@@ -402,6 +402,13 @@
         var grant_tot = document.getElementById('grand_total').value;
         var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
         document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+    });
+
+    $('#insurance').click(function () {
+        var sub_tot =document.getElementById('sub_tot').value;
+        var tax = 2.42;
+        var total = parseFloat (sub_tot * tax / 100);
+        document.getElementById('insurance').value = total;
     });
 
 
@@ -819,11 +826,29 @@
         $('#igst').show();
         $('#sgst').hide();
         $('#cgst').hide();
+        var sub_tot =document.getElementById('sub_tot').value;
+        var insurance =document.getElementById('insurance').value;
+        var trans =document.getElementById('transport').value;
+        var sum = ((parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(trans) ) * 18 / 100 );
+        document.getElementById('igst').value = parseFloat(sum).toFixed(3);
+        var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(trans) + parseFloat(sum));
+        document.getElementById('gross_tot').value = parseInt(grant);
     }
     function GST() {
         $('#igst').hide();
         $('#sgst').show();
         $('#cgst').show();
+        var sub_tot =document.getElementById('sub_tot').value;
+        var insurance =document.getElementById('insurance').value;
+        var gst = document.getElementById('gst').value;
+        var trans =document.getElementById('transport').value;
+        var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+        document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+        document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+        var sgst = document.getElementById('sgst').value;
+        var cgst = document.getElementById('cgst').value;
+        var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) + parseFloat(trans));
+        document.getElementById('gross_tot').value = parseInt(grant);
     }
 </script>
 
