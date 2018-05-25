@@ -169,7 +169,7 @@
                                     <td><?php echo $val['Dispatch_Remaining_Qty']; ?></td>
                                 <?php }?>
 
-                                <td><input type="number" class="form-control" name="remain_qty" id="remain_qty<?php echo $val['WO_Process_Icode']; ?>" required min="0" ></td>
+                                <td><input type="text" class="form-control" name="remain_qty" id="remain_qty<?php echo $val['WO_Process_Icode']; ?>" required min="0" onkeyup="change_qty('<?php echo $val['WO_Process_Icode']; ?>')"  ></td>
                                 <td><select name="comments" class="form-control" id="comments<?php echo $val['WO_Process_Icode']; ?>">
                                         <option value="">Select Reason</option>
                                         <option value="Out_of_Stock">Out of Stock </option>
@@ -178,8 +178,6 @@
                                     </select></td>
                                 <td><select name="status" class="form-control" id="status<?php echo $val['WO_Process_Icode']; ?>">
                                         <option value="">Select Status</option>
-                                        <option value="2">Completed with Remaining </option>
-                                        <option value="3">Fully Completed</option>
                                     </select></td>
                                 <td> <button class="btn btn-success" onclick="Save_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
                                     <input type="hidden" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Proforma_Invoice_Item_Icode']; ?>"
@@ -206,8 +204,9 @@
             var wo_icode = document.getElementById('wo_icode').value;
             var remaining_qty = document.getElementById('remain_qty' + id).value;
             var remaining_comments = document.getElementById('comments' + id).value;
-            var status = document.getElementById('status' + id).value;
+
             var profoma_item_icode = document.getElementById('profoma_item_icode' + id).value;
+            var status = document.getElementById('status' + id).value;
 
             var total_qty = document.getElementById('tot_qty' + id).value;
 
@@ -215,7 +214,7 @@
             var dispatch_income = document.getElementById('dis_income' + id).value;
 
 
-            if (remaining_qty == "" || status == "") {
+            if (remaining_qty == "" ) {
                 alert("Please Select Remaining qty and Status");
             }
             else if (remaining_qty != 0 && remaining_comments == "") {
@@ -253,6 +252,37 @@
                 });
             }
         }
+    }
+
+
+    function change_qty(id) {
+        var remaining_qty = document.getElementById('remain_qty' + id).value;
+        var total_qty = document.getElementById('tot_qty' + id).value;
+        if (!/^[0-9]+$/.test(remaining_qty))
+        {
+            alert("Please enter onyl number.");
+
+        }
+
+        if(remaining_qty == 0)
+        {
+            $('#status'+id)
+                .empty()
+                .append('<option selected="selected" value="3">Fully Completed</option>');
+            $('#comments'+id).prop('disabled', true);
+        }
+      else
+        {
+            $('#status'+id)
+                .empty()
+                .append('<option selected="selected" value="2">Completed with Remaining</option>');
+            $('#comments'+id).prop('disabled', false);
+        }
+       if(total_qty < remaining_qty )
+        {
+            alert("Remaining QTY is Wrong..");
+        }
+
     }
 
 </script>
