@@ -30,7 +30,7 @@
 
                         </div>
                         <input type="hidden" name="wo_icode" value="<?php echo $wo[0]['WO_Icode']; ?>">
-                        <input type="text" name="wo_number" value="<?php echo $wo[0]['WO_Number']; ?>">
+                        <input type="hidden" name="wo_number" value="<?php echo $wo[0]['WO_Number']; ?>">
                         <div class="col-md-1">
                             <div class="form-group">
                                 <input type="checkbox" name="check" id="check" checked onclick="FillBilling()">
