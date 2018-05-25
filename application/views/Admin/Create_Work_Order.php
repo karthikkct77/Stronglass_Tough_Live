@@ -388,8 +388,8 @@
     }
 
     $("#no_holes").on('change keyup paste', function() {
-        var holes = parseInt($(this).val());
-        var amt = parseInt($('#charge_amt').val());
+        var holes =$(this).val();
+        var amt = $('#charge_amt').val();
         var total =  parseInt(holes * amt);
         document.getElementById('tot_charge_amt').value = total;
 
