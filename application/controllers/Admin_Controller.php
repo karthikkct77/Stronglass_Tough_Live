@@ -1023,7 +1023,6 @@ class Admin_Controller extends CI_Controller
         /** insert work order */
         public function Insert_WO()
         {
-
             $address =$this->input->post('company_address');
             if($address == 0)
             {
@@ -1130,10 +1129,7 @@ class Admin_Controller extends CI_Controller
                     $this->session->set_flashdata('feedback', 'Work Order Generated ..');
                     redirect('Admin_Controller/Invoice_List');
                 }
-
             }
-
-
         }
         /** Manual Create Work Order */
 
