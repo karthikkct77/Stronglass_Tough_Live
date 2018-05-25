@@ -48,10 +48,10 @@
                                 <td><?php echo $i; ?></td>
                                 <td></td>
                                 <td><?php echo $val['WO_Number']; ?></td>
-                                <td><?php echo $val['WO_Confirm_Date']; ?></td>
+                                <td><?php echo $val['WO_Date']; ?></td>
                                 <td><?php echo $val['Proforma_Number']; ?></td>
                                 <?php
-                                if($val['WO_Status'] == '1')
+                                if($val['WO_Confirm_Status'] == '1')
                                 {
                                     ?>
                                     <td>Completed</td>

@@ -1129,6 +1129,11 @@ class Admin_Controller extends CI_Controller
                 }
             }
         }
+
+        public function View_WO()
+        {
+
+        }
         /** Manual Create Work Order */
 
 }
