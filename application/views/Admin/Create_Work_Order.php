@@ -266,7 +266,7 @@
                         </div>
                         <div class="col-md-6"></div>
                     </div>
-                    <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Confirm PI</button>
+                    <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Confirm WO</button>
                 </form>
             </div>
         </div>
@@ -390,8 +390,8 @@
     $("#no_holes").on('change keyup paste', function() {
         var holes =$(this).val();
         var amt = $('#charge_amt').val();
-        var total =  parseInt(holes * amt);
-        document.getElementById('tot_charge_amt').value = total;
+        var total =  parseFloat(holes * amt);
+        document.getElementById('tot_charge_amt').value = parseFloat(total).toFixed(3);
 
         var totals =document.getElementsByName("tot_charge_amt[]");
         var sum = 0;
@@ -403,7 +403,26 @@
         }
         var grant_tot = document.getElementById('grand_total').value;
         var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
-        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(3);
+    });
+
+    $("#charge_amt").on('change keyup paste', function() {
+        var holes =$(this).val();
+        var amt = $('#no_holes').val();
+        var total =  parseFloat(holes * amt);
+        document.getElementById('tot_charge_amt').value = parseFloat(total).toFixed(3);
+
+        var totals =document.getElementsByName("tot_charge_amt[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+        var grant_tot = document.getElementById('grand_total').value;
+        var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
+        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(3);
     });
 
     $('#insurance').click(function () {
