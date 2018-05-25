@@ -1107,15 +1107,13 @@ class Admin_Controller extends CI_Controller
                 if($insert_wo != 0)
                 {
                     $item =  $this->admin_model->get_invoice_item($insert);
-                    $Qty =  $this->input->post('pics');
-
                     foreach ($item as $item_icode )
                     {
                         $data1 = array(
                             'WO_Icode' =>  $insert_wo,
                             'Proforma_Icode' => $insert,
                             'Proforma_Invoice_Item_Icode' => $item_icode['Proforma_Invoice_Items_Icode'],
-                            'Total_Qty' =>$Qty[$i] ,
+                            'Total_Qty' =>$item_icode['Proforma_Qty'] ,
                             'Cutting_Remaining_Qty' =>'0',
                             'Furnace_Remaining_Qty' =>'0',
                             'Dispatch_Remaining_Qty' =>'0');
