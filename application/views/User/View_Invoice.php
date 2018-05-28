@@ -105,19 +105,19 @@
                                     <td><input class="form-control" type="text" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['holes']; ?>" readonly></td>
                                     <td><input class="form-control" type="text" name="height[]" id="height<?php echo $i; ?>" value="<?php echo $key['height']; ?>" readonly></td>
                                     <td><input class="form-control" type="text" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['width']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="ch_height[]" id="ch_height<?php echo $i; ?>" value="<?php echo $key['ch_height']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="ch_weight[]" id="ch_weight<?php echo $i; ?>" value="<?php echo $key['ch_weight']; ?>" readonly></td>
+                                    <td><input class="form-control" type="text" name="ch_height[]" id="ch_height<?php echo $i; ?>" value="<?php echo $key['ch_height']; ?>" onkeyup="change_height('<?php echo $i; ?>')" ></td>
+                                    <td><input class="form-control" type="text" name="ch_weight[]" id="ch_weight<?php echo $i; ?>" value="<?php echo $key['ch_weight']; ?>" onkeyup="change_weight('<?php echo $i; ?>')" ></td>
                                     <?php
                                     if($key['area'] > 5)
                                     {
                                         ?>
-                                        <td><input class="form-control" style="color: red;" type="text" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['area']; ?>" readonly></td>
+                                        <td><input class="form-control" style="color: red;" id="new_area1<?php echo $i; ?>" type="text" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['area']; ?>" readonly></td>
 
                                         <?php
                                     }
                                     else{
                                         ?>
-                                        <td><input class="form-control" type="text" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['area']; ?>" readonly></td>
+                                        <td><input class="form-control" type="text" id="new_area2<?php echo $i; ?>" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['area']; ?>" readonly></td>
 
                                     <?php }
                                     ?>
@@ -535,6 +535,38 @@
         var total = (pcs * area * rate);
         document.getElementById('total'+id).value = total;
     }
+
+    function change_height(id) {
+        var height = document.getElementById('ch_height'+id).value;
+        var width = document.getElementById('ch_weight'+id).value;
+        var area = (height/1000 * width/1000);
+
+        if(area > 5)
+        {
+            document.getElementById('new_area1'+id).value = area;
+        }
+        else
+        {
+            document.getElementById('new_area2'+id).value = area;
+        }
+
+    }
+
+
+    function change_weight(id) {
+        var height = document.getElementById('ch_height'+id).value;
+        var width = document.getElementById('ch_weight'+id).value;
+        var area = (height/1000 * width/1000);
+        if(area > 5)
+        {
+            document.getElementById('new_area1'+id).value = area;
+        }
+        else
+        {
+            document.getElementById('new_area2'+id).value = area;
+        }
+    }
+
 
     function ajaxSearch()
     {
