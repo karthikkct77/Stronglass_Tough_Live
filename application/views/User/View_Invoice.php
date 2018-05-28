@@ -111,13 +111,13 @@
                                     if($key['area'] > 5)
                                     {
                                         ?>
-                                        <td><input class="form-control" style="color: red;" id="new_area1<?php echo $i; ?>" type="text" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['area']; ?>" readonly></td>
+                                        <td><input class="form-control new_area" style="color: red;" type="text" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['area']; ?>" readonly></td>
 
                                         <?php
                                     }
                                     else{
                                         ?>
-                                        <td><input class="form-control" type="text" id="new_area2<?php echo $i; ?>" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['area']; ?>" readonly></td>
+                                        <td><input class="form-control new_area1" type="text"  name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['area']; ?>" readonly></td>
 
                                     <?php }
                                     ?>
@@ -535,37 +535,14 @@
         var total = (pcs * area * rate);
         document.getElementById('total'+id).value = total;
     }
-
     function change_height(id) {
         var height = document.getElementById('ch_height'+id).value;
-        var width = document.getElementById('ch_weight'+id).value;
-        var area = (height/1000 * width/1000);
-
-        if(area > 5)
-        {
-            document.getElementById('new_area1'+id).value = area;
-        }
-        else
-        {
-            document.getElementById('new_area2'+id).value = area;
-        }
+        var weight = document.getElementById('ch_weight'+id).value;
+        var area = height/1000 * weight/1000;
 
     }
 
 
-    function change_weight(id) {
-        var height = document.getElementById('ch_height'+id).value;
-        var width = document.getElementById('ch_weight'+id).value;
-        var area = (height/1000 * width/1000);
-        if(area > 5)
-        {
-            document.getElementById('new_area1'+id).value = area;
-        }
-        else
-        {
-            document.getElementById('new_area2'+id).value = area;
-        }
-    }
 
 
     function ajaxSearch()
