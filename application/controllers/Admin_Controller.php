@@ -1007,7 +1007,7 @@ class Admin_Controller extends CI_Controller
         /** Current Status */
         public function Current_Status()
         {
-            $data['work_order']= $this->admin_model->get_Single_Work_Order($wo_icode);
+            $data['8hour']= $this->admin_model->get_all_work_order_within8();
             $this->load->view('Admin/header');
             $this->load->view('Admin/top');
             $this->load->view('Admin/left');
