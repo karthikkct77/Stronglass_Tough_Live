@@ -1004,6 +1004,21 @@ class Admin_Controller extends CI_Controller
             $this->load->view('Admin/footer');
         }
 
+        /** Current Status */
+        public function Current_Status()
+        {
+            $data['work_order']= $this->admin_model->get_Single_Work_Order($wo_icode);
+            $this->load->view('Admin/header');
+            $this->load->view('Admin/top');
+            $this->load->view('Admin/left');
+            $this->load->view('Admin/Current_Status',$data, FALSE);
+            $this->load->view('Admin/footer');
+        }
+
+
+
+
+
 
         /** Manual Create Work Order */
         public function  Create_Work_Order()

@@ -45,6 +45,8 @@
 
                </ul>
            </li>
+           <li><a class="app-menu__item active" href="<?php echo site_url('Admin_Controller/Current_Status'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Status</span></a></li>
+
 
        <?php }
         elseif($_SESSION['role'] == 'MD')
