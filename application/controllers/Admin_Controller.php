@@ -1007,19 +1007,28 @@ class Admin_Controller extends CI_Controller
         /** Current Status */
         public function Current_Status()
         {
-            $data['8hour']= $this->admin_model->get_all_work_order_within8();
+            $data['hours']= $this->admin_model->get_all_work_order_within8();
             $this->load->view('Admin/header');
             $this->load->view('Admin/top');
             $this->load->view('Admin/left');
             $this->load->view('Admin/Current_Status',$data, FALSE);
             $this->load->view('Admin/footer');
         }
-
-
-
-
-
-
+        /** View Work Order Status */
+        public function View_WO_Status($id)
+        {
+            $wo_icode = $this->uri->segment(3);
+            $data['work_order']= $this->admin_model->get_Single_Work_Order($wo_icode);
+            $data['cutting']= $this->admin_model->get_cutting_status($wo_icode);
+            $data['complete']= $this->admin_model->get_completed_status($wo_icode);
+            $data['furnace']= $this->admin_model->get_furnace_status($wo_icode);
+            $data['dispatch']= $this->admin_model->get_dispatch_status($wo_icode);
+            $this->load->view('Admin/header');
+            $this->load->view('Admin/top');
+            $this->load->view('Admin/left');
+            $this->load->view('Admin/WO_Status',$data, FALSE);
+            $this->load->view('Admin/footer');
+        }
         /** Manual Create Work Order */
         public function  Create_Work_Order()
         {
@@ -1115,6 +1124,7 @@ class Admin_Controller extends CI_Controller
                     'WO_Number' => $this->input->post('wo_number'),
                     'Proforma_Icode' => $insert,
                     'Proforma_Number' => $this->input->post('invoice_no'),
+                    'Total_Qty'=> $this->input->post('total_qty'),
                     'WO_Date' =>date('Y-m-d') ,
                     'WO_Confirm_Status' =>'1',
                     'WO_Created_By' => $this->session->userdata['userid']);

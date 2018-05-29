@@ -121,7 +121,7 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td><input type="text" class="form-control pull-right" id="total_pic" value="0"   readonly/></td>
+                                <td><input type="text" class="form-control pull-right" id="total_pic" value="0"  name="total_qty"  readonly/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>

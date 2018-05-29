@@ -407,5 +407,35 @@ class Admin_Model extends CI_Model
         return $query->result_array();
     }
     /** Get all work order with in 8Hr */
+    public function get_all_work_order_within8()
+    {
+        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                   WHERE now() <= DATE_ADD(A.WO_Created_On, INTERVAL 8 HOUR)");
+        return $query->result_array();
+    }
+    /** get cutting Status */
+    public function get_cutting_status($id)
+    {
+        $query = $this->db->query("SELECT sum(Total_Qty)as total, sum(Cutting_Remaining_Qty) as remaining FROM wo_processing  WHERE WO_Icode ='$id' and Cutting_Status !='3'");
+        return $query->result_array();
+    }
+    /** work order completed status */
+    public function get_completed_status($id)
+    {
+        $query = $this->db->query("SELECT sum(Total_Qty)as total, sum(Dispatch_Remaining_Qty) as remaining FROM wo_processing  WHERE WO_Icode ='$id' and Dispatch_Status ='3'");
+        return $query->result_array();
+    }
+    /** get furnace status */
+    public function get_furnace_status($id)
+    {
+        $query = $this->db->query("SELECT sum(Furnace_Incoming)as total, sum(Furnace_Remaining_Qty) as remaining FROM wo_processing  WHERE WO_Icode ='$id' and Furnace_Status !='3'");
+        return $query->result_array();
+    }
+    /** dispatch status */
+    public function get_dispatch_status($id)
+    {
+        $query = $this->db->query("SELECT sum(Dispatch_Incoming)as total, sum(Furnace_Remaining_Qty) as remaining FROM wo_processing  WHERE WO_Icode ='$id' and Dispatch_Status !='3'");
+        return $query->result_array();
+    }
 
 }

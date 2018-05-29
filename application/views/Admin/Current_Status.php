@@ -27,10 +27,10 @@
             <div class="tile">
                 <div class="tile-title">
                     <ul  class="nav nav-pills" id="myTab">
-                        <button>With in 8Hr </button>
-                        <button>8 to 16 hr</button>
-                        <button>16 to 24hr</button>
-                        <button>24 to 48hr</button>
+                        <li class="active"><a  href="#1a" data-toggle="tab">>With in 8Hr </a></li>
+                        <li><a href="#2a" data-toggle="tab">8 to 16 hr</a></li>
+                        <li><a href="#3a" data-toggle="tab">16 to 24hr</a></li>
+                        <li><a href="#4a" data-toggle="tab">24 to 48hr</a></li>
                     </ul>
                 </div>
                 <div class="tile-body">
@@ -38,17 +38,16 @@
                         <div class="col-md-12">
                             <div class="tab-content clearfix">
                                 <div class="tab-pane active" id="1a">
-                                    <h3>Un Assigned Requirements </h3>
+                                    <h3>With in 8 hours </h3>
 
                                     <table id="assigned_tasks" class="table table-striped table-bordered" cellspacing="0" width="100%">
                                         <thead>
                                         <tr>
                                             <td>#</td>
-                                            <th>Client</th>
-                                            <th>Project</th>
-                                            <th>Contract Type</th>
-                                            <th>Ddate</th>
-                                            <th>Select Leader</th>
+                                            <th>WO Number</th>
+                                            <th>WO DATE/TIME</th>
+                                            <th>Client Name</th>
+                                            <th>Total Qty</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
@@ -56,34 +55,16 @@
                                         <tbody>
                                         <?php
                                         $i=1;
-                                        foreach($Requirements as $r)
+                                        foreach($hours as $r)
                                         {
                                             ?>
                                             <tr>
                                                 <td><?php echo $i; ?></td>
-                                                <td><?php echo $r['Company_Name']; ?></td>
-                                                <td><?php echo $r['Project_Title']; ?></td>
-                                                <td><?php echo $r['Requirement_Type']; ?></td>
-                                                <td><?php echo $r['Estimation_Date']; ?></td>
-                                                <td>
-                                                    <div class="form-group">
-                                                        <select name="Leader_Code[]" class="form-control" id="Leader<?php echo $r['Requirement_Icode']; ?>" required >
-                                                            <option value="" >Select Leader</option>
-                                                            <?php foreach ($Leader as $row):
-                                                            {
-                                                                echo '<option value= "'.$row['User_Icode'].'">' . $row['User_Name'] . '</option>';
-                                                            }
-                                                            endforeach; ?>
-                                                        </select>
-
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <button id="myBtn" class="btn btn-success" value="<?php echo $r['Requirement_Icode']; ?>"
-                                                            onclick="Assign_Leader(this.value)" >Assign</button>
-                                                </td>
-
-
+                                                <td><?php echo $r['WO_Number']; ?></td>
+                                                <td><?php echo $r['WO_Created_On']; ?></td>
+                                                <td><?php echo $r['Customer_Company_Name']; ?></td>
+                                                <td><?php echo $r['Total_Qty']; ?></td>
+                                                <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/View_WO_Status/') . $r['WO_Icode']; ?>">View Status</a></td>
                                             </tr>
                                             <?php
                                             $i++;
@@ -107,10 +88,8 @@
                                                     <th>Tech Team Date</th>
                                                     <th>Leader Name</th>
                                                     <th>Status</th>
-
                                                 </tr>
                                                 </thead>
-
                                                 <tbody>
                                                 <?php
                                                 $i=1;
@@ -136,11 +115,9 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -157,11 +134,14 @@
 
             $('#myTab a[href="' + activeTab + '"]').tab('show');
         }
-
         /*stay in same tab after form submit*/
         $('#assigned_tasks').DataTable();
-
     });
+    function with_in_8hours(id) {
+        alert(id);
+
+
+    }
 </script>
 
 
