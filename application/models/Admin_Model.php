@@ -413,6 +413,27 @@ class Admin_Model extends CI_Model
                                    WHERE now() <= DATE_ADD(A.WO_Created_On, INTERVAL 8 HOUR)");
         return $query->result_array();
     }
+    /** Get all work order with in 16Hr */
+    public function get_all_work_order_within16()
+    {
+        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                   WHERE now() <= DATE_ADD(A.WO_Created_On, INTERVAL 16 HOUR) and now() >= DATE_ADD(A.WO_Created_On, INTERVAL 8 HOUR)");
+        return $query->result_array();
+    }
+    /** Get all work order with in 16Hr to 24 hr */
+    public function get_all_work_order_within24()
+    {
+        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                   WHERE now() <= DATE_ADD(A.WO_Created_On, INTERVAL 24 HOUR) and now() >= DATE_ADD(A.WO_Created_On, INTERVAL 16 HOUR)");
+        return $query->result_array();
+    }
+    /** Get all work order with in 24Hr to 48 hr */
+    public function get_all_work_order_within48()
+    {
+        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                   WHERE now() <= DATE_ADD(A.WO_Created_On, INTERVAL 48 HOUR) and now() >= DATE_ADD(A.WO_Created_On, INTERVAL 24 HOUR)");
+        return $query->result_array();
+    }
     /** get cutting Status */
     public function get_cutting_status($id)
     {
