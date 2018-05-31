@@ -1011,6 +1011,7 @@ class Admin_Controller extends CI_Controller
             $data['hours16']= $this->admin_model->get_all_work_order_within16();
             $data['hours24']= $this->admin_model->get_all_work_order_within24();
             $data['hours48']= $this->admin_model->get_all_work_order_within48();
+            $data['delay']= $this->admin_model->get_all_work_order_delay();
             $this->load->view('Admin/header');
             $this->load->view('Admin/top');
             $this->load->view('Admin/left');
