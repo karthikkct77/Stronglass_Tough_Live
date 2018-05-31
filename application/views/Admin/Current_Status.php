@@ -21,6 +21,7 @@
             color: white;
             font-family: initial;
         }
+
     </style>
     <div class="row">
         <div class="col-md-12">
@@ -28,7 +29,7 @@
                 <div class="tile-title">
                     <ul  class="nav nav-pills" id="myTab">
                         <li class="active"><a  href="#5a" data-toggle="tab">Delay </a></li>
-                        <li><a  href="#1a" data-toggle="tab">With in 8Hr </a></li>
+                        <li><a href="#1a" data-toggle="tab">With in 8Hr </a></li>
                         <li><a href="#2a" data-toggle="tab">8 to 16 hr</a></li>
                         <li><a href="#3a" data-toggle="tab">16 to 24hr</a></li>
                         <li><a href="#4a" data-toggle="tab">24 to 48hr</a></li>
