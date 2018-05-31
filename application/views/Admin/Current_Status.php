@@ -49,6 +49,7 @@
                                             <th>WO DATE/TIME</th>
                                             <th>Client Name</th>
                                             <th>Total Qty</th>
+                                            <th>Completed %</th>
                                             <th>Action</th>
                                         </tr>
                                         </thead>
@@ -58,6 +59,9 @@
                                         $i=1;
                                         foreach($hours as $r)
                                         {
+                                            $total_qty = $r['Total_Qty'];
+                                            $completed = $r['total'] - $r['remaining'];
+                                            $totel_completed = ($completed/$total_qty) * 100;
                                             ?>
                                             <tr>
                                                 <td><?php echo $i; ?></td>
@@ -65,6 +69,23 @@
                                                 <td><?php echo $r['WO_Created_On']; ?></td>
                                                 <td><?php echo $r['Customer_Company_Name']; ?></td>
                                                 <td><?php echo $r['Total_Qty']; ?></td>
+                                                <?php
+                                                if($totel_completed < 50)
+                                                { ?>
+                                                    <td style="color: red;"><h3><?php echo  $totel_completed; ?>%</h3></td>
+                                                    <?php
+                                                }
+                                                elseif($totel_completed >50 && $totel_completed <90 )
+                                                {
+                                                    ?>
+                                                    <td style="color: orange;"><h3><?php echo  $totel_completed; ?>%</h3></td>
+
+                                                    <?php
+                                                }
+                                                else{ ?>
+                                                    <td style="color: green;"><h3><?php echo  $totel_completed; ?>%</h3></td>
+                                                <?php }
+                                                ?>
                                                 <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/View_WO_Status/') . $r['WO_Icode']; ?>">View Status</a></td>
                                             </tr>
                                             <?php
@@ -86,6 +107,7 @@
                                                     <th>WO DATE/TIME</th>
                                                     <th>Client Name</th>
                                                     <th>Total Qty</th>
+                                                    <th>Completed %</th>
                                                     <th>Action</th>
                                                 </tr>
                                                 </thead>
@@ -95,6 +117,9 @@
                                                 $i=1;
                                                 foreach($hours16 as $r)
                                                 {
+                                                    $total_qty = $r['Total_Qty'];
+                                                    $completed = $r['total'] - $r['remaining'];
+                                                    $totel_completed = ($completed/$total_qty) * 100;
                                                     ?>
                                                     <tr>
                                                         <td><?php echo $i; ?></td>
@@ -102,6 +127,23 @@
                                                         <td><?php echo $r['WO_Created_On']; ?></td>
                                                         <td><?php echo $r['Customer_Company_Name']; ?></td>
                                                         <td><?php echo $r['Total_Qty']; ?></td>
+                                                        <?php
+                                                        if($totel_completed < 50)
+                                                        { ?>
+                                                            <td style="color: red;"><h3><?php echo  $totel_completed; ?>%</h3></td>
+                                                            <?php
+                                                        }
+                                                        elseif($totel_completed >50 && $totel_completed <90 )
+                                                        {
+                                                            ?>
+                                                            <td style="color: orange;"><h3><?php echo  $totel_completed; ?>%</h3></td>
+
+                                                            <?php
+                                                        }
+                                                        else{ ?>
+                                                            <td style="color: green;"><h3><?php echo  $totel_completed; ?>%</h3></td>
+                                                        <?php }
+                                                        ?>
                                                         <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/View_WO_Status/') . $r['WO_Icode']; ?>">View Status</a></td>
                                                     </tr>
                                                     <?php
@@ -125,6 +167,7 @@
                                                     <th>WO DATE/TIME</th>
                                                     <th>Client Name</th>
                                                     <th>Total Qty</th>
+                                                    <th>Completed %</th>
                                                     <th>Action</th>
                                                 </tr>
                                                 </thead>
@@ -134,6 +177,9 @@
                                                 $i=1;
                                                 foreach($hours24 as $r)
                                                 {
+                                                    $total_qty = $r['Total_Qty'];
+                                                    $completed = $r['total'] - $r['remaining'];
+                                                    $totel_completed = ($completed/$total_qty) * 100;
                                                     ?>
                                                     <tr>
                                                         <td><?php echo $i; ?></td>
@@ -141,6 +187,23 @@
                                                         <td><?php echo $r['WO_Created_On']; ?></td>
                                                         <td><?php echo $r['Customer_Company_Name']; ?></td>
                                                         <td><?php echo $r['Total_Qty']; ?></td>
+                                                        <?php
+                                                        if($totel_completed < 50)
+                                                        { ?>
+                                                            <td style="color: red;"><h3><?php echo  $totel_completed; ?>%</h3></td>
+                                                            <?php
+                                                        }
+                                                        elseif($totel_completed >50 && $totel_completed <90 )
+                                                        {
+                                                            ?>
+                                                            <td style="color: orange;"><h3><?php echo  $totel_completed; ?>%</h3></td>
+
+                                                            <?php
+                                                        }
+                                                        else{ ?>
+                                                            <td style="color: green;"><h3><?php echo  $totel_completed; ?>%</h3></td>
+                                                        <?php }
+                                                        ?>
                                                         <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/View_WO_Status/') . $r['WO_Icode']; ?>">View Status</a></td>
                                                     </tr>
                                                     <?php
@@ -164,6 +227,7 @@
                                                     <th>WO DATE/TIME</th>
                                                     <th>Client Name</th>
                                                     <th>Total Qty</th>
+                                                    <th>Completed %</th>
                                                     <th>Action</th>
                                                 </tr>
                                                 </thead>
@@ -173,6 +237,9 @@
                                                 $i=1;
                                                 foreach($hours48 as $r)
                                                 {
+                                                    $total_qty = $r['Total_Qty'];
+                                                    $completed = $r['total'] - $r['remaining'];
+                                                    $totel_completed = ($completed/$total_qty) * 100;
                                                     ?>
                                                     <tr>
                                                         <td><?php echo $i; ?></td>
@@ -180,6 +247,23 @@
                                                         <td><?php echo $r['WO_Created_On']; ?></td>
                                                         <td><?php echo $r['Customer_Company_Name']; ?></td>
                                                         <td><?php echo $r['Total_Qty']; ?></td>
+                                                        <?php
+                                                        if($totel_completed < 50)
+                                                        { ?>
+                                                            <td style="color: red;"><h3><?php echo  $totel_completed; ?>%</h3></td>
+                                                            <?php
+                                                        }
+                                                        elseif($totel_completed >50 && $totel_completed <90 )
+                                                        {
+                                                            ?>
+                                                            <td style="color: orange;"><h3><?php echo  $totel_completed; ?>%</h3></td>
+
+                                                            <?php
+                                                        }
+                                                        else{ ?>
+                                                            <td style="color: green;"><h3><?php echo  $totel_completed; ?>%</h3></td>
+                                                        <?php }
+                                                        ?>
                                                         <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/View_WO_Status/') . $r['WO_Icode']; ?>">View Status</a></td>
                                                     </tr>
                                                     <?php
@@ -204,15 +288,20 @@
                                                     <th>WO DATE/TIME</th>
                                                     <th>Client Name</th>
                                                     <th>Total Qty</th>
+                                                    <th>Completed%</th>
                                                     <th>Action</th>
                                                 </tr>
                                                 </thead>
 
                                                 <tbody>
                                                 <?php
+
                                                 $i=1;
-                                                foreach($delay as $r)
+                                                foreach($delays as $r)
                                                 {
+                                                    $total_qty = $r['Total_Qty'];
+                                                    $completed = $r['total'] - $r['remaining'];
+                                                    $totel_completed = ($completed/$total_qty) * 100;
                                                     ?>
                                                     <tr>
                                                         <td><?php echo $i; ?></td>
@@ -220,6 +309,24 @@
                                                         <td><?php echo $r['WO_Created_On']; ?></td>
                                                         <td><?php echo $r['Customer_Company_Name']; ?></td>
                                                         <td><?php echo $r['Total_Qty']; ?></td>
+                                                        <?php
+                                                        if($totel_completed < 50)
+                                                        { ?>
+                                                            <td style="color: red;"><h3><?php echo  $totel_completed; ?>%</h3></td>
+                                                            <?php
+                                                        }
+                                                        elseif($totel_completed >50 && $totel_completed <90 )
+                                                        {
+                                                            ?>
+                                                            <td style="color: orange;"><h3><?php echo  $totel_completed; ?>%</h3></td>
+
+                                                            <?php
+                                                        }
+                                                        else{ ?>
+                                                            <td style="color: green;"><h3><?php echo  $totel_completed; ?>%</h3></td>
+                                                        <?php }
+                                                        ?>
+
                                                         <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/View_WO_Status/') . $r['WO_Icode']; ?>">View Status</a></td>
                                                     </tr>
                                                     <?php
@@ -239,6 +346,22 @@
         </div>
     </div>
 </main>
+<script>
+    $(document).ready(function() {
+        /*stay in same tab after form submit*/
+        $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+            localStorage.setItem('activeTab', $(e.target).attr('href'));
+        });
+        var activeTab = localStorage.getItem('activeTab');
+        if(activeTab){
+
+            $('#myTab a[href="' + activeTab + '"]').tab('show');
+        }
+    } );
+</script>
+
+
+
 
 
 

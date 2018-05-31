@@ -409,36 +409,61 @@ class Admin_Model extends CI_Model
     /** Get all work order with in 8Hr */
     public function get_all_work_order_within8()
     {
-        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
-                                   WHERE now() <= DATE_ADD(A.WO_Created_On, INTERVAL 48 HOUR) and now() >= DATE_ADD(A.WO_Created_On, INTERVAL 24 HOUR) ");
+//        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode
+//                                   WHERE now() <= DATE_ADD(A.WO_Created_On, INTERVAL 48 HOUR) and now() >= DATE_ADD(A.WO_Created_On, INTERVAL 24 HOUR) ");
+        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name, ifnull(sum(D.Total_Qty), '0') as total, ifnull(sum(D.Dispatch_Remaining_Qty), '0') as remaining FROM work_order A 
+                                   INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                   INNER JOIN wo_processing D on A.WO_Icode=D.WO_Icode WHERE now() <= DATE_ADD(A.WO_Created_On, INTERVAL 48 HOUR) and now() >= DATE_ADD(A.WO_Created_On, INTERVAL 24 HOUR) AND D.Dispatch_Status='3' 
+                                   GROUP by A.WO_Icode ");
+
         return $query->result_array();
     }
     /** Get all work order with in 16Hr */
     public function get_all_work_order_within16()
     {
-        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name, sum(D.Total_Qty)as total, sum(D.Dispatch_Remaining_Qty) as remaining FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode INNER JOIN wo_processing D on A.WO_Icode=D.WO_Icode
-                                   WHERE now() >= DATE_ADD(A.WO_Created_On, INTERVAL 16 HOUR) and now() <= DATE_ADD(A.WO_Created_On, INTERVAL 24 HOUR) and D.Dispatch_Status='3'");
+//        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name, sum(D.Total_Qty)as total, sum(D.Dispatch_Remaining_Qty) as remaining FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode INNER JOIN wo_processing D on A.WO_Icode=D.WO_Icode
+//                                   WHERE now() >= DATE_ADD(A.WO_Created_On, INTERVAL 16 HOUR) and now() <= DATE_ADD(A.WO_Created_On, INTERVAL 24 HOUR) and D.Dispatch_Status='3'");
+
+        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name, ifnull(sum(D.Total_Qty), '0') as total, ifnull(sum(D.Dispatch_Remaining_Qty), '0') as remaining FROM work_order A 
+                                   INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                   INNER JOIN wo_processing D on A.WO_Icode=D.WO_Icode WHERE now() >= DATE_ADD(A.WO_Created_On, INTERVAL 16 HOUR) and now() <= DATE_ADD(A.WO_Created_On, INTERVAL 24 HOUR) AND D.Dispatch_Status='3' 
+                                   GROUP by A.WO_Icode ");
         return $query->result_array();
     }
     /** Get all work order with in 16Hr to 24 hr */
     public function get_all_work_order_within24()
     {
-        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
-                                   WHERE now() >= DATE_ADD(A.WO_Created_On, INTERVAL 8 HOUR) and now() <= DATE_ADD(A.WO_Created_On, INTERVAL 16 HOUR)");
+//        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode
+//                                   WHERE now() >= DATE_ADD(A.WO_Created_On, INTERVAL 8 HOUR) and now() <= DATE_ADD(A.WO_Created_On, INTERVAL 16 HOUR)");
+
+        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name, ifnull(sum(D.Total_Qty), '0') as total, ifnull(sum(D.Dispatch_Remaining_Qty), '0') as remaining FROM work_order A 
+                                   INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                   INNER JOIN wo_processing D on A.WO_Icode=D.WO_Icode WHERE now() >= DATE_ADD(A.WO_Created_On, INTERVAL 8 HOUR) and now() <= DATE_ADD(A.WO_Created_On, INTERVAL 16 HOUR) AND D.Dispatch_Status='3' 
+                                   GROUP by A.WO_Icode ");
         return $query->result_array();
     }
     /** Get all work order with in 24Hr to 48 hr */
     public function get_all_work_order_within48()
     {
-        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
-                                   WHERE now() <= DATE_ADD(A.WO_Created_On, INTERVAL 8 HOUR) ");
+//        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode
+//                                   WHERE now() <= DATE_ADD(A.WO_Created_On, INTERVAL 8 HOUR) ");
+
+        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name, ifnull(sum(D.Total_Qty), '0') as total, ifnull(sum(D.Dispatch_Remaining_Qty), '0') as remaining FROM work_order A 
+                                   INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                   INNER JOIN wo_processing D on A.WO_Icode=D.WO_Icode WHERE now() <= DATE_ADD(A.WO_Created_On, INTERVAL 8 HOUR) AND D.Dispatch_Status='3' 
+                                   GROUP by A.WO_Icode ");
         return $query->result_array();
     }
     /** Get all work order Delay */
     public function get_all_work_order_delay()
     {
-        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
-                                   WHERE now() >= DATE_ADD(A.WO_Created_On, INTERVAL 48 HOUR) ");
+//        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode
+//                                   WHERE now() >= DATE_ADD(A.WO_Created_On, INTERVAL 48 HOUR) ");
+        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name, ifnull(sum(D.Total_Qty), '0') as total, ifnull(sum(D.Dispatch_Remaining_Qty), '0') as remaining FROM work_order A 
+                                   INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                   INNER JOIN wo_processing D on A.WO_Icode=D.WO_Icode WHERE now() >= DATE_ADD(A.WO_Created_On, INTERVAL 48 HOUR) AND D.Dispatch_Status='3' 
+                                   GROUP by A.WO_Icode ");
+
         return $query->result_array();
     }
     /** get cutting Status */
@@ -464,6 +489,12 @@ class Admin_Model extends CI_Model
     {
         $query = $this->db->query("SELECT sum(Dispatch_Incoming)as total, sum(Furnace_Remaining_Qty) as remaining FROM wo_processing  WHERE WO_Icode ='$id' and Dispatch_Status !='3'");
         return $query->result_array();
+    }
+    /** Get Completed Status with result */
+    public function get_completed_result($id)
+    {
+        $query = $this->db->query("SELECT ifnull(sum(Total_Qty), '0') as total, ifnull(sum(Dispatch_Remaining_Qty), '0') as remaining FROM wo_processing  WHERE WO_Icode ='$id' and Dispatch_Status ='3'");
+        return $query->row_array(0);
     }
 
 }
