@@ -106,7 +106,6 @@
                                 $total_qty = $work_order[0]['Total_Qty'];
                                 $completed = $complete[0]['total'] - $complete[0]['remaining'];
                                 $totel_completed = ($completed/$total_qty) * 100;
-
                                 if($totel_completed < 50)
                                 { ?>
                                     <td style="color: red;"><h2><?php echo  $totel_completed; ?>%</h2></td>
