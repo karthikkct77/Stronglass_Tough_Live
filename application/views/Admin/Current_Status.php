@@ -343,9 +343,8 @@
     $(document).ready(function() {
         $('#tblCustomers5').dataTable();
         $('#tblCustomers4').dataTable();
-        $('#tblCustomers3').dataTable();
-        $('#tblCustomers2').dataTable();
-        $('#tblCustomers1').dataTable();
+
+
         /*stay in same tab after form submit*/
         $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
             localStorage.setItem('activeTab', $(e.target).attr('href'));
