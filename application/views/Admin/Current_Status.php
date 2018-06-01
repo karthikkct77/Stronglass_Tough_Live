@@ -37,10 +37,10 @@
                     <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#2a" role="tab" aria-controls="pills-contact" aria-selected="false">Between 8 to 16 Hours</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#3a" role="tab" aria-controls="pills-contact" aria-selected="false">Between 16 to 24 Hours</a>
+                    <a class="nav-link" id="pills-24hours-tab" data-toggle="pill" href="#3a" role="tab" aria-controls="pills-24hours" aria-selected="false">Between 16 to 24 Hours</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#4a" role="tab" aria-controls="pills-contact" aria-selected="false">Between 24 to 48 Hours</a>
+                    <a class="nav-link" id="pills-48hours-tab" data-toggle="pill" href="#4a" role="tab" aria-controls="pills-48hours" aria-selected="false">Between 24 to 48 Hours</a>
                 </li>
             </ul>
             <div class="tab-content" id="pills-tabContent">
@@ -220,7 +220,7 @@
                     </table>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="3a" role="tabpanel" aria-labelledby="pills-contact-tab">
+                <div class="tab-pane fade" id="3a" role="tabpanel" aria-labelledby="pills-24hours-tab">
                     <div class="tile">
                         <h2>With in 16 to 24 Hours</h2>
                         <table id="tblCustomers4"  data-page-length='25' class="table table-striped" width="100%">
@@ -277,7 +277,7 @@
                     </table>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="4a" role="tabpanel" aria-labelledby="pills-contact-tab">
+                <div class="tab-pane fade" id="4a" role="tabpanel" aria-labelledby="pills-48hours-tab">
                     <div class="tile">
                         <h2>With in 24 to 48 Hours</h2>
                     <table id="tblCustomers5"  data-page-length='25' class="table table-striped" width="100%">
@@ -341,23 +341,21 @@
 </main>
 <script>
     $(document).ready(function() {
-        $('#tblCustomers5').dataTable();
-        $('#tblCustomers4').dataTable();
-
-
         /*stay in same tab after form submit*/
-        $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+        $('a[data-toggle="pill"]').on('show.bs.tab', function(e) {
             localStorage.setItem('activeTab', $(e.target).attr('href'));
         });
         var activeTab = localStorage.getItem('activeTab');
         if(activeTab){
 
-            $('#myTab a[href="' + activeTab + '"]').tab('show');
+            $('#pills-tab a[href="' + activeTab + '"]').tab('show');
         }
-
+        $('#tblCustomers5').DataTable();
+        $('#tblCustomers4').DataTable();
+//        $('#tblCustomers3').DataTable();
+//        $('#tblCustomers2').DataTable();
+//        $('#tblCustomers1').DataTable();
     } );
-
-
 </script>
 
 

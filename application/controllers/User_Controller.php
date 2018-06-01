@@ -137,7 +137,7 @@ class User_Controller extends CI_Controller
                 $work_order =$this->input->post('Wo_Icode',true);
                 $data['complete']= $this->admin_model->get_completed_status($work_order);
                 $data['work_order']= $this->admin_model->get_Single_Work_Order($work_order);
-                if($data['complete']['total'] = $data['work_order']['Total_Qty'] )
+                if($data['complete'][0]['total'] = $data['work_order'][0]['Total_Qty'] )
                 {
                     $complete = '1';
                 }
