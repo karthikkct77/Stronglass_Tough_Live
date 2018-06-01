@@ -129,10 +129,24 @@ class User_Controller extends CI_Controller
             if($insert == 1)
             {
                 $update = array('Dispatch_Remaining_Qty' => $this->input->post('Qty',true),
-                    'Dispatch_Incoming' => '0',
-                    'Dispatch_Status' => $this->input->post('Status',true) );
+                                'Dispatch_Incoming' => '0',
+                                'Dispatch_Status' => $this->input->post('Status',true) );
                 $this->db->where('WO_Process_Icode',$wo_icode);
                 $this->db->update('wo_processing', $update);
+
+                $work_order =$this->input->post('Wo_Icode',true);
+                $data['complete']= $this->admin_model->get_completed_status($work_order);
+                $data['work_order']= $this->admin_model->get_Single_Work_Order($work_order);
+                if($data['complete']['total'] = $data['work_order']['Total_Qty'] )
+                {
+                    $complete = '1';
+                }
+                else{
+                    $complete = '0';
+                }
+                $update1 = array('WO_Completed' => $complete);
+                $this->db->where('WO_Icode',$work_order);
+                $this->db->update('work_order', $update1);
                 echo 1;
                 //$work_order = $this->input->post('Wo_Icode',true);
               //  $success = $this->user_model->find_WO_Finished($work_order);
