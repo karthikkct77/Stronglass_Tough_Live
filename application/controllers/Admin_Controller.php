@@ -1042,6 +1042,19 @@ class Admin_Controller extends CI_Controller
             $this->load->view('Admin/WO_Status',$data, FALSE);
             $this->load->view('Admin/footer');
         }
+        /** Complete Work Order */
+        public function Complete_Work_Order()
+        {
+            $data['work_order']= $this->admin_model->get_complete_work_order();
+            $this->load->view('Admin/header');
+            $this->load->view('Admin/top');
+            $this->load->view('Admin/left');
+            $this->load->view('Admin/Completed_Work_Order',$data,false);
+            $this->load->view('Admin/footer');
+        }
+
+
+
         /** Manual Create Work Order */
         public function  Create_Work_Order()
         {

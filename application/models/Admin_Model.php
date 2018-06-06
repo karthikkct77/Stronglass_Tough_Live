@@ -491,5 +491,11 @@ class Admin_Model extends CI_Model
         $query = $this->db->query("SELECT ifnull(sum(Total_Qty), '0') as total, ifnull(sum(Dispatch_Remaining_Qty), '0') as remaining FROM wo_processing  WHERE WO_Icode ='$id' and Dispatch_Status ='3'");
         return $query->row_array(0);
     }
+    /** Get completed work order */
+    public function get_complete_work_order()
+    {
+        $query = $this->db->query("SELECT A.*,C.Customer_Company_Name FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode  WHERE A.WO_Completed='1'");
+        return $query->result_array();
+    }
 
 }
