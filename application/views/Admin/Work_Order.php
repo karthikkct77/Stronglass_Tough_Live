@@ -51,13 +51,13 @@
                                 <td><?php echo $val['WO_Date']; ?></td>
                                 <td><?php echo $val['Proforma_Number']; ?></td>
                                 <?php
-                                if($val['WO_Confirm_Status'] == '1')
+                                if($val['WO_Completed'] == '1')
                                 {
                                     ?>
-                                    <td>Completed</td>
+                                    <td style="color: #00CC00;">Completed</td>
 
                                 <?php } else {?>
-                                    <td>On Progress</td>
+                                    <td style="color: red;">On Progress</td>
                                 <?php } ?>
                                 <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/View_Work_Order/') . $val['WO_Icode']; ?>">View</a></td>
                             </tr>

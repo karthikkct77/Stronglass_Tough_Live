@@ -130,19 +130,19 @@
                                 <td></td>
                                 <td><?php echo $val['Cutting_Remaining_Qty']; ?></td>
                                 <?php if($val['Cutting_Status'] == '3') {?>
-                                <td>Completed</td>
+                                <td style="color: #00CC00;">Completed</td>
                                 <?php } else {?> <td>Pending</td> <?php }
                                 $total = $val['Furnace_Remaining_Qty'] + $val['Furnace_Incoming'];
                                 ?>
                                 <td><?php echo $total; ?></td>
                                 <?php if($val['Furnace_Status'] == '3') {?>
-                                    <td>Completed</td>
+                                    <td style="color: #00CC00;">Completed</td>
                                 <?php } else {?> <td>Pending</td> <?php }
                                 $total_dispatch = $val['Dispatch_Incoming'] + $val['Dispatch_Remaining_Qty'];
                                 ?>
                                 <td><?php echo $total_dispatch; ?></td>
                                 <?php if($val['Dispatch_Status'] == '3') {?>
-                                    <td>Completed</td>
+                                    <td style="color: #00CC00;">Completed</td>
                                 <?php } else {?> <td>Pending</td> <?php } ?>
 
 
