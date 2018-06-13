@@ -145,7 +145,7 @@ class User_Controller extends CI_Controller
                     $complete = '0';
                 }
                 $update1 = array('WO_Completed' => $complete,
-                           'WO_Completed_On' => date('Y-m-d  h:i:s'));
+                           'WO_Completed_On' => date('Y-m-d  H:i:s'));
                 $this->db->where('WO_Icode',$work_order);
                 $this->db->update('work_order', $update1);
                 echo 1;
