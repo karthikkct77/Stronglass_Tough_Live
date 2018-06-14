@@ -55,6 +55,8 @@
 
                </ul>
            </li>
+           <li><a class="app-menu__item active" href="<?php echo site_url('Admin_Controller/Upload_Customer'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Upload</span></a></li>
+
 
        <?php }
         elseif($_SESSION['role'] == 'MD')

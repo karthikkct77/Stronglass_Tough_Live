@@ -1187,4 +1187,63 @@ class Admin_Controller extends CI_Controller
         }
         /** Manual Create Work Order */
 
+        //** Uploads */
+    public function  Upload_Customer()
+    {
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Data_Import');
+    }
+
+    public  function ExcelDataAdd_new() {
+        $configUpload['upload_path'] = FCPATH.'uploads/excel/';
+        $configUpload['allowed_types'] = 'xls|xlsx|csv';
+        $configUpload['max_size'] = '5000';
+        $this->load->library('upload', $configUpload);
+        $this->upload->do_upload('userfile');
+        $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
+        $file_name = $upload_data['file_name']; //uploded file name
+        $extension=$upload_data['file_ext'];    // uploded file extension
+
+        //$objReader =PHPExcel_IOFactory::createReader('Excel5');     //For excel 2003
+        $objReader= PHPExcel_IOFactory::createReader('Excel2007'); // For excel 2007
+        //Set to read only
+        $objReader->setReadDataOnly(true);
+        //Load excel file
+        $objPHPExcel=$objReader->load(FCPATH.'uploads/excel/'.$file_name);
+        $totalrows=$objPHPExcel->setActiveSheetIndex(0)->getHighestRow();   //Count Numbe of rows avalable in excel
+        print_r($totalrows);
+        $objWorksheet=$objPHPExcel->setActiveSheetIndex(0);
+        //loop from first data untill last data
+        for($i=2;$i<=$totalrows;$i++)
+        {
+            $company_name=$objWorksheet->getCellByColumnAndRow(0,$i)->getValue();
+            $email=$objWorksheet->getCellByColumnAndRow(1,$i)->getValue();
+            $phone=$objWorksheet->getCellByColumnAndRow(3,$i)->getValue();
+            $phone1=$objWorksheet->getCellByColumnAndRow(4,$i)->getValue();
+            $gstn=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
+            $add1=$objWorksheet->getCellByColumnAndRow(6,$i)->getValue();
+            $add2=$objWorksheet->getCellByColumnAndRow(7,$i)->getValue();
+            $add3=$objWorksheet->getCellByColumnAndRow(8,$i)->getValue();
+            $add4=$objWorksheet->getCellByColumnAndRow(9,$i)->getValue();
+            $add5=$objWorksheet->getCellByColumnAndRow(10,$i)->getValue();
+            $data_user=array(
+                'Customer_Company_Name'=>$company_name,
+                'Customer_GSTIN'=>$gstn,
+                'Customer_Address_1'=>$add1,
+                'Customer_Address_2'=>$add2,
+                'Customer_Area'=>$add3,
+                'Customer_City'=>$add4,
+                'Customer_State'=>$add5,
+                'Customer_Phone'=>$phone,
+                'Customer_Alternate_Phone'=>$phone1,
+                'Customer_Email_Id_1'=>$email,
+                'Customer_Created_By'=>$this->session->userdata['userid']);
+            $insert= $this->admin_model->Insert_Customer($data_user);
+         }
+
+    }
+
+
 }

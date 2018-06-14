@@ -497,5 +497,11 @@ class Admin_Model extends CI_Model
         $query = $this->db->query("SELECT A.*,C.Customer_Company_Name FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode  WHERE A.WO_Completed='1'");
         return $query->result_array();
     }
+    public function Insert_Customer($data)
+    {
+        $this->db->insert('customer_master', $data);
+        return 1;
+
+    }
 
 }
