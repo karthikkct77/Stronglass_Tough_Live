@@ -33,7 +33,7 @@
                         <tr>
                             <th>#</th>
                             <th>Customer Name</th>
-                            <th>City</th>
+                            <th>Address</th>
                             <th>Phone</th>
                             <th>Email</th>
                             <th>Locations</th>
@@ -48,7 +48,7 @@
                             <tr>
                                 <td><?php echo $i; ?></td>
                                 <td><?php echo $val['Customer_Company_Name']; ?></td>
-                                <td><?php echo $val['Customer_City']; ?></td>
+                                <td><?php echo $val['Customer_Address_1']; ?>, <?php echo $val['Customer_Address_2']; ?></td>
                                 <td><?php echo $val['Customer_Phone']; ?></td>
                                 <td><?php echo $val['Customer_Email_Id_1']; ?></td>
                                 <td><h3><a href="<?php echo site_url('Admin_Controller/Locations/') . $val['Customer_Icode'];  ?>"> <?php echo $val['locations']; ?></a></h3></td>
