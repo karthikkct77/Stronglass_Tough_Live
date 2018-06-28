@@ -235,15 +235,15 @@
                                     <?php
                                     if($invoice[0]['IGST_Value'] == '0')
                                     { ?>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td><input  type="radio" id="ptype" name="tax"  required onclick="isgt()" > IGST</td>
-                                            <td>
-                                                <input  type="radio" id="ptype" name="tax" onclick="GST()" required checked> SGST/CGST
-                                            </td>
-                                            <td></td>
-                                        </tr>
+<!--                                        <tr>-->
+<!--                                            <td></td>-->
+<!--                                            <td></td>-->
+<!--                                            <td><input  type="radio" id="ptype" name="tax"  required onclick="isgt()" > IGST</td>-->
+<!--                                            <td>-->
+<!--                                                <input  type="radio" id="ptype" name="tax" onclick="GST()" required checked> SGST/CGST-->
+<!--                                            </td>-->
+<!--                                            <td></td>-->
+<!--                                        </tr>-->
                                         <tr>
                                             <td></td>
                                             <td></td>
@@ -265,14 +265,14 @@
                                     <?php }
                                     else
                                     { ?>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td><input  type="radio" id="ptype" name="tax"  required onclick="isgt()" checked> IGST</td>
-                                        <td>
-                                            <input  type="radio" id="ptype" name="tax" onclick="GST()" required> SGST/CGST
-                                        </td>
-                                    </tr>
+<!--                                    <tr>-->
+<!--                                        <td></td>-->
+<!--                                        <td></td>-->
+<!--                                        <td><input  type="radio" id="ptype" name="tax"  required onclick="isgt()" checked> IGST</td>-->
+<!--                                        <td>-->
+<!--                                            <input  type="radio" id="ptype" name="tax" onclick="GST()" required> SGST/CGST-->
+<!--                                        </td>-->
+<!--                                    </tr>-->
                                         <tr>
                                             <td colspan="3" align="right">IGST @18%
                                                 <input type="hidden" id="gst" value="18">
@@ -283,26 +283,26 @@
                                    <?php }
                                     ?>
 
-                                    <tr id="sgst1" style="display: none">
-                                        <td colspan="3" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
-
-                                        <td><input class="form-control" type="text" name="sgst" id="sgst"  readonly ></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr id="cgst1" style="display: none">
-                                        <td colspan="3" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
-                                            <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
-                                        </td>
-                                        <td><input class="form-control" type="text" name="cgst" id="cgst"  readonly ></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr id="igst1" style="display: none">
-                                        <td colspan="3" align="right">IGST @18%
-
-                                        </td>
-                                        <td><input class="form-control" type="text" name="igst" id="igst" readonly ></td>
-                                        <td></td>
-                                    </tr>
+<!--                                    <tr id="sgst1" style="display: none">-->
+<!--                                        <td colspan="3" align="right">SGST @--><?php //echo $tax[0]['SGST%']; ?><!--</td>-->
+<!---->
+<!--                                        <td><input class="form-control" type="text" name="sgst" id="sgst"  readonly ></td>-->
+<!--                                        <td></td>-->
+<!--                                    </tr>-->
+<!--                                    <tr id="cgst1" style="display: none">-->
+<!--                                        <td colspan="3" align="right">CGST @--><?php //echo $tax[0]['CGST%']; ?>
+<!--                                            <input type="hidden" id="gst" value="--><?php //echo $tax[0]['CGST%']; ?><!--">-->
+<!--                                        </td>-->
+<!--                                        <td><input class="form-control" type="text" name="cgst" id="cgst"  readonly ></td>-->
+<!--                                        <td></td>-->
+<!--                                    </tr>-->
+<!--                                    <tr id="igst1" style="display: none">-->
+<!--                                        <td colspan="3" align="right">IGST @18%-->
+<!---->
+<!--                                        </td>-->
+<!--                                        <td><input class="form-control" type="text" name="igst" id="igst" readonly ></td>-->
+<!--                                        <td></td>-->
+<!--                                    </tr>-->
                                 <tr>
 
                                     <td colspan="3" align="right">GROSS TOTAL</td>

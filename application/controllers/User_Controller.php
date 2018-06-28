@@ -518,6 +518,7 @@ class User_Controller extends CI_Controller
             'Insurance_Value' => $this->input->post('insurance'),
             'SGST_Value' => $this->input->post('sgst'),
             'CGST_Value' => $this->input->post('cgst'),
+            'IGST_Value' => $this->input->post('igst'),
             'GrossTotal_Value' => $this->input->post('gross_tot'),
             'Modified_By' => $this->session->userdata['userid'],
             'Modified_On' => date('Y-m-d H:i:s'));
