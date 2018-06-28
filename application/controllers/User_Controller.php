@@ -463,20 +463,50 @@ class User_Controller extends CI_Controller
         }
         elseif ($role == 7)
         {
-            $wo_icode = $this->input->post('wo_icode');
-            $data = array(
-                'WO_Icode' => $wo_icode ,
-                'WO_Number' => $this->input->post('wo_number'),
-                'Approved_by' =>$this->session->userdata['userid']);
-            $approve = $this->user_model->Approve_Work_Order($data);
-            if($approve == 1)
-            {
-                $update = array('WO_Confirm_Status' => '1');
-                $this->db->where('WO_Icode',$wo_icode);
-                $this->db->update('work_order', $update);
-                $this->session->set_flashdata('feedback', 'Work Order Approved ..');
-                redirect('User_Controller/Check_PI');
-            }
+//            $wo_icode = $this->input->post('wo_icode');
+//            $data = array(
+//                'WO_Icode' => $wo_icode ,
+//                'WO_Number' => $this->input->post('wo_number'),
+//                'Approved_by' =>$this->session->userdata['userid']);
+//            $approve = $this->user_model->Approve_Work_Order($data);
+//            if($approve == 1)
+//            {
+//                $update = array('WO_Confirm_Status' => '1');
+//                $this->db->where('WO_Icode',$wo_icode);
+//                $this->db->update('work_order', $update);
+//                $this->session->set_flashdata('feedback', 'Work Order Approved ..');
+//                redirect('User_Controller/Check_PI');
+//            }
+
+            //Load email library
+            $this->load->library('email');
+
+            //SMTP & mail configuration
+            $config = array(
+                'protocol'  => 'smtp',
+                'smtp_host' => 'ssl://smtp.example.com',
+                'smtp_port' => 465,
+                'smtp_user' => 'email@example.com',
+                'smtp_pass' => 'email_password',
+                'mailtype'  => 'html',
+                'charset'   => 'utf-8'
+            );
+            $this->email->initialize($config);
+            $this->email->set_mailtype("html");
+            $this->email->set_newline("\r\n");
+
+            //Email content
+            $htmlContent = '<h1>Sending email via SMTP server</h1>';
+            $htmlContent .= '<p>This email has sent via SMTP server from CodeIgniter application.</p>';
+
+            $this->email->to('recipient@example.com');
+            $this->email->from('sender@example.com','MyWebsite');
+            $this->email->subject('How to send email via SMTP server in CodeIgniter');
+            $this->email->message($htmlContent);
+
+            //Send email
+            $this->email->send();
+
         }
 
     }

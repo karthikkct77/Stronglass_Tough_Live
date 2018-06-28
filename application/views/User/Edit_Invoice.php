@@ -341,7 +341,6 @@
                             <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>
                         </div>
                     </div>
-
                 </form>
             </div>
         </div>
