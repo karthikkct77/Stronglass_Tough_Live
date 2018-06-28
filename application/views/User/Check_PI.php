@@ -29,9 +29,9 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Work Order No</th>
-                            <th>Work Order Date</th>
-                            <th>PI NO</th>
+                            <th>PI- Number</th>
+                            <th>Customer</th>
+                            <th>PI- Date</th>
                             <th>Total Amount</th>
                             <th>PI Generated  By </th>
                             <th></th>
@@ -39,17 +39,17 @@
                         </thead>
                         <tbody>
                         <?php $i=1;
-                        foreach ($wo as $val)
+                        foreach ($invoice as $val)
                         {
                             ?>
                             <tr>
                                 <td><?php echo $i; ?></td>
-                                <td><?php echo $val['WO_Number']; ?></td>
-                                <td><?php echo $val['WO_Date']; ?></td>
                                 <td><?php echo $val['Proforma_Number']; ?></td>
+                                <td><?php echo $val['Customer_Company_Name']; ?></td>
+                                <td><?php echo $val['Proforma_Date']; ?></td>
                                 <td><?php echo $val['GrossTotal_Value']; ?></td>
                                 <td><?php echo $val['User_Name']; ?></td>
-                                <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/single_Work_Order/') . $val['Proforma_Icode']; ?>">Check</a></td>
+                                <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/single_Invoice/') . $val['Proforma_Icode']; ?>">Review</a></td>
                             </tr>
                             <?php
                             $i++;

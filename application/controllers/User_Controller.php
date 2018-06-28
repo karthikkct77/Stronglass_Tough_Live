@@ -475,7 +475,7 @@ class User_Controller extends CI_Controller
                 $this->db->where('WO_Icode',$wo_icode);
                 $this->db->update('work_order', $update);
                 $this->session->set_flashdata('feedback', 'Work Order Approved ..');
-                redirect('User_Controller/Check_WO');
+                redirect('User_Controller/Check_PI');
             }
         }
 
@@ -577,13 +577,14 @@ class User_Controller extends CI_Controller
         $this->load->view('User/footer');
     }
     /** CHECK WORK ORDERS */
-    public function Check_WO()
+    public function Check_PI()
     {
-        $data['wo'] = $this->user_model->get_All_WO_Details();
+        //$data['wo'] = $this->user_model->get_All_WO_Details();get_All_Invoice
+        $data['invoice'] = $this->user_model->get_All_Invoice();
         $this->load->view('User/header');
         $this->load->view('User/top');
         $this->load->view('User/left');
-        $this->load->view('User/Check_WO',$data,false);
+        $this->load->view('User/Check_PI',$data,false);
         $this->load->view('User/footer');
     }
     /** Get Single work order */

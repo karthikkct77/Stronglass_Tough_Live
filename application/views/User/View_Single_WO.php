@@ -188,21 +188,36 @@
                                     <td><input class="form-control" type="text" name="insurance" id="insurance" value="<?php echo $invoice[0]['Insurance_Value']; ?>" required readonly></td>
                                     <td></td>
                                 </tr>
-                                <tr>
-                                    <td colspan="4" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
+                                <?php
+                                if($invoice[0]['IGST_Value'] == '0')
+                                { ?>
+                                    <tr>
+                                        <td colspan="4" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
 
-                                    <td><input class="form-control" type="text" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
-                                        <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
-                                    </td>
+                                        <td><input class="form-control" type="text" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
+                                            <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
+                                        </td>
+                                        <td><input class="form-control" type="text" name="cgst" id="cgst" value="<?php echo $invoice[0]['CGST_Value']; ?>" readonly ></td>
+                                        <td></td>
+                                    </tr>
 
+                                <?php }
+                                else{?>
+                                    <tr>
+                                        <td colspan="4" align="right">IGST @18%
+                                            <input type="hidden" id="gst" value="18">
+                                        </td>
+                                        <td><input class="form-control" type="text" name="igst" id="igst" value="<?php echo $invoice[0]['IGST_Value']; ?>" readonly ></td>
+                                        <td></td>
+                                    </tr>
+                                <?php
+                                }
+                                ?>
 
-                                    <td><input class="form-control" type="text" name="cgst" id="cgst" value="<?php echo $invoice[0]['CGST_Value']; ?>" readonly ></td>
-                                    <td></td>
-                                </tr>
                                 <tr>
 
                                     <td colspan="4" align="right">GROSS TOTAL</td>
