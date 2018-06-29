@@ -109,4 +109,31 @@ class User_Model extends CI_Model
         $this->db->insert('wo_approve', $data);
         return 1;
     }
+
+    //** Update Invoice history */
+    public function Invoice_Update($pi_id)
+    {
+        $user_icode =$this->session->userdata['userid'];
+        $query = $this->db->query("INSERT INTO pi_master_history (Proforma_Icode,Proforma_Number,Proforma_Date,Proforma_Customer_Icode,Proforma_Delivery_Address_Icode,Sub_Total,Insurance_Value,Transport,SGST_Value,CGST_Value,IGST_Value,GrossTotal_Value,Updated_By)
+                                   SELECT Proforma_Icode,Proforma_Number,Proforma_Date,Proforma_Customer_Icode,Proforma_Delivery_Address_Icode,Sub_Total,Insurance_Value,Transport,SGST_Value,CGST_Value,IGST_Value,GrossTotal_Value,'$user_icode'
+                                   FROM proforma_invoice WHERE Proforma_Icode='$pi_id' ");
+        if($query)
+        {
+            $query_item = $this->db->query("INSERT INTO pi_item_history (Proforma_Invoice_Items_Icode,Proforma_Icode,Proforma_Date,Proforma_Material_Icode,Proforma_HSNCode,Proforma_Special,Proforma_Holes,Proforma_Qty,Proforma_Actual_Size_Width,Proforma_Actual_Size_Height,Proforma_Chargeable_Size_Width,Proforma_Chargeable_Size_Height,Proforma_Area_SQMTR,Proforma_Material_Rate,Proforma_Material_Cost,Updated_By)
+                                   SELECT Proforma_Invoice_Items_Icode,Proforma_Icode,Proforma_Date,Proforma_Material_Icode,Proforma_HSNCode,Proforma_Special,Proforma_Holes,Proforma_Qty,Proforma_Actual_Size_Width,Proforma_Actual_Size_Height,Proforma_Chargeable_Size_Width,Proforma_Chargeable_Size_Height,Proforma_Area_SQMTR,Proforma_Material_Rate,Proforma_Material_Cost,'$user_icode'
+                                   FROM proforma_invoice_items WHERE Proforma_Icode='$pi_id' ");
+            if($query_item)
+            {
+                $query_charges = $this->db->query("INSERT INTO pi_charges_history (Proforma_Material_PC_Icode,Proforma_Icode,Proforma_Charge_Icode,Proforma_Charge_Count,Proforma_Charge_Value,Proforma_Charge_Cost,Updated_By)
+                                   SELECT Proforma_Material_PC_Icode,Proforma_Icode,Proforma_Charge_Icode,Proforma_Charge_Count,Proforma_Charge_Value,Proforma_Charge_Cost,'$user_icode'
+                                   FROM proforma_material_processing_charges WHERE Proforma_Icode='$pi_id' ");
+                if($query_charges)
+                {
+                    return 1;
+                }
+            }
+        }
+    }
+
+
 }

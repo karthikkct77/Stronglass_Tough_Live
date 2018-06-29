@@ -323,7 +323,8 @@ class Admin_Model extends CI_Model
     public function get_All_Invoice()
     {
         $user_icode =$this->session->userdata['userid'];
-        $query = $this->db->query("Select * from proforma_invoice A INNER JOIN  customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode WHERE  A.WO_Confirm='0' and A.Proforma_Generated_By ='$user_icode'  ");
+        $query = $this->db->query("Select * from proforma_invoice A INNER JOIN  customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode
+                                   WHERE  A.PI_Confirm='0' and A.Proforma_Generated_By ='$user_icode'  ");
         return $query->result_array();
     }
 
@@ -501,6 +502,12 @@ class Admin_Model extends CI_Model
     {
         $this->db->insert('customer_master', $data);
         return 1;
+    }
+    public function Profoma_Charges($charges,$picode)
+    {
+        $charg = $this->db->query("SELECT Proforma_Material_PC_Icode FROM proforma_material_processing_charges WHERE Proforma_Icode='$picode'");
+        return $charg->num_rows();
+
 
     }
 
