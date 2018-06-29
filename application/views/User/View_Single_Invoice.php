@@ -262,7 +262,7 @@
                                 <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Generate WO</button>
                              <?php } elseif($_SESSION['role'] == 7){
                                 ?>
-                                <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Approve WO</button>
+                                <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Send Email</button>
                             <?php } ?>
 
                         </div>
