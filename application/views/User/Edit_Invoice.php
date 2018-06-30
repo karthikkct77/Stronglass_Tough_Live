@@ -148,6 +148,8 @@
                                     <td> <input type="text" class="form-control pull-right" id="grand_total" value="<?php echo round($invoice_total[0]['rate'],2); ?>"   readonly/>(INR)</td>
                                 </tr>
                                 </tbody>
+
+
                             </table>
 
                             <div >

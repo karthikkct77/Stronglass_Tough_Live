@@ -1,14 +1,9 @@
 <main class="app-content">
-    <div class="app-title">
-        <div>
-            <h1><i class="fa fa-edit"></i>Generate Work Order</h1>
-
-        </div>
-        <div class="row invoice">
-            <h4><?php echo $st[0]['ST_Name']; ?></h4>
-            <h5><?php echo $st[0]['ST_Address_1']; ?>,&nbsp;<?php echo $st[0]['ST_Area']; ?>,&nbsp;<?php echo $st[0]['ST_City']; ?></h5>
-            <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
-        </div>
+    <div>
+        <div class="app-title">
+            <div>
+                <h1><i class="fa fa-edit"></i>Generate Work Order</h1>
+            </div>
         <ul class="app-breadcrumb breadcrumb">
             <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
             <li class="breadcrumb-item">Work Order</li>
@@ -16,7 +11,14 @@
     </div>
     <div class="row">
         <div class="col-md-12" >
+
             <div class="tile">
+                <div class="row invoice">
+                    <h4><?php echo $st[0]['ST_Name']; ?></h4>
+                    <h5><?php echo $st[0]['ST_Address_1']; ?>,&nbsp;<?php echo $st[0]['ST_Area']; ?>,&nbsp;<?php echo $st[0]['ST_City']; ?></h5>
+                    <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
+                </div>
+                <hr>
                 <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Save_Work_Order'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
                     <div class="row">
                         <div class="col-md-4">
@@ -65,7 +67,7 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <input class="form-control" type="hidden" name="PI_Icode"  value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
+                            <input class="form-control" type="hidden" name="PI_Icode"  id="PI_Icode" value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
                             <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly></h4>
                             <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly></h4>
                         </div>
@@ -257,12 +259,15 @@
                             <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
                         </div>
                         <div class="col-md-6">
-                            <a class="btn btn-success pull-right" href="<?php echo site_url('User_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT</a>
+                            <a class="btn btn-success pull-right" id="with_print" href="<?php echo site_url('User_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT</a>
                             <?php if($_SESSION['role'] == 6) { ?>
                                 <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Generate WO</button>
                              <?php } elseif($_SESSION['role'] == 7){
                                 ?>
-                                <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Send Email</button>
+                                <button class="btn btn-danger pull-right" type="submit" id="with_print"><i class="fa fa-fw fa-lg fa-check-circle"></i>Send Email</button>
+                                <input type="button" id="with_print" class="btn btn-default pull-right" onclick="window.print()" value="print">
+                                <input type="button" id="with_print" class="btn btn-info pull-right" onclick="Request_Approve()" value="Request To WO Approve">
+
                             <?php } ?>
 
                         </div>
@@ -272,8 +277,14 @@
             </div>
         </div>
     </div>
+    </div>
 </main>
 <style>
+    @media print {
+        #with_print {
+            display: none;
+        }
+    }
     #search_data {
         width: 200px;
         padding: 5px;
@@ -300,7 +311,6 @@
 
 <script>
     $("#company_name2").change(function () {
-        alert("gdsgdsg");
         $.ajax({
             url:"<?php echo site_url('Admin_Controller/get_Customer_Address_Details'); ?>",
             data: {id:
@@ -590,6 +600,20 @@
                 document.getElementById('gstn1').innerHTML =  document.getElementById('gstn').innerHTML;
             }
         });
+    }
+
+    /** Request for Approve **/
+    function Request_Approve() {
+
+        var pi_code = document.getElementById('PI_Icode').value;
+        $.ajax({
+            url:"<?php echo site_url('User_Controller/Request_To_Approve'); ?>",
+            data: {id: pi_code},
+            type: "POST",
+            success:function(server_response){
+            }
+        });
+
     }
 </script>
 
