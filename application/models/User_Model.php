@@ -14,15 +14,15 @@ class User_Model extends CI_Model
         $role = $this->session->userdata['role'];
         if ($role == 2) // Cutting
         {
-            $query = $this->db->query("SELECT * FROM work_order A INNER JOIN wo_processing B on A.WO_Icode=B.WO_Icode WHERE B.Cutting_Status !='3' and A.WO_Confirm_Status !='0' GROUP by A.WO_Icode");
+            $query = $this->db->query("SELECT * FROM work_order A INNER JOIN wo_processing B on A.WO_Icode=B.WO_Icode WHERE B.Cutting_Status !='3'  GROUP by A.WO_Icode");
             return $query->result_array();
         } elseif ($role == 3) // Furnace
         {
-            $query = $this->db->query("SELECT * FROM work_order A INNER JOIN wo_processing B on A.WO_Icode=B.WO_Icode WHERE B.Cutting_Status in('2' ,'3') and  B.Furnace_Status !='3' and A.WO_Confirm_Status !='0' GROUP by A.WO_Icode");
+            $query = $this->db->query("SELECT * FROM work_order A INNER JOIN wo_processing B on A.WO_Icode=B.WO_Icode WHERE B.Cutting_Status in('2' ,'3') and  B.Furnace_Status !='3'  GROUP by A.WO_Icode");
             return $query->result_array();
         } elseif ($role == 4) // Dispatch
         {
-            $query = $this->db->query("SELECT * FROM work_order A INNER JOIN wo_processing B on A.WO_Icode=B.WO_Icode WHERE B.Furnace_Status in('2','3') and  B.Dispatch_Status !='3' and A.WO_Confirm_Status !='0' GROUP by A.WO_Icode");
+            $query = $this->db->query("SELECT * FROM work_order A INNER JOIN wo_processing B on A.WO_Icode=B.WO_Icode WHERE B.Furnace_Status in('2','3') and  B.Dispatch_Status !='3' GROUP by A.WO_Icode");
             return $query->result_array();
         }
 

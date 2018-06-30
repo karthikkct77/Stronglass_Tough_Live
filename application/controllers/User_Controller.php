@@ -29,7 +29,7 @@ class User_Controller extends CI_Controller
     }
 
     /** Get Work Order */
-    public function Work_Order()
+    public function Work_Order()   // Production side
     {
         $data['work_order']= $this->user_model->get_all_Work_Order();
         $this->load->view('User/header');
