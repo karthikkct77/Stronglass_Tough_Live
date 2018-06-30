@@ -676,8 +676,6 @@ class User_Controller extends CI_Controller
                       'PI_Confirm_Date' => date('Y-m-d H:i:s'));
         $this->db->where('Proforma_Icode',$pi_code);
         $this->db->update('proforma_invoice', $update);
-
-
     }
 
 }
