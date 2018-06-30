@@ -129,7 +129,7 @@
                                         <td><input class="form-control" type="text" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['Proforma_Area_SQMTR']; ?>" readonly></td>
                                         <td><input class="form-control" type="text" name="rate[]" value="<?php echo $key['Proforma_Material_Rate']; ?>" id="rate<?php echo $i; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
                                         <td><input class="form-control" type="text" name="total[]" value="<?php echo $key['Proforma_Material_Cost']; ?>" id="total<?php echo $i; ?>" ></td>
-                                        <td><input type="button" onclick="delete_items('<?php echo $i; ?>')" value="Delete"></input></td>
+                                        <td><input type="button" onclick="delete_items('<?php echo $i; ?>','<?php echo $key['Proforma_Invoice_Items_Icode']; ?>')" value="Delete"></input></td>
                                     </tr>
                                     <?php $i++; } ?>
                                 <tr>
@@ -149,6 +149,14 @@
                                 </tr>
                                 </tbody>
                             </table>
+
+                            <div >
+                                <table id="my_item_table">
+                                    <thead></thead>
+                                    <tbody></tbody>
+                                </table>
+
+                            </div>
                             <script>
                                 $("#grand_total").on('click', function() {
                                     var total =document.getElementsByName("total[]");
@@ -1215,8 +1223,19 @@
         /** Change Charge Height */
 
         //** Delete Item **/
-        function delete_items (id) {
+        function delete_items (id,item_icode) {
             if (confirm("Do you Want to Delete This Material...!")) {
+                var tBody = $("#my_item_table > TBODY")[0];
+                //Add Row.
+                row = tBody.insertRow(-1);
+                //Add Name cell.
+                var cell = $(row.insertCell(-1));
+                var stock = $("<input />");
+                stock.attr("type", "text");
+                stock.attr("name", "Delete_Item_Icode[]");
+                stock.val(item_icode);
+                cell.append(stock);
+
                 $('table#sampleTabless tr#row'+id).remove();
                 var totals =document.getElementsByName("total[]");
                 var sum = 0;

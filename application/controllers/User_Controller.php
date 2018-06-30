@@ -576,6 +576,15 @@ class User_Controller extends CI_Controller
                 $this->db->update('proforma_invoice_items', $full_data);
             }
 
+            $delete_item_id = $this->input->post('Delete_Item_Icode');
+            $count_item = sizeof($delete_item_id);
+            for($i=0; $i<$count_item; $i++)
+            {
+
+                $delete_item_list=$this->admin_model->delete_Item($delete_item_id[$i]);
+
+            }
+
             $delete_charges_id = $this->input->post('Delete_Charge_Icode');
             $count1 = sizeof($delete_charges_id);
             for($i=0; $i<$count1; $i++)

@@ -522,6 +522,11 @@ class Admin_Model extends CI_Model
     {
         $delete = $this->db->query("DELETE FROM proforma_material_processing_charges WHERE Proforma_Icode='$picode' and Proforma_Charge_Icode='$charge_id' ");
 
+    }
+
+    public function delete_Item($item_id)
+    {
+        $delete = $this->db->query("DELETE FROM proforma_invoice_items WHERE Proforma_Invoice_Items_Icode='$item_id' ");
 
     }
 
