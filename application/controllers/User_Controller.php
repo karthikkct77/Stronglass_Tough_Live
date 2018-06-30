@@ -587,28 +587,30 @@ class User_Controller extends CI_Controller
             $charges_cost = $this->input->post('tot_charge_amt');
 
             $update_charges_id = $this->input->post('Delete_charges');
-            $count_update = sizeof($update_charges_id);
 
+            $count_update = sizeof($update_charges_id);
                 for($i=0; $i<$count_update; $i++)
                 {
-                    $full_data1 =array( 'Proforma_Icode' => $picode,
-                        'Proforma_Charge_Icode' => $update_charges_id[$i],
-                        'Proforma_Charge_Count' => $charges_count[$i],
-                        'Proforma_Charge_Value' => $charges_value[$i],
-                        'Proforma_Charge_Cost' => $charges_cost[$i],
-                        'Modified_By' => $this->session->userdata['userid'],
-                        'Modified_On' => date('Y-m-d H:i:s'));
-                    $charge_id=$this->admin_model->get_Profoma_Charges($update_charges_id[$i],$picode);
-                    $this->db->where('Proforma_Material_PC_Icode',$charge_id['Proforma_Material_PC_Icode']);
-                    $this->db->update('proforma_material_processing_charges', $full_data1);
+                    if (empty($update_charges_id[$i])) {
+
+                    }
+                    else{
+                        $full_data1 =array( 'Proforma_Icode' => $picode,
+                            'Proforma_Charge_Icode' => $update_charges_id[$i],
+                            'Proforma_Charge_Count' => $charges_count[$i],
+                            'Proforma_Charge_Value' => $charges_value[$i],
+                            'Proforma_Charge_Cost' => $charges_cost[$i],
+                            'Modified_By' => $this->session->userdata['userid'],
+                            'Modified_On' => date('Y-m-d H:i:s'));
+                        $charge_id=$this->admin_model->get_Profoma_Charges($update_charges_id[$i],$picode);
+                        $this->db->where('Proforma_Material_PC_Icode',$charge_id['Proforma_Material_PC_Icode']);
+                        $this->db->update('proforma_material_processing_charges', $full_data1);
+                    }
+
                 }
-
             $charges_id = $this->input->post('charges');
-
-            if (empty($charges_id)) {
-            }
-            else{
-
+            $check = array_filter($charges_id);
+            if (!empty($check)) {
                 $charges_count = $this->input->post('no_holes');
                 $charges_value = $this->input->post('charge_amt');
                 $charges_cost = $this->input->post('tot_charge_amt');
@@ -627,8 +629,7 @@ class User_Controller extends CI_Controller
             }
             $this->session->set_flashdata('feedback', 'Updated Invoice..');
             redirect('User_Controller/Check_PI');
-        }
-
+            }
     }
 
     /** Get WO LIST */

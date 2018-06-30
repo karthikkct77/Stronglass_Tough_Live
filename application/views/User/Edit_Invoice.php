@@ -199,9 +199,9 @@
                                         ?>
                                         <tr id="charge<?php echo $i; ?>">
                                             <td><input type="hidden" name="Delete_charges[]" class="form-control" value="<?php echo $key['charge_icode']; ?>" ><?php echo $key['charge_name']; ?></td>
-                                            <td><input type="hidden" name="Delete_charges_count[]" class="form-control" value="<?php echo $key['Proforma_Charge_Count']; ?>" ><?php echo $key['Proforma_Charge_Count']; ?></td>
-                                            <td><input type="hidden" name="Delete_charges_value[]" class="form-control" value="<?php echo $key['Proforma_Charge_Value']; ?>" ><?php echo $key['Proforma_Charge_Value']; ?></td>
-                                            <td><input class="form-control" type="text" name="tot_charge_amt[]" id="tot_charge_amt" value="<?php echo $key['Proforma_Charge_Cost']; ?>"  readonly></td>
+                                            <td><input type="text" id="charges_count<?php echo $i; ?>" name="Delete_charges_count[]" class="form-control" value="<?php echo $key['Proforma_Charge_Count']; ?>" onkeyup="change_charge_count('<?php echo $i; ?>')"  ></td>
+                                            <td><input type="text" id="charges_value<?php echo $i; ?>" name="Delete_charges_value[]" class="form-control" value="<?php echo $key['Proforma_Charge_Value']; ?>" onkeyup="change_charge_value('<?php echo $i; ?>')"  ></td>
+                                            <td><input class="form-control" type="text" name="tot_charge_amt[]" id="tot_charge_amt<?php echo $i; ?>" value="<?php echo $key['Proforma_Charge_Cost']; ?>"  readonly></td>
                                             <td><input type="button" onclick="delete_charges('<?php echo $i; ?>','<?php echo $key['charge_icode']; ?>')" value="Delete"></input>
                                             </td>
                                         </tr>
@@ -225,7 +225,7 @@
                                             </div></td>
                                         <td><input class="form-control" type="text" name="no_holes[]" id="no_holes" ></td>
                                         <td><input class="form-control" type="text" name="charge_amt[]" id="charge_amt"  readonly></td>
-                                        <td><input class="form-control" type="text" name="tot_charge_amt[]" id="tot_charge_amt1"  readonly></td>
+                                        <td><input class="form-control" type="text" name="tot_charge_amt[]" id="tot_charge_amount"  readonly></td>
                                         <td><input type="button" onclick="Add_one()" value="Add" id="Add" /></td>
                                     </tr>
                                     <tr>
@@ -256,7 +256,7 @@
                                                 <td colspan="4" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
 
                                                 <td><input class="form-control" type="text" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ></td>
-                                                <td></td>
+                                                <td> <input type="hidden" id="igst" value="0"></td>
                                             </tr>
                                             <tr>
                                                 <td></td>
@@ -273,7 +273,7 @@
                                         { ?>
                                             <tr>
                                                 <td colspan="3" align="right">IGST @18%
-                                                    <input type="hidden" id="gst" value="18">
+                                                    <input type="hidden" id="igst1" value="18">
                                                 </td>
                                                 <td><input class="form-control" type="text" name="igst" id="igst" value="<?php echo $invoice[0]['IGST_Value']; ?>" readonly ></td>
                                                 <td></td>
@@ -377,7 +377,7 @@
             var holes = parseInt($(this).val());
             var amt = parseInt($('#charge_amt').val());
             var total =  parseInt(holes * amt);
-            document.getElementById('tot_charge_amt1').value = total;
+            document.getElementById('tot_charge_amount').value = total;
 
             var totals =document.getElementsByName("tot_charge_amt[]");
             var sum1 = 0;
@@ -443,11 +443,11 @@
             else
             {
                 var chrgs = $("#charges option:selected").text();
-                AddRow($('#charges').val(), $("#no_holes").val(),$("#charge_amt").val(),$("#tot_charge_amt1").val(),chrgs);
+                AddRow($('#charges').val(), $("#no_holes").val(),$("#charge_amt").val(),$("#tot_charge_amount").val(),chrgs);
                 $("#charges").val("");
                 $("#no_holes").val("");
                 $("#charge_amt").val("");
-                $("#tot_charge_amt1").val("");
+                $("#tot_charge_amount").val("");
             }
         });
         function AddRow(charges,no_holes,charge_amt,tot_charge_amt,chrgs) {
@@ -1350,6 +1350,7 @@
                 var sub_tot =document.getElementById('sub_tot').value;
                 var insurance =document.getElementById('insurance').value;
                 var igst =document.getElementById('igst').value;
+                alert(igst);
                 if(igst == '')
                 {
                     var gst = document.getElementById('gst').value;
@@ -1406,6 +1407,112 @@
 
             }
         }
+
+        /** Change Charge count */
+        function change_charge_count(id) {
+            var holes = document.getElementById('charges_count'+id).value;
+            var amt = document.getElementById('charges_value'+id).value;
+            var total =  parseInt(holes * amt);
+            document.getElementById('tot_charge_amt'+id).value=total;
+                var totals =document.getElementsByName("tot_charge_amt[]");
+                var sum = 0;
+                for (var j = 0, iLen = totals.length; j < iLen; j++) {
+                    if (totals[j].value!==""){
+                        val=parseFloat(totals[j].value);
+                        sum +=val;
+                    }
+                }
+                var grant_tot = document.getElementById('grand_total').value;
+                var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
+                document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+                var sub_tot1 =document.getElementById('sub_tot').value;
+
+                var tax = 2.42;
+                var total = parseFloat (sub_tot1 * tax / 100);
+                document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+                var insurance =parseFloat(total).toFixed(3);
+                var igst =document.getElementById('igst').value;
+                if(igst == '0')
+                {
+                    var gst = document.getElementById('gst').value;
+                    var trans =document.getElementById('transport').value;
+                    var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+                    document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+                    document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+                    var sgst = document.getElementById('sgst').value;
+                    var cgst = document.getElementById('cgst').value;
+                    var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) +  parseFloat(trans));
+                    document.getElementById('gross_tot').value = parseInt(grant);
+                }
+                else
+                {
+
+                    var gst = 18;
+                    var trans =document.getElementById('transport').value;
+                    var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+                    document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+                    var iisgst = document.getElementById('igst').value;
+                    var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) +  parseFloat(trans));
+                    document.getElementById('gross_tot').value = parseInt(grant);
+
+                }
+
+
+        }
+        /** Change Charge count */
+        /** Change Charge value */
+        function change_charge_value(id) {
+            var holes = document.getElementById('charges_count'+id).value;
+            var amt = document.getElementById('charges_value'+id).value;
+            var total =  parseInt(holes * amt);
+            document.getElementById('tot_charge_amt'+id).value=total;
+            var totals =document.getElementsByName("tot_charge_amt[]");
+            var sum = 0;
+            for (var j = 0, iLen = totals.length; j < iLen; j++) {
+                if (totals[j].value!==""){
+                    val=parseFloat(totals[j].value);
+                    sum +=val;
+                }
+            }
+            var grant_tot = document.getElementById('grand_total').value;
+            var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
+            document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+            var sub_tot1 =document.getElementById('sub_tot').value;
+
+            var tax = 2.42;
+            var total = parseFloat (sub_tot1 * tax / 100);
+            document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+            var insurance =parseFloat(total).toFixed(3);
+            var igst =document.getElementById('igst').value;
+            if(igst == '0')
+            {
+                var gst = document.getElementById('gst').value;
+                var trans =document.getElementById('transport').value;
+                var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+                document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+                document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+                var sgst = document.getElementById('sgst').value;
+                var cgst = document.getElementById('cgst').value;
+                var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) +  parseFloat(trans));
+                document.getElementById('gross_tot').value = parseInt(grant);
+            }
+            else
+            {
+
+                var gst = 18;
+                var trans =document.getElementById('transport').value;
+                var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+                document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+                var iisgst = document.getElementById('igst').value;
+                var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) +  parseFloat(trans));
+                document.getElementById('gross_tot').value = parseInt(grant);
+
+            }
+
+
+        }
+        /** Change Charge value */
+
 
 
     </script>
