@@ -259,11 +259,12 @@
                             <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
                         </div>
                         <div class="col-md-6">
-                            <a class="btn btn-success pull-right" id="with_print" href="<?php echo site_url('User_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT</a>
                             <?php if($_SESSION['role'] == 6) { ?>
                                 <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Generate WO</button>
                              <?php } elseif($_SESSION['role'] == 7){
                                 ?>
+                                <a class="btn btn-success pull-right" id="with_print" href="<?php echo site_url('User_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT</a>
+
                                 <button class="btn btn-danger pull-right" type="submit" id="with_print"><i class="fa fa-fw fa-lg fa-check-circle"></i>Send Email</button>
                                 <input type="button" id="with_print" class="btn btn-default pull-right" onclick="window.print()" value="print">
                                 <input type="button" id="with_print" class="btn btn-info pull-right" onclick="Request_Approve()" value="Request To WO Approve">
@@ -604,15 +605,29 @@
 
     /** Request for Approve **/
     function Request_Approve() {
+        if (confirm("Do you Want to Delete This Material...!")) {
+            var pi_code = document.getElementById('PI_Icode').value;
+            $.ajax({
+                url:"<?php echo site_url('User_Controller/Request_To_Approve'); ?>",
+                data: {id: pi_code},
+                type: "POST",
+                success:function(data){
+                    if(data == '1')
+                    {
+                        swal({
+                                title: "Success!",
+                                text: 'PI Request Send Success',
+                                type: "success"
+                            },
+                            function(){
+                                window.location.href = document.referrer;
+                            });
+                    }
 
-        var pi_code = document.getElementById('PI_Icode').value;
-        $.ajax({
-            url:"<?php echo site_url('User_Controller/Request_To_Approve'); ?>",
-            data: {id: pi_code},
-            type: "POST",
-            success:function(server_response){
-            }
-        });
+                }
+            });
+
+        }
 
     }
 </script>

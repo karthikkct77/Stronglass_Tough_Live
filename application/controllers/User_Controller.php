@@ -383,7 +383,7 @@ class User_Controller extends CI_Controller
     /*Get Company Name*/
     public function Generate_WO()
     {
-        $data['invoice'] = $this->user_model->get_All_Invoice();
+        $data['invoice'] = $this->user_model->get_All_WO_Details();
         $this->load->view('User/header');
         $this->load->view('User/top');
         $this->load->view('User/left');
@@ -411,7 +411,7 @@ class User_Controller extends CI_Controller
     public function Save_Work_Order()
     {
         $role =  $this->session->userdata['role'];
-        if($role == 6)
+        if($role == 6) // Wo Creater
         {
             $month =date('m');
             $perfoma = $this->admin_model->get_WO_number($month);
@@ -453,15 +453,16 @@ class User_Controller extends CI_Controller
                     $insert_process = $this->admin_model->Insert_WO_Process($data1);
                 }
                 $id=$this->input->post('PI_Icode');
-                $update = array('WO_Confirm' => '1');
+                $update = array('WO_Confirm' => '1',
+                    'WO_Confirm_By'=>$this->session->userdata['userid'],
+                    'WO_Confirm_On'=>date('Y-m-d H:i:s'));
                 $this->db->where('Proforma_Icode',$id);
                 $this->db->update('proforma_invoice', $update);
-
                 $this->session->set_flashdata('feedback', 'Work Order Generated ..');
-                redirect('User_Controller/Generate_WO');
+                redirect('User_Controller/View_WO');
             }
         }
-        elseif ($role == 7)
+        elseif ($role == 7) // Pi Confirm
         {
 
 
@@ -676,6 +677,7 @@ class User_Controller extends CI_Controller
                       'PI_Confirm_Date' => date('Y-m-d H:i:s'));
         $this->db->where('Proforma_Icode',$pi_code);
         $this->db->update('proforma_invoice', $update);
+        echo 1;
     }
 
 }

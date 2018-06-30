@@ -89,14 +89,14 @@ class User_Model extends CI_Model
     {
         $user_icode =$this->session->userdata['userid'];
         $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
-                                  INNER JOIN st_user_details C on A.WO_Created_By = C.User_Icode  WHERE A.WO_Created_By='$user_icode' and A.WO_Confirm_Status= '0'");
+                                  INNER JOIN st_user_details C on A.WO_Created_By = C.User_Icode  WHERE A.WO_Created_By='$user_icode' and B.WO_Confirm= '1'");
         return $query->result_array();
     }
     public function get_All_WO_Details()
     {
-        $user_icode =$this->session->userdata['userid'];
-        $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
-                                  INNER JOIN st_user_details C on A.WO_Created_By = C.User_Icode  WHERE A.WO_Confirm_Status= '0'");
+
+        $query = $this->db->query("Select * from proforma_invoice A INNER JOIN  customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode 
+                                   INNER  JOIN  st_user_details C on A.PI_Confirm_By =C. User_Icode WHERE  PI_Confirm='1' and WO_Confirm='0'");
         return $query->result_array();
     }
     public function Get_Single_wo($pi_icode)

@@ -34,9 +34,9 @@
                             <th>#</th>
                             <th>PI- Number</th>
                             <th>Customer</th>
-                            <th>PI- Date</th>
                             <th>Total Amount</th>
-                            <th>PI Generated  By </th>
+                            <th>PI Confirm  By </th>
+                            <th>PI Confirm Date</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -49,9 +49,9 @@
                                 <td><?php echo $i; ?></td>
                                 <td><?php echo $val['Proforma_Number']; ?></td>
                                 <td><?php echo $val['Customer_Company_Name']; ?></td>
-                                <td><?php echo $val['Proforma_Date']; ?></td>
                                 <td><?php echo $val['GrossTotal_Value']; ?></td>
                                 <td><?php echo $val['User_Name']; ?></td>
+                                <td><?php echo $val['PI_Confirm_Date']; ?></td>
                                 <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/single_Invoice/') . $val['Proforma_Icode']; ?>">Generate WO</a></td>
                             </tr>
                             <?php
