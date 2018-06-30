@@ -427,18 +427,20 @@ class User_Controller extends CI_Controller
                 $WO_Number = $month .'-'. $increment;
 
             }
+            $Qty =  $this->input->post('pics');
+            $tot_qty = array_sum($Qty);
 
             $data = array(
                 'WO_Number' => $WO_Number,
                 'Proforma_Icode' => $this->input->post('PI_Icode'),
                 'Proforma_Number' => $this->input->post('invoice_no'),
                 'WO_Date' =>date('Y-m-d') ,
+                'Total_Qty' =>$tot_qty,
                 'WO_Created_By' => $this->session->userdata['userid']);
             $insert = $this->admin_model->Insert_WO($data);
             if($insert != 0)
             {
                 $item_icode =  $this->input->post('material');
-                $Qty =  $this->input->post('pics');
                 $count = sizeof($item_icode);
                 for($i=0; $i<$count; $i++)
                 {
