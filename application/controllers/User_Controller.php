@@ -531,102 +531,105 @@ class User_Controller extends CI_Controller
     public function Update_Invoice()
     {
         $picode = $this->input->post('PI_Icode');
-//        $history = $this->user_model->Invoice_Update($picode);
-//        if($history == '1')
-//        {
-//            $address =$this->input->post('company_address');
-//            if($address == 0)
-//            {
-//                $profoma_address= '0';
-//            }
-//            else{
-//                $profoma_address= $this->input->post('company_address');
-//            }
-//            $data = array(
-//                'Proforma_Number' => $this->input->post('invoice_no'),
-//                'Proforma_Date' => $this->input->post('invoice_date'),
-//                'Proforma_Customer_Icode' => $this->input->post('company_name'),
-//                'Proforma_Delivery_Address_Icode' =>$profoma_address ,
-//                'Sub_Total' => $this->input->post('sub_tot'),
-//                'Insurance_Value' => $this->input->post('insurance'),
-//                'SGST_Value' => $this->input->post('sgst'),
-//                'CGST_Value' => $this->input->post('cgst'),
-//                'IGST_Value' => $this->input->post('igst'),
-//                'GrossTotal_Value' => $this->input->post('gross_tot'),
-//                'Modified_By' => $this->session->userdata['userid'],
-//                'Modified_On' => date('Y-m-d H:i:s'));
-//            $this->db->where('Proforma_Icode',$picode);
-//            $this->db->update('proforma_invoice', $data);
-//
-//            $material_id = $this->input->post('material');
-//            $qty = $this->input->post('pics');
-//            $holes = $this->input->post('holes');
-//            $Rate = $this->input->post('rate');
-//            $cost = $this->input->post('total');
-//            $count = sizeof($material_id);
-//            for($i=0; $i<$count; $i++)
-//            {
-//                $full_data =array( 'Proforma_Icode' => $picode,
-//                    'Proforma_Holes' => $holes[$i],
-//                    'Proforma_Qty' => $qty[$i],
-//                    'Proforma_Material_Rate' => $Rate[$i],
-//                    'Proforma_Material_Cost' => $cost[$i],
-//                    'Modified_By' => $this->session->userdata['userid'],'Modified_On' => date('Y-m-d H:i:s'));
-//                $this->db->where('Proforma_Invoice_Items_Icode',$material_id[$i]);
-//                $this->db->update('proforma_invoice_items', $full_data);
-//            }
+        $history = $this->user_model->Invoice_Update($picode);
+        if($history == '1')
+        {
+            $address =$this->input->post('company_address');
+            if($address == 0)
+            {
+                $profoma_address= '0';
+            }
+            else{
+                $profoma_address= $this->input->post('company_address');
+            }
+            $data = array(
+                'Proforma_Number' => $this->input->post('invoice_no'),
+                'Proforma_Date' => $this->input->post('invoice_date'),
+                'Proforma_Customer_Icode' => $this->input->post('company_name'),
+                'Proforma_Delivery_Address_Icode' =>$profoma_address ,
+                'Sub_Total' => $this->input->post('sub_tot'),
+                'Insurance_Value' => $this->input->post('insurance'),
+                'SGST_Value' => $this->input->post('sgst'),
+                'CGST_Value' => $this->input->post('cgst'),
+                'IGST_Value' => $this->input->post('igst'),
+                'GrossTotal_Value' => $this->input->post('gross_tot'),
+                'Modified_By' => $this->session->userdata['userid'],
+                'Modified_On' => date('Y-m-d H:i:s'));
+            $this->db->where('Proforma_Icode',$picode);
+            $this->db->update('proforma_invoice', $data);
 
-            $delete_charges_id = $this->input->post('Delete_charges');
+            $material_id = $this->input->post('material');
+            $qty = $this->input->post('pics');
+            $holes = $this->input->post('holes');
+            $Rate = $this->input->post('rate');
+            $cost = $this->input->post('total');
+            $count = sizeof($material_id);
+            for($i=0; $i<$count; $i++)
+            {
+                $full_data =array( 'Proforma_Icode' => $picode,
+                    'Proforma_Holes' => $holes[$i],
+                    'Proforma_Qty' => $qty[$i],
+                    'Proforma_Material_Rate' => $Rate[$i],
+                    'Proforma_Material_Cost' => $cost[$i],
+                    'Modified_By' => $this->session->userdata['userid'],'Modified_On' => date('Y-m-d H:i:s'));
+                $this->db->where('Proforma_Invoice_Items_Icode',$material_id[$i]);
+                $this->db->update('proforma_invoice_items', $full_data);
+            }
+
+            $delete_charges_id = $this->input->post('Delete_Charge_Icode');
             $count1 = sizeof($delete_charges_id);
-            $delete_chrg=$this->admin_model->Profoma_Charges($delete_charges_id,$picode);
+            for($i=0; $i<$count1; $i++)
+            {
+
+                $delete_chrg_list=$this->admin_model->delete_charges($delete_charges_id[$i],$picode);
+
+            }
             $charges_count = $this->input->post('Delete_charges_count');
             $charges_value = $this->input->post('Delete_charges_value');
             $charges_cost = $this->input->post('tot_charge_amt');
-            if($delete_chrg > $count1 )
-            {
 
-            }
-            else
-            {
-                for($i=0; $i<$count1; $i++)
+            $update_charges_id = $this->input->post('Delete_charges');
+            $count_update = sizeof($update_charges_id);
+
+                for($i=0; $i<$count_update; $i++)
                 {
                     $full_data1 =array( 'Proforma_Icode' => $picode,
-                        'Proforma_Charge_Icode' => $delete_charges_id[$i],
+                        'Proforma_Charge_Icode' => $update_charges_id[$i],
                         'Proforma_Charge_Count' => $charges_count[$i],
                         'Proforma_Charge_Value' => $charges_value[$i],
                         'Proforma_Charge_Cost' => $charges_cost[$i],
                         'Modified_By' => $this->session->userdata['userid'],
                         'Modified_On' => date('Y-m-d H:i:s'));
-                    $this->db->where('Proforma_Material_PC_Icode',$material_id[$i]);
+                    $charge_id=$this->admin_model->get_Profoma_Charges($update_charges_id[$i],$picode);
+                    $this->db->where('Proforma_Material_PC_Icode',$charge_id['Proforma_Material_PC_Icode']);
                     $this->db->update('proforma_material_processing_charges', $full_data1);
                 }
 
+            $charges_id = $this->input->post('charges');
+
+            if (empty($charges_id)) {
             }
-//            $charges_id = $this->input->post('charges');
-//
-//            if (empty($charges_id)) {
-//            }
-//            else{
-//
-//                $charges_count = $this->input->post('no_holes');
-//                $charges_value = $this->input->post('charge_amt');
-//                $charges_cost = $this->input->post('tot_charge_amt');
-//                $count1 = sizeof($charges_id);
-//                for($i=0; $i<$count1; $i++)
-//                {
-//                    $full_data1 =array( 'Proforma_Icode' => $picode,
-//                        'Proforma_Charge_Icode' => $charges_id[$i],
-//                        'Proforma_Charge_Count' => $charges_count[$i],
-//                        'Proforma_Charge_Value' => $charges_value[$i],
-//                        'Proforma_Charge_Cost' => $charges_cost[$i],
-//                        'Modified_By' => $this->session->userdata['userid'],
-//                        'Modified_On' => date('Y-m-d H:i:s'));
-//                    $insert_charges = $this->admin_model->Insert_Profoma_Charges($full_data1);
-//                }
-//            }
-//            $this->session->set_flashdata('feedback', 'Updated Invoice..');
-//            redirect('User_Controller/Check_PI');
-//        }
+            else{
+
+                $charges_count = $this->input->post('no_holes');
+                $charges_value = $this->input->post('charge_amt');
+                $charges_cost = $this->input->post('tot_charge_amt');
+                $count1 = sizeof($charges_id);
+                for($i=0; $i<$count1; $i++)
+                {
+                    $full_data1 =array( 'Proforma_Icode' => $picode,
+                        'Proforma_Charge_Icode' => $charges_id[$i],
+                        'Proforma_Charge_Count' => $charges_count[$i],
+                        'Proforma_Charge_Value' => $charges_value[$i],
+                        'Proforma_Charge_Cost' => $charges_cost[$i],
+                        'Modified_By' => $this->session->userdata['userid'],
+                        'Modified_On' => date('Y-m-d H:i:s'));
+                    $insert_charges = $this->admin_model->Insert_Profoma_Charges($full_data1);
+                }
+            }
+            $this->session->set_flashdata('feedback', 'Updated Invoice..');
+            redirect('User_Controller/Check_PI');
+        }
 
     }
 

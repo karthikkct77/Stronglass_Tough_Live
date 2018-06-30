@@ -503,10 +503,24 @@ class Admin_Model extends CI_Model
         $this->db->insert('customer_master', $data);
         return 1;
     }
-    public function Profoma_Charges($charges,$picode)
+    public function Profoma_Charges($picode)
     {
         $charg = $this->db->query("SELECT Proforma_Material_PC_Icode FROM proforma_material_processing_charges WHERE Proforma_Icode='$picode'");
         return $charg->num_rows();
+    }
+    public function get_Profoma_Charges($charge_id,$picode)
+    {
+        $charg = $this->db->query("SELECT Proforma_Material_PC_Icode FROM proforma_material_processing_charges WHERE Proforma_Icode='$picode' and Proforma_Charge_Icode='$charge_id'");
+        return $charg->row_array(0);
+    }
+    public function Profoma_Charges_list($picode)
+    {
+        $query = $this->db->query("SELECT Proforma_Charge_Icode FROM proforma_material_processing_charges WHERE Proforma_Icode='$picode'");
+        return $query->result();
+    }
+    public function delete_charges($charge_id,$picode)
+    {
+        $delete = $this->db->query("DELETE FROM proforma_material_processing_charges WHERE Proforma_Icode='$picode' and Proforma_Charge_Icode='$charge_id' ");
 
 
     }

@@ -192,7 +192,8 @@
                                             <td><input type="hidden" name="Delete_charges_count[]" class="form-control" value="<?php echo $key['Proforma_Charge_Count']; ?>" ><?php echo $key['Proforma_Charge_Count']; ?></td>
                                             <td><input type="hidden" name="Delete_charges_value[]" class="form-control" value="<?php echo $key['Proforma_Charge_Value']; ?>" ><?php echo $key['Proforma_Charge_Value']; ?></td>
                                             <td><input class="form-control" type="text" name="tot_charge_amt[]" id="tot_charge_amt" value="<?php echo $key['Proforma_Charge_Cost']; ?>"  readonly></td>
-                                            <td><input type="button" onclick="delete_charges('<?php echo $i; ?>')" value="Delete"></input></td>
+                                            <td><input type="button" onclick="delete_charges('<?php echo $i; ?>','<?php echo $key['charge_icode']; ?>')" value="Delete"></input>
+                                            </td>
                                         </tr>
                                         <?php
                                         $i++;
@@ -277,6 +278,13 @@
                                     </tr>
                                     </tfoot>
                                 </table>
+                                <div style="display: none">
+                                    <table id="my_table">
+                                        <thead></thead>
+                                        <tbody></tbody>
+                                    </table>
+
+                                </div>
                             </div>
                             <script>
                                 $("#insurance").on('change keyup paste', function() {
@@ -1291,8 +1299,21 @@
         //** Delete Item **/
 
         //** Delete Charges **//
-        function delete_charges(id) {
+        function delete_charges(id,charges) {
             if (confirm("Do you Want to Delete This Charges...!")) {
+
+                var tBody = $("#my_table > TBODY")[0];
+                //Add Row.
+                row = tBody.insertRow(-1);
+                //Add Name cell.
+                var cell = $(row.insertCell(-1));
+                var stock = $("<input />");
+                stock.attr("type", "text");
+                stock.attr("name", "Delete_Charge_Icode[]");
+                stock.val(charges);
+                cell.append(stock);
+
+
                 $('table#sampleTable tr#charge'+id).remove();
                 var totals =document.getElementsByName("tot_charge_amt[]");
                 var sum1 = 0;
