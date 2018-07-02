@@ -489,12 +489,12 @@ class User_Controller extends CI_Controller
             $data['st']= $this->admin_model->get_ST();
         $this->email->to($userEmail);  // replace it with receiver mail id
         $this->email->subject($subject); // replace it with relevant subject
-            $this->load->view('User/email',$data,false);
-//        $body = $this->load->view('User/email',$data,TRUE);
-//        $this->email->message($body);
-//        $this->email->send();
+          //  $this->load->view('User/email',$data,false);
+        $body = $this->load->view('User/email',$data,TRUE);
+        $this->email->message($body);
+        $this->email->send();
             $this->session->set_flashdata('feedback', 'Email Send Successfully ..');
-            redirect('User_Controller/View_WO');
+            redirect('User_Controller/Check_PI');
 
         }
 
