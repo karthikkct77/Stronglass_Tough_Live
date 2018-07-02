@@ -468,33 +468,31 @@ class User_Controller extends CI_Controller
         {
 
 
-//            $this->load->library('email');
-//
-//            //SMTP & mail configuration
-//            $config = array(
-//                'protocol'  => 'smtp',
-//                'smtp_host' => 'ssl://smtp.example.com',
-//                'smtp_port' => 465,
-//                'smtp_user' => 'email@example.com',
-//                'smtp_pass' => 'email_password',
-//                'mailtype'  => 'html',
-//                'charset'   => 'utf-8'
-//            );
-//            $this->email->initialize($config);
-//            $this->email->set_mailtype("html");
-//            $this->email->set_newline("\r\n");
-//
-//            //Email content
-//            $htmlContent = '<h1>Sending email via SMTP server</h1>';
-//            $htmlContent .= '<p>This email has sent via SMTP server from CodeIgniter application.</p>';
-//
-//            $this->email->to('recipient@example.com');
-//            $this->email->from('sender@example.com','MyWebsite');
-//            $this->email->subject('How to send email via SMTP server in CodeIgniter');
-//            $this->email->message($htmlContent);
-//
-//            //Send email
-//            $this->email->send();
+
+            $userEmail='vignesh@ibtemail.com';
+            $subject='Test';
+            $config = Array(
+                'mailtype' => 'html',
+                'charset' => 'utf-8',
+                'priority' => '1'
+            );
+        $this->load->library('email', $config);
+       $this->email->set_newline("\r\n");
+            $pi_icode= $this->input->post('PI_Icode');
+
+        $this->email->from('karthik@ibtemail.com', 'Pheonix solutions');
+            $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
+            $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
+            $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
+            $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
+            $data['tax']= $this->admin_model->get_Tax();
+            $data['st']= $this->admin_model->get_ST();
+        $this->email->to($userEmail);  // replace it with receiver mail id
+        $this->email->subject($subject); // replace it with relevant subject
+
+        $body = $this->load->view('User/View_Single_Invoice',$data,TRUE);
+        $this->email->message($body);
+        $this->email->send();
 
         }
 
