@@ -251,18 +251,6 @@
                         </div>
                         <div>Amount in Words: <span id="word"></span></div>
                         <script>
-//                            $("#insurance").on('change keyup paste', function() {
-//                                var sub_tot =document.getElementById('sub_tot').value;
-//                                var insurance =document.getElementById('insurance').value;
-//                                var gst = document.getElementById('gst').value;
-//                                var sum = ((parseFloat(sub_tot) + parseFloat(insurance)) * gst / 100 );
-//                                document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
-//                                document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
-//                                var sgst = document.getElementById('sgst').value;
-//                                var cgst = document.getElementById('cgst').value;
-//                                var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst));
-//                                document.getElementById('gross_tot').value = parseInt(grant);
-//                            });
                                 $('#insurance').click(function () {
                                     var sub_tot =document.getElementById('sub_tot').value;
                                     var tax = 2.42;
