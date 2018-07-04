@@ -88,17 +88,20 @@
                                 <tr id="row<?php echo $i; ?>">
                                     <td><?php echo $i; ?></td>
                                     <td>     <div class="form-group">
-                                            <select name="material[]" class="form-control" id="material<?php echo $i; ?>" onclick="get_result('<?php echo $i; ?>')" required >
-                                                <option value="" >Select material</option>
+                                           <select name="material[]" class="form-control" id="material--><?php //echo $i; ?><!--" onclick="get_result('--><?php //echo $i; ?>//')" required >
+                                               <option value="" >Select material</option>
                                                 <?php foreach ($stock as $row):
-                                                {
-                                                    echo '<option value= "'.$row['Material_Icode'].'">' . $row['Material_Name'] . '</option>';
-                                                }
-                                                endforeach; ?>
-                                            </select>
+                                               {
+                                                   echo '<option value= "'.$row['Material_Icode'].'">' . $row['Material_Name'] . '</option>';
+                                              }
+                                              endforeach; ?>
+                                           </select>
                                         </div>
                                     </td>
-                                    <td> <input class="form-control" type="text" name="thickness[]" id="thckness<?php echo $i; ?>" value="<?php echo $key['Thickness']; ?>" readonly></td>
+<!--                                    <div id="suggestions_material">-->
+<!--                                        <div id="autoSuggestionsList_material"></div>-->
+<!--                                    </div>-->
+                                    <td><input class="form-control" type="text" name="thickness[]" id="thckness<?php echo $i; ?>" value="<?php echo $key['Thickness']; ?>" readonly></td>
                                     <td><input class="form-control" type="text" name="hsn[]" id="hsn<?php echo $i; ?>" readonly ></td>
                                     <td><input class="form-control" type="text" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly></td>
                                     <td><input class="form-control" type="text" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['pics']; ?>" readonly></td>
@@ -621,7 +624,6 @@
 
             $.ajax({
                 type: "POST",
-
                 url:"<?php echo site_url('User_Controller/GetCountryName'); ?>",
                 data: post_data,
                 success: function (data) {
@@ -630,6 +632,40 @@
                         $('#suggestions').show();
                         $('#autoSuggestionsList').addClass('auto_list');
                         $('#autoSuggestionsList').html(data);
+                    }
+                }
+            });
+
+        }
+    }
+
+
+    function ajaxSearch_material()
+    {
+        var input_data = $('#search_data_material').val();
+
+        if (input_data.length === 0)
+        {
+            $('#suggestions_material').hide();
+        }
+        else
+        {
+
+            var post_data = {
+                'search_data': input_data,
+                '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
+            };
+
+            $.ajax({
+                type: "POST",
+                url:"<?php echo site_url('User_Controller/GetAllMaterial'); ?>",
+                data: post_data,
+                success: function (data) {
+                    // return success
+                    if (data.length > 0) {
+                        $('#suggestions').show();
+                        $('#autoSuggestionsList_material').addClass('auto_list');
+                        $('#autoSuggestionsList_material').html(data);
                     }
                 }
             });

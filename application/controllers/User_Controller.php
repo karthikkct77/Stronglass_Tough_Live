@@ -358,6 +358,23 @@ class User_Controller extends CI_Controller
         }
     }
     /*Get Company Name*/
+
+    /*Get Company Name*/
+    public function GetAllMaterial(){
+        $search_data = $this->input->post('search_data');
+        $result = $this->admin_model->Get_All_Material($search_data);
+        if (!empty($result))
+        {
+            foreach ($result as $row):
+                echo "<li><a href='javascript:;'  onclick='get_row(". $row['Material_Icode'] .")' >" . $row['Material_Name'] . "</a></li>";
+            endforeach;
+        }
+        else
+        {
+            echo "<li> <em> Not found ... </em> </li>";
+        }
+    }
+    /*Get Company Name*/
     /** Get customer more address */
     public function get_Customer_Address()
     {

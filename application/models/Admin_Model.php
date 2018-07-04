@@ -328,6 +328,11 @@ class Admin_Model extends CI_Model
         return $query->result_array();
     }
 
+    public function Get_All_Material($keyword) {
+        $this->db->order_by('Material_Icode', 'Asc');
+        $this->db->like("Material_Name", $keyword);
+        return $this->db->get('material_master')->result_array();
+    }
     /*Get Company Name*/
     public function GetRow($keyword) {
         $this->db->order_by('Customer_Icode', 'DESC');
