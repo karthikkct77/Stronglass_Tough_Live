@@ -23,7 +23,7 @@
                             <div class="col-md-4">
 
                                 <h5>Consignee</h5>
-                                <input  class="form-control" name="search_data" id="search_data" type="text" value="<?php echo $invoice[0]['Customer_Company_Name']; ?>"   onkeyup="ajaxSearch();">
+                                <input  class="form-control" name="search_data" id="search_data" type="text" value="<?php echo $invoice[0]['Customer_Company_Name']; ?>"   onkeyup="ajaxSearch();" required>
                                 <input  class="form-control" name="company_name" id="company_name" type="hidden" value="<?php echo $invoice[0]['Customer_Icode']; ?>">
                                 <div id="suggestions">
                                     <div id="autoSuggestionsList"></div>
@@ -120,15 +120,15 @@
                                             </div></td>
                                         <td><?php echo $key['Proforma_HSNCode']; ?></td>
                                         <td><?php echo $key['Proforma_Special']; ?></td>
-                                        <td><input class="form-control" type="text" id="pics<?php echo $i; ?>"  name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
-                                        <td><input class="form-control" type="text" name="holes[]"  value="<?php echo $key['Proforma_Holes']; ?>" ></td>
-                                        <td><input class="form-control" type="text" id="Actual_width<?php echo $i; ?>" name="Actual_width[]"  value="<?php echo $key['Proforma_Actual_Size_Width']; ?>"  onkeyup="change_Actual_Width('<?php echo $i; ?>')" ></td>
-                                        <td><input class="form-control" type="text" id="Actual_height<?php echo $i; ?>" name="Actual_height[]"  value="<?php echo $key['Proforma_Actual_Size_Height']; ?>"  onkeyup="change_Actual_Height('<?php echo $i; ?>')" ></td>
-                                        <td><input class="form-control" type="text" id="Charge_width<?php echo $i; ?>" name="Charge_width[]"  value="<?php echo $key['Proforma_Chargeable_Size_Width']; ?>"  onkeyup="change_Charge_Width('<?php echo $i; ?>')" ></td>
-                                        <td><input class="form-control" type="text" id="Charge_height<?php echo $i; ?>" name="Charge_height[]"  value="<?php echo $key['Proforma_Chargeable_Size_Height']; ?>"  onkeyup="change_Charge_Height('<?php echo $i; ?>')" ></td>
-                                        <td><input class="form-control" type="text" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['Proforma_Area_SQMTR']; ?>" readonly></td>
-                                        <td><input class="form-control" type="text" name="rate[]" value="<?php echo $key['Proforma_Material_Rate']; ?>" id="rate<?php echo $i; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
-                                        <td><input class="form-control" type="text" name="total[]" value="<?php echo $key['Proforma_Material_Cost']; ?>" id="total<?php echo $i; ?>" ></td>
+                                        <td><input class="form-control" type="number" id="pics<?php echo $i; ?>"  name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
+                                        <td><input class="form-control" type="number" name="holes[]"  value="<?php echo $key['Proforma_Holes']; ?>" ></td>
+                                        <td><input class="form-control" type="number" id="Actual_width<?php echo $i; ?>" name="Actual_width[]"  value="<?php echo $key['Proforma_Actual_Size_Width']; ?>"  onkeyup="change_Actual_Width('<?php echo $i; ?>')" ></td>
+                                        <td><input class="form-control" type="number" id="Actual_height<?php echo $i; ?>" name="Actual_height[]"  value="<?php echo $key['Proforma_Actual_Size_Height']; ?>"  onkeyup="change_Actual_Height('<?php echo $i; ?>')" ></td>
+                                        <td><input class="form-control" type="number" id="Charge_width<?php echo $i; ?>" name="Charge_width[]"  value="<?php echo $key['Proforma_Chargeable_Size_Width']; ?>"  onkeyup="change_Charge_Width('<?php echo $i; ?>')" ></td>
+                                        <td><input class="form-control" type="number" id="Charge_height<?php echo $i; ?>" name="Charge_height[]"  value="<?php echo $key['Proforma_Chargeable_Size_Height']; ?>"  onkeyup="change_Charge_Height('<?php echo $i; ?>')" ></td>
+                                        <td><input class="form-control" type="number" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['Proforma_Area_SQMTR']; ?>" readonly></td>
+                                        <td><input class="form-control" type="number" name="rate[]" value="<?php echo $key['Proforma_Material_Rate']; ?>" id="rate<?php echo $i; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
+                                        <td><input class="form-control" type="number" name="total[]" value="<?php echo $key['Proforma_Material_Cost']; ?>" id="total<?php echo $i; ?>" readonly></td>
                                         <td><input type="button" onclick="delete_items('<?php echo $i; ?>','<?php echo $key['Proforma_Invoice_Items_Icode']; ?>')" value="Delete"></input></td>
                                     </tr>
                                     <?php $i++; } ?>
@@ -199,8 +199,8 @@
                                         ?>
                                         <tr id="charge<?php echo $i; ?>">
                                             <td><input type="hidden" name="Delete_charges[]" class="form-control" value="<?php echo $key['charge_icode']; ?>" ><?php echo $key['charge_name']; ?></td>
-                                            <td><input type="text" id="charges_count<?php echo $i; ?>" name="Delete_charges_count[]" class="form-control" value="<?php echo $key['Proforma_Charge_Count']; ?>" onkeyup="change_charge_count('<?php echo $i; ?>')"  ></td>
-                                            <td><input type="text" id="charges_value<?php echo $i; ?>" name="Delete_charges_value[]" class="form-control" value="<?php echo $key['Proforma_Charge_Value']; ?>" onkeyup="change_charge_value('<?php echo $i; ?>')"  ></td>
+                                            <td><input type="number" id="charges_count<?php echo $i; ?>" name="Delete_charges_count[]" class="form-control" value="<?php echo $key['Proforma_Charge_Count']; ?>" onkeyup="change_charge_count('<?php echo $i; ?>')"  ></td>
+                                            <td><input type="number" id="charges_value<?php echo $i; ?>" name="Delete_charges_value[]" class="form-control" value="<?php echo $key['Proforma_Charge_Value']; ?>" onkeyup="change_charge_value('<?php echo $i; ?>')"  ></td>
                                             <td><input class="form-control" type="text" name="tot_charge_amt[]" id="tot_charge_amt<?php echo $i; ?>" value="<?php echo $key['Proforma_Charge_Cost']; ?>"  readonly></td>
                                             <td><input type="button" onclick="delete_charges('<?php echo $i; ?>','<?php echo $key['charge_icode']; ?>')" value="Delete"></input>
                                             </td>
@@ -209,9 +209,9 @@
                                         $i++;
                                     }
                                     ?>
-                                    <tr>
                                     </tbody>
                                     <tfoot>
+                                    <tr>
 
                                         <td><div class="form-group">
                                                 <select name="charges[]" class="form-control" id="charges"   >
@@ -223,8 +223,8 @@
                                                     endforeach; ?>
                                                 </select>
                                             </div></td>
-                                        <td><input class="form-control" type="text" name="no_holes[]" id="no_holes" ></td>
-                                        <td><input class="form-control" type="text" name="charge_amt[]" id="charge_amt"  readonly></td>
+                                        <td><input class="form-control" type="number" name="no_holes[]" id="no_holes" ></td>
+                                        <td><input class="form-control" type="number" name="charge_amt[]" id="charge_amt"  readonly></td>
                                         <td><input class="form-control" type="text" name="tot_charge_amt[]" id="tot_charge_amount"  readonly></td>
                                         <td><input type="button" onclick="Add_one()" value="Add" id="Add" /></td>
                                     </tr>
