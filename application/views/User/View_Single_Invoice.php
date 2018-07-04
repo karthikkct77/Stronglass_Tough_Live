@@ -260,14 +260,15 @@
                         </div>
                         <div class="col-md-6">
                             <?php if($_SESSION['role'] == 6) { ?>
-                                <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Generate WO</button>
+
+                                <button class="btn btn-danger pi_button" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i> Generate WO</button>
+                                <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="print"/>
                              <?php } elseif($_SESSION['role'] == 7){
                                 ?>
-                                <a class="btn btn-success pull-right" id="with_print" href="<?php echo site_url('User_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT</a>
-
-                                <button class="btn btn-danger pull-right" type="submit" id="with_print"><i class="fa fa-fw fa-lg fa-check-circle"></i>Send Email</button>
-                                <input type="button" id="with_print" class="btn btn-default pull-right" onclick="window.print()" value="print">
-                                <input type="button" id="with_print" class="btn btn-info pull-right" onclick="Request_Approve()" value="Request To WO Approve">
+                                <a class="btn btn-success pi_button" id="with_print" href="<?php echo site_url('User_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT</a>
+                                <input type="button" id="request" class="btn btn-info pi_button" onclick="Request_Approve()" value="Request To WO Approve">
+                                <button class="btn btn-danger pi_button " type="submit" id="with_print"><i class="fa fa-fw fa-lg fa-check-circle"></i>Send Email</button>
+                                <input  type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="print">
 
                             <?php } ?>
 
@@ -306,6 +307,10 @@
         border: 1px solid #E3E3E3;
         border-radius: 5px 5px 5px 5px;
         position: absolute;
+    }
+    .pi_button{
+        margin-right: 15px;
+        float: right;
     }
 </style>
 
@@ -605,7 +610,7 @@
 
     /** Request for Approve **/
     function Request_Approve() {
-        if (confirm("Do you Want to Delete This Material...!")) {
+        if (confirm("Do you Want Request to Approve WO...!")) {
             var pi_code = document.getElementById('PI_Icode').value;
             $.ajax({
                 url:"<?php echo site_url('User_Controller/Request_To_Approve'); ?>",

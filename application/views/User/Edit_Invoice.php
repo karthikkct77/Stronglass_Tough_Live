@@ -236,13 +236,11 @@
                                     </tr>
                                     <tr>
                                         <td colspan="3" align="right">HANDLING CHARGES</td>
-
                                         <td><input class="form-control" type="text" name="insurance" id="insurance" value="<?php echo $invoice[0]['Insurance_Value']; ?>" required readonly></td>
                                         <td></td>
                                     </tr>
                                         <tr>
                                             <td colspan="3" align="right">TRANSPORT</td>
-
                                             <td><input class="form-control" type="text" name="transport" id="transport" onkeyup="change_transport(this.value)"  value="<?php echo $invoice[0]['Transport']; ?>" ></td>
                                             <td></td>
                                         </tr>
@@ -251,17 +249,15 @@
                                         if($invoice[0]['IGST_Value'] == '0')
                                         { ?>
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td colspan="4" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
+
+                                                <td colspan="3" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
 
                                                 <td><input class="form-control" type="text" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ></td>
                                                 <td> <input type="hidden" id="igst" value="0"></td>
                                             </tr>
                                             <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td colspan="4" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
+
+                                                <td colspan="3" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
                                                     <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
                                                 </td>
                                                 <td><input class="form-control" type="text" name="cgst" id="cgst" value="<?php echo $invoice[0]['CGST_Value']; ?>" readonly ></td>
@@ -357,7 +353,6 @@
 
     <script>
         $("#company_name2").change(function () {
-            alert("gdsgdsg");
             $.ajax({
                 url:"<?php echo site_url('User_Controller/get_Customer_Address_Details'); ?>",
                 data: {id:
@@ -1350,7 +1345,6 @@
                 var sub_tot =document.getElementById('sub_tot').value;
                 var insurance =document.getElementById('insurance').value;
                 var igst =document.getElementById('igst').value;
-                alert(igst);
                 if(igst == '')
                 {
                     var gst = document.getElementById('gst').value;
