@@ -253,7 +253,7 @@
                                                 <td colspan="3" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
 
                                                 <td><input class="form-control" type="text" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ></td>
-                                                <td> <input type="hidden" id="igst" value="0"></td>
+                                                <td> <input type="hidden" id="igst" value=""></td>
                                             </tr>
                                             <tr>
 
@@ -1317,7 +1317,6 @@
         //** Delete Charges **//
         function delete_charges(id,charges) {
             if (confirm("Do you Want to Delete This Charges...!")) {
-
                 var tBody = $("#my_table > TBODY")[0];
                 //Add Row.
                 row = tBody.insertRow(-1);
@@ -1328,8 +1327,6 @@
                 stock.attr("name", "Delete_Charge_Icode[]");
                 stock.val(charges);
                 cell.append(stock);
-
-
                 $('table#sampleTable tr#charge'+id).remove();
                 var totals =document.getElementsByName("tot_charge_amt[]");
                 var sum1 = 0;
@@ -1343,7 +1340,10 @@
                 var sub_tot1 = parseFloat(sum1) + parseFloat(grant_tot);
                 document.getElementById('sub_tot').value = parseFloat(sub_tot1).toFixed(2);
                 var sub_tot =document.getElementById('sub_tot').value;
-                var insurance =document.getElementById('insurance').value;
+                var tax = 2.42;
+                var total = parseFloat (sub_tot * tax / 100);
+                document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+                var insurance =parseFloat(total).toFixed(3);
                 var igst =document.getElementById('igst').value;
                 if(igst == '')
                 {
@@ -1359,7 +1359,6 @@
                 }
                 else
                 {
-
                     var gst = 18;
                     var trans =document.getElementById('transport').value;
                     var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
@@ -1367,10 +1366,8 @@
                     var iisgst = document.getElementById('igst').value;
                     var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst)+ parseFloat(trans));
                     document.getElementById('gross_tot').value = parseInt(grant);
-
                 }
             }
-
         }
         //** Chasnge Transport**/
         function change_transport(val) {
