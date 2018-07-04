@@ -336,7 +336,7 @@
 
     // No of  Pieces
     $("#no_holes").on('change keyup paste', function() {
-        var holes = parseInt($(this).val());
+        var holes = parseInt($('#no_holes').val());
         var amt = parseInt($('#charge_amt').val());
         var total =  parseInt(holes * amt);
         document.getElementById('tot_charge_amt').value = total;
@@ -361,7 +361,7 @@
             if(res == 'gst')
             {
                 var gst = document.getElementById('gst').value;
-                var trans =val;
+                var trans =parseFloat(document.getElementById('transport').value);
                 var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
                 document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
                 document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
@@ -372,8 +372,9 @@
             }
             else
             {
+
                 var gst = 18;
-                var trans =parseFloat(val);
+                var trans =parseFloat(document.getElementById('transport').value);
                 var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
                 document.getElementById('igst').value = parseFloat(sum).toFixed(2);
                 var iisgst = document.getElementById('igst').value;
@@ -392,7 +393,7 @@
 
     // Charge Amount
     $("#charge_amt").on('change keyup paste', function() {
-        var amt = parseInt($(this).val());
+        var amt = parseInt($('#charge_amt').val());
         var holes = parseInt($('#no_holes').val());
         var total =  parseInt(holes * amt);
         document.getElementById('tot_charge_amt').value = total;
@@ -416,8 +417,9 @@
             var res = $('input:radio[name="tax"]:checked').val();
             if(res == 'gst')
             {
+
                 var gst = document.getElementById('gst').value;
-                var trans =val;
+                var trans =parseFloat(document.getElementById('transport').value);
                 var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
                 document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
                 document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
@@ -428,8 +430,9 @@
             }
             else
             {
+
                 var gst = 18;
-                var trans =parseFloat(val);
+                var trans =parseFloat(document.getElementById('transport').value);
                 var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
                 document.getElementById('igst').value = parseFloat(sum).toFixed(2);
                 var iisgst = document.getElementById('igst').value;
@@ -914,7 +917,7 @@
                 if(res == 'gst')
                 {
                     var gst = document.getElementById('gst').value;
-                    var trans =val;
+                    var trans =parseFloat(document.getElementById('transport').value);
                     var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
                     document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
                     document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
@@ -926,7 +929,7 @@
                 else
                 {
                     var gst = 18;
-                    var trans =parseFloat(val);
+                    var trans =parseFloat(document.getElementById('transport').value);
                     var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
                     document.getElementById('igst').value = parseFloat(sum).toFixed(2);
                     var iisgst = document.getElementById('igst').value;
@@ -1007,7 +1010,7 @@
                 if(res == 'gst')
                 {
                     var gst = document.getElementById('gst').value;
-                    var trans =val;
+                    var trans =parseFloat(document.getElementById('transport').value);
                     var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
                     document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
                     document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
@@ -1019,7 +1022,7 @@
                 else
                 {
                     var gst = 18;
-                    var trans =parseFloat(val);
+                    var trans =parseFloat(document.getElementById('transport').value);
                     var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
                     document.getElementById('igst').value = parseFloat(sum).toFixed(2);
                     var iisgst = document.getElementById('igst').value;
@@ -1050,7 +1053,7 @@
             if(res == 'gst')
             {
                 var gst = document.getElementById('gst').value;
-                var trans =val;
+                var trans =parseFloat(document.getElementById('transport').value);
                 var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
                 document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
                 document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
@@ -1062,7 +1065,7 @@
             else
             {
                 var gst = 18;
-                var trans =parseFloat(val);
+                var trans =parseFloat(document.getElementById('transport').value);
                 var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
                 document.getElementById('igst').value = parseFloat(sum).toFixed(2);
                 var iisgst = document.getElementById('igst').value;
