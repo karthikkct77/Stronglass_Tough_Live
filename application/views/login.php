@@ -8,6 +8,8 @@
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('css/main.css'); ?>">
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css" rel="stylesheet">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
     <title>Login - Stronglass Tough</title>
     <link rel="shortcut icon" href="<?php echo base_url('img/st.jpg'); ?>">
 </head>
@@ -20,6 +22,19 @@
         <h1>Stronglass Tough</h1>
     </div>
     <div class="login-box">
+        <?php if($this->session->flashdata('feedback')): ?>
+            <script>
+                var ssd = "<?php echo $this->session->flashdata('feedback'); ?>";
+                swal({
+                        title: "Failed!",
+                        text: ssd,
+                        type: "warning"
+                    },
+                    function(){
+                        location.reload();
+                    });
+            </script>
+        <?php endif; ?>
         <form method="post" class="login-form" action="<?php echo site_url('Login/sigin'); ?>" name="data_register">
             <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>SIGN IN</h3>
             <div class="form-group">

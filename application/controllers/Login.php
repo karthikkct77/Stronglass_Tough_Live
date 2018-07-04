@@ -48,6 +48,10 @@ class Login extends CI_Controller {
         {
             redirect('User_Controller/dashboard');
         }
+        else{
+            $this->session->set_flashdata('feedback', 'Incorrect UserName/Password  ..');
+            redirect('Login/index');
+        }
 
     }
     //** logout */
