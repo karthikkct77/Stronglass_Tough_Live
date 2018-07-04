@@ -212,15 +212,15 @@
                                 <tr>
                                     <td colspan="3" align="right">TRANSPORT</td>
 
-                                    <td><input class="form-control" type="number" name="transport" id="transport" required  ></td>
+                                    <td><input class="form-control" type="number" name="transport" id="transport" onkeyup="change_transport(this.value)" required  ></td>
                                     <td></td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td></td>
-                                    <td><input  type="radio" id="ptype" name="tax"  required onclick="isgt()"> IGST</td>
+                                    <td><input  type="radio" id="ptype" name="tax" value="igst"  required onclick="isgt()"> IGST</td>
                                     <td>
-                                        <input  type="radio" id="ptype" name="tax" onclick="GST()" required> SGST/CGST
+                                        <input  type="radio" id="ptype2" name="tax" value="gst"  onclick="GST()" required> SGST/CGST
                                     </td>
                                 </tr>
                                 <tr id="sgst1" style="display: none">
@@ -272,9 +272,11 @@
                             <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
                             <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
                         </div>
-                        <div class="col-md-6"></div>
+                        <div class="col-md-6">
+                            <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Confirm PI</button>
+                        </div>
                     </div>
-                    <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Confirm PI</button>
+
                 </form>
             </div>
         </div>
@@ -348,8 +350,38 @@
         var tax = 2.42;
         var totals = parseFloat (sub_tot * tax / 100);
         document.getElementById('insurance').value = parseFloat(totals).toFixed(3);
+        var insurance = totals;
+        var igst =document.getElementById('igst').value;
+        if(igst == '')
+        {
+            var gst = document.getElementById('gst').value;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+            document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+            var sgst = document.getElementById('sgst').value;
+            var cgst = document.getElementById('cgst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) + parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        else
+        {
+
+            var gst = 18;
+            var trans =document.getElementById('transport').value;
+            var sum = parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans);
+            var sum_tot =parseFloat(sum) * gst / 100 ;
+            document.getElementById('igst').value = parseFloat(sum_tot).toFixed(2);
+            var iisgst = document.getElementById('igst').value;
+            var grant = parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) + parseFloat(trans);
+            document.getElementById('gross_tot').value = parseInt(grant);
+
+        }
+
     });
     $("#charges").change(function () {
+        var pics=document.getElementById('no_holes').value;
+        var amt=document.getElementById('charge_amt').value;
         $.ajax({
             url:"<?php echo site_url('User_Controller/Edit_Charges'); ?>",
             data: {id:
@@ -359,6 +391,8 @@
                 var data = $.parseJSON(server_response);
                 var  price = data[0]['charge_current_price'];
                 document.getElementById('charge_amt').value = price;
+                var total =  parseInt(pics * price);
+                document.getElementById('tot_charge_amt').value = total;
             }
         });
     });
@@ -457,6 +491,35 @@
             var tax = 2.42;
             var totals = parseFloat (sub_tot * tax / 100);
             document.getElementById('insurance').value = parseFloat(totals).toFixed(3);
+            var insurance =parseFloat(totals).toFixed(3);
+
+            var igst =document.getElementById('igst').value;
+            if(igst == '')
+            {
+                var gst = document.getElementById('gst').value;
+                var trans =document.getElementById('transport').value;
+                var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+                document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+                document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+                var sgst = document.getElementById('sgst').value;
+                var cgst = document.getElementById('cgst').value;
+                var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) + parseFloat(trans));
+                document.getElementById('gross_tot').value = parseInt(grant);
+            }
+            else
+            {
+
+                var gst = 18;
+                var trans =document.getElementById('transport').value;
+                var sum = parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans);
+                var sum_tot =parseFloat(sum) * gst / 100 ;
+                document.getElementById('igst').value = parseFloat(sum_tot).toFixed(2);
+                var iisgst = document.getElementById('igst').value;
+                var grant = parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) + parseFloat(trans);
+                document.getElementById('gross_tot').value = parseInt(grant);
+
+            }
+
         }
     };
     function FillBilling() {
@@ -1007,5 +1070,43 @@
 
     }
     /** Change Charge Width */
+
+    //** Chasnge Transport**/
+    function change_transport(val) {
+        var igst =document.getElementById('igst').value;
+        var sub_tot =document.getElementById('sub_tot').value;
+        var insurance =document.getElementById('insurance').value;
+
+        if ($('input[name=tax]:checked').length > 0) {
+           var res = $('input:radio[name="tax"]:checked').val();
+            if(res == 'gst')
+            {
+                var gst = document.getElementById('gst').value;
+                var trans =val;
+                var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+                document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+                document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+                var sgst = document.getElementById('sgst').value;
+                var cgst = document.getElementById('cgst').value;
+                var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) + parseFloat(trans));
+                document.getElementById('gross_tot').value = parseInt(grant);
+            }
+            else
+            {
+                var gst = 18;
+                var trans =parseFloat(val);
+                var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+                document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+                var iisgst = document.getElementById('igst').value;
+                var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst)+ parseFloat(trans));
+                document.getElementById('gross_tot').value = parseInt(grant);
+            }
+        }
+        else
+        {
+
+        }
+
+    }
 </script>
 
