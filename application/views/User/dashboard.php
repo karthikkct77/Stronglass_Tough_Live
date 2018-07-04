@@ -42,7 +42,7 @@
                     <?php  }
                     elseif ($_SESSION['role'] == 7)
                     { ?>
-                        <p><b>QA</b></p>
+                        <p><b>Review/Confirm PI</b></p>
 
                     <?php  }
                     ?>

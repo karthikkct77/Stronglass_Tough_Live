@@ -88,7 +88,7 @@
                                 <tr id="row<?php echo $i; ?>">
                                     <td><?php echo $i; ?></td>
                                     <td>     <div class="form-group">
-                                           <select name="material[]" class="form-control" id="material--><?php //echo $i; ?><!--" onclick="get_result('--><?php //echo $i; ?>//')" required >
+                                           <select name="material[]" class="form-control" id="material<?php echo $i; ?>" onclick="get_result('<?php echo $i; ?>')" required >
                                                <option value="" >Select material</option>
                                                 <?php foreach ($stock as $row):
                                                {
@@ -842,7 +842,7 @@
         var Charge_H = document.getElementById('ch_height'+id).value;
         if(actual_H > Charge_H)
         {
-            alert("Please Check Chargable Height Because Actual Size Height");
+            alert("Chargable Height should be greater then Actual Height ");
         }
         else
         {
@@ -928,7 +928,7 @@
 
         if(actual_W > Charge_W)
         {
-            alert("Please Check Chargable Width Because Actual Size Width");
+            alert("Chargable Width should be greater then Actual Width");
         }
         else
         {

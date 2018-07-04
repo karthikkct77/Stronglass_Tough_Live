@@ -1051,7 +1051,7 @@
 
             if(actual_W > Charge_W)
             {
-                alert("Please Check Chargable Width Because Actual Size Width")
+                alert("Chargable Width should be greater then Actual Width")
             }
             else
             {
@@ -1139,7 +1139,7 @@
 
             if(actual_H > Charge_H)
             {
-                alert("Please Check Chargable Height Because Actual Size Height")
+                alert("Chargable Height should be greater then Actual Height")
             }
             else
             {
