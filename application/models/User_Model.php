@@ -135,5 +135,11 @@ class User_Model extends CI_Model
         }
     }
 
+    //** Monthly PI */
+    public function user_model()
+    {
+
+    }
+
 
 }

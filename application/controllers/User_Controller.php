@@ -699,5 +699,13 @@ class User_Controller extends CI_Controller
         $this->db->update('proforma_invoice', $update);
         echo 1;
     }
+    /** PI Monthly Chart */
+    public function PI_Monthly_Chart()
+    {
+        $User_Icode =  $this->session->userdata['userid'];
+        $data_count= $this->user_model->Monthly_PI($User_Icode);
+        print_r(json_encode($data_count, true));
+
+    }
 
 }
