@@ -818,6 +818,8 @@
             }
         });
     }
+
+    //IGST Function
     function isgt() {
         $('#igst1').show();
         $('#sgst1').hide();
@@ -831,6 +833,8 @@
         document.getElementById('gross_tot').value = parseInt(grant);
         number_to_words();
     }
+
+    //GST Function
     function GST() {
         $('#igst1').hide();
         $('#sgst1').show();
