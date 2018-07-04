@@ -1423,7 +1423,7 @@
                 document.getElementById('insurance').value = parseFloat(total).toFixed(3);
                 var insurance =parseFloat(total).toFixed(3);
                 var igst =document.getElementById('igst').value;
-                if(igst == '0')
+                if(igst == '')
                 {
                     var gst = document.getElementById('gst').value;
                     var trans =document.getElementById('transport').value;
@@ -1475,7 +1475,7 @@
             document.getElementById('insurance').value = parseFloat(total).toFixed(3);
             var insurance =parseFloat(total).toFixed(3);
             var igst =document.getElementById('igst').value;
-            if(igst == '0')
+            if(igst == '')
             {
                 var gst = document.getElementById('gst').value;
                 var trans =document.getElementById('transport').value;
@@ -1489,7 +1489,6 @@
             }
             else
             {
-
                 var gst = 18;
                 var trans =document.getElementById('transport').value;
                 var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
