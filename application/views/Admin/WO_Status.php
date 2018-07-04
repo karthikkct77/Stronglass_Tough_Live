@@ -36,6 +36,13 @@
 
                 padding: 10px 0;
             }
+            .remaining_qty
+            {
+                display: inline-block;
+                vertical-align: middle;
+                font-size: 20px;
+                color: #009688;
+            }
         </style>
         <!-- view Stock Details -->
         <div class="col-md-12">
@@ -126,17 +133,17 @@
                                 $total_qty = $work_order[0]['Total_Qty'];
                                 $completed = $cutting[0]['total'] - $cutting[0]['remaining'];
                                 $totel = ($completed/$total_qty) * 100; ?>
-                                    <td><h2><?php echo  $totel; ?>%</h2></td>
+                                <td><h2><?php echo  $totel; ?>% <span class="remaining_qty">(<?php echo $completed; ?> / <?php echo $total_qty; ?> )</span></h2></td>
                                 <?php
                                 $total_qty = $work_order[0]['Total_Qty'];
                                 $completed = $furnace[0]['total'] - $furnace[0]['remaining'];
                                 $totel_furnace = ($completed/$total_qty) * 100; ?>
-                                    <td><h2><?php echo  $totel_furnace; ?>%</h2></td>
+                                    <td><h2><?php echo  $totel_furnace; ?>% <span class="remaining_qty">(<?php echo $completed; ?> / <?php echo $total_qty; ?> )</span></h2></td>
                                 <?php
                                 $total_qty = $work_order[0]['Total_Qty'];
                                 $completed = $dispatch[0]['total'] - $dispatch[0]['remaining'];
                                 $totel_dispatch = ($completed/$total_qty) * 100; ?>
-                                    <td><h2><?php echo  $totel_dispatch; ?>%</h2></td>
+                                    <td><h2><?php echo  $totel_dispatch; ?>% <span class="remaining_qty">(<?php echo $completed; ?> / <?php echo $total_qty; ?> )</span></h2></td>
 
                             </tr>
                         </tbody>
