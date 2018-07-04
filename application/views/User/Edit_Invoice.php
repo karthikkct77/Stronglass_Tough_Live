@@ -1377,7 +1377,7 @@
             if(igst == '')
             {
                 var gst = document.getElementById('gst').value;
-                var trans =val;
+                var trans =document.getElementById('transport').value;
                 var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
                 document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
                 document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
@@ -1389,7 +1389,7 @@
             else
             {
                 var gst = 18;
-                var trans =parseFloat(val);
+                var trans =document.getElementById('transport').value;
                 var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
                 document.getElementById('igst').value = parseFloat(sum).toFixed(2);
                 var iisgst = document.getElementById('igst').value;
