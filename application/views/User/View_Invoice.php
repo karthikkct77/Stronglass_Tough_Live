@@ -672,7 +672,11 @@
 
                 }
             });
+
+
+
         });
+
     }
 
     // Change Charge Rate
