@@ -870,7 +870,6 @@
             }
             else
             {
-
                 var gst = 18;
                 var trans =document.getElementById('transport').value;
                 var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
@@ -878,7 +877,6 @@
                 var iisgst = document.getElementById('igst').value;
                 var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) +  parseFloat(trans));
                 document.getElementById('gross_tot').value = parseInt(grant);
-
             }
 
         }
