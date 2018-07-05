@@ -567,16 +567,31 @@ class User_Controller extends CI_Controller
             $this->db->update('proforma_invoice', $data);
 
             $material_id = $this->input->post('material');
-            $qty = $this->input->post('pics');
-            $holes = $this->input->post('holes');
-            $Rate = $this->input->post('rate');
             $cost = $this->input->post('total');
+            $hsn = $this->input->post('hsn');
+            $qty = $this->input->post('pics');
+            $special = $this->input->post('type');
+            $holes = $this->input->post('holes');
+            $actual_W = $this->input->post('width');
+            $actual_H = $this->input->post('height');
+            $Charge_W = $this->input->post('ch_weight');
+            $Charge_H = $this->input->post('ch_height');
+            $Area = $this->input->post('area');
+            $Rate = $this->input->post('rate');
             $count = sizeof($material_id);
             for($i=0; $i<$count; $i++)
             {
                 $full_data =array( 'Proforma_Icode' => $picode,
                     'Proforma_Holes' => $holes[$i],
+                    'Proforma_HSNCode' => $hsn[$i],
+                    'Proforma_Special' => $special[$i],
+                    'Proforma_Holes' => $holes[$i],
                     'Proforma_Qty' => $qty[$i],
+                    'Proforma_Actual_Size_Width' => $actual_W[$i],
+                    'Proforma_Actual_Size_Height' => $actual_H[$i],
+                    'Proforma_Chargeable_Size_Width' =>$Charge_W[$i],
+                    'Proforma_Chargeable_Size_Height' => $Charge_H[$i],
+                    'Proforma_Area_SQMTR' => $Area[$i],
                     'Proforma_Material_Rate' => $Rate[$i],
                     'Proforma_Material_Cost' => $cost[$i],
                     'Modified_By' => $this->session->userdata['userid'],'Modified_On' => date('Y-m-d H:i:s'));
