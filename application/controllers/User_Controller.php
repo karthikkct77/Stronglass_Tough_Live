@@ -21,10 +21,12 @@ class User_Controller extends CI_Controller
     /** User Dashboard */
     public function dashboard()
     {
+
+        $data['pi_confirm']= $this->user_model->get_pi_confirm_status();
         $this->load->view('User/header');
         $this->load->view('User/top');
         $this->load->view('User/left');
-        $this->load->view('User/dashboard');
+        $this->load->view('User/dashboard',$data, FALSE);
         $this->load->view('User/footer');
     }
 
@@ -705,7 +707,14 @@ class User_Controller extends CI_Controller
         $User_Icode =  $this->session->userdata['userid'];
         $data_count= $this->user_model->Monthly_PI($User_Icode);
         print_r(json_encode($data_count, true));
+    }
 
+    /** PI Confirm Monthly Chart */
+    public function PI_Confirm_Monthly_Chart()
+    {
+        $User_Icode =  $this->session->userdata['userid'];
+        $data_count= $this->user_model->Monthly_PI_Confirm($User_Icode);
+        print_r(json_encode($data_count, true));
     }
 
 }

@@ -79,8 +79,6 @@
     <div class="row">
         <div class="col-md-6">
             <div class="tile">
-                <h3 class="tile-title">Monthly Status</h3>
-
                     <?php
                     if($_SESSION['role'] == 2)
                     { ?>
@@ -99,6 +97,7 @@
                     <?php  }
                     elseif ($_SESSION['role'] == 5)
                     { ?>
+                        <h3 class="tile-title">Monthly Status</h3>
                         <div id="line_chart_Pi" style="width: 100%;"></div>
                     <?php  }
                     elseif ($_SESSION['role'] == 6)
@@ -108,7 +107,9 @@
                     <?php  }
                     elseif ($_SESSION['role'] == 7)
                     { ?>
-                        <p><b>Review/Confirm PI</b></p>
+                        <h3 class="tile-title">Received PI</h3>
+                        <div id="line_chart_Pi" style="width: 100%;"></div>
+
 
                     <?php  }
                     ?>
@@ -117,7 +118,6 @@
         </div>
         <div class="col-md-6">
             <div class="tile">
-                <h3 class="tile-title">Support Requests</h3>
                 <?php
                 if($_SESSION['role'] == 2)
                 { ?>
@@ -145,7 +145,8 @@
                 <?php  }
                 elseif ($_SESSION['role'] == 7)
                 { ?>
-                    <p><b>Review/Confirm PI</b></p>
+                    <h3 class="tile-title">Completed PI</h3>
+                    <div id="line_chart_Pi_confirm" style="width: 100%;"></div>
 
                 <?php  }
                 ?>
@@ -161,6 +162,7 @@
     google.charts.load('current', {'packages':['line']});
     // Set a callback to run when the Google Visualization API is loaded.
     google.charts.setOnLoadCallback(pi_chart);
+    google.charts.setOnLoadCallback(pi_chart_Confirm);
 
 
 
@@ -198,6 +200,47 @@
 
                 };
                 var chart = new google.charts.Line(document.getElementById('line_chart_Pi'));
+                chart.draw(data, options);
+            }
+        });
+    }
+
+
+
+    function pi_chart_Confirm() {
+
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo site_url('User_Controller/PI_Confirm_Monthly_Chart'); ?>',
+
+            success: function (data1) {
+                // Create our data table out of JSON data loaded from server.
+                var data = new google.visualization.DataTable();
+
+                data.addColumn('string', 'Date');
+                data.addColumn('number', 'pi');
+                var jsonData = $.parseJSON(data1);
+                //alert(jsonData);
+
+                for (var i = 0; i < jsonData.length; i++) {
+                    data.addRow([jsonData[i].Date, parseInt(jsonData[i].pi)]);
+                }
+                var options = {
+                    chart: {
+                        title: 'Invoice',
+                        subtitle: ''
+                    },
+
+                    height: 300,
+                    axes: {
+                        x: {
+                            0: {side: 'bottom'}
+                        }
+                    },
+                    colors: ['#f39c12', '#f9325c']
+
+                };
+                var chart = new google.charts.Line(document.getElementById('line_chart_Pi_confirm'));
                 chart.draw(data, options);
             }
         });
