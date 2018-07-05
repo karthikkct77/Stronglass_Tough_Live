@@ -31,7 +31,6 @@
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Ref No</th>
                             <th>Work Order No</th>
                             <th>Work Order Date</th>
                             <th>PI NO</th>
@@ -45,7 +44,6 @@
                             ?>
                             <tr>
                                 <td><?php echo $i; ?></td>
-                                <td></td>
                                 <td><?php echo $val['WO_Number']; ?></td>
                                 <td><?php echo $val['WO_Date']; ?></td>
                                 <td><?php echo $val['Proforma_Number']; ?></td>
