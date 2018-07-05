@@ -183,7 +183,7 @@
                                 <tfoot>
                                 <tr>
                                     <td><div class="form-group">
-                                            <select name="charges[]" class="form-control" id="charges"  required >
+                                            <select name="charges[]" class="form-control" id="charges"   >
                                                 <option value="" >Select Charges</option>
                                                 <?php foreach ($charges as $row):
                                                 {
