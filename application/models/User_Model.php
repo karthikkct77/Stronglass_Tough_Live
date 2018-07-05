@@ -136,8 +136,11 @@ class User_Model extends CI_Model
     }
 
     //** Monthly PI */
-    public function user_model()
+    public function Monthly_PI($user_id)
     {
+        $query=$this->db->query("SELECT  DATE_FORMAT(Proforma_Generated_On, '%d') as Date ,COUNT(*) as pi FROM `proforma_invoice`  WHERE Proforma_Generated_By ='$user_id'  and  MONTH(Proforma_Generated_On) = MONTH(CURRENT_DATE())
+          AND YEAR(Proforma_Generated_On) = YEAR(CURRENT_DATE())  GROUP BY Date(Proforma_Generated_On)  ");
+        return $query->result_array();
 
     }
 

@@ -26,6 +26,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.css" rel="stylesheet">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-sweetalert/1.0.1/sweetalert.js"></script>
+
     <!-- Data table plugin-->
     <script src="<?php echo base_url('js/plugins/jquery.dataTables.min.js'); ?>"></script>
     <script src="<?php echo base_url('js/plugins/dataTables.bootstrap.min.js'); ?>"></script>
