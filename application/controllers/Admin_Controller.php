@@ -23,11 +23,11 @@ class Admin_Controller extends CI_Controller
     //** Admin Dashboard**//
     public function dashboard()
     {
-        $data['stock']= $this->admin_model->get_all_item();
+        $data['status']= $this->admin_model->get_all_WO_Status();
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
         $this->load->view('Admin/left');
-        $this->load->view('Admin/dashboard');
+        $this->load->view('Admin/dashboard',$data, FALSE);
         $this->load->view('Admin/footer');
     }
 

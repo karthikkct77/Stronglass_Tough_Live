@@ -532,7 +532,17 @@ class Admin_Model extends CI_Model
     public function delete_Item($item_id)
     {
         $delete = $this->db->query("DELETE FROM proforma_invoice_items WHERE Proforma_Invoice_Items_Icode='$item_id' ");
-
     }
 
+    //** Get All Work Order Status */
+    public function get_all_WO_Status()
+    {
+        $query = $this->db->query("SELECT COUNT(CASE WHEN now() >= DATE_ADD(WO_Created_On, INTERVAL 48 HOUR) THEN 1 END) as delay,
+                                COUNT(CASE WHEN now() <= DATE_ADD(A.WO_Created_On, INTERVAL 48 HOUR) and now() >= DATE_ADD(A.WO_Created_On, INTERVAL 24 HOUR) THEN 1 END) as within8,
+                                COUNT(CASE WHEN  now() >= DATE_ADD(A.WO_Created_On, INTERVAL 16 HOUR) and now() <= DATE_ADD(A.WO_Created_On, INTERVAL 24 HOUR) THEN 1 END) as within16,
+                                COUNT(CASE WHEN now() >= DATE_ADD(A.WO_Created_On, INTERVAL 8 HOUR) and now() <= DATE_ADD(A.WO_Created_On, INTERVAL 16 HOUR) THEN 1 END) as within24,
+                                COUNT(CASE WHEN now() <= DATE_ADD(A.WO_Created_On, INTERVAL 8 HOUR) THEN 1 END) as within48
+                                FROM work_order A  WHERE WO_Completed ='0' ");
+        return $query->result_array();
+    }
 }
