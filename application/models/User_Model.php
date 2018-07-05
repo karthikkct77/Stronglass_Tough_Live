@@ -154,10 +154,26 @@ class User_Model extends CI_Model
     //** Invoice Received,Pending,Confirm Status Confirm */
     public function Monthly_PI_Confirm()
     { $user_id=$this->session->userdata['userid'];
-        $query=$this->db->query("SELECT  DATE_FORMAT(PI_Confirm_Date, '%d') as Date ,COUNT(*) as pi FROM `proforma_invoice`  WHERE PI_Confirm_By ='$user_id' and PI_Confirm='1'  and  MONTH(PI_Confirm_Date) = MONTH(CURRENT_DATE())
+        $query=$this->db->query("SELECT  DATE_FORMAT(PI_Confirm_Date, '%d') as Date ,COUNT(*) as Complete_pi FROM `proforma_invoice`  WHERE PI_Confirm_By ='$user_id' and PI_Confirm='1'  and  MONTH(PI_Confirm_Date) = MONTH(CURRENT_DATE())
           AND YEAR(PI_Confirm_Date) = YEAR(CURRENT_DATE())  GROUP BY Date(PI_Confirm_Date)  ");
         return $query->result_array();
     }
+    //** Invoice Received,Pending,Confirm Status Confirm */
+    public function Monthly_PI_Received()
+    { $user_id=$this->session->userdata['userid'];
+        $query=$this->db->query("SELECT  DATE_FORMAT(Proforma_Generated_On, '%d') as Date ,COUNT(*) as Received_pi FROM `proforma_invoice`  WHERE  PI_Confirm='0'  and  MONTH(Proforma_Generated_On) = MONTH(CURRENT_DATE())
+          AND YEAR(Proforma_Generated_On) = YEAR(CURRENT_DATE())  GROUP BY Date(Proforma_Generated_On)  ");
+        return $query->result_array();
+    }
+    // generated Wo
+    public function Monthly_Wo_Generated()
+    {
+        $user_id=$this->session->userdata['userid'];
+        $query=$this->db->query("SELECT  DATE_FORMAT(WO_Confirm_On, '%d') as Date ,COUNT(*) as Work_Order FROM `proforma_invoice`  WHERE WO_Confirm_By ='$user_id' and WO_Confirm='1'  and  MONTH(WO_Confirm_On) = MONTH(CURRENT_DATE())
+          AND YEAR(WO_Confirm_On) = YEAR(CURRENT_DATE())  GROUP BY Date(WO_Confirm_On)  ");
+        return $query->result_array();
+    }
+
 
 
 }

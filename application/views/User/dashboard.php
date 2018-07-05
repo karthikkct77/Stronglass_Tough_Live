@@ -102,13 +102,14 @@
                     <?php  }
                     elseif ($_SESSION['role'] == 6)
                     { ?>
-                        <p><b>WO ENTRY</b></p>
+                        <h3 class="tile-title">Generated WO</h3>
+                        <div id="line_chart_WO" style="width: 100%;"></div>
 
                     <?php  }
                     elseif ($_SESSION['role'] == 7)
                     { ?>
-                        <h3 class="tile-title">Received PI</h3>
-                        <div id="line_chart_Pi" style="width: 100%;"></div>
+                        <h3 class="tile-title">Completed PI</h3>
+                        <div id="line_chart_Pi_confirm" style="width: 100%;"></div>
 
 
                     <?php  }
@@ -145,8 +146,6 @@
                 <?php  }
                 elseif ($_SESSION['role'] == 7)
                 { ?>
-                    <h3 class="tile-title">Completed PI</h3>
-                    <div id="line_chart_Pi_confirm" style="width: 100%;"></div>
 
                 <?php  }
                 ?>
@@ -163,6 +162,7 @@
     // Set a callback to run when the Google Visualization API is loaded.
     google.charts.setOnLoadCallback(pi_chart);
     google.charts.setOnLoadCallback(pi_chart_Confirm);
+    google.charts.setOnLoadCallback(generated_wo);
 
 
 
@@ -218,12 +218,12 @@
                 var data = new google.visualization.DataTable();
 
                 data.addColumn('string', 'Date');
-                data.addColumn('number', 'pi');
+                data.addColumn('number', 'Complete_pi');
                 var jsonData = $.parseJSON(data1);
                 //alert(jsonData);
 
                 for (var i = 0; i < jsonData.length; i++) {
-                    data.addRow([jsonData[i].Date, parseInt(jsonData[i].pi)]);
+                    data.addRow([jsonData[i].Date, parseInt(jsonData[i].Complete_pi)]);
                 }
                 var options = {
                     chart: {
@@ -237,13 +237,88 @@
                             0: {side: 'bottom'}
                         }
                     },
-                    colors: ['#f39c12', '#f9325c']
+                    colors: ['#16b72f', '#f9325c']
 
                 };
                 var chart = new google.charts.Line(document.getElementById('line_chart_Pi_confirm'));
                 chart.draw(data, options);
             }
         });
+//
+//        $.ajax({
+//            type: 'POST',
+//            url: '<?php //echo site_url('User_Controller/PI_Monthly_Received_Chart'); ?>//',
+//
+//            success: function (data1) {
+//                // Create our data table out of JSON data loaded from server.
+//                var data = new google.visualization.DataTable();
+//
+//                data.addColumn('string', 'Date');
+//                data.addColumn('number', 'Received_pi');
+//                var jsonData = $.parseJSON(data1);
+//                //alert(jsonData);
+//
+//                for (var i = 0; i < jsonData.length; i++) {
+//                    data.addRow([jsonData[i].Date, parseInt(jsonData[i].Received_pi)]);
+//                }
+//                var options = {
+//                    chart: {
+//                        title: 'Invoice Received',
+//                        subtitle: ''
+//                    },
+//
+//                    height: 300,
+//                    axes: {
+//                        x: {
+//                            0: {side: 'bottom'}
+//                        }
+//                    },
+//                    colors: ['#f39c12', '#f9325c']
+//
+//                };
+//                var chart = new google.charts.Line(document.getElementById('line_chart_Pi_Received'));
+//                chart.draw(data, options);
+//            }
+//        });
+    }
+
+    function generated_wo() {
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo site_url('User_Controller/Completed_WO'); ?>',
+
+            success: function (data1) {
+                // Create our data table out of JSON data loaded from server.
+                var data = new google.visualization.DataTable();
+
+                data.addColumn('string', 'Date');
+                data.addColumn('number', 'Work_Order');
+                var jsonData = $.parseJSON(data1);
+                //alert(jsonData);
+
+                for (var i = 0; i < jsonData.length; i++) {
+                    data.addRow([jsonData[i].Date, parseInt(jsonData[i].Work_Order)]);
+                }
+                var options = {
+                    chart: {
+                        title: 'Generated WO',
+                        subtitle: ''
+                    },
+
+                    height: 300,
+                    axes: {
+                        x: {
+                            0: {side: 'bottom'}
+                        }
+                    },
+                    colors: ['#16b72f', '#f9325c']
+
+                };
+                var chart = new google.charts.Line(document.getElementById('line_chart_WO'));
+                chart.draw(data, options);
+            }
+        });
+
     }
 </script>
 <script type="text/javascript">

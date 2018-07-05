@@ -713,7 +713,19 @@ class User_Controller extends CI_Controller
     public function PI_Confirm_Monthly_Chart()
     {
         $User_Icode =  $this->session->userdata['userid'];
-        $data_count= $this->user_model->Monthly_PI_Confirm($User_Icode);
+        $data_count= $this->user_model->Monthly_PI_Confirm();
+        print_r(json_encode($data_count, true));
+    }
+    /** PI Confirm Monthly Chart */
+    public function PI_Monthly_Received_Chart()
+    {
+        $data_count= $this->user_model->Monthly_PI_Received();
+        print_r(json_encode($data_count, true));
+    }
+    // generated Work Order
+    public function Completed_WO()
+    {
+        $data_count= $this->user_model->Monthly_Wo_Generated();
         print_r(json_encode($data_count, true));
     }
 
