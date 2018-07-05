@@ -95,3 +95,26 @@
     </div>
 
 </main>
+
+<script>
+    $(document).ready(function() {
+    $.ajax({
+        url:"<?php echo site_url('Admin_Controller/WO_Result'); ?>",
+        data: {},
+        type: "POST",
+        cache: false,
+        success:function(server_response){
+            $("#update").show();
+            $("#add").hide();
+            var data = $.parseJSON(server_response);
+            var charges_name = data[0]['charge_name'];
+            document.getElementById('charge').value = charges_name;
+            var price = data[0]['charge_current_price'];
+            document.getElementById('price').value = price;
+            var icode =data[0]['charge_icode'];
+            document.getElementById('charges_icode').value = icode;
+        }
+    });
+    });
+
+</script>

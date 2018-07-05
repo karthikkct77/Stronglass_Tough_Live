@@ -545,4 +545,10 @@ class Admin_Model extends CI_Model
                                 FROM work_order A  WHERE WO_Completed ='0' ");
         return $query->result_array();
     }
+    /** Get Wotrk order result */
+    public function Get_Workorder_Result()
+    {
+        $query = $this->db->query("SELECT Proforma_Charge_Icode FROM proforma_material_processing_charges WHERE Proforma_Icode=''");
+        return $query->result();
+    }
 }

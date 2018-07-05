@@ -1245,5 +1245,12 @@ class Admin_Controller extends CI_Controller
 
     }
 
+    //** Work order Result */
+    public function WO_Result()
+    {
+        $result = $this->admin_model->Get_Workorder_Result();
+
+    }
+
 
 }
