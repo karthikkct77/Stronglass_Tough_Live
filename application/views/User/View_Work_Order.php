@@ -220,6 +220,10 @@
             else if (remaining_qty != 0 && remaining_comments == "") {
                 alert("Please Type Reason for Remaining Qty");
             }
+            else if(remaining_qty > total_qty )
+            {
+                alert("Remaining QTY is Wrong");
+            }
             else {
                 $.ajax({
                     url: "<?php echo site_url('User_Controller/Save_WO_Item'); ?>",
