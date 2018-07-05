@@ -71,11 +71,11 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Phone </label>
-                                    <input class="form-control" name="phone" type="text" placeholder="Enter Phone Number" required>
+                                    <input class="form-control" name="phone" type="number" placeholder="Enter Phone Number" required>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Alternate Phone</label>
-                                    <input class="form-control" name="alternate_phone" type="text" placeholder="Enter Alternate Phone Number" >
+                                    <input class="form-control" name="alternate_phone" type="number" placeholder="Enter Alternate Phone Number" >
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label">Email Id 1</label>
