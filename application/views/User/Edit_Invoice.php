@@ -1150,7 +1150,7 @@
                 //Add Name cell.
                 var cell = $(row.insertCell(-1));
                 var stock = $("<input />");
-                stock.attr("type", "text");
+                stock.attr("type", "hidden");
                 stock.attr("name", "Delete_Item_Icode[]");
                 stock.val(item_icode);
                 cell.append(stock);
