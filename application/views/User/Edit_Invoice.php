@@ -435,6 +435,49 @@
                     var data = $.parseJSON(server_response);
                     var  price = data[0]['charge_current_price'];
                     document.getElementById('charge_amt').value = price;
+                    var total =  parseInt(pics * price);
+                    document.getElementById('tot_charge_amt').value = total;
+                    var totals =document.getElementsByName("tot_charge_amt[]");
+                    var sum = 0;
+                    for (var j = 0, iLen = totals.length; j < iLen; j++) {
+                        if (totals[j].value!==""){
+                            val=parseFloat(totals[j].value);
+                            sum +=val;
+                        }
+                    }
+                    var grant_tot = document.getElementById('grand_total').value;
+                    var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
+                    document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+                    var tax = 2.42;
+                    var totals = parseFloat (sub_tot * tax / 100);
+                    document.getElementById('insurance').value = parseFloat(totals).toFixed(3);
+                    var insurance = totals;
+                    if(res == 'gst')
+                    {
+
+                        var gst = document.getElementById('gst').value;
+                        var trans =parseFloat(document.getElementById('transport').value);
+                        var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+                        document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+                        document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+                        var sgst = document.getElementById('sgst').value;
+                        var cgst = document.getElementById('cgst').value;
+                        var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) + parseFloat(trans));
+                        document.getElementById('gross_tot').value = parseInt(grant);
+                    }
+                    else
+                    {
+
+                        var gst = 18;
+                        var trans =parseFloat(document.getElementById('transport').value);
+                        var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+                        document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+                        var iisgst = document.getElementById('igst').value;
+                        var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst)+ parseFloat(trans));
+                        document.getElementById('gross_tot').value = parseInt(grant);
+                    }
+                    number_to_words();
+
                 }
             });
         });
