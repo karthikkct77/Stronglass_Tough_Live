@@ -224,6 +224,14 @@
             {
                 alert("Remaining QTY is Wrong");
             }
+            else if(remaining_qty > furnace_income )
+            {
+                alert("Income QTY lessthen Remaining QTY");
+            }
+            else if(remaining_qty > dispatch_income )
+            {
+                alert("Income QTY lessthen Remaining QTY");
+            }
             else {
                 $.ajax({
                     url: "<?php echo site_url('User_Controller/Save_WO_Item'); ?>",
