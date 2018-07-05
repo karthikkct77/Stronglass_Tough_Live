@@ -268,7 +268,7 @@ class Admin_Controller extends CI_Controller
     public function Save_Address()
     {
         $data = array( 'Customer_Icode' => $this->input->post('company_name'),
-            'Customer_GSTIN' =>$this->input->post('gstin_number'),
+            'Customer_Add_GSTIN' =>$this->input->post('gstin_number'),
             'Customer_Add_Address_1' =>$this->input->post('address'),
             'Customer_Add_Address_2' =>$this->input->post('address1'),
             'Customer_Add_Area' =>$this->input->post('area'),

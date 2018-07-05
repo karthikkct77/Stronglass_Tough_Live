@@ -45,6 +45,10 @@
     </div>
     <div class="row">
         <div class="col-md-6">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
             <div class="tile">
                 <h3 class="tile-title">Monthly Sales</h3>
                 <div class="embed-responsive embed-responsive-16by9">
