@@ -567,33 +567,28 @@ class User_Controller extends CI_Controller
             $this->db->update('proforma_invoice', $data);
 
             $material_id = $this->input->post('material');
-            $cost = $this->input->post('total');
-            $hsn = $this->input->post('hsn');
             $qty = $this->input->post('pics');
-            $special = $this->input->post('type');
             $holes = $this->input->post('holes');
-            $actual_W = $this->input->post('width');
-            $actual_H = $this->input->post('height');
-            $Charge_W = $this->input->post('ch_weight');
-            $Charge_H = $this->input->post('ch_height');
+            $cost = $this->input->post('total');
+            $actual_W = $this->input->post('Actual_width');
+            $actual_H = $this->input->post('Actual_height');
+            $Charge_W = $this->input->post('Charge_width');
             $Area = $this->input->post('area');
+            $Charge_H = $this->input->post('Charge_height');
             $Rate = $this->input->post('rate');
             $count = sizeof($material_id);
             for($i=0; $i<$count; $i++)
             {
                 $full_data =array( 'Proforma_Icode' => $picode,
                     'Proforma_Holes' => $holes[$i],
-                    'Proforma_HSNCode' => $hsn[$i],
-                    'Proforma_Special' => $special[$i],
-                    'Proforma_Holes' => $holes[$i],
                     'Proforma_Qty' => $qty[$i],
+                    'Proforma_Material_Rate' => $Rate[$i],
+                    'Proforma_Material_Cost' => $cost[$i],
                     'Proforma_Actual_Size_Width' => $actual_W[$i],
                     'Proforma_Actual_Size_Height' => $actual_H[$i],
                     'Proforma_Chargeable_Size_Width' =>$Charge_W[$i],
                     'Proforma_Chargeable_Size_Height' => $Charge_H[$i],
                     'Proforma_Area_SQMTR' => $Area[$i],
-                    'Proforma_Material_Rate' => $Rate[$i],
-                    'Proforma_Material_Cost' => $cost[$i],
                     'Modified_By' => $this->session->userdata['userid'],'Modified_On' => date('Y-m-d H:i:s'));
                 $this->db->where('Proforma_Invoice_Items_Icode',$material_id[$i]);
                 $this->db->update('proforma_invoice_items', $full_data);
@@ -728,20 +723,9 @@ class User_Controller extends CI_Controller
     public function PI_Confirm_Monthly_Chart()
     {
         $User_Icode =  $this->session->userdata['userid'];
-        $data_count= $this->user_model->Monthly_PI_Confirm();
+        $data_count= $this->user_model->Monthly_PI_Confirm($User_Icode);
         print_r(json_encode($data_count, true));
     }
-    /** PI Confirm Monthly Chart */
-    public function PI_Monthly_Received_Chart()
-    {
-        $data_count= $this->user_model->Monthly_PI_Received();
-        print_r(json_encode($data_count, true));
-    }
-    // generated Work Order
-    public function Completed_WO()
-    {
-        $data_count= $this->user_model->Monthly_Wo_Generated();
-        print_r(json_encode($data_count, true));
-    }
+
 
 }

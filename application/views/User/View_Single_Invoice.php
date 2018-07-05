@@ -33,8 +33,8 @@
                         </div>
                         <div class="col-md-1">
                             <div class="form-group">
-                                <input type="checkbox" name="check" id="check" checked onclick="FillBilling()">
-                                <em>Check this box if Current Address and Mailing permanent are the same.</em>
+<!--                                <input type="checkbox" name="check" id="check" checked onclick="FillBilling()">-->
+<!--                                <em>Check this box if Current Address and Mailing permanent are the same.</em>-->
                             </div>
 
                         </div>
