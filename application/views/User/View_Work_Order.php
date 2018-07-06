@@ -149,7 +149,7 @@
                                 if($_SESSION['role'] == 2)
                                 {
                                     ?>
-                                    <td><?php echo $val['Cutting_Remaining_Qty']; ?></td>
+                                    <td><input type="hidden" id="Cutting_balance_qty<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Cutting_Remaining_Qty']; ?>"><?php echo $val['Cutting_Remaining_Qty']; ?></td>
                                 <?php }
                                 elseif($_SESSION['role'] == 3)
                                 { ?>
@@ -158,7 +158,7 @@
                                     <td><?php echo $val['Proforma_Special']; ?></td>
                                     <td>other</td>
                                     <td><?php echo $val['Furnace_Incoming']; ?></td>
-                                    <td><?php echo $val['Furnace_Remaining_Qty']; ?></td>
+                                    <td><input type="hidden" id="Furnance_balance_qty<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Furnace_Remaining_Qty']; ?>"><?php echo $val['Furnace_Remaining_Qty']; ?></td>
                                 <?php }
                                 elseif($_SESSION['role'] == 4) {?>
                                     <td><?php echo $val['Proforma_Holes']; ?></td>
@@ -166,7 +166,7 @@
                                     <td><?php echo $val['Proforma_Special']; ?></td>
                                     <td>other</td>
                                     <td><?php echo $val['Dispatch_Incoming']; ?> </td>
-                                    <td><?php echo $val['Dispatch_Remaining_Qty']; ?></td>
+                                    <td><input type="hidden" id="Dispatch_balance_qty<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Dispatch_Remaining_Qty']; ?>"><?php echo $val['Dispatch_Remaining_Qty']; ?></td>
                                 <?php }?>
 
                                 <td><input type="text" class="form-control" name="remain_qty" id="remain_qty<?php echo $val['WO_Process_Icode']; ?>" required min="0" onkeyup="change_qty('<?php echo $val['WO_Process_Icode']; ?>')"  ></td>
@@ -233,6 +233,9 @@
 
             var furnace_income = document.getElementById('Fur_income' + id).value;
             var dispatch_income = document.getElementById('dis_income' + id).value;
+            var Cutting_balance = document.getElementById('Cutting_balance_qty' + id).value;
+
+            var balance = parseInt(total_qty) - parseInt(Cutting_balance);
 
 
             if (remaining_qty == "" ) {
@@ -243,7 +246,11 @@
             }
             else if(remaining_qty > total_qty )
             {
-                alert("Remaining QTY is Wrong");
+                alert("Remaining QTY is Greater then Total Qty ");
+            }
+            else if(remaining_qty > balance )
+            {
+                alert("Remaining QTY Greater then Balance QTY...")
             }
           else {
                 $.ajax({
