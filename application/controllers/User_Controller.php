@@ -198,12 +198,49 @@ class User_Controller extends CI_Controller
         {
             $thickness=$objWorksheet->getCellByColumnAndRow(0,$i)->getValue();
             $height=$objWorksheet->getCellByColumnAndRow(1,$i)->getValue();
+            if(is_numeric($height))
+            {
+               $charge_height = $height + 30;
+                $height_check[] ="";
+            }
+            else{
+                $height_check[] ='1';
+            }
             $width=$objWorksheet->getCellByColumnAndRow(2,$i)->getValue();
+            if(is_numeric($width))
+            {
+                $charge_weigth = $width + 30;
+                $width_check[]="";
+            }
+            else{
+                $width_check[] ='1';
+            }
             $pics=$objWorksheet->getCellByColumnAndRow(3,$i)->getValue();
+            if(is_numeric($pics))
+            {
+                $pics_check[]="";
+            }
+            else{
+
+                $pics_check[] ='1';
+            }
             $holes=$objWorksheet->getCellByColumnAndRow(4,$i)->getValue();
+            if(is_numeric($holes))
+            {
+                $holes_check[]="";
+            }
+            else{
+                $holes_check[] ='1';
+            }
             $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
-            $charge_height = $height + 30;
-            $charge_weigth = $width + 30;
+            if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B')
+            {
+                $types_check[]="";
+            }
+            else{
+                $types_check[] ='1';
+            }
+
             $area = $charge_height/1000 * $charge_weigth/1000;
             $data_user[]=array(
                 'Thickness'=>$thickness,
@@ -236,11 +273,21 @@ class User_Controller extends CI_Controller
             $data['profoma_number'] = $month .'-'. $increment;
 
         }
-        $this->load->view('User/header');
-        $this->load->view('User/top');
-        $this->load->view('User/left');
-        $this->load->view('User/View_Invoice',$data,false);
-        $this->load->view('User/footer');
+
+        if(!empty($height_check) and !empty($width_check) and !empty($pics_check) and !empty($holes_check) and !empty($types_check) )
+        {
+            $this->load->view('User/header');
+            $this->load->view('User/top');
+            $this->load->view('User/left');
+            $this->load->view('User/View_Invoice',$data,false);
+            $this->load->view('User/footer');
+        }
+        else{
+
+            $this->session->set_flashdata('feedback', 'Please Cross Check the values in the Excel Sheet.The Columns Height,Width,No.of.pieces,Holes Must have only Numeric values. Type must have only Alphabetic. Make corrections and load Again ..');
+            redirect('User_Controller/Proforma_Invoice');
+        }
+
     }
     /** Save Invoice */
     public function Save_Invoice()
