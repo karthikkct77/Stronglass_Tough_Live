@@ -174,6 +174,16 @@ class User_Model extends CI_Model
         return $query->result_array();
     }
 
+    // get today pi count
+    public function get_today_pi_count()
+    {
+        $user_id=$this->session->userdata['userid'];
+        $today=date('Y-m-d');
+        $query=$this->db->query("SELECT COUNT(Proforma_Icode) as pi_count FROM proforma_invoice WHERE Proforma_Generated_By='$user_id' and date(Proforma_Generated_On)='$today'  ");
+        return $query->result_array();
+
+    }
+
 
 
 }

@@ -9,73 +9,7 @@
             <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
         </ul>
     </div>
-    <div class="row">
-        <div class="col-md-6 col-lg-3">
-            <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
-                <div class="info">
-                    <h4><?php echo("{$_SESSION['user_name']}"."<br />");?></h4>
-                    <?php
-                    if($_SESSION['role'] == 2)
-                    { ?>
-                        <p><b>CUTTING</b></p>
 
-                    <?php   }
-                    elseif ($_SESSION['role'] == 3)
-                    { ?>
-                        <p><b>FURNACE</b></p>
-
-                    <?php  }
-                    elseif ($_SESSION['role'] == 4)
-                    { ?>
-                        <p><b>DISPATCH</b></p>
-
-                    <?php  }
-                    elseif ($_SESSION['role'] == 5)
-                    { ?>
-                        <p><b>DATA ENTRY</b></p>
-
-                    <?php  }
-                    elseif ($_SESSION['role'] == 6)
-                    { ?>
-                        <p><b>WO ENTRY</b></p>
-
-                    <?php  }
-                    elseif ($_SESSION['role'] == 7)
-                    { ?>
-                        <p><b>Review/Confirm PI</b></p>
-
-                    <?php  }
-                    ?>
-
-
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="widget-small info coloured-icon"><i class="icon fa fa-thumbs-o-up fa-3x"></i>
-                <div class="info">
-                    <h4>Likes</h4>
-                    <p><b>25</b></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="widget-small warning coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
-                <div class="info">
-                    <h4>Uploades</h4>
-                    <p><b>10</b></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-3">
-            <div class="widget-small danger coloured-icon"><i class="icon fa fa-star fa-3x"></i>
-                <div class="info">
-                    <h4>Stars</h4>
-                    <p><b>500</b></p>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="row">
         <div class="col-md-6">
             <div class="tile">
@@ -99,6 +33,7 @@
                     { ?>
                         <h3 class="tile-title">Monthly Status</h3>
                         <div id="line_chart_Pi" style="width: 100%;"></div>
+                        <h4>Todays PI Count:<span style="color: #00CC00;margin-left: 10px;font-size: 30px;"><?php echo $today_pi_count[0]['pi_count']; ?></span></h4>
                     <?php  }
                     elseif ($_SESSION['role'] == 6)
                     { ?>
@@ -137,11 +72,21 @@
                 <?php  }
                 elseif ($_SESSION['role'] == 5)
                 { ?>
-                    <div id="piechart" style="width: 100%;"></div>
+                    <div class="widget-small info coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
+                        <div class="info">
+                            <h4><a href="<?php echo site_url('User_Controller/Proforma_Invoice'); ?>">Create PI</a></h4>
+                        </div>
+                    </div>
+                    <div class="widget-small warning coloured-icon"><i class="icon fa fa fa-eye fa-3x"></i>
+                        <div class="info">
+                            <h4><a href="<?php echo site_url('User_Controller/Invoice_List'); ?>">View PI</a></h4>
+                        </div>
+                    </div>
+
                 <?php  }
                 elseif ($_SESSION['role'] == 6)
                 { ?>
-                    <p><b>WO ENTRY</b></p>
+
 
                 <?php  }
                 elseif ($_SESSION['role'] == 7)
@@ -173,6 +118,7 @@
             url: '<?php echo site_url('User_Controller/PI_Monthly_Chart'); ?>',
 
             success: function (data1) {
+
                 // Create our data table out of JSON data loaded from server.
                 var data = new google.visualization.DataTable();
 

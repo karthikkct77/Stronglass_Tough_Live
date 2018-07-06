@@ -23,6 +23,7 @@ class User_Controller extends CI_Controller
     {
 
         $data['pi_confirm']= $this->user_model->get_pi_confirm_status();
+        $data['today_pi_count']= $this->user_model->get_today_pi_count();
         $this->load->view('User/header');
         $this->load->view('User/top');
         $this->load->view('User/left');
