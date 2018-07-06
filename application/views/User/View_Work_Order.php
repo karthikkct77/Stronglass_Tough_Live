@@ -388,8 +388,6 @@
                 var qty = Cutting_balance;
             }
 
-
-
             if (remaining_qty == "" ) {
                 alert("Please Select Remaining qty and Status");
             }
