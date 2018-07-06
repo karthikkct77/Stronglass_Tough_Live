@@ -274,7 +274,13 @@ class User_Controller extends CI_Controller
 
         }
 
-        if(!empty($height_check) and !empty($width_check) and !empty($pics_check) and !empty($holes_check) and !empty($types_check) )
+        $check_H = array_filter($height_check);
+        $check_W = array_filter($width_check);
+        $check_P = array_filter($pics_check);
+        $check_Holes = array_filter($holes_check);
+        $check_Type = array_filter($types_check);
+
+        if(!empty($check_H) and !empty($check_W) and !empty($check_P) and !empty($check_Holes) and !empty($check_Type) )
         {
             $this->load->view('User/header');
             $this->load->view('User/top');
