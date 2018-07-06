@@ -41,7 +41,7 @@
                         <div class="col-md-1">
                             <div class="form-group">
                                 <input type="checkbox" name="check" id="check" checked onclick="FillBilling()">
-                                <em>Check this box if Current Address and Mailing permanent are the same.</em>
+                                <em>Check this box if Consigee and   Buyer are the same.</em>
                             </div>
 
                         </div>
@@ -292,7 +292,7 @@
     #autoSuggestionsList {
         z-index: 99;
         max-height: 400px;
-        overflow-y: scroll;
+        overflow-y: auto;
         min-height: auto;
     }
     #autoSuggestionsList > li {
