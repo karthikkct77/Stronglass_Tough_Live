@@ -235,7 +235,17 @@
             var dispatch_income = document.getElementById('dis_income' + id).value;
             var Cutting_balance = document.getElementById('Cutting_balance_qty' + id).value;
 
-            var balance = parseInt(total_qty) - parseInt(Cutting_balance);
+
+            if(Cutting_balance == '0')
+            {
+                var qty = total_qty;
+            }
+            else
+            {
+                var qty = Cutting_balance;
+            }
+
+
 
 
             if (remaining_qty == "" ) {
@@ -244,13 +254,9 @@
             else if (remaining_qty != 0 && remaining_comments == "") {
                 alert("Please Type Reason for Remaining Qty");
             }
-            else if(remaining_qty > total_qty )
+            else if(remaining_qty > qty )
             {
                 alert("Remaining QTY is Greater then Total Qty ");
-            }
-            else if(remaining_qty > balance )
-            {
-                alert("Remaining QTY Greater then Balance QTY...")
             }
           else {
                 $.ajax({
@@ -301,6 +307,17 @@
             var furnace_income = document.getElementById('Fur_income' + id).value;
             var dispatch_income = document.getElementById('dis_income' + id).value;
 
+            var Cutting_balance = document.getElementById('Furnace_balance_qty' + id).value;
+
+            if(Cutting_balance == '0')
+            {
+                var qty = furnace_income;
+            }
+            else
+            {
+                var qty = Cutting_balance;
+            }
+
 
             if (remaining_qty == "" ) {
                 alert("Please Select Remaining qty and Status");
@@ -308,7 +325,7 @@
             else if (remaining_qty != 0 && remaining_comments == "") {
                 alert("Please Type Reason for Remaining Qty");
             }
-            else if(remaining_qty > furnace_income )
+            else if(remaining_qty > qty )
             {
                 alert("Remaining QTY is Wrong");
             }
@@ -360,6 +377,18 @@
             var furnace_income = document.getElementById('Fur_income' + id).value;
             var dispatch_income = document.getElementById('dis_income' + id).value;
 
+            var Cutting_balance = document.getElementById('Dispatch_balance_qty' + id).value;
+
+            if(Cutting_balance == '0')
+            {
+                var qty = dispatch_income;
+            }
+            else
+            {
+                var qty = Cutting_balance;
+            }
+
+
 
             if (remaining_qty == "" ) {
                 alert("Please Select Remaining qty and Status");
@@ -367,7 +396,7 @@
             else if (remaining_qty != 0 && remaining_comments == "") {
                 alert("Please Type Reason for Remaining Qty");
             }
-            else if(remaining_qty > dispatch_income )
+            else if(remaining_qty > qty )
             {
                 alert("Remaining QTY is Wrong");
             }
