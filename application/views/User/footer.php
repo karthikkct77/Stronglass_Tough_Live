@@ -7,6 +7,11 @@
 <script src="<?php echo base_url('js/plugins/pace.min.js');?>"></script>
 
 <!-- Page specific javascripts-->
-
+<footer class="main-footer" style="padding-left: 250px;">
+    <div class="pull-right hidden-xs" style="margin-right: 20px;">
+       Powered by <a href="http://ideabrickstechnologies.com/" target="_blank">IBT</a>
+    </div>
+    <strong>Copyright &copy; 2018-Stronglass Tough - Coimbatore.</strong>
+</footer>
 </body>
 </html>
