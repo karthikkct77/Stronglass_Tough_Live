@@ -726,6 +726,13 @@ class User_Controller extends CI_Controller
         $data_count= $this->user_model->Monthly_PI_Confirm($User_Icode);
         print_r(json_encode($data_count, true));
     }
+    /** Complete work order */
+    public function Completed_WO()
+    {
+        $User_Icode =  $this->session->userdata['userid'];
+        $data_count= $this->user_model->Monthly_Wo_Generated($User_Icode);
+        print_r(json_encode($data_count, true));
+    }
 
 
 }

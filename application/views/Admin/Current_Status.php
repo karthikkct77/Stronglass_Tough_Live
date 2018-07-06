@@ -31,7 +31,7 @@
                     <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#5a" role="tab" aria-controls="pills-home" aria-selected="true">Delay</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#1a" role="tab" aria-controls="pills-profile" aria-selected="false">With in 8 Hours</a>
+                    <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#1a" role="tab" aria-controls="pills-profile" aria-selected="false">Within 8 Hours</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" id="pills-contact-tab" data-toggle="pill" href="#2a" role="tab" aria-controls="pills-contact" aria-selected="false">Between 8 to 16 Hours</a>
@@ -106,7 +106,7 @@
                 </div>
                 <div class="tab-pane fade" id="1a" role="tabpanel" aria-labelledby="pills-profile-tab">
                     <div class="tile">
-                        <h2>With in 8 Hours</h2>
+                        <h2>Within 8 Hours</h2>
                         <table id="tblCustomers2"  data-page-length='25' class="table table-striped" width="100%">
                         <thead>
                         <tr>
@@ -222,7 +222,7 @@
                 </div>
                 <div class="tab-pane fade" id="3a" role="tabpanel" aria-labelledby="pills-24hours-tab">
                     <div class="tile">
-                        <h2>With in 16 to 24 Hours</h2>
+                        <h2>Between 16 to 24 Hours</h2>
                         <table id="tblCustomers4"  data-page-length='25' class="table table-striped" width="100%">
                         <thead>
                         <tr>
@@ -279,7 +279,7 @@
                 </div>
                 <div class="tab-pane fade" id="4a" role="tabpanel" aria-labelledby="pills-48hours-tab">
                     <div class="tile">
-                        <h2>With in 24 to 48 Hours</h2>
+                        <h2>Between 24 to 48 Hours</h2>
                     <table id="tblCustomers5"  data-page-length='25' class="table table-striped" width="100%">
                         <thead>
                         <tr>
