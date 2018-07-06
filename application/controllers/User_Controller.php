@@ -74,6 +74,7 @@ class User_Controller extends CI_Controller
             {
                 $update = array('Cutting_Remaining_Qty' => $this->input->post('Qty',true),
                     'Furnace_Incoming' => $Income,
+                    'Furnace_Remaining_Qty'=>$Income,
                     'Furnace_Status' => '1',
                     'Cutting_Status' => $this->input->post('Status',true) );
                 $this->db->where('WO_Process_Icode',$wo_icode);
@@ -104,6 +105,7 @@ class User_Controller extends CI_Controller
             {
                 $update = array('Furnace_Remaining_Qty' => $this->input->post('Qty',true),
                     'Dispatch_Incoming' => $Disptach_Income,
+                    'Dispatch_Remaining_Qty'=>$Disptach_Income,
                     'Furnace_Incoming' => '0',
                     'Dispatch_Status' => '1',
                     'Furnace_Status' => $this->input->post('Status',true) );
@@ -468,7 +470,7 @@ class User_Controller extends CI_Controller
                         'Proforma_Icode' => $this->input->post('PI_Icode'),
                         'Proforma_Invoice_Item_Icode' => $item_icode[$i],
                         'Total_Qty' =>$Qty[$i] ,
-                        'Cutting_Remaining_Qty' =>'0',
+                        'Cutting_Remaining_Qty' =>$Qty[$i],
                         'Furnace_Remaining_Qty' =>'0',
                         'Dispatch_Remaining_Qty' =>'0');
                     $insert_process = $this->admin_model->Insert_WO_Process($data1);

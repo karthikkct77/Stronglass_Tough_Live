@@ -111,7 +111,7 @@
                             <tr>
                                 <?php
                                 $total_qty = $work_order[0]['Total_Qty'];
-                                $completed = $complete[0]['total'] - $complete[0]['remaining'];
+                                $completed = $complete[0]['remaining'];
                                 $totel_completed = ($completed/$total_qty) * 100;
                                 if($totel_completed < 50)
                                 { ?>
@@ -131,17 +131,17 @@
                                 ?>
                                 <?php
                                 $total_qty = $work_order[0]['Total_Qty'];
-                                $completed = $cutting[0]['total'] - $cutting[0]['remaining'];
+                                $completed = $cutting[0]['remaining'];
                                 $totel = ($completed/$total_qty) * 100; ?>
                                 <td><h2><?php echo  $totel; ?>% <span class="remaining_qty">(<?php echo $completed; ?> / <?php echo $total_qty; ?> )</span></h2></td>
                                 <?php
                                 $total_qty = $work_order[0]['Total_Qty'];
-                                $completed = $furnace[0]['total'] - $furnace[0]['remaining'];
+                                $completed =  $furnace[0]['remaining'];
                                 $totel_furnace = ($completed/$total_qty) * 100; ?>
                                     <td><h2><?php echo  $totel_furnace; ?>% <span class="remaining_qty">(<?php echo $completed; ?> / <?php echo $total_qty; ?> )</span></h2></td>
                                 <?php
                                 $total_qty = $work_order[0]['Total_Qty'];
-                                $completed = $dispatch[0]['total'] - $dispatch[0]['remaining'];
+                                $completed =  $dispatch[0]['remaining'];
                                 $totel_dispatch = ($completed/$total_qty) * 100; ?>
                                     <td><h2><?php echo  $totel_dispatch; ?>% <span class="remaining_qty">(<?php echo $completed; ?> / <?php echo $total_qty; ?> )</span></h2></td>
 

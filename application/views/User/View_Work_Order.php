@@ -302,12 +302,16 @@
             var profoma_item_icode = document.getElementById('profoma_item_icode' + id).value;
             var status = document.getElementById('status' + id).value;
 
+
             var total_qty = document.getElementById('tot_qty' + id).value;
 
+
             var furnace_income = document.getElementById('Fur_income' + id).value;
+
             var dispatch_income = document.getElementById('dis_income' + id).value;
 
-            var Cutting_balance = document.getElementById('Furnace_balance_qty' + id).value;
+
+            var Cutting_balance = document.getElementById('Furnance_balance_qty' + id).value;
 
             if(Cutting_balance == '0')
             {
@@ -330,6 +334,7 @@
                 alert("Remaining QTY is Wrong");
             }
             else {
+
                 $.ajax({
                     url: "<?php echo site_url('User_Controller/Save_WO_Item'); ?>",
                     data: {

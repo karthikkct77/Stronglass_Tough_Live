@@ -299,7 +299,7 @@
                         foreach($hours48 as $r)
                         {
                             $total_qty = $r['Total_Qty'];
-                            $completed = $r['total'] - $r['remaining'];
+                            $completed = $r['remaining'];
                             $totel_completed = ($completed/$total_qty) * 100;
                             ?>
                             <tr>

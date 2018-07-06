@@ -488,7 +488,7 @@ class Admin_Model extends CI_Model
     /** dispatch status */
     public function get_dispatch_status($id)
     {
-        $query = $this->db->query("SELECT sum(Dispatch_Incoming)as total, sum(Furnace_Remaining_Qty) as remaining FROM wo_processing  WHERE WO_Icode ='$id' and Dispatch_Status !='3'");
+        $query = $this->db->query("SELECT sum(Dispatch_Incoming)as total, sum(Dispatch_Remaining_Qty) as remaining FROM wo_processing  WHERE WO_Icode ='$id' and Dispatch_Status !='3'");
         return $query->result_array();
     }
     /** Get Completed Status with result */
