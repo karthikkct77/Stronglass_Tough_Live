@@ -3,11 +3,7 @@
         <div>
             <h1><i class="fa fa-edit"></i> Proforma Invoice List</h1>
         </div>
-        <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item"><a href="<?php echo site_url('User_Controller/Proforma_Invoice'); ?>">Add Invoice</a></li>
-            <li class="breadcrumb-item"><a href="#">Proforma Invoice List</a></li>
-        </ul>
+
     </div>
     <div class="row">
         <?php if($this->session->flashdata('feedback')): ?>
