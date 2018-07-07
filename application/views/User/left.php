@@ -64,8 +64,8 @@
         elseif ($_SESSION['role'] == 6)
         { ?>
             <li><a class="app-menu__item " href="<?php echo site_url('User_Controller/dashboard'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
-            <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Generate_WO'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Create WO</span></a></li>
-            <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/View_WO'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">View WO</span></a></li>
+            <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Generate_WO'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">View PI List</span></a></li>
+            <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/View_WO'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">View WO List</span></a></li>
 
         <?php  }
         elseif ($_SESSION['role'] == 7)

@@ -1,13 +1,9 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-edit"></i> Create Work Order</h1>
+            <h1><i class="fa fa-edit"></i> Generate Work Order</h1>
         </div>
-        <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
 
-            <li class="breadcrumb-item"><a href="#">Proforma Invoice List</a></li>
-        </ul>
     </div>
     <div class="row">
         <?php if($this->session->flashdata('feedback')): ?>
@@ -52,7 +48,7 @@
                                 <td><?php echo $val['GrossTotal_Value']; ?></td>
                                 <td><?php echo $val['User_Name']; ?></td>
                                 <td><?php echo $val['PI_Confirm_Date']; ?></td>
-                                <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/single_Invoice/') . $val['Proforma_Icode']; ?>">Generate WO</a></td>
+                                <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/single_Invoice/') . $val['Proforma_Icode']; ?>">View</a></td>
                             </tr>
                             <?php
                             $i++;

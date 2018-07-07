@@ -3,10 +3,6 @@
         <div>
             <h1><i class="fa fa-edit"></i> Work order List</h1>
         </div>
-        <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item">Work Order List</li>
-        </ul>
     </div>
     <div class="row">
         <?php if($this->session->flashdata('feedback')): ?>
@@ -35,6 +31,7 @@
                             <th>WO - Date</th>
                             <th>PI- Number</th>
                             <th>Total Amount</th>
+                            <th></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -48,6 +45,7 @@
                                 <td><?php echo $val['WO_Date']; ?></td>
                                 <td><?php echo $val['Proforma_Number']; ?></td>
                                 <td><?php echo $val['GrossTotal_Value']; ?></td>
+                                <td><a class="btn btn-info" href="<?php echo site_url('User_Controller/single_WO/') . $val['Proforma_Icode']; ?>">View</a></td>
                             </tr>
                             <?php
                             $i++;

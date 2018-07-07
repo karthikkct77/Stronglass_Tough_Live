@@ -261,7 +261,7 @@
                             <?php if($_SESSION['role'] == 6) { ?>
 
                                 <button class="btn btn-danger pi_button" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i> Generate WO</button>
-                                <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="print"/>
+                                <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="Print"/>
                              <?php } elseif($_SESSION['role'] == 7){
                                 ?>
                                 <input type="button" id="request" class="btn btn-info" onclick="Request_Approve()" value="Request Work Order">

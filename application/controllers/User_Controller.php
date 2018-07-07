@@ -540,7 +540,7 @@ class User_Controller extends CI_Controller
                 $this->db->where('Proforma_Icode',$id);
                 $this->db->update('proforma_invoice', $update);
                 $this->session->set_flashdata('feedback', 'Work Order Generated ..');
-                redirect('User_Controller/View_WO');
+                redirect('User_Controller/single_WO/'.$id);
             }
         }
         elseif ($role == 7) // Pi Confirm
@@ -798,6 +798,25 @@ class User_Controller extends CI_Controller
         $data_count= $this->user_model->Monthly_Wo_Generated($User_Icode);
         print_r(json_encode($data_count, true));
     }
+    /** Get Single Workorder Details */
+    public function single_WO($id)
+    {
+        $pi_icode = $this->uri->segment(3);
+        $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
+        $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
+        $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
+        $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
+        $data['tax']= $this->admin_model->get_Tax();
+        $data['st']= $this->admin_model->get_ST();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/WO_Barcode',$data,false);
+        $this->load->view('User/footer');
+    }
+
+
+
 
 
 }
