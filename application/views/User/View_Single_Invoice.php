@@ -179,7 +179,7 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="4" align="right">INSURANCE</td>
+                                    <td colspan="4" align="right">HANDLING CHARGE</td>
 
                                     <td><input class="form-control" type="text" name="insurance" id="insurance" value="<?php echo $invoice[0]['Insurance_Value']; ?>" required readonly></td>
                                     <td></td>
