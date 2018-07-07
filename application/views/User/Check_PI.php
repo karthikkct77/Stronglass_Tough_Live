@@ -31,6 +31,7 @@
                             <th>PI- Date</th>
                             <th>Total Amount</th>
                             <th>PI Generated  By </th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -46,6 +47,19 @@
                                 <td><?php echo $val['Proforma_Date']; ?></td>
                                 <td><?php echo $val['GrossTotal_Value']; ?></td>
                                 <td><?php echo $val['User_Name']; ?></td>
+                                <?php
+                                if($val['Email_Send_Status'] == '1')
+                                { ?>
+                                    <td style="color: #00CC00">Email Sent</td>
+                               <?php }
+                               else if($val['Modified_Status'] == '1' && $val['Email_Send_Status'] == '0' )
+                               { ?>
+                                   <td>In Review</td>
+                              <?php }
+                              else
+                                { ?>
+                                    <td>Yet to Review</td>
+                                <?php }?>
                                 <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/single_Invoice/') . $val['Proforma_Icode']; ?>">Review</a></td>
                             </tr>
                             <?php
