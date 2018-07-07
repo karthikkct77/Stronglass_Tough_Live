@@ -91,6 +91,7 @@
                 <?php  }
                 elseif ($_SESSION['role'] == 7)
                 { ?>
+                    <h3 class="tile-title">Completed PI</h3>
 
                 <?php  }
                 ?>

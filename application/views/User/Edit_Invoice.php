@@ -318,7 +318,7 @@
                                 <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
                             </div>
                             <div class="col-md-6">
-                                <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>
+                                <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update PI</button>
                             </div>
                         </div>
                     </form>
