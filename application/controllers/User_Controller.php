@@ -235,7 +235,7 @@ class User_Controller extends CI_Controller
             $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
             if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B')
             {
-                $types_check[]="";
+                 $types_check[]="";
             }
             else{
                 $types_check[] ='1';
@@ -274,13 +274,14 @@ class User_Controller extends CI_Controller
 
         }
 
-        $check_H = array_filter($height_check);
-        $check_W = array_filter($width_check);
-        $check_P = array_filter($pics_check);
-        $check_Holes = array_filter($holes_check);
-        $check_Type = array_filter($types_check);
+        $check_H = count(array_keys($height_check, "1"));
+        $check_W = count(array_keys($width_check, "1"));
+        $check_P = count(array_keys($pics_check, "1"));
+        $check_Holes = count(array_keys($holes_check, "1"));
+        $check_Type = count(array_keys($types_check, "1"));
 
-        if(!empty($check_H) and !empty($check_W) and !empty($check_P) and !empty($check_Holes) and !empty($check_Type) )
+
+        if($check_H =='0' and $check_W =='0' and $check_P =='0' and $check_Holes =='0' and $check_Type =='0'  )
         {
             $this->load->view('User/header');
             $this->load->view('User/top');
@@ -288,11 +289,13 @@ class User_Controller extends CI_Controller
             $this->load->view('User/View_Invoice',$data,false);
             $this->load->view('User/footer');
         }
-        else{
-
+        else
+        {
             $this->session->set_flashdata('feedback', 'Please Cross Check the values in the Excel Sheet.The Columns Height,Width,No.of.pieces,Holes Must have only Numeric values. Type must have only Alphabetic. Make corrections and load Again ..');
             redirect('User_Controller/Proforma_Invoice');
         }
+
+
 
     }
     /** Save Invoice */
