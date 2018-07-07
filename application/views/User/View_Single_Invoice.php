@@ -4,10 +4,6 @@
             <div>
                 <h1><i class="fa fa-edit"></i>Generate Work Order</h1>
             </div>
-        <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item">Work Order</li>
-        </ul>
     </div>
     <div class="row">
         <div class="col-md-12" >
@@ -265,10 +261,10 @@
                                 <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="print"/>
                              <?php } elseif($_SESSION['role'] == 7){
                                 ?>
-                                <a class="btn btn-success pi_button" id="with_print" href="<?php echo site_url('User_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT</a>
-                                <input type="button" id="request" class="btn btn-info pi_button" onclick="Request_Approve()" value="Request To WO Approve">
-                                <button class="btn btn-danger pi_button " type="submit" id="with_print"><i class="fa fa-fw fa-lg fa-check-circle"></i>Send Email</button>
-                                <input  type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="print">
+                                <input type="button" id="request" class="btn btn-info" onclick="Request_Approve()" value="Request Work Order">
+                                <button class="btn btn-danger pi_button " type="submit" id="with_print"><i class="fa fa-fw fa-lg fa-check-circle"></i>Send PI To Customer</button>
+                                <input  type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="Print PI">
+                                <a class="btn btn-success pi_button" id="with_print" href="<?php echo site_url('User_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT PI</a>
 
                             <?php } ?>
 
