@@ -67,8 +67,9 @@
                                     foreach($delays as $r)
                                     {
                                         $total_qty = $r['Total_Qty'];
-                                        $completed = $r['total'] - $r['remaining'];
-                                        $totel_completed = ($completed/$total_qty) * 100;
+                                        $remain = $r['remaining'];
+                                        $completed = $total_qty - $remain;
+                                        $totel_completed = (int)(($completed / $total_qty) * 100);
                                         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
@@ -126,8 +127,9 @@
                         foreach($hours as $r)
                         {
                             $total_qty = $r['Total_Qty'];
-                            $completed = $r['total'] - $r['remaining'];
-                            $totel_completed = ($completed/$total_qty) * 100;
+                            $remain = $r['remaining'];
+                            $completed = $total_qty - $remain;
+                            $totel_completed = (int)(($completed / $total_qty) * 100);
                             ?>
                             <tr>
                                 <td><?php echo $i; ?></td>
@@ -184,8 +186,9 @@
                         foreach($hours16 as $r)
                         {
                             $total_qty = $r['Total_Qty'];
-                            $completed = $r['total'] - $r['remaining'];
-                            $totel_completed = ($completed/$total_qty) * 100;
+                            $remain = $r['remaining'];
+                            $completed = $total_qty - $remain;
+                            $totel_completed = (int)(($completed / $total_qty) * 100);
                             ?>
                             <tr>
                                 <td><?php echo $i; ?></td>
@@ -241,8 +244,9 @@
                         foreach($hours24 as $r)
                         {
                             $total_qty = $r['Total_Qty'];
-                            $completed = $r['total'] - $r['remaining'];
-                            $totel_completed = ($completed/$total_qty) * 100;
+                            $remain = $r['remaining'];
+                            $completed = $total_qty - $remain;
+                            $totel_completed = (int)(($completed / $total_qty) * 100);
                             ?>
                             <tr>
                                 <td><?php echo $i; ?></td>
@@ -299,8 +303,9 @@
                         foreach($hours48 as $r)
                         {
                             $total_qty = $r['Total_Qty'];
-                            $completed = $r['remaining'];
-                            $totel_completed = ($completed/$total_qty) * 100;
+                            $remain = $r['remaining'];
+                            $completed = $total_qty - $remain;
+                            $totel_completed = (int)(($completed / $total_qty) * 100);
                             ?>
                             <tr>
                                 <td><?php echo $i; ?></td>
