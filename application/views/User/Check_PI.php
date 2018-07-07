@@ -1,11 +1,8 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-edit"></i>Check Work Order</h1>
+            <h1><i class="fa fa-edit"></i>Review/Confirm Proforma Invoice</h1>
         </div>
-        <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i> Check WO</li>
-        </ul>
     </div>
     <div class="row">
         <?php if($this->session->flashdata('feedback')): ?>
