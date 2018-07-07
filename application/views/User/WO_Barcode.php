@@ -2,7 +2,7 @@
     <div>
         <div class="app-title">
             <div>
-                <h1><i class="fa fa-edit"></i>Profoma Invoice</h1>
+                <h1><i class="fa fa-edit"></i>Work Order Barcode</h1>
             </div>
         </div>
         <div class="row">

@@ -187,13 +187,23 @@ class User_Model extends CI_Model
     //** Get PI Check Todays */
     public function get_today_pi_check()
     {
+
         $query=$this->db->query("   SELECT 
                                 COUNT(CASE WHEN Email_Send_Status = '1'  THEN 1 END) AS SendEmail,
                                 COUNT(CASE WHEN Modified_Status = '1' AND Email_Send_Status = '0'   THEN 1 END) AS In_Review,
                                 COUNT(CASE WHEN Modified_Status = '0' AND Email_Send_Status = '0'  THEN 1 END) AS Yet_to_review
                                 FROM proforma_invoice WHERE WO_Confirm ='0' and PI_Confirm ='0'  ");
         return $query->result_array();
-
+    }
+    //** Today Generated WO  */
+    public function get_today_WO_Generate()
+    {
+        $today=date('Y-m-d');
+        $query=$this->db->query("  SELECT 
+                                    COUNT(CASE WHEN PI_Confirm='1' and WO_Confirm='0'  THEN 1 END) AS Yet_to_generate,
+                                    COUNT(CASE WHEN WO_Confirm='1' and date(WO_Confirm_On) ='$today' THEN 1 END) AS Generated
+                                    FROM proforma_invoice   ");
+        return $query->result_array();
     }
 
 

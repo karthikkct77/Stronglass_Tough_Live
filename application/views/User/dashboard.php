@@ -86,8 +86,17 @@
                 <?php  }
                 elseif ($_SESSION['role'] == 6)
                 { ?>
-
-
+                    <h3 class="tile-title">Review Status</h3>
+                    <div class="widget-small info coloured-icon review_status"><i class="icon fa fa-play fa-3x"></i>
+                        <div class="info">
+                            <h4>Yet to Generate <span style="color: #00CC00;margin-left: 10px;font-size: 30px;"><?php echo $wo_generate[0]['Yet_to_generate']; ?></span></h4>
+                        </div>
+                    </div>
+                    <div class="widget-small warning coloured-icon review_status"><i class="icon fa fa-files-o fa-3x"></i>
+                        <div class="info">
+                            <h4>Today Generated <span style="color: #00CC00;margin-left: 10px;font-size: 30px;"><?php echo $wo_generate[0]['Generated']; ?></span></h4>
+                        </div>
+                    </div>
                 <?php  }
                 elseif ($_SESSION['role'] == 7)
                 { ?>
