@@ -135,17 +135,7 @@
                             </tr>
                             </tbody>
                         </table>
-                        <script>
-                            $("#grand_total").on('click', function() {
-                                var total =document.getElementsByName("total[]");
-                                var sum = 0;
-                                for (var j = 0, iLen = total.length; j < iLen; j++) {
-                                    val=parseFloat(total[j].value);
-                                    sum +=val;
-                                }
-                                document.getElementById('grand_total').value = parseFloat(sum).toFixed(2);
-                            });
-                        </script>
+
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -166,7 +156,7 @@
                                 <th>Select Charges</th>
                                 <th>No.of pieces</th>
                                 <th>Price</th>
-                                <th>Total</th>
+                                <th>Total(INR)</th>
                                 </thead>
                                 <tbody></tbody>
                                 <tfoot>
@@ -236,7 +226,7 @@
                                 <tr>
 
                                     <td colspan="4" align="right">GROSS TOTAL</td>
-                                    <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" ></td>
+                                    <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" >(INR)</td>
                                     <td></td>
                                 </tr>
                                 </tfoot>

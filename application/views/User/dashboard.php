@@ -91,7 +91,22 @@
                 <?php  }
                 elseif ($_SESSION['role'] == 7)
                 { ?>
-                    <h3 class="tile-title">Completed PI</h3>
+                    <h3 class="tile-title">Review Status</h3>
+                    <div class="widget-small info coloured-icon review_status"><i class="icon fa fa-play fa-3x"></i>
+                        <div class="info">
+                            <h4>Yet to Review <span style="color: #00CC00;margin-left: 10px;font-size: 30px;"><?php echo $today_pi_check[0]['Yet_to_review']; ?></span></h4>
+                        </div>
+                    </div>
+                    <div class="widget-small warning coloured-icon review_status"><i class="icon fa fa-files-o fa-3x"></i>
+                        <div class="info">
+                            <h4>In Review <span style="color: #00CC00;margin-left: 10px;font-size: 30px;"><?php echo $today_pi_check[0]['In_Review']; ?></span></h4>
+                        </div>
+                    </div>
+                    <div class="widget-small primary coloured-icon review_status"><i class="icon fa fa-share fa-3x"></i>
+                        <div class="info">
+                            <h4>Sent to Customer <span style="color: #00CC00;margin-left: 10px;font-size: 30px;"><?php echo $today_pi_check[0]['SendEmail']; ?></span></h4>
+                        </div>
+                    </div>
 
                 <?php  }
                 ?>
@@ -100,6 +115,14 @@
     </div>
 
 </main>
+<style>
+    .review_status{
+        margin-bottom: 20px;
+    }
+    .review_status h4{
+        text-transform: none!important;
+    }
+</style>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
 <script type="text/javascript">
