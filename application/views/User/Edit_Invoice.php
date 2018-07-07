@@ -1,7 +1,7 @@
     <main class="app-content">
         <div class="app-title">
             <div>
-                <h1><i class="fa fa-edit"></i>Invoice</h1>
+                <h1><i class="fa fa-edit"></i>Edit PI</h1>
 
             </div>
             <div class="row invoice">
@@ -10,9 +10,7 @@
                 <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
             </div>
             <ul class="app-breadcrumb breadcrumb">
-                <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-                <li class="breadcrumb-item">Profoma_invoice</li>
-                <li class="breadcrumb-item"><a href="#">Profoma_invoice</a></li>
+
             </ul>
         </div>
         <div class="row">

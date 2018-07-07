@@ -545,7 +545,11 @@ class User_Controller extends CI_Controller
         elseif ($role == 7) // Pi Confirm
         {
 
-
+            $id=$this->input->post('PI_Icode');
+            $update = array('Email_Send_Status' => '1',
+                'Email_Send_Date'=>date('Y-m-d H:i:s'));
+            $this->db->where('Proforma_Icode',$id);
+            $this->db->update('proforma_invoice', $update);
 
             $userEmail='vignesh@ibtemail.com';
             $subject='Test';
@@ -558,7 +562,7 @@ class User_Controller extends CI_Controller
        $this->email->set_newline("\r\n");
             $pi_icode= $this->input->post('PI_Icode');
 
-        $this->email->from('karthik@ibtemail.com', 'Pheonix solutions');
+        $this->email->from('karthik@ibtemail.com', 'Stronglass Tough');
             $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
             $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
             $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
@@ -717,7 +721,7 @@ class User_Controller extends CI_Controller
                 }
             }
             $this->session->set_flashdata('feedback', 'Updated Invoice..');
-            redirect('User_Controller/Check_PI');
+            redirect('User_Controller/single_Invoice/'.$picode);
             }
     }
 

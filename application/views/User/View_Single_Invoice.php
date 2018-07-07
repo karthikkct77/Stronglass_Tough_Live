@@ -2,10 +2,23 @@
     <div>
         <div class="app-title">
             <div>
-                <h1><i class="fa fa-edit"></i>Generate Work Order</h1>
+                <h1><i class="fa fa-edit"></i>Profoma Invoice</h1>
             </div>
     </div>
     <div class="row">
+        <?php if($this->session->flashdata('feedback')): ?>
+            <script>
+                var ssd = "<?php echo $this->session->flashdata('feedback'); ?>";
+                swal({
+                        title: "Success!",
+                        text: ssd,
+                        type: "success"
+                    },
+                    function(){
+                        location.reload();
+                    });
+            </script>
+        <?php endif; ?>
         <div class="col-md-12" >
 
             <div class="tile">
