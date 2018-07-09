@@ -19,7 +19,6 @@
                     <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Update_Invoice'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
                         <div class="row">
                             <div class="col-md-4">
-
                                 <h5>Consignee</h5>
                                 <input  class="form-control" name="search_data" id="search_data" type="text" value="<?php echo $invoice[0]['Customer_Company_Name']; ?>"   onkeyup="ajaxSearch();" required>
                                 <input  class="form-control" name="company_name" id="company_name" type="hidden" value="<?php echo $invoice[0]['Customer_Icode']; ?>">
@@ -32,14 +31,12 @@
                                     <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
                                     <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
                                 </div>
-
                             </div>
                             <div class="col-md-1">
                                 <div class="form-group">
                                     <input type="checkbox" name="check" id="check" checked onclick="FillBilling()">
                                     <em>Check this box if Current Address and Mailing permanent are the same.</em>
                                 </div>
-
                             </div>
                             <div class="col-md-4">
                                 <h5>Buyer (if other than consignee)</h5>
@@ -107,7 +104,7 @@
                                         <td><?php echo $i; ?></td>
                                         <td>
                                             <div class="form-group">
-                                                <select name="material[]" class="form-control" id="material"  required >
+                                                <select name="material[]" class="form-control" id="material<?php echo $i; ?>" onclick="get_result('<?php echo $i; ?>')" required >
                                                     <option value="<?php echo $key['Proforma_Invoice_Items_Icode']; ?>" ><?php echo $key['Material_Name']; ?></option>
                                                     <?php foreach ($stock as $row):
                                                     {
@@ -616,6 +613,7 @@
             }
         }
         function get_result(id) {
+
             var pcs = document.getElementById('pics'+id).value;
             var area = document.getElementById('area'+id).value;
             $("#material"+id).change(function () {
@@ -663,9 +661,57 @@
                         }
                         document.getElementById('total_area').value = parseFloat(sum_area).toFixed(2);
 
+                        var totals =document.getElementsByName("tot_charge_amt[]");
+                        var charge = 0;
+                        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+                            if (totals[j].value!==""){
+                                val=parseFloat(totals[j].value);
+                                charge +=val;
+                            }
+                        }
+                        var grant_tot = document.getElementById('grand_total').value;
+                        var sub_tot = parseFloat(charge) + parseFloat(grant_tot);
+                        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+                        var tax = 2.42;
+                        var total = parseFloat (sub_tot * tax / 100);
+                        document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+                        var insurance =parseFloat(total).toFixed(3);
+
+                        var igst =document.getElementById('igst').value;
+                        if(igst == '')
+                        {
+                            var gst = document.getElementById('gst').value;
+                            var trans =document.getElementById('transport').value;
+                            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+                            document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+                            document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+                            var sgst = document.getElementById('sgst').value;
+                            var cgst = document.getElementById('cgst').value;
+                            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) + parseFloat(trans));
+                            document.getElementById('gross_tot').value = parseInt(grant);
+                        }
+                        else
+                        {
+
+                            var gst = 18;
+                            var trans =document.getElementById('transport').value;
+                            var sum = parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans);
+                            var sum_tot =parseFloat(sum) * gst / 100 ;
+                            document.getElementById('igst').value = parseFloat(sum_tot).toFixed(2);
+                            var iisgst = document.getElementById('igst').value;
+                            var grant = parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) + parseFloat(trans);
+                            document.getElementById('gross_tot').value = parseInt(grant);
+
+                        }
+                        number_to_words();
+
                     }
                 });
             });
+
+
+
+
         }
 
         function change_rate(id) {
