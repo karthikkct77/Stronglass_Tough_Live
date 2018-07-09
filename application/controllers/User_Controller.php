@@ -195,7 +195,14 @@ class User_Controller extends CI_Controller
                 $work_order =$this->input->post('Wo_Icode',true);
                 $data['complete']= $this->admin_model->get_completed_status($work_order);
                 $data['work_order']= $this->admin_model->get_Single_Work_Order($work_order);
-                if($data['complete'][0]['total'] = $data['work_order'][0]['Total_Qty'] )
+
+                $total_qty = $data['complete'][0]['total'];
+                $disptach_remain = $data['complete'][0]['remaining1'];
+                $cutting_remain = $data['complete'][0]['remaining2'];
+                $funan_remain = $data['complete'][0]['remaining3'];
+                $remain = $disptach_remain + $cutting_remain + $funan_remain;
+                $completed = $total_qty - $remain;
+                if($completed == $data['work_order'][0]['Total_Qty'] )
                 {
                     $complete = '1';
                 }
@@ -203,7 +210,7 @@ class User_Controller extends CI_Controller
                     $complete = '0';
                 }
                 $update1 = array('WO_Completed' => $complete,
-                           'WO_Completed_On' => date('Y-m-d  H:i:s'));
+                           'WO_Completed_On' => date('Y-m-d'));
                 $this->db->where('WO_Icode',$work_order);
                 $this->db->update('work_order', $update1);
                 echo 1;

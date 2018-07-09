@@ -1012,8 +1012,6 @@ class Admin_Controller extends CI_Controller
             $data['hours16']= $this->admin_model->get_all_work_order_within16();
             $data['hours24']= $this->admin_model->get_all_work_order_within24();
             $data['hours48']= $this->admin_model->get_all_work_order_within48();
-
-            print_r($data['hours48']);
             $data['delays']= $this->admin_model->get_all_work_order_delay();
 //            foreach ($data['delay'] as $val)
 //            {
