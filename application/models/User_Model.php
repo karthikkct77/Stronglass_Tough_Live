@@ -205,6 +205,12 @@ class User_Model extends CI_Model
                                     FROM proforma_invoice   ");
         return $query->result_array();
     }
+    //** Get Workorder Furnance */
+    public function get_furnance_details($process_icode)
+    {
+        $query=$this->db->query("  SELECT  * from wo_processing WHERE WO_Process_Icode ='$process_icode' ");
+        return $query->result_array();
+    }
 
 
 

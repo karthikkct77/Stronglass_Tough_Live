@@ -62,8 +62,10 @@ class User_Controller extends CI_Controller
         if($role == 2) //  Cutting
         {
             $total_qty = $this->input->post('Total_Qty',true);
+            $balance =  $this->input->post('Balance',true);
             $remain = $this->input->post('Qty',true);
-            $Income = $total_qty - $remain;
+            $Income = $balance - $remain;
+
             $wo_icode = $this->input->post('Process_Icode',true);
             $data =array('WO_Icode' => $this->input->post('Wo_Icode',true),
                 'WO_Process_Icode' => $this->input->post('Process_Icode',true),
@@ -75,14 +77,37 @@ class User_Controller extends CI_Controller
             $insert = $this->user_model->Insert_Cutting($data);
             if($insert == 1)
             {
-                $update = array('Cutting_Remaining_Qty' => $this->input->post('Qty',true),
-                    'Furnace_Incoming' => $Income,
-                    'Furnace_Remaining_Qty'=>$Income,
-                    'Furnace_Status' => '1',
-                    'Cutting_Status' => $this->input->post('Status',true) );
-                $this->db->where('WO_Process_Icode',$wo_icode);
-                $this->db->update('wo_processing', $update);
-                echo 1;
+                $wo_process = $this->user_model->get_furnance_details($wo_icode);
+                $furnance_icome = $wo_process[0]['Furnace_Remaining_Qty'];
+
+                if($furnance_icome == '0')
+                {
+
+                    $update = array('Cutting_Remaining_Qty' => $this->input->post('Qty',true),
+                        'Furnace_Incoming' => $Income,
+                        'Furnace_Remaining_Qty'=>$Income,
+                        'Furnace_Status' => '1',
+                        'Cutting_Status' => $this->input->post('Status',true) );
+                    $this->db->where('WO_Process_Icode',$wo_icode);
+                    $this->db->update('wo_processing', $update);
+                    echo 1;
+                }
+                else
+                {
+
+                    $new_income = $Income + $furnance_icome;
+                    $update = array('Cutting_Remaining_Qty' => $this->input->post('Qty',true),
+                        'Furnace_Incoming' => $new_income,
+                        'Furnace_Remaining_Qty'=>$new_income,
+                        'Furnace_Status' => '1',
+                        'Cutting_Status' => $this->input->post('Status',true) );
+                    $this->db->where('WO_Process_Icode',$wo_icode);
+                    $this->db->update('wo_processing', $update);
+                    echo 1;
+
+                }
+
+
             }
             else{
                 echo 0;
@@ -92,7 +117,9 @@ class User_Controller extends CI_Controller
         elseif ($role == 3) // Fornace
         {
             $Furnace_income = $this->input->post('Furnace_Income',true);
+            $balance =  $this->input->post('Balance',true);
             $remain = $this->input->post('Qty',true);
+            $Income = $balance - $remain;
             $Disptach_Income = $Furnace_income - $remain;
             $wo_icode = $this->input->post('Process_Icode',true);
             $data =array('WO_Icode' => $this->input->post('Wo_Icode',true),
@@ -106,15 +133,39 @@ class User_Controller extends CI_Controller
             $insert = $this->user_model->Insert_Furnace($data);
             if($insert == 1)
             {
-                $update = array('Furnace_Remaining_Qty' => $this->input->post('Qty',true),
-                    'Dispatch_Incoming' => $Disptach_Income,
-                    'Dispatch_Remaining_Qty'=>$Disptach_Income,
-                    'Furnace_Incoming' => '0',
-                    'Dispatch_Status' => '1',
-                    'Furnace_Status' => $this->input->post('Status',true) );
-                $this->db->where('WO_Process_Icode',$wo_icode);
-                $this->db->update('wo_processing', $update);
-                echo 1;
+                $wo_process = $this->user_model->get_furnance_details($wo_icode);
+                $dispatch_icome = $wo_process[0]['Dispatch_Remaining_Qty'];
+                if($dispatch_icome == '0')
+                {
+
+                    $update = array('Furnace_Remaining_Qty' => $this->input->post('Qty',true),
+                        'Dispatch_Incoming' => $Income,
+                        'Dispatch_Remaining_Qty'=>$Income,
+                        'Furnace_Incoming' => '0',
+                        'Dispatch_Status' => '1',
+                        'Furnace_Status' => $this->input->post('Status',true) );
+                    $this->db->where('WO_Process_Icode',$wo_icode);
+                    $this->db->update('wo_processing', $update);
+                    echo 1;
+                }
+                else
+                {
+                    $new_income = $Income + $dispatch_icome;
+
+                    $update = array('Furnace_Remaining_Qty' => $this->input->post('Qty',true),
+                        'Dispatch_Incoming' => $new_income,
+                        'Dispatch_Remaining_Qty'=>$new_income,
+                        'Furnace_Incoming' => '0',
+                        'Dispatch_Status' => '1',
+                        'Furnace_Status' => $this->input->post('Status',true) );
+                    $this->db->where('WO_Process_Icode',$wo_icode);
+                    $this->db->update('wo_processing', $update);
+                    echo 1;
+
+                }
+
+
+
             }
             else{
                 echo 0;
