@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-md-12" >
             <div class="tile">
-                <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Save_Invoice'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
+                <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Save_Invoice'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save PI?');">
                     <div class="row">
                         <div class="col-md-4">
                             <h5>Consignee</h5>

@@ -432,7 +432,7 @@ class User_Controller extends CI_Controller
                     'created_by' => $this->session->userdata['userid']);
                 $insert_charges = $this->admin_model->Insert_Profoma_Charges($full_data1);
             }
-            $this->session->set_flashdata('feedback', 'Profoma Generated ..');
+            $this->session->set_flashdata('feedback', 'PI Created Successfully ..');
             redirect('User_Controller/Invoice_List');
         }
     }
@@ -598,7 +598,7 @@ class User_Controller extends CI_Controller
                     'WO_Confirm_On'=>date('Y-m-d H:i:s'));
                 $this->db->where('Proforma_Icode',$id);
                 $this->db->update('proforma_invoice', $update);
-                $this->session->set_flashdata('feedback', 'Work Order Generated ..');
+                $this->session->set_flashdata('feedback', 'Work Order Generated Successfully ..');
                 redirect('User_Controller/single_WO/'.$id);
             }
         }
