@@ -3,7 +3,6 @@
         <div>
             <h1><i class="fa fa-edit"></i> Proforma Invoice List</h1>
         </div>
-
     </div>
     <div class="row">
         <?php if($this->session->flashdata('feedback')): ?>
@@ -56,7 +55,6 @@
                 </div>
             </div>
         </div>
-
     </div>
 </main>
 <script>$('#sampleTable').DataTable();</script>
