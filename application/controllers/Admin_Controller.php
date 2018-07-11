@@ -1246,12 +1246,13 @@ class Admin_Controller extends CI_Controller
 
     }
 
-    //** Work order Result */
-    public function WO_Result()
+    //** Work order Completed */
+    public function WO_Monthly_Chart()
     {
-        $result = $this->admin_model->Get_Workorder_Result();
-
+        $data_count= $this->admin_model->Monthly_WO_Complete();
+        print_r(json_encode($data_count, true));
     }
+
 
 
 }

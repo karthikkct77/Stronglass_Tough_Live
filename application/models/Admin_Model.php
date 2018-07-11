@@ -560,6 +560,12 @@ class Admin_Model extends CI_Model
                                     COUNT(CASE WHEN WO_Confirm ='1'  and date(WO_Confirm_On) = date('Y-m-d') THEN 1 END) as wo_confirm
                                     FROM `proforma_invoice`  ");
         return $query->result_array();
-
+    }
+    /** Get Monthly wo Completed */
+    public function Monthly_WO_Complete()
+    {
+        $query = $this->db->query("SELECT DATE_FORMAT(WO_Completed_On, '%b') as months, COUNT(WO_Icode) as wo FROM `work_order` WHERE WO_Completed='1' 
+                                  GROUP BY  DATE_FORMAT(WO_Completed_On, '%b') order by WO_Completed_On ASC  ");
+        return $query->result_array();
     }
 }
