@@ -42,16 +42,16 @@
                    <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Current_Status'); ?>"><i class="icon fa fa-circle-o"></i>WO Status</a></li>
                    <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Work_Order'); ?>"><i class="icon fa fa-circle-o"></i>View Work Order</a></li>
                    <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Complete_Work_Order'); ?>"><i class="icon fa fa-circle-o"></i>Completed WO</a></li>
-                   <!--                   <li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/View_Customers'); ?><!--"><i class="icon fa fa-circle-o"></i>View Customers</a></li>-->
+                   <!--                   <li><a class="treeview-item" href="--><!--"><i class="icon fa fa-circle-o"></i>View Customers</a></li>-->
 
                </ul>
            </li>
 <!--           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Work Order</span><i class="treeview-indicator fa fa-angle-right"></i></a>-->
 <!--               <ul class="treeview-menu">-->
-<!--                   <!--<li><a class="treeview-item" href="-->--><?php ////echo site_url('Admin_Controller/Size_Master'); ?><!--<!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>-->-->
+<!--                   <!--<li><a class="treeview-item" href="--><?php ////echo site_url('Admin_Controller/Size_Master'); ?><!--<!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>-->
 <!--                   <li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Create_Work_Order'); ?><!--"><i class="icon fa fa-circle-o"></i> Create Work Order</a></li>-->
 <!--                   <li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Work_Order'); ?><!--"><i class="icon fa fa-circle-o"></i>View Work Order</a></li>-->
-<!--<!--                   <li><a class="treeview-item" href="-->--><?php ////echo site_url('Admin_Controller/View_Customers'); ?><!--<!--"><i class="icon fa fa-circle-o"></i>View Customers</a></li>-->-->
+<!--<!--                   <li><a class="treeview-item" href="--><?php ////echo site_url('Admin_Controller/View_Customers'); ?><!--<!--"><i class="icon fa fa-circle-o"></i>View Customers</a></li>-->
 <!---->
 <!--               </ul>-->
 <!--           </li>-->
@@ -71,7 +71,7 @@
 
 <!--        <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Invoice</span><i class="treeview-indicator fa fa-angle-right"></i></a>-->
 <!--            <ul class="treeview-menu">-->
-<!--                <!--<li><a class="treeview-item" href="-->--><?php ////echo site_url('Admin_Controller/Size_Master'); ?><!--<!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>-->-->
+<!--                <!--<li><a class="treeview-item" href="--><?php ////echo site_url('Admin_Controller/Size_Master'); ?><!--<!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>--
 <!--                <li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Proforma_Invoice'); ?><!--"><i class="icon fa fa-circle-o"></i> Add Profoma Invoice</a></li>-->
 <!--                <li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Invoice_List'); ?><!--"><i class="icon fa fa-circle-o"></i>View Invoice</a></li>-->
 <!--            </ul>-->
