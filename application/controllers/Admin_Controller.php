@@ -24,6 +24,7 @@ class Admin_Controller extends CI_Controller
     public function dashboard()
     {
         $data['status']= $this->admin_model->get_all_WO_Status();
+        $data['todays_pi'] =$this->admin_model->get_today_pi();
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
         $this->load->view('Admin/left');

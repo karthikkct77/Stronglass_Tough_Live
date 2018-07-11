@@ -74,22 +74,29 @@
                 </table>
             </div>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-6">
             <div class="tile">
-                <h3 class="tile-title">Monthly Sales</h3>
-                <div class="embed-responsive embed-responsive-16by9">
-                    <canvas class="embed-responsive-item" id="lineChartDemo"></canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="tile">
-                <h3 class="tile-title">Support Requests</h3>
-                <div class="embed-responsive embed-responsive-16by9">
-                    <canvas class="embed-responsive-item" id="pieChartDemo"></canvas>
-                </div>
+                <h3 class="tile-title">Today Status</h3>
+                <table id="tblCustomers5"  data-page-length='25' class="table table-striped" width="100%">
+                    <thead>
+                    <tr>
+                        <th>Generate PI</th>
+                        <th>Confirm PI</th>
+                        <th>Generate WO</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php  foreach($todays_pi as $r)
+                    { ?>
+                        <tr>
+                            <td><h2><?php echo $r['pi']; ?></h2></td>
+                            <td><h2><?php echo $r['pi_confirm']; ?></h2></td>
+                            <td><h2><?php echo $r['wo_confirm']; ?></h2></td>
+
+                        </tr>
+                    <?php }?>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>

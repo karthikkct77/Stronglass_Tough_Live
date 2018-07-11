@@ -552,4 +552,14 @@ class Admin_Model extends CI_Model
         $query = $this->db->query("SELECT Proforma_Charge_Icode FROM proforma_material_processing_charges WHERE Proforma_Icode=''");
         return $query->result();
     }
+    /** Get Todays Count Details */
+    public function get_today_pi()
+    {
+        $query = $this->db->query(" SELECT COUNT(CASE WHEN PI_Confirm ='0' and date(Proforma_Generated_On) = date('Y-m-d') THEN 1 END) as pi,
+                                    COUNT(CASE WHEN PI_Confirm ='1' and WO_Confirm='0' and date(PI_Confirm_Date) = date('Y-m-d') THEN 1 END) as pi_confirm,
+                                    COUNT(CASE WHEN WO_Confirm ='1'  and date(WO_Confirm_On) = date('Y-m-d') THEN 1 END) as wo_confirm
+                                    FROM `proforma_invoice`  ");
+        return $query->result_array();
+
+    }
 }
