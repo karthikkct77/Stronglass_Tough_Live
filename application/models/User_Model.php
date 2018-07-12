@@ -212,6 +212,15 @@ class User_Model extends CI_Model
         return $query->result_array();
     }
 
+    //** Monthly Cutting */
+    public function Cutting_Chart()
+    {
+        $user_id=$this->session->userdata['userid'];
+        $query=$this->db->query("SELECT DATE_FORMAT(Created_On, '%d') as Date,SUM(Cutting_Qty) as cutting FROM `cutting_history` WHERE Cutting_Status='3' and Created_By='$user_id' and MONTH(Created_On) = MONTH(CURRENT_DATE())
+          AND YEAR(Created_On) = YEAR(CURRENT_DATE())  GROUP BY Date(Created_On) ");
+        return $query->result_array();
+    }
+
 
 
 }

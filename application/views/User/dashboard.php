@@ -16,7 +16,8 @@
                     <?php
                     if($_SESSION['role'] == 2)
                     { ?>
-                        <p><b>CUTTING</b></p>
+                        <h3 class="tile-title">Cutting Status</h3>
+                        <div id="line_chart_cutting" style="width: 100%;"></div>
 
                     <?php   }
                     elseif ($_SESSION['role'] == 3)
@@ -141,6 +142,7 @@
     google.charts.setOnLoadCallback(pi_chart);
     google.charts.setOnLoadCallback(pi_chart_Confirm);
     google.charts.setOnLoadCallback(generated_wo);
+    google.charts.setOnLoadCallback(cutting_chart);
 
 
 
@@ -223,42 +225,6 @@
                 chart.draw(data, options);
             }
         });
-//
-//        $.ajax({
-//            type: 'POST',
-//            url: '<?php //echo site_url('User_Controller/PI_Monthly_Received_Chart'); ?>//',
-//
-//            success: function (data1) {
-//                // Create our data table out of JSON data loaded from server.
-//                var data = new google.visualization.DataTable();
-//
-//                data.addColumn('string', 'Date');
-//                data.addColumn('number', 'Received_pi');
-//                var jsonData = $.parseJSON(data1);
-//                //alert(jsonData);
-//
-//                for (var i = 0; i < jsonData.length; i++) {
-//                    data.addRow([jsonData[i].Date, parseInt(jsonData[i].Received_pi)]);
-//                }
-//                var options = {
-//                    chart: {
-//                        title: 'Invoice Received',
-//                        subtitle: ''
-//                    },
-//
-//                    height: 300,
-//                    axes: {
-//                        x: {
-//                            0: {side: 'bottom'}
-//                        }
-//                    },
-//                    colors: ['#f39c12', '#f9325c']
-//
-//                };
-//                var chart = new google.charts.Line(document.getElementById('line_chart_Pi_Received'));
-//                chart.draw(data, options);
-//            }
-//        });
     }
 
     function generated_wo() {
@@ -294,6 +260,44 @@
 
                 };
                 var chart = new google.charts.Line(document.getElementById('line_chart_WO'));
+                chart.draw(data, options);
+            }
+        });
+    }
+
+    function cutting_chart() {
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo site_url('User_Controller/Cutting_chart'); ?>',
+
+            success: function (data1) {
+                // Create our data table out of JSON data loaded from server.
+                var data = new google.visualization.DataTable();
+
+                data.addColumn('string', 'Date');
+                data.addColumn('number', 'cutting');
+                var jsonData = $.parseJSON(data1);
+                //alert(jsonData);
+
+                for (var i = 0; i < jsonData.length; i++) {
+                    data.addRow([jsonData[i].Date, parseInt(jsonData[i].cutting)]);
+                }
+                var options = {
+                    chart: {
+                        title: 'Cutting',
+                        subtitle: ''
+                    },
+
+                    height: 300,
+                    axes: {
+                        x: {
+                            0: {side: 'bottom'}
+                        }
+                    },
+                    colors: ['#16b72f', '#f9325c']
+
+                };
+                var chart = new google.charts.Line(document.getElementById('line_chart_cutting'));
                 chart.draw(data, options);
             }
         });

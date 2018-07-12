@@ -70,6 +70,7 @@ class User_Controller extends CI_Controller
             $data =array('WO_Icode' => $this->input->post('Wo_Icode',true),
                 'WO_Process_Icode' => $this->input->post('Process_Icode',true),
                 'Proforma_Invoice_Items_Icode' => $this->input->post('Item_Icode',true),
+                'Cutting_Qty'=>$Income,
                 'Cutting_Remaining_Qty  ' => $this->input->post('Qty',true),
                 'Remaining_Comments' => $this->input->post('Comments',true),
                 'Cutting_Status' => $this->input->post('Status',true),
@@ -872,6 +873,13 @@ class User_Controller extends CI_Controller
         $this->load->view('User/left');
         $this->load->view('User/WO_Barcode',$data,false);
         $this->load->view('User/footer');
+    }
+
+    /** Cutting Monthly Chart */
+    public function Cutting_chart()
+    {
+        $data_count= $this->user_model->Cutting_Chart();
+        print_r(json_encode($data_count, true));
     }
 
 
