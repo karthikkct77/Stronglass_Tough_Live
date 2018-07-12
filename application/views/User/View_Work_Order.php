@@ -414,7 +414,8 @@
                         Process_Icode: id,
                         Total_Qty: total_qty,
                         Furnace_Income: furnace_income,
-                        Dispatch_Income: dispatch_income
+                        Dispatch_Income: dispatch_income,
+                        Balance: Cutting_balance
                     },
                     type: "POST",
                     context: document.body,

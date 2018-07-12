@@ -127,6 +127,7 @@ class User_Controller extends CI_Controller
                 'WO_Process_Icode' => $this->input->post('Process_Icode',true),
                 'Proforma_Invoice_Items_Icode' => $this->input->post('Item_Icode',true),
                 'Cutting_Income' => $this->input->post('Furnace_Income',true),
+                'Furnace_qty'=>$Income,
                 'Furnace_Remaining_Qty  ' => $this->input->post('Qty',true),
                 'Remaining_Comments' => $this->input->post('Comments',true),
                 'Furnace_Status' => $this->input->post('Status',true),
@@ -175,10 +176,14 @@ class User_Controller extends CI_Controller
         }
         elseif ($role == 4) // Dispatch
         {
+            $balance =  $this->input->post('Balance',true);
+            $remain = $this->input->post('Qty',true);
+            $Income = $balance - $remain;
             $wo_icode = $this->input->post('Process_Icode',true);
             $data =array('WO_Icode' => $this->input->post('Wo_Icode',true),
                 'WO_Process_Icode' => $this->input->post('Process_Icode',true),
                 'Proforma_Invoice_Items_Icode' => $this->input->post('Item_Icode',true),
+                'Dispatch_Qty' =>$Income,
                 'Dispatch_Remaining_Qty  ' => $this->input->post('Qty',true),
                 'Furnace_Income' => $this->input->post('Dispatch_Income',true),
                 'Remaining_Comments' => $this->input->post('Comments',true),
@@ -879,6 +884,19 @@ class User_Controller extends CI_Controller
     public function Cutting_chart()
     {
         $data_count= $this->user_model->Cutting_Chart();
+        print_r(json_encode($data_count, true));
+    }
+
+    /** Furnace Monthly Chart */
+    public function Furnace_chart()
+    {
+        $data_count= $this->user_model->Furnace_Chart();
+        print_r(json_encode($data_count, true));
+    }
+    /** Dispatch Monthly Chart */
+    public function Dispatch_chart()
+    {
+        $data_count= $this->user_model->Dispatch_chart();
         print_r(json_encode($data_count, true));
     }
 

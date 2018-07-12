@@ -216,10 +216,27 @@ class User_Model extends CI_Model
     public function Cutting_Chart()
     {
         $user_id=$this->session->userdata['userid'];
-        $query=$this->db->query("SELECT DATE_FORMAT(Created_On, '%d') as Date,SUM(Cutting_Qty) as cutting FROM `cutting_history` WHERE Cutting_Status='3' and Created_By='$user_id' and MONTH(Created_On) = MONTH(CURRENT_DATE())
+        $query=$this->db->query("SELECT DATE_FORMAT(Created_On, '%d') as Date,SUM(Cutting_Qty) as cutting FROM `cutting_history` WHERE  Created_By='$user_id' and MONTH(Created_On) = MONTH(CURRENT_DATE())
           AND YEAR(Created_On) = YEAR(CURRENT_DATE())  GROUP BY Date(Created_On) ");
         return $query->result_array();
     }
+    //** Monthly Furnace */
+    public function Furnace_Chart()
+    {
+        $user_id=$this->session->userdata['userid'];
+        $query=$this->db->query("SELECT DATE_FORMAT(Created_On, '%d') as Date,SUM(Furnace_qty) as furnace FROM `furnace_history` WHERE  Created_By='$user_id' and MONTH(Created_On) = MONTH(CURRENT_DATE())
+          AND YEAR(Created_On) = YEAR(CURRENT_DATE())  GROUP BY Date(Created_On) ");
+        return $query->result_array();
+    }
+    //** Monthly Dispatch */
+    public function Dispatch_chart()
+    {
+        $user_id=$this->session->userdata['userid'];
+        $query=$this->db->query("SELECT DATE_FORMAT(Created_On, '%d') as Date,SUM(Dispatch_Qty) as dispatch FROM `dispatch_history` WHERE  Created_By='$user_id' and MONTH(Created_On) = MONTH(CURRENT_DATE())
+          AND YEAR(Created_On) = YEAR(CURRENT_DATE())  GROUP BY Date(Created_On)  ");
+        return $query->result_array();
+    }
+
 
 
 

@@ -22,12 +22,15 @@
                     <?php   }
                     elseif ($_SESSION['role'] == 3)
                     { ?>
-                        <p><b>FURNACE</b></p>
+                        <h3 class="tile-title">Furnace Status</h3>
+                        <div id="line_chart_furnace" style="width: 100%;"></div>
 
                     <?php  }
                     elseif ($_SESSION['role'] == 4)
                     { ?>
-                        <p><b>DISPATCH</b></p>
+                        <h3 class="tile-title">Dispatch Status</h3>
+                        <div id="line_chart_dispatch" style="width: 100%;"></div>
+
 
                     <?php  }
                     elseif ($_SESSION['role'] == 5)
@@ -143,6 +146,9 @@
     google.charts.setOnLoadCallback(pi_chart_Confirm);
     google.charts.setOnLoadCallback(generated_wo);
     google.charts.setOnLoadCallback(cutting_chart);
+    google.charts.setOnLoadCallback(furnace_chart);
+    google.charts.setOnLoadCallback(dispatch_chart);
+
 
 
 
@@ -302,6 +308,82 @@
             }
         });
 
+    }
+
+    function furnace_chart() {
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo site_url('User_Controller/Furnace_chart'); ?>',
+
+            success: function (data1) {
+                // Create our data table out of JSON data loaded from server.
+                var data = new google.visualization.DataTable();
+
+                data.addColumn('string', 'Date');
+                data.addColumn('number', 'furnace');
+                var jsonData = $.parseJSON(data1);
+                //alert(jsonData);
+
+                for (var i = 0; i < jsonData.length; i++) {
+                    data.addRow([jsonData[i].Date, parseInt(jsonData[i].furnace)]);
+                }
+                var options = {
+                    chart: {
+                        title: 'Cutting',
+                        subtitle: ''
+                    },
+
+                    height: 300,
+                    axes: {
+                        x: {
+                            0: {side: 'bottom'}
+                        }
+                    },
+                    colors: ['#16b72f', '#f9325c']
+
+                };
+                var chart = new google.charts.Line(document.getElementById('line_chart_furnace'));
+                chart.draw(data, options);
+            }
+        });
+    }
+
+    function dispatch_chart() {
+        $.ajax({
+            type: 'POST',
+            url: '<?php echo site_url('User_Controller/Dispatch_chart'); ?>',
+
+            success: function (data1) {
+                // Create our data table out of JSON data loaded from server.
+                var data = new google.visualization.DataTable();
+
+                data.addColumn('string', 'Date');
+                data.addColumn('number', 'dispatch');
+                var jsonData = $.parseJSON(data1);
+                //alert(jsonData);
+
+                for (var i = 0; i < jsonData.length; i++) {
+                    data.addRow([jsonData[i].Date, parseInt(jsonData[i].dispatch)]);
+                }
+                var options = {
+                    chart: {
+                        title: 'Cutting',
+                        subtitle: ''
+                    },
+
+                    height: 300,
+                    axes: {
+                        x: {
+                            0: {side: 'bottom'}
+                        }
+                    },
+                    colors: ['#16b72f', '#f9325c']
+
+                };
+                var chart = new google.charts.Line(document.getElementById('line_chart_dispatch'));
+                chart.draw(data, options);
+            }
+        });
     }
 </script>
 <script type="text/javascript">
