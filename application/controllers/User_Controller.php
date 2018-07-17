@@ -611,7 +611,16 @@ class User_Controller extends CI_Controller
         elseif ($role == 7) // Pi Confirm
         {
 
-            $id=$this->input->post('PI_Icode');
+            $email =$this->input->post('email');
+            $picode=$this->input->post('PI_Icode');
+
+            if($email == "")
+            {
+                $this->session->set_flashdata('feedback1', 'Sorry, No Email Address in this Customer...');
+                redirect('User_Controller/single_Invoice/'.$picode);
+            }
+            else{
+              $id=$this->input->post('PI_Icode');
             $update = array('Email_Send_Status' => '1',
                 'Email_Send_Date'=>date('Y-m-d H:i:s'));
             $this->db->where('Proforma_Icode',$id);
@@ -643,6 +652,7 @@ class User_Controller extends CI_Controller
         $this->email->send();
             $this->session->set_flashdata('feedback', 'Email Send Successfully ..');
             redirect('User_Controller/Check_PI');
+            }
 
         }
 

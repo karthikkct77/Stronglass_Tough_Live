@@ -27,7 +27,7 @@
                                 </div>
                                 <div id="consign">
                                     <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                    <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; ?><?php echo $invoice[0]['Customer_Address_2']; ?></h5>
+                                    <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; echo '&nbsp'; ?><?php echo $invoice[0]['Customer_Address_2']; ?></h5>
                                     <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
                                     <h5 id="email">Email: <?php echo $invoice[0]['Customer_Email_Id_1']; ?></h5>
                                     <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
@@ -53,7 +53,7 @@
                                     {
                                         ?>
                                         <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                        <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; ?>&nbsn;<?php echo $invoice[0]['Customer_Address_2']; ?></h5>
+                                        <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; echo '&nbsp'; ?><?php echo $invoice[0]['Customer_Address_2']; ?></h5>
                                         <h5 id="phone">City: <?php echo $invoice[0]['Customer_City']; ?></h5>
                                         <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
                                         <h5 id="email">Email: <?php echo $invoice[0]['Customer_Email_Id_1']; ?></h5>
@@ -64,7 +64,7 @@
                                     {
                                         ?>
                                         <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                        <h5 id="address"><?php echo $invoice[0]['Customer_Add_Address_1']; ?>&nbsn;<?php echo $invoice[0]['Customer_Add_Address_2']; ?></h5>
+                                        <h5 id="address"><?php echo $invoice[0]['Customer_Add_Address_1']; echo '&nbsp'; ?><?php echo $invoice[0]['Customer_Add_Address_2']; ?></h5>
                                         <h5 id="phone">City: <?php echo $invoice[0]['Customer_Add_City']; ?></h5>
                                         <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Add_Phone']; ?></h5>
                                         <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_Add_Email_Id_1']; ?></h5>

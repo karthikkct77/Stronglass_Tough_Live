@@ -19,6 +19,20 @@
                     });
             </script>
         <?php endif; ?>
+
+        <?php if($this->session->flashdata('feedback1')): ?>
+            <script>
+                var ssd = "<?php echo $this->session->flashdata('feedback1'); ?>";
+                swal({
+                        title: "Error!",
+                        text: ssd,
+                        type: "warning"
+                    },
+                    function(){
+                        location.reload();
+                    });
+            </script>
+        <?php endif; ?>
         <div class="col-md-12" >
 
             <div class="tile">
@@ -34,10 +48,11 @@
                             <h5>Consignee</h5>
                             <div id="consign">
                                 <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                <h5 id="address"><?php echo $invoice[0]['Customer_Company_Name']; ?>&nbsn;<?php echo $invoice[0]['Customer_Address_1']; ?>&nbsn;<?php echo $invoice[0]['Customer_Address_2']; ?></h5>
+                                <h5 id="address"><?php echo $invoice[0]['Customer_Company_Name']; echo '&nbsp'; ?><?php echo $invoice[0]['Customer_Address_1']; echo '&nbsp';?><?php echo $invoice[0]['Customer_Address_2']; ?></h5>
                                 <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
                                 <h5 id="email">Email: <?php echo $invoice[0]['Customer_Email_Id_1']; ?></h5>
                                 <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
+                                <input type="hidden" name="email" value="<?php echo $invoice[0]['Customer_Email_Id_1']; ?>">
                             </div>
 
                         </div>
@@ -56,7 +71,7 @@
                                 {
                                     ?>
                                     <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                    <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; ?>&nbsn;<?php echo $invoice[0]['Customer_Address_2']; ?></h5>
+                                    <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; echo '&nbsp'; ?><?php echo $invoice[0]['Customer_Address_2']; echo '&nbsp'; ?></h5>
                                     <h5 id="phone">City: <?php echo $invoice[0]['Customer_City']; ?></h5>
                                     <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
                                     <h5 id="email">Email: <?php echo $invoice[0]['Customer_Email_Id_1']; ?></h5>
