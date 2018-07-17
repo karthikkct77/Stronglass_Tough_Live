@@ -107,17 +107,17 @@
                     <h3 class="tile-title">Review Status</h3>
                     <div class="widget-small info coloured-icon review_status"><i class="icon fa fa-play fa-3x"></i>
                         <div class="info">
-                            <h4>Yet to Review <span style="color: #00CC00;margin-left: 10px;font-size: 30px;"><?php echo $today_pi_check[0]['Yet_to_review']; ?></span></h4>
+                            <h4>Yet to Review <span style="color: #00CC00;margin-left: 10px;font-size: 30px;"><a href="<?php echo site_url('User_Controller/Check_PI'); ?>"><?php echo $today_pi_check[0]['Yet_to_review']; ?></a></span></h4>
                         </div>
                     </div>
                     <div class="widget-small warning coloured-icon review_status"><i class="icon fa fa-files-o fa-3x"></i>
                         <div class="info">
-                            <h4>In Review <span style="color: #00CC00;margin-left: 10px;font-size: 30px;"><?php echo $today_pi_check[0]['In_Review']; ?></span></h4>
+                            <h4>In Review <span style="color: #00CC00;margin-left: 10px;font-size: 30px;"><a href="<?php echo site_url('User_Controller/Check_PI'); ?>"><?php echo $today_pi_check[0]['In_Review']; ?></a></span></h4>
                         </div>
                     </div>
                     <div class="widget-small primary coloured-icon review_status"><i class="icon fa fa-share fa-3x"></i>
                         <div class="info">
-                            <h4>Sent to Customer <span style="color: #00CC00;margin-left: 10px;font-size: 30px;"><?php echo $today_pi_check[0]['SendEmail']; ?></span></h4>
+                            <h4>Sent to Customer <span style="color: #00CC00;margin-left: 10px;font-size: 30px;"><a href="<?php echo site_url('User_Controller/Check_PI'); ?>"><?php echo $today_pi_check[0]['SendEmail']; ?></a></span></h4>
                         </div>
                     </div>
 
