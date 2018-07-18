@@ -77,8 +77,8 @@
                             </div>
                             <div class="col-md-3">
                                 <input class="form-control" type="hidden" name="PI_Icode"  id="PI_Icode" value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
-                                <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly></h4>
-                                <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly></h4>
+                                <h4>Work Order No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $wo[0]['WO_Number']; ?>" readonly></h4>
+                                <h4>Work Order Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo $wo[0]['WO_Date']; ?>" readonly></h4>
                             </div>
                         </div>
                         <div class="row">
@@ -90,6 +90,7 @@
                                 <th>Special</th>
                                 <th>No.of Pieces</th>
                                 <th>No.of Holes</th>
+                                <th>Cutouts</th>
                                 <th>Actucal Size(W)(MM)</th>
                                 <th>Actucal Size(H)(MM)</th>
                                 <th>Chargable Size(W)(MM)</th>
@@ -109,6 +110,7 @@
                                         <td><?php echo $key['Proforma_Special']; ?></td>
                                         <td><?php echo $key['Proforma_Qty']; ?></td>
                                         <td><?php echo $key['Proforma_Holes']; ?></td>
+                                        <td><?php echo $key['Proforma_Cutout']; ?></td>
                                         <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                         <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
                                         <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
@@ -129,6 +131,7 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
+                                    <td></td>
                                     <td><input type="text" class="form-control pull-right" id="total_area" value="<?php echo round($invoice_total[0]['area'], 2); ?>"   readonly/></td>
                                     <td></td>
                                     <td> <input type="text" class="form-control pull-right" id="grand_total" value="<?php echo round($invoice_total[0]['rate'],2); ?>"   readonly/>(INR)</td>
@@ -137,17 +140,22 @@
                             </table>
 
                         </div>
+                        <div id="printableArea" >
                         <?php
                         foreach ($invoice_item as $key)
                         {
                             $total = $key['Proforma_Qty'];
                             for ($i=1;$i<=$total;$i++)
                             { ?>
-                                <div id="printableArea" >
+
                                     <div style="width: 405.952756px; height: 204px; background: red">
-                                        <h4 style="text-align: center;">STRONGLASS TOUGH  <span> D </span></h4>
+                                        <h4 class="st">STRONGLASS TOUGH  <span class="special"> <?php echo $key['Proforma_Special']; ?> </span></h4>
+                                        <h4>WO.NO : <?php echo $wo[0]['WO_Number']; ?> <span class="customer"><?php echo $invoice[0]['Customer_Company_Name']; ?></span></h4>
+                                        <h4>Thickness: <?php echo $key['Material_Name']; ?> <span style="margin-left: 70px;"> QTY: 1</span></h4>
+                                        <h1>SIZE :<?php echo $key['Proforma_Actual_Size_Width']; ?> * <?php echo $key['Proforma_Actual_Size_Height']; ?></h1>
+                                        <h4>Holes: <?php echo $key['Proforma_Holes']; ?> <span  style="margin-left: 25px;">Cutouts: <?php echo $key['Proforma_Cutout']; ?></span><span  style="margin-left: 25px;">Other: C & W</span></h4>
                                     </div>
-                                </div>
+
                                 <hr>
                           <?php
                             }
@@ -155,6 +163,7 @@
                         <?php
                         }
                         ?>
+                </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <h3>Terms & Conditions</h3>
@@ -325,7 +334,25 @@
         float: right;
     }
 
-    .
+    .special{
+        margin-left: 30px;
+        font-weight: bold;
+        font-size: 50px;
+        position: absolute;
+        top: -10px;
+    }
+    .st{
+        text-align: center;
+        float: left;
+        width: 100%;
+        font-weight: normal;
+        position: relative;
+    }
+    .customer {
+        font-weight: normal;
+        font-size: 15px;
+        margin-left: 10px;
+    }
 </style>
 
 <script type="text/javascript">
