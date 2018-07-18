@@ -89,6 +89,7 @@
                                 <th>Special</th>
                                 <th>No.of Pieces</th>
                                 <th>No.of Holes</th>
+                                <th>Cutouts</th>
                                 <th>Actucal Size(W)(MM)</th>
                                 <th>Actucal Size(H)(MM)</th>
                                 <th>Chargable Size(W)(MM)</th>
@@ -119,6 +120,8 @@
                                         <td><?php echo $key['Proforma_Special']; ?></td>
                                         <td><input class="form-control" type="number" id="pics<?php echo $i; ?>"  name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
                                         <td><input class="form-control" type="number" name="holes[]"  value="<?php echo $key['Proforma_Holes']; ?>" ></td>
+                                        <td><input class="form-control" type="number" name="cutout[]"  value="<?php echo $key['Proforma_Cutout']; ?>" ></td>
+
                                         <td><input class="form-control" type="number" id="Actual_width<?php echo $i; ?>" name="Actual_width[]"  value="<?php echo $key['Proforma_Actual_Size_Width']; ?>"  onkeyup="change_Actual_Width('<?php echo $i; ?>')" ></td>
                                         <td><input class="form-control" type="number" id="Actual_height<?php echo $i; ?>" name="Actual_height[]"  value="<?php echo $key['Proforma_Actual_Size_Height']; ?>"  onkeyup="change_Actual_Height('<?php echo $i; ?>')" ></td>
                                         <td><input class="form-control" type="number" id="Charge_width<?php echo $i; ?>" name="Charge_width[]"  value="<?php echo $key['Proforma_Chargeable_Size_Width']; ?>"  onkeyup="change_Charge_Width('<?php echo $i; ?>')" ></td>

@@ -143,6 +143,7 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
                                 <td><input type="text" class="form-control pull-right" id="total_area" value="0"   readonly/></td>
                                 <td></td>
                                 <td> <input type="text" class="form-control pull-right" id="grand_total" value="0"   readonly/>(INR)</td>

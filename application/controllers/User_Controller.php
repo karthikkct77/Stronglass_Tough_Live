@@ -721,6 +721,7 @@ class User_Controller extends CI_Controller
             $material_id = $this->input->post('material');
             $qty = $this->input->post('pics');
             $holes = $this->input->post('holes');
+            $cutout = $this->input->post('cutout');
             $cost = $this->input->post('total');
             $actual_W = $this->input->post('Actual_width');
             $actual_H = $this->input->post('Actual_height');
@@ -734,6 +735,7 @@ class User_Controller extends CI_Controller
                 $full_data =array( 'Proforma_Icode' => $picode,
                     'Proforma_Holes' => $holes[$i],
                     'Proforma_Qty' => $qty[$i],
+                    'Proforma_Cutout' => $cutout[$i],
                     'Proforma_Material_Rate' => $Rate[$i],
                     'Proforma_Material_Cost' => $cost[$i],
                     'Proforma_Actual_Size_Width' => $actual_W[$i],

@@ -107,6 +107,7 @@
                             <th>Special</th>
                             <th>No.of Pieces</th>
                             <th>No.of Holes</th>
+                            <th>Cutouts</th>
                             <th>Actucal Size(W)(MM)</th>
                             <th>Actucal Size(H)(MM)</th>
                             <th>Chargable Size(W)(MM)</th>
@@ -126,6 +127,7 @@
                                     <td><?php echo $key['Proforma_Special']; ?></td>
                                     <td><?php echo $key['Proforma_Qty']; ?></td>
                                     <td><?php echo $key['Proforma_Holes']; ?></td>
+                                    <td><?php echo $key['Proforma_Cutout']; ?></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
                                     <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
@@ -141,6 +143,7 @@
                                 <td></td>
                                 <td></td>
                                 <td><input type="text" class="form-control pull-right" id="total_pic" value="<?php echo $invoice_total[0]['qty']; ?>"   readonly/></td>
+                                <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
