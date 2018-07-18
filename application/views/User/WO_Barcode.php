@@ -137,6 +137,24 @@
                             </table>
 
                         </div>
+                        <?php
+                        foreach ($invoice_item as $key)
+                        {
+                            $total = $key['Proforma_Qty'];
+                            for ($i=1;$i<=$total;$i++)
+                            { ?>
+                                <div id="printableArea" >
+                                    <div style="width: 405.952756px; height: 204px; background: red">
+                                        <h4 style="text-align: center;">STRONGLASS TOUGH  <span> D </span></h4>
+                                    </div>
+                                </div>
+                                <hr>
+                          <?php
+                            }
+                        ?>
+                        <?php
+                        }
+                        ?>
                         <div class="row">
                             <div class="col-md-6">
                                 <h3>Terms & Conditions</h3>
@@ -261,7 +279,7 @@
                                 <?php if($_SESSION['role'] == 6) { ?>
 
                                     <button class="btn btn-danger pi_button" type="submit"><i class="fa fa-fw fa-lg fa-print"></i> Barcode Print</button>
-                                    <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="Print"/>
+                                    <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="printDiv('printableArea')" value="Print"/>
                                 <?php } elseif($_SESSION['role'] == 7){
                                     ?>
                                 <?php } ?>
@@ -306,7 +324,19 @@
         margin-right: 15px;
         float: right;
     }
+
+    .
 </style>
+
+<script type="text/javascript">
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+</script>
 
 
 <script>
