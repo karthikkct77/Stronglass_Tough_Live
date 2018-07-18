@@ -306,6 +306,14 @@ class User_Controller extends CI_Controller
             else{
                 $types_check[] ='1';
             }
+            $cutout=$objWorksheet->getCellByColumnAndRow(6,$i)->getValue();
+//            if(is_numeric($cutout))
+//            {
+//                $cutout_check[]="";
+//            }
+//            else{
+//                $cutout_check[] ='1';
+//            }
 
             $area = $charge_height/1000 * $charge_weigth/1000;
             $data_user[]=array(
@@ -315,6 +323,7 @@ class User_Controller extends CI_Controller
                 'pics'=>$pics,
                 'holes'=>$holes,
                 'type'=>$types,
+                'cutout'=>$cutout,
                 'ch_height'=>$charge_height,
                 'ch_weight'=>$charge_weigth,
                 'area'=>$area );
@@ -345,9 +354,10 @@ class User_Controller extends CI_Controller
         $check_P = count(array_keys($pics_check, "1"));
         $check_Holes = count(array_keys($holes_check, "1"));
         $check_Type = count(array_keys($types_check, "1"));
+//        $check_cutout = count(array_keys($cutout_check, "1"));
 
 
-        if($check_H =='0' and $check_W =='0' and $check_P =='0' and $check_Holes =='0' and $check_Type =='0'  )
+        if($check_H =='0' and $check_W =='0' and $check_P =='0' and $check_Holes =='0' and $check_Type =='0' )
         {
             $this->load->view('User/header');
             $this->load->view('User/top');
@@ -396,6 +406,7 @@ class User_Controller extends CI_Controller
             $qty = $this->input->post('pics');
             $special = $this->input->post('type');
             $holes = $this->input->post('holes');
+            $cutout = $this->input->post('cutout');
             $actual_W = $this->input->post('width');
             $actual_H = $this->input->post('height');
             $Charge_W = $this->input->post('ch_weight');
@@ -413,6 +424,7 @@ class User_Controller extends CI_Controller
                     'Proforma_Special' => $special[$i],
                     'Proforma_Holes' => $holes[$i],
                     'Proforma_Qty' => $qty[$i],
+                    'Proforma_Cutout'=>$cutout[$i],
                     'Proforma_Actual_Size_Width' => $actual_W[$i],
                     'Proforma_Actual_Size_Height' => $actual_H[$i],
                     'Proforma_Chargeable_Size_Width' =>$Charge_W[$i],

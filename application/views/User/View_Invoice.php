@@ -75,6 +75,7 @@
                             <th>Special</th>
                             <th>No.of Pieces</th>
                             <th>No.of Holes</th>
+                            <th>Cutouts</th>
                             <th>Actucal Size(H)(MM)</th>
                             <th>Actucal Size(W)(MM)</th>
                             <th>Chargable Size(H)(MM)</th>
@@ -106,6 +107,7 @@
                                     <td><input class="form-control" type="text" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly></td>
                                     <td><input class="form-control" type="text" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['pics']; ?>" readonly></td>
                                     <td><input class="form-control" type="text" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['holes']; ?>" readonly></td>
+                                    <td><input class="form-control" type="text" name="cutout[]" id="cutout<?php echo $i; ?>" value="<?php echo $key['cutout']; ?>" readonly></td>
                                     <td><input class="form-control" type="text" name="height[]" id="height<?php echo $i; ?>" value="<?php echo $key['height']; ?>" readonly></td>
                                     <td><input class="form-control" type="text" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['width']; ?>" readonly></td>
                                     <td><input class="form-control" type="number" name="ch_height[]" id="ch_height<?php echo $i; ?>" value="<?php echo $key['ch_height']; ?>" onkeyup="change_Charge_Height('<?php echo $i; ?>')" ></td>
