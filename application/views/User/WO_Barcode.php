@@ -151,7 +151,7 @@
                                     <div style="width: 405.952756px; height: 204px; background: red">
                                         <h4 class="st">STRONGLASS TOUGH  <span class="special"> <?php echo $key['Proforma_Special']; ?> </span></h4>
                                         <h4>WO.NO : <?php echo $wo[0]['WO_Number']; ?> <span class="customer"><?php echo $invoice[0]['Customer_Company_Name']; ?></span></h4>
-                                        <h4>Thickness: <?php echo $key['Material_Name']; ?> <span style="margin-left: 70px;"> QTY: 1</span></h4>
+                                        <h4>Thickness: <?php echo $key['Material_Name']; ?> <span style="margin-left: 70px;"> QTY: <?php echo $key['Proforma_Qty']; ?></span></h4>
                                         <h1>SIZE :<?php echo $key['Proforma_Actual_Size_Width']; ?> * <?php echo $key['Proforma_Actual_Size_Height']; ?></h1>
                                         <h4>Holes: <?php echo $key['Proforma_Holes']; ?> <span  style="margin-left: 25px;">Cutouts: <?php echo $key['Proforma_Cutout']; ?></span><span  style="margin-left: 25px;">Other: C & W</span></h4>
                                     </div>
