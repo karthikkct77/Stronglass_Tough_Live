@@ -181,6 +181,13 @@
                                     Any discrepancies observed in the supply like quantity,specification,
                                     quality, etc.
                                 </p>
+                                <p style="font-size: 16px;text-align: justify;">
+                                    Supply shall be against advance payment or Letter of credit or any other agreed
+                                    terms. Interest @2% per month will be charged for the payment delayed beyond
+                                    the terms agreed from the date of invoice. All payments made by third
+                                    party/consumer/contractor interested in the transaction shall be adjusted against
+                                    supplies made to buyer/consignee
+                                </p>
 
                             </div>
                             <div class="col-md-6">

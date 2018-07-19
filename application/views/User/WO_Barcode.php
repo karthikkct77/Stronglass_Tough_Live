@@ -141,28 +141,28 @@
 
                         </div>
                         <div id="printableArea" >
-                        <?php
-                        foreach ($invoice_item as $key)
-                        {
-                            $total = $key['Proforma_Qty'];
-                            for ($i=1;$i<=$total;$i++)
-                            { ?>
+                            <?php
+                            foreach ($invoice_item as $key)
+                            {
+                                $total = $key['Proforma_Qty'];
+                                for ($i=1;$i<=$total;$i++)
+                                { ?>
 
                                     <div style="width: 405.952756px; height: 204px; background: red">
-                                        <h4 class="st">STRONGLASS TOUGH  <span class="special"><?php echo $key['Proforma_Special']; ?> </span></h4>
+                                        <h4 class="st">STRONGLASS TOUGH  <span class="special"><h2 style="position: absolute;top: 10px;margin-left: 15px;"> <?php echo $key['Proforma_Special']; ?> </h2></span></h4>
                                         <h4>WO.NO : <?php echo $wo[0]['WO_Number']; ?> <span class="customer"><?php echo $invoice[0]['Customer_Company_Name']; ?></span></h4>
                                         <h4>Thickness: <?php echo $key['Material_Name']; ?> <span style="margin-left: 70px;"> QTY: <?php echo $key['Proforma_Qty']; ?></span></h4>
                                         <h1>SIZE :<?php echo $key['Proforma_Actual_Size_Width']; ?> * <?php echo $key['Proforma_Actual_Size_Height']; ?></h1>
                                         <h4>Holes: <?php echo $key['Proforma_Holes']; ?> <span  style="margin-left: 25px;">Cutouts: <?php echo $key['Proforma_Cutout']; ?></span><span  style="margin-left: 25px;">Other: C & W</span></h4>
                                     </div>
 
-                                <hr>
-                          <?php
+                                    <hr>
+                                    <?php
+                                }
+                                ?>
+                                <?php
                             }
-                        ?>
-                        <?php
-                        }
-                        ?>
+                            ?>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
@@ -173,6 +173,13 @@
                                     the customer and not by the company.
                                     Any discrepancies observed in the supply like quantity,specification,
                                     quality, etc.
+                                </p>
+                                <p style="font-size: 16px;text-align: justify;">
+                                    Supply shall be against advance payment or Letter of credit or any other agreed
+                                    terms. Interest @2% per month will be charged for the payment delayed beyond
+                                    the terms agreed from the date of invoice. All payments made by third
+                                    party/consumer/contractor interested in the transaction shall be adjusted against
+                                    supplies made to buyer/consignee
                                 </p>
 
                             </div>
