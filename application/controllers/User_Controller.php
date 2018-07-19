@@ -978,6 +978,21 @@ class User_Controller extends CI_Controller
         $this->load->view('User/footer');
 
     }
+    //** Production Work Order Status */
+    public function Production_WO_Status($id)
+    {
+        $wo_icode = $this->uri->segment(3);
+        $data['work_order']= $this->admin_model->get_Single_Work_Order($wo_icode);
+        $data['cutting']= $this->admin_model->get_cutting_status($wo_icode);
+        $data['complete']= $this->admin_model->get_completed_status($wo_icode);
+        $data['furnace']= $this->admin_model->get_furnace_status($wo_icode);
+        $data['dispatch']= $this->admin_model->get_dispatch_status($wo_icode);
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/Production_WO_Status',$data, FALSE);
+        $this->load->view('User/footer');
+    }
 
 
 

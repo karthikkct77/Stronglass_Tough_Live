@@ -89,7 +89,7 @@
                                     <?php }
                                     ?>
 
-                                    <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/View_WO_Status/') . $r['WO_Icode']; ?>">View Status</a></td>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/Production_WO_Status/') . $r['WO_Icode']; ?>">View Status</a></td>
                                 </tr>
                                 <?php
                                 $i++;
@@ -148,7 +148,7 @@
                                         <td style="color: green;"><h3><?php echo  $totel_completed; ?>%</h3></td>
                                     <?php }
                                     ?>
-                                    <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/View_WO_Status/') . $r['WO_Icode']; ?>">View Status</a></td>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/Production_WO_Status/') . $r['WO_Icode']; ?>">View Status</a></td>
                                 </tr>
                                 <?php
                                 $i++;
@@ -207,7 +207,7 @@
                                         <td style="color: green;"><h3><?php echo  $totel_completed; ?>%</h3></td>
                                     <?php }
                                     ?>
-                                    <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/View_WO_Status/') . $r['WO_Icode']; ?>">View Status</a></td>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/Production_WO_Status/') . $r['WO_Icode']; ?>">View Status</a></td>
                                 </tr>
                                 <?php
                                 $i++;
@@ -265,7 +265,7 @@
                                         <td style="color: green;"><h3><?php echo  $totel_completed; ?>%</h3></td>
                                     <?php }
                                     ?>
-                                    <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/View_WO_Status/') . $r['WO_Icode']; ?>">View Status</a></td>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/Production_WO_Status/') . $r['WO_Icode']; ?>">View Status</a></td>
                                 </tr>
                                 <?php
                                 $i++;
@@ -324,7 +324,7 @@
                                         <td style="color: green;"><h3><?php echo  $totel_completed; ?>%</h3></td>
                                     <?php }
                                     ?>
-                                    <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/View_WO_Status/') . $r['WO_Icode']; ?>">View Status</a></td>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/Production_WO_Status/') . $r['WO_Icode']; ?>">View Status</a></td>
                                 </tr>
                                 <?php
                                 $i++;
