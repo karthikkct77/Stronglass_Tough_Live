@@ -63,6 +63,7 @@ class User_Controller extends CI_Controller
         $data['today_pi_count']= $this->user_model->get_today_pi_count();
         $data['today_pi_check']= $this->user_model->get_today_pi_check();
         $data['wo_generate']= $this->user_model->get_today_WO_Generate();
+        $data['status']= $this->admin_model->get_all_WO_Status();
         $this->load->view('User/header');
         $this->load->view('User/top');
         $this->load->view('User/left');
@@ -960,6 +961,22 @@ class User_Controller extends CI_Controller
     {
         $data_count= $this->user_model->Dispatch_chart();
         print_r(json_encode($data_count, true));
+    }
+
+    //** Production Dashboard */
+    public function Production_Dashboard()
+    {
+        $data['hours']= $this->admin_model->get_all_work_order_within8();
+        $data['hours16']= $this->admin_model->get_all_work_order_within16();
+        $data['hours24']= $this->admin_model->get_all_work_order_within24();
+        $data['hours48']= $this->admin_model->get_all_work_order_within48();
+        $data['delays']= $this->admin_model->get_all_work_order_delay();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/production_dashboard',$data,false);
+        $this->load->view('User/footer');
+
     }
 
 

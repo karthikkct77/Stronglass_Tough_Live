@@ -74,6 +74,12 @@
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Check_PI'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">CHECK PI</span></a></li>
 
         <?php  }
+        elseif ($_SESSION['role'] == 8)
+        { ?>
+            <li><a class="app-menu__item " href="<?php echo site_url('User_Controller/Production_Dashboard'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+<!--            <li><a class="app-menu__item" href="--><?php //echo site_url('User_Controller/Check_PI'); ?><!--"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">CHECK PI</span></a></li>-->
+
+        <?php  }
         ?>
     </ul>
 </aside>

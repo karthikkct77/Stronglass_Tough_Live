@@ -52,6 +52,39 @@
 
 
                     <?php  }
+                    elseif ($_SESSION['role'] == 8)
+                    { ?>
+                        <div class="tile">
+                            <h3 class="tile-title">Current Work Order Status</h3>
+                            <table id="tblCustomers5"  data-page-length='25' class="table table-striped" width="100%">
+                                <thead>
+                                <tr>
+                                    <th>Delay</th>
+                                    <th>Within 8 hours</th>
+                                    <th>Within 16 Hours</th>
+                                    <th>Within 24 Hours</th>
+                                    <th>Within 48 Hours</th>
+                                    <!--                        <th></th>-->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <?php  foreach($status as $r)
+                                { ?>
+                                    <tr>
+                                        <td><h2><a href="<?php echo site_url('Admin_Controller/Current_Status'); ?>"><?php echo $r['delay']; ?></a></h2></td>
+                                        <td><h2><a href="<?php echo site_url('Admin_Controller/Current_Status'); ?>"><?php echo $r['within8']; ?></a></h2></td>
+                                        <td><h2><a href="<?php echo site_url('Admin_Controller/Current_Status'); ?>"><?php echo $r['within16']; ?></a></h2></td>
+                                        <td><h2><a href="<?php echo site_url('Admin_Controller/Current_Status'); ?>"><?php echo $r['within24']; ?></a></h2></td>
+                                        <td><h2><a href="<?php echo site_url('Admin_Controller/Current_Status'); ?>"><?php echo $r['within48']; ?></a></h2></td>
+                                        <!--                        <td> <a class="btn btn-info" href="--><?php //echo site_url('Admin_Controller/Current_Status'); ?><!--">View Status</a></td>-->
+                                    </tr>
+                                <?php }?>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    <?php  }
                     ?>
 
             </div>
