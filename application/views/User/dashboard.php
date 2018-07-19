@@ -71,11 +71,11 @@
                                 <?php  foreach($status as $r)
                                 { ?>
                                     <tr>
-                                        <td><h2><a href="<?php echo site_url('Admin_Controller/Current_Status'); ?>"><?php echo $r['delay']; ?></a></h2></td>
-                                        <td><h2><a href="<?php echo site_url('Admin_Controller/Current_Status'); ?>"><?php echo $r['within8']; ?></a></h2></td>
-                                        <td><h2><a href="<?php echo site_url('Admin_Controller/Current_Status'); ?>"><?php echo $r['within16']; ?></a></h2></td>
-                                        <td><h2><a href="<?php echo site_url('Admin_Controller/Current_Status'); ?>"><?php echo $r['within24']; ?></a></h2></td>
-                                        <td><h2><a href="<?php echo site_url('Admin_Controller/Current_Status'); ?>"><?php echo $r['within48']; ?></a></h2></td>
+                                        <td><h2><a href="<?php echo site_url('User_Controller/Production_Dashboard'); ?>"><?php echo $r['delay']; ?></a></h2></td>
+                                        <td><h2><a href="<?php echo site_url('User_Controller/Production_Dashboard'); ?>"><?php echo $r['within8']; ?></a></h2></td>
+                                        <td><h2><a href="<?php echo site_url('User_Controller/Production_Dashboard'); ?>"><?php echo $r['within16']; ?></a></h2></td>
+                                        <td><h2><a href="<?php echo site_url('User_Controller/Production_Dashboard'); ?>"><?php echo $r['within24']; ?></a></h2></td>
+                                        <td><h2><a href="<?php echo site_url('User_Controller/Production_Dashboard'); ?>"><?php echo $r['within48']; ?></a></h2></td>
                                         <!--                        <td> <a class="btn btn-info" href="--><?php //echo site_url('Admin_Controller/Current_Status'); ?><!--">View Status</a></td>-->
                                     </tr>
                                 <?php }?>
