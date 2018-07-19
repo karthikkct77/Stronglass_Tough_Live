@@ -316,9 +316,7 @@
 
                     <div class="row" style="margin-top: 150px;">
                             <div class="col-md-3">
-
                                 <h4 class="st_check">Customer's Acceptance <br>Sign & Seal</h4>
-
                             </div>
                             <div class="col-md-3">
                                 <h4 class="st_check">Prepared By</h4>
@@ -329,9 +327,7 @@
                             <div class="col-md-3">
                                 <h4 class="st_check">(Authorised Signatory)</h4>
                             </div>
-
                     </div>
-
                 </form>
             </div>
         </div>
