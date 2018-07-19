@@ -14,9 +14,46 @@ class User_Controller extends CI_Controller
         /***** LOADING HELPER TO AVOID PHP ERROR ****/
         $this->load->model('User_Model', 'user_model'); /* LOADING MODEL * User_Model as user_model */
         $this->load->model('Admin_Model','admin_model');
+        $this->load->model('Login_model','login_model');
         $this->load->library('session');
         $this->load->library('excel');
         $this->session->set_flashdata('message');
+    }
+
+    //** CHANGE Password**/
+    public function change_password()
+    {
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/change_password');
+        $this->load->view('User/footer');
+    }
+
+
+    /** Save Password */
+    public function save_password()
+    {
+        $current_pwd = $this->input->post('currentPassword');
+        $id = $this->session->userdata['userid'];
+        $data =  array('Password'=> $this->input->post('newPassword') );
+        $insert = $this->login_model->insert_user_password($data);
+        foreach ($insert as $key => $val)
+        {
+            $check = $val['Password'];
+        }
+        if($current_pwd == $check)
+        {
+            $this->db->where('User_Icode',$id);
+            $this->db->update('st_user_details', $data);
+            $this->session->set_flashdata('message', 'Update Password Successfully..');
+            redirect('User_Controller/dashboard');
+        }
+        else
+        {
+            $this->session->set_flashdata('message', 'Current Password is not correct');
+            redirect('User/change_password');
+        }
     }
     /** User Dashboard */
     public function dashboard()
