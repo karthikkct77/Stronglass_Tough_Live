@@ -48,4 +48,11 @@ class Login_model extends CI_Model
         }
 
     }
+
+    /*** update user Password **/
+    public function insert_user_password($data)
+    {
+        $query =$this->db->query("SELECT * from st_user_details WHERE User_Icode='" . $_SESSION["userid"] . "'");
+        return $query->result_array();
+    }
 }
