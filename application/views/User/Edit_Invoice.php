@@ -311,6 +311,7 @@
 
                                 </div>
                             </div>
+                            <div>Amount in Words: <span id="word"></span></div>
                             <script>
                                 $("#insurance").on('change keyup paste', function() {
                                     var sub_tot =document.getElementById('sub_tot').value;
@@ -405,6 +406,10 @@
 
 
     <script>
+        $( document ).ready(function() {
+            number_to_words();
+        });
+
         $("#company_name2").change(function () {
             $.ajax({
                 url:"<?php echo site_url('User_Controller/get_Customer_Address_Details'); ?>",
