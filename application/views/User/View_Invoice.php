@@ -166,18 +166,30 @@
                         <div class="col-md-6">
                             <h3>Terms & Conditions</h3>
                             <p style="font-size: 16px;text-align: justify;">
-                                We Shall not be responsible for any type of Breakage/Loss in Transit.
-                                At the time of transit Breakage/Loss insurance claim will be done by
-                                the customer and not by the company.
-                                Any discrepancies observed in the supply like quantity,specification,
-                                quality, etc.
-                            </p>
-                            <p style="font-size: 16px;text-align: justify;">
                                 Supply shall be against advance payment or Letter of credit or any other agreed
                                 terms. Interest @2% per month will be charged for the payment delayed beyond
                                 the terms agreed from the date of invoice. All payments made by third
                                 party/consumer/contractor interested in the transaction shall be adjusted against
                                 supplies made to buyer/consignee
+                            </p>
+                            <h3>Dear Customer</h3>
+                            <p style="font-size: 16px;text-align: justify;">
+                            <ul style="list-style: none;padding: 0;font-size: 16px;text-align: justify;">
+                                <li style="margin-bottom: 15px;">
+                                    1.Please make sure to DOUBLE - CHECK the Pro-Forma Invoice in terms Billing & Delivery Address, Contact Name & Number, PAN NO, GST NO, complete Glass
+                                    Specifications, Size, Quantity, Rates & Taxes.
+                                </li>
+                                <li style="margin-bottom: 15px;">
+                                    2.If there is any item not as per your requirement, please get the same modified to be reflected in the Pro-Forma Invoice before confirmation. PI terms mentioned are
+                                    final and shall supersede PO terms, no dispute will be entertained after order released for production pertaining to terms agreed in Pro-Forma invoice.
+                                </li>
+                                <li>
+                                    3.In the event the order is modified or cancelled once issued to production, all material expenses, processing costs and cancellation penalties up to the date of
+                                    modification or cancellation shall be invoiced. The amount to be invoiced is solely at the discretion of the Seller and shall be final and non-negotiable
+                                </li>
+                            </ul>
+
+
                             </p>
 
                         </div>
@@ -286,6 +298,23 @@
                             <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Confirm PI</button>
                         </div>
                     </div>
+                    <div class="row" style="margin-top: 150px;">
+                        <div class="col-md-3">
+
+                            <h4 class="st_check">Customer's Acceptance <br>Sign & Seal</h4>
+
+                        </div>
+                        <div class="col-md-3">
+                            <h4 class="st_check">Prepared By</h4>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 class="st_check">Checked By</h4>
+                        </div>
+                        <div class="col-md-3">
+                            <h4 class="st_check">(Authorised Signatory)</h4>
+                        </div>
+
+                    </div>
 
                 </form>
             </div>
@@ -293,6 +322,11 @@
     </div>
 </main>
 <style>
+    .st_check{
+        padding-top: 15px;
+        border-top: 1px solid #000000;
+        text-align: center;
+    }
     #search_data {
         width: 200px;
         padding: 5px;

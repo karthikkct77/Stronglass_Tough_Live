@@ -1,5 +1,5 @@
 <main class="app-content">
-    <div>
+    <div id="printableArea"  >
         <div class="app-title">
             <div>
                 <h1><i class="fa fa-edit"></i>Work Order Barcode</h1>
@@ -140,30 +140,30 @@
                             </table>
 
                         </div>
-                        <div id="printableArea" >
-                            <?php
-                            foreach ($invoice_item as $key)
-                            {
-                                $total = $key['Proforma_Qty'];
-                                for ($i=1;$i<=$total;$i++)
-                                { ?>
-
-                                    <div style="width: 405.952756px; height: 204px; background: red">
-                                        <h4 class="st">STRONGLASS TOUGH  <span class="special"><h2 style="position: absolute;top: 10px;margin-left: 15px;"> <?php echo $key['Proforma_Special']; ?> </h2></span></h4>
-                                        <h4>WO.NO : <?php echo $wo[0]['WO_Number']; ?> <span class="customer"><?php echo $invoice[0]['Customer_Company_Name']; ?></span></h4>
-                                        <h4>Thickness: <?php echo $key['Material_Name']; ?> <span style="margin-left: 70px;"> QTY: <?php echo $key['Proforma_Qty']; ?></span></h4>
-                                        <h1>SIZE :<?php echo $key['Proforma_Actual_Size_Width']; ?> * <?php echo $key['Proforma_Actual_Size_Height']; ?></h1>
-                                        <h4>Holes: <?php echo $key['Proforma_Holes']; ?> <span  style="margin-left: 25px;">Cutouts: <?php echo $key['Proforma_Cutout']; ?></span><span  style="margin-left: 25px;">Other: C & W</span></h4>
-                                    </div>
-
-                                    <hr>
-                                    <?php
-                                }
-                                ?>
-                                <?php
-                            }
-                            ?>
-                        </div>
+<!--                        <div >-->
+<!--                            --><?php
+//                            foreach ($invoice_item as $key)
+//                            {
+//                                $total = $key['Proforma_Qty'];
+//                                for ($i=1;$i<=$total;$i++)
+//                                { ?>
+<!---->
+<!--                                    <div style="width: 405.952756px; height: 204px; background: red">-->
+<!--                                        <h4 class="st">STRONGLASS TOUGH  <span class="special"><h2 style="position: absolute;top: 10px;margin-left: 15px;"> --><?php //echo $key['Proforma_Special']; ?><!-- </h2></span></h4>-->
+<!--                                        <h4>WO.NO : --><?php //echo $wo[0]['WO_Number']; ?><!-- <span class="customer">--><?php //echo $invoice[0]['Customer_Company_Name']; ?><!--</span></h4>-->
+<!--                                        <h4>Thickness: --><?php //echo $key['Material_Name']; ?><!-- <span style="margin-left: 70px;"> QTY: --><?php //echo $key['Proforma_Qty']; ?><!--</span></h4>-->
+<!--                                        <h1>SIZE :--><?php //echo $key['Proforma_Actual_Size_Width']; ?><!-- * --><?php //echo $key['Proforma_Actual_Size_Height']; ?><!--</h1>-->
+<!--                                        <h4>Holes: --><?php //echo $key['Proforma_Holes']; ?><!-- <span  style="margin-left: 25px;">Cutouts: --><?php //echo $key['Proforma_Cutout']; ?><!--</span><span  style="margin-left: 25px;">Other: C & W</span></h4>-->
+<!--                                    </div>-->
+<!---->
+<!--                                    <hr>-->
+<!--                                    --><?php
+//                                }
+//                                ?>
+<!--                                --><?php
+//                            }
+//                            ?>
+<!--                        </div>-->
                         <div class="row">
                             <div class="col-md-6">
                                 <h3>Terms & Conditions</h3>
@@ -174,12 +174,24 @@
                                     Any discrepancies observed in the supply like quantity,specification,
                                     quality, etc.
                                 </p>
+                                <h3>Dear Customer</h3>
                                 <p style="font-size: 16px;text-align: justify;">
-                                    Supply shall be against advance payment or Letter of credit or any other agreed
-                                    terms. Interest @2% per month will be charged for the payment delayed beyond
-                                    the terms agreed from the date of invoice. All payments made by third
-                                    party/consumer/contractor interested in the transaction shall be adjusted against
-                                    supplies made to buyer/consignee
+                                <ul style="list-style: none;padding: 0;font-size: 16px;text-align: justify;">
+                                    <li style="margin-bottom: 15px;">
+                                        1.Please make sure to DOUBLE - CHECK the Pro-Forma Invoice in terms Billing & Delivery Address, Contact Name & Number, PAN NO, GST NO, complete Glass
+                                        Specifications, Size, Quantity, Rates & Taxes.
+                                    </li>
+                                    <li style="margin-bottom: 15px;">
+                                        2.If there is any item not as per your requirement, please get the same modified to be reflected in the Pro-Forma Invoice before confirmation. PI terms mentioned are
+                                        final and shall supersede PO terms, no dispute will be entertained after order released for production pertaining to terms agreed in Pro-Forma invoice.
+                                    </li>
+                                    <li>
+                                        3.In the event the order is modified or cancelled once issued to production, all material expenses, processing costs and cancellation penalties up to the date of
+                                        modification or cancellation shall be invoiced. The amount to be invoiced is solely at the discretion of the Seller and shall be final and non-negotiable
+                                    </li>
+                                </ul>
+
+
                                 </p>
 
                             </div>
@@ -294,13 +306,30 @@
                             <div class="col-md-6">
                                 <?php if($_SESSION['role'] == 6) { ?>
 
-                                    <button class="btn btn-danger pi_button" type="submit"><i class="fa fa-fw fa-lg fa-print"></i> Barcode Print</button>
+                                    <button class="btn btn-danger pi_button" id="with_print" type="submit"><i class="fa fa-fw fa-lg fa-print"></i> Barcode Print</button>
                                     <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="printDiv('printableArea')" value="Print"/>
                                 <?php } elseif($_SESSION['role'] == 7){
                                     ?>
                                 <?php } ?>
 
                             </div>
+                        </div>
+                        <div class="row" style="margin-top: 150px;">
+                            <div class="col-md-3">
+
+                                <h4 class="st_check">Customer's Acceptance <br>Sign & Seal</h4>
+
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="st_check">Prepared By</h4>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="st_check">Checked By</h4>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="st_check">(Authorised Signatory)</h4>
+                            </div>
+
                         </div>
 
                     </form>
@@ -309,11 +338,16 @@
         </div>
     </div>
 </main>
+
 <style>
     @media print {
         #with_print {
             display: none;
         }
+    }
+    @page {
+        size: auto;   /* auto is the initial value */
+        margin: 0;  /* this affects the margin in the printer settings */
     }
     #search_data {
         width: 200px;
@@ -328,6 +362,11 @@
         padding: 3px 15px 3px 15px;
         text-align: left;
     }
+    .st_check{
+        padding-top: 15px;
+        border-top: 1px solid #000000;
+        text-align: center;
+    }
 
     #autoSuggestionsList > li a { color: #800000; }
 
@@ -341,25 +380,25 @@
         float: right;
     }
 
-    .special{
-        margin-left: 30px;
-        font-weight: bold;
-        font-size: 50px;
-        position: absolute;
-        top: -10px;
-    }
-    .st{
-        text-align: center;
-        float: left;
-        width: 100%;
-        font-weight: normal;
-        position: relative;
-    }
-    .customer {
-        font-weight: normal;
-        font-size: 15px;
-        margin-left: 10px;
-    }
+    /*.special{*/
+        /*margin-left: 30px;*/
+        /*font-weight: bold;*/
+        /*font-size: 50px;*/
+        /*position: absolute;*/
+        /*top: -10px;*/
+    /*}*/
+    /*.st{*/
+        /*text-align: center;*/
+        /*float: left;*/
+        /*width: 100%;*/
+        /*font-weight: normal;*/
+        /*position: relative;*/
+    /*}*/
+    /*.customer {*/
+        /*font-weight: normal;*/
+        /*font-size: 15px;*/
+        /*margin-left: 10px;*/
+    /*}*/
 </style>
 
 <script type="text/javascript">
