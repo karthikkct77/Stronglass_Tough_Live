@@ -353,7 +353,8 @@ class User_Controller extends CI_Controller
 //                $cutout_check[] ='1';
 //            }
 
-            $area = $charge_height/1000 * $charge_weigth/1000;
+            $area1 = $charge_height/1000 * $charge_weigth/1000;
+            $area = number_format((float)$area1, 3, '.', '');
             $data_user[]=array(
                 'Thickness'=>$thickness,
                 'height'=>$height,

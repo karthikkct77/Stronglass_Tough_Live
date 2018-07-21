@@ -71,18 +71,17 @@
                             <th>#</th>
                             <th>Material</th>
                             <th>Thickness</th>
-                            <th>Hsn code</th>
                             <th>Special</th>
-                            <th>No.of Pieces</th>
-                            <th>No.of Holes</th>
+                            <th>No.of<br>Pieces</th>
+                            <th>No.of<br>Holes</th>
                             <th>Cutouts</th>
-                            <th>Actucal Size(H)(MM)</th>
-                            <th>Actucal Size(W)(MM)</th>
-                            <th>Chargable Size(H)(MM)</th>
-                            <th>Chargable Size(W)(MM)</th>
-                            <th>Area(SQMTR)</th>
-                            <th>Rate(SQMTR)</th>
-                            <th>Total(INR)</th>
+                            <th>Actucal<br>size(H)</th>
+                            <th>Actucal<br>siz(W)</th>
+                            <th>Chargable<br>siz(H)</th>
+                            <th>Chargable<br>sizeW)</th>
+                            <th>Area<br>(SQMTR)</th>
+                            <th>Rate<br>(SQMTR)</th>
+                            <th>Total<br>Rs</th>
                             </thead>
                             <tbody>
                             <?php $i=1; foreach ($invoice as $key) { ?>
@@ -102,27 +101,26 @@
 <!--                                    <div id="suggestions_material">-->
 <!--                                        <div id="autoSuggestionsList_material"></div>-->
 <!--                                    </div>-->
-                                    <td><input class="form-control" type="text" name="thickness[]" id="thckness<?php echo $i; ?>" value="<?php echo $key['Thickness']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="hsn[]" id="hsn<?php echo $i; ?>" readonly ></td>
-                                    <td><input class="form-control" type="text" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['pics']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['holes']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="cutout[]" id="cutout<?php echo $i; ?>" value="<?php echo $key['cutout']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="height[]" id="height<?php echo $i; ?>" value="<?php echo $key['height']; ?>" readonly></td>
-                                    <td><input class="form-control" type="text" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['width']; ?>" readonly></td>
+                                    <td><input class="form-control" type="hidden" name="thickness[]" id="thckness<?php echo $i; ?>" value="<?php echo $key['Thickness']; ?>" readonly><?php echo $key['Thickness']; ?></td>
+                                    <td><input class="form-control" type="hidden" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly><?php echo $key['type']; ?></td>
+                                    <td><input class="form-control" type="hidden" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['pics']; ?>" readonly><?php echo $key['pics']; ?></td>
+                                    <td><input class="form-control" type="hidden" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['holes']; ?>" readonly><?php echo $key['holes']; ?></td>
+                                    <td><input class="form-control" type="hidden" name="cutout[]" id="cutout<?php echo $i; ?>" value="<?php echo $key['cutout']; ?>" readonly><?php echo $key['cutout']; ?></td>
+                                    <td><input class="form-control" type="hidden" name="height[]" id="height<?php echo $i; ?>" value="<?php echo $key['height']; ?>" readonly><?php echo $key['height']; ?></td>
+                                    <td><input class="form-control" type="hidden" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['width']; ?>" readonly><?php echo $key['width']; ?></td>
                                     <td><input class="form-control" type="number" name="ch_height[]" id="ch_height<?php echo $i; ?>" value="<?php echo $key['ch_height']; ?>" onkeyup="change_Charge_Height('<?php echo $i; ?>')" ></td>
                                     <td><input class="form-control" type="number" name="ch_weight[]" id="ch_weight<?php echo $i; ?>" value="<?php echo $key['ch_weight']; ?>" onkeyup="change_Charge_Width('<?php echo $i; ?>')" ></td>
                                     <?php
                                     if($key['area'] > 5)
                                     {
                                         ?>
-                                        <td><input class="form-control new_area" style="color: red;" type="text" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['area']; ?>" readonly></td>
+                                        <td><input class="form-control new_area" style="color: red;" type="hidden" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['area']; ?>" readonly><?php echo $key['area']; ?></td>
 
                                         <?php
                                     }
                                     else{
                                         ?>
-                                        <td><input class="form-control new_area1" type="text"  name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['area']; ?>" readonly></td>
+                                        <td><input class="form-control new_area1" type="hidden"  name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['area']; ?>" readonly><?php echo $key['area']; ?></td>
 
                                     <?php }
                                     ?>
@@ -136,15 +134,14 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td><input type="text" class="form-control pull-right" id="total_pic" value="0"   readonly/></td>
-                                <td></td>
+                                <td id="total_pic1"><input type="hidden" class="form-control pull-right" id="total_pic" value="0" readonly/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td><input type="text" class="form-control pull-right" id="total_area" value="0"   readonly/></td>
+                                <td></td>
+                                <td id="total_area1" ><input type="hidden" class="form-control pull-right" id="total_area" value="0"   readonly/></td>
                                 <td></td>
                                 <td> <input type="text" class="form-control pull-right" id="grand_total" value="0"   readonly/>(INR)</td>
                             </tr>
@@ -164,17 +161,17 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <h3>Terms & Conditions</h3>
-                            <p style="font-size: 16px;text-align: justify;">
+                            <h3 style="font-size: 15px;">Terms & Conditions</h3>
+                            <p style="font-size: 10px;text-align: justify;">
                                 Supply shall be against advance payment or Letter of credit or any other agreed
                                 terms. Interest @2% per month will be charged for the payment delayed beyond
                                 the terms agreed from the date of invoice. All payments made by third
                                 party/consumer/contractor interested in the transaction shall be adjusted against
                                 supplies made to buyer/consignee
                             </p>
-                            <h3>Dear Customer</h3>
-                            <p style="font-size: 16px;text-align: justify;">
-                            <ul style="list-style: none;padding: 0;font-size: 16px;text-align: justify;">
+                            <h3 style="font-size: 15px;">Dear Customer</h3>
+                            <p style="font-size: 10px;text-align: justify;">
+                            <ul style="list-style: none;padding: 0;font-size: 10px;text-align: justify;">
                                 <li style="margin-bottom: 15px;">
                                     1.Please make sure to DOUBLE - CHECK the Pro-Forma Invoice in terms Billing & Delivery Address, Contact Name & Number, PAN NO, GST NO, complete Glass
                                     Specifications, Size, Quantity, Rates & Taxes.
@@ -369,7 +366,29 @@
 
 
 <script>
+    $( document ).ready(function() {
+        var areas =document.getElementsByName("area[]");
+        var sum_area = 0;
+        for (var j = 0, iLen = areas.length; j < iLen; j++) {
+            if (areas[j].value!==""){
+                val=parseFloat(areas[j].value);
+                sum_area +=val;
+            }
+        }
+       document.getElementById('total_area').value=sum_area;
+        document.getElementById('total_area1').innerHTML = sum_area;
 
+        var pices =document.getElementsByName("pics[]");
+        var sum_pic = 0;
+        for (var j = 0, iLen = pices.length; j < iLen; j++) {
+            if (pices[j].value!==""){
+                val=parseFloat(pices[j].value);
+                sum_pic +=val;
+            }
+        }
+        document.getElementById('total_pic').value = parseInt(sum_pic);
+        document.getElementById('total_pic1').innerHTML = parseInt(sum_pic);
+    });
     // Get Company Addresss
     $("#company_name2").change(function () {
         $.ajax({
@@ -382,7 +401,7 @@
                 $('#Buyer').show();
                 document.getElementById('coustomer1').innerHTML = data[0]['Customer_Company_Name'];
                 document.getElementById('address1').innerHTML = data[0]['Customer_Add_Address_1'] + data[0]['Customer_Add_Area'] + data[0]['Customer_Add_City'] ;
-                document.getElementById('phone1').innerHTML = "Mob :" + data[0]['Customer_Add_Phone'];
+                document.getElementById('phone1').innerHTML = "Mob :" + data[0]['Customer_Add_Phone'], "Email :" + data[0]['Customer_Email_Id_1'] ;
                 document.getElementById('gstn1').innerHTML = "GSTIN :" + data[0]['Customer_Add_GSTIN'];
             }
         });
@@ -761,6 +780,7 @@
                         }
                     }
                     document.getElementById('total_pic').value = parseInt(sum_pic);
+                    document.getElementById('total_pic1').innerHTML = parseInt(sum_pic);
 
                     //total area
                     var areas =document.getElementsByName("area[]");
@@ -771,7 +791,9 @@
                             sum_area +=val;
                         }
                     }
-                    document.getElementById('total_area').value = parseFloat(sum_area).toFixed(2);
+                    alert(sum_area);
+                    document.getElementById('total_area').value = parseFloat(sum_area).toFixed(3);
+//                    document.getElementById('total_area1').innerHTML = parseFloat(sum_area).toFixed(3);
 
                 }
             });
@@ -809,6 +831,7 @@
             }
         }
         document.getElementById('total_pic').value = parseInt(sum_pic);
+        document.getElementById('total_pic1').innerHTML = parseInt(sum_pic);
         var charge =document.getElementsByName("tot_charge_amt[]");
         var sum_charge = 0;
         for (var j = 0, iLen = charge.length; j < iLen; j++) {
@@ -1001,6 +1024,7 @@
                 }
             }
             document.getElementById('total_pic').value = parseInt(sum_pic);
+            document.getElementById('total_pic1').innerHTML = parseInt(sum_pic);
             var totals =document.getElementsByName("tot_charge_amt[]");
             var sum = 0;
             for (var j = 0, iLen = totals.length; j < iLen; j++) {
@@ -1094,6 +1118,7 @@
                 }
             }
             document.getElementById('total_pic').value = parseInt(sum_pic);
+            document.getElementById('total_pic1').innerHTML = parseInt(sum_pic);
             var totals =document.getElementsByName("tot_charge_amt[]");
             var sum = 0;
             for (var j = 0, iLen = totals.length; j < iLen; j++) {

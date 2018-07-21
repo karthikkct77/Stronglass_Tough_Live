@@ -36,7 +36,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Material Price</label>
-                            <input class="form-control" type="number" name="stock_price"  placeholder="Enter Amount" min="0"  required>
+                            <input class="form-control" type="number" name="stock_price"  placeholder="Enter Amount" min="0"  >
                         </div>
                         <div class="form-group">
                             <label class="control-label">HSN Code</label>
