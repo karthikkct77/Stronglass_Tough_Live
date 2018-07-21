@@ -187,8 +187,13 @@
                                     modification or cancellation shall be invoiced. The amount to be invoiced is solely at the discretion of the Seller and shall be final and non-negotiable
                                 </li>
                             </ul>
-
                             </p>
+                            <h4>Bank Details</h4>
+                            <h5>Stronglass Tough</h5>
+                            <h5>A/C Type: <span><?php echo $st[0]['ST_Bank_Account_Type']; ?></span></h5>
+                            <h5>A/C Number: <span><?php echo $st[0]['ST_Bank_Account_Number']; ?></span></h5>
+                            <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
+                            <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
 
                         </div>
                         <div class="col-md-6">
@@ -285,12 +290,6 @@
                     <hr>
                     <div class="row">
                         <div class="col-md-6">
-                            <h4>Bank Details</h4>
-                            <h5>Stronglass Tough</h5>
-                            <h5>A/C Type: <span><?php echo $st[0]['ST_Bank_Account_Type']; ?></span></h5>
-                            <h5>A/C Number: <span><?php echo $st[0]['ST_Bank_Account_Number']; ?></span></h5>
-                            <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
-                            <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
                         </div>
                         <div class="col-md-6">
                             <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Confirm PI</button>
@@ -592,6 +591,10 @@
         }
         else if($('#no_holes').val() == ""){
             alert("Please enter No.of pieces...");
+        }
+        else if($('#charge_amt').val() == '0')
+        {
+            alert("Please Enter Charges Amount..")
         }
         else
         {
