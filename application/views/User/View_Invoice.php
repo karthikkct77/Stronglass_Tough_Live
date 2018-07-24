@@ -75,10 +75,10 @@
                             <th>No.of<br>Pieces</th>
                             <th>No.of<br>Holes</th>
                             <th>Cutouts</th>
-                            <th>Actucal<br>size(H)</th>
-                            <th>Actucal<br>siz(W)</th>
-                            <th>Chargable<br>siz(H)</th>
-                            <th>Chargable<br>sizeW)</th>
+                            <th>Actucal<br>size(h)</th>
+                            <th>Actucal<br>siz(w)</th>
+                            <th>Chargable<br>siz(h)</th>
+                            <th>Chargable<br>size(w)</th>
                             <th>Area<br>(sqmtr)</th>
                             <th>Rate<br>(sqmtr)</th>
                             <th>Total<br>Rs</th>
