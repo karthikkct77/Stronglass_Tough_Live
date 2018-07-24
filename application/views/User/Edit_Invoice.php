@@ -20,7 +20,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <h5>Consignee</h5>
-                                <input  class="form-control" name="search_data" id="search_data" type="text" value="<?php echo $invoice[0]['Customer_Company_Name']; ?>" required readonly>
+                                <input  class="form-control" style="display: none;" name="search_data" id="search_data" type="text" value="<?php echo $invoice[0]['Customer_Company_Name']; ?>" required readonly>
                                 <input  class="form-control" name="company_name" id="company_name" type="hidden" value="<?php echo $invoice[0]['Customer_Icode']; ?>">
                                 <div id="suggestions">
                                     <div id="autoSuggestionsList"></div>
@@ -34,15 +34,11 @@
                                 </div>
                             </div>
                             <div class="col-md-1">
-                                <div class="form-group">
-                                    <input type="checkbox" name="check" id="check" checked onclick="FillBilling()">
-                                    <em>Check this box if Current Address and Mailing permanent are the same.</em>
-                                </div>
+
                             </div>
                             <div class="col-md-4">
                                 <h5>Buyer (if other than consignee)</h5>
                                 <div class="form-group" >
-                                    <label class="control-label">Customer Name </label>
                                     <select name="company_address" class="form-control" id="company_name2" style="display: none" >
                                         <option>Select Another Address</option>
                                     </select>
@@ -85,18 +81,17 @@
                                 <thead>
                                 <th>#</th>
                                 <th>Material</th>
-                                <th>Hsn code</th>
                                 <th>Special</th>
-                                <th>No.of Pieces</th>
-                                <th>No.of Holes</th>
-                                <th>Cutouts</th>
-                                <th>Actucal Size(W)(MM)</th>
-                                <th>Actucal Size(H)(MM)</th>
-                                <th>Chargable Size(W)(MM)</th>
-                                <th>Chargable Size(H)(MM)</th>
-                                <th>Area(SQMTR)</th>
-                                <th>Rate(SQMTR)</th>
-                                <th>Total(INR)</th>
+                                <th style="width: 5%;">No.of<br>Pcs</th>
+                                <th style="width: 6%;">No.of<br>Holes</th>
+                                <th style="width: 5%;">Cutout</th>
+                                <th>Actucal<br>size(h)</th>
+                                <th>Actucal<br>size(w)</th>
+                                <th>Charge<br>size(h)</th>
+                                <th>Charge<br>size(w)</th>
+                                <th>Area<br>(sqmtr)</th>
+                                <th>Rate<br>(sqmtr)</th>
+                                <th style="width: 10%;">Total Rs</th>
                                 <th></th>
                                 </thead>
                                 <tbody>
@@ -116,7 +111,6 @@
                                                     endforeach; ?>
                                                 </select>
                                             </div></td>
-                                        <td><?php echo $key['Proforma_HSNCode']; ?></td>
                                         <td><?php echo $key['Proforma_Special']; ?></td>
                                         <td><input class="form-control" type="number" id="pics<?php echo $i; ?>"  name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
                                         <td><input class="form-control" type="number" name="holes[]"  value="<?php echo $key['Proforma_Holes']; ?>" ></td>
@@ -129,7 +123,8 @@
                                         <td><input class="form-control" type="number" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['Proforma_Area_SQMTR']; ?>" readonly></td>
                                         <td><input class="form-control" type="number" name="rate[]" value="<?php echo $key['Proforma_Material_Rate']; ?>" id="rate<?php echo $i; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
                                         <td><input class="form-control" type="number" name="total[]" value="<?php echo $key['Proforma_Material_Cost']; ?>" id="total<?php echo $i; ?>" readonly></td>
-                                        <td><input type="button" onclick="delete_items('<?php echo $i; ?>','<?php echo $key['Proforma_Invoice_Items_Icode']; ?>')" value="Delete"></input></td>
+                                        <td><a  style="color: red;" href="javascript:;"><i class="fa fa-trash"  onclick="delete_items('<?php echo $i; ?>','<?php echo $key['Proforma_Invoice_Items_Icode']; ?>')" aria-hidden="true"></i></a>
+                                           </td>
                                     </tr>
                                     <?php $i++; } ?>
                                 <tr>
@@ -172,18 +167,18 @@
                             </script>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
-                                <h3>Terms & Conditions</h3>
-                                <p style="font-size: 16px;text-align: justify;">
-                                    We Shall not be responsible for any type of Breakage/Loss in Transit.
-                                    At the time of transit Breakage/Loss insurance claim will be done by
-                                    the customer and not by the company.
-                                    Any discrepancies observed in the supply like quantity,specification,
-                                    quality, etc.
+                            <div class="col-md-5">
+                                <h3 style="font-size: 15px;">Terms & Conditions</h3>
+                                <p style="font-size: 8px;text-align: justify;">
+                                    Supply shall be against advance payment or Letter of credit or any other agreed
+                                    terms. Interest @2% per month will be charged for the payment delayed beyond
+                                    the terms agreed from the date of invoice. All payments made by third
+                                    party/consumer/contractor interested in the transaction shall be adjusted against
+                                    supplies made to buyer/consignee
                                 </p>
-                                <h3>Dear Customer</h3>
-                                <p style="font-size: 16px;text-align: justify;">
-                                <ul style="list-style: none;padding: 0;font-size: 16px;text-align: justify;">
+                                <h3 style="font-size: 15px;">Dear Customer</h3>
+                                <p style="font-size: 8px;text-align: justify;">
+                                <ul style="list-style: none;padding: 0;font-size: 8px;text-align: justify;">
                                     <li style="margin-bottom: 15px;">
                                         1.Please make sure to DOUBLE - CHECK the Pro-Forma Invoice in terms Billing & Delivery Address, Contact Name & Number, PAN NO, GST NO, complete Glass
                                         Specifications, Size, Quantity, Rates & Taxes.
@@ -197,12 +192,16 @@
                                         modification or cancellation shall be invoiced. The amount to be invoiced is solely at the discretion of the Seller and shall be final and non-negotiable
                                     </li>
                                 </ul>
-
-
                                 </p>
+                                <h4>Bank Details</h4>
+                                <h5>Stronglass Tough</h5>
+                                <h5>A/C Type: <span><?php echo $st[0]['ST_Bank_Account_Type']; ?></span></h5>
+                                <h5>A/C Number: <span><?php echo $st[0]['ST_Bank_Account_Number']; ?></span></h5>
+                                <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
+                                <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
 
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-7">
                                 <table class="table table-hover table-bordered" id="sampleTable">
                                     <thead>
                                     <th>Select Charges</th>
@@ -330,34 +329,13 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-6">
-                                <h4>Bank Details</h4>
-                                <h5>Stronglass Tough</h5>
-                                <h5>A/C Type: <span><?php echo $st[0]['ST_Bank_Account_Type']; ?></span></h5>
-                                <h5>A/C Number: <span><?php echo $st[0]['ST_Bank_Account_Number']; ?></span></h5>
-                                <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
-                                <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
+
                             </div>
                             <div class="col-md-6">
                                 <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update PI</button>
                             </div>
                         </div>
-                        <div class="row" style="margin-top: 150px;">
-                            <div class="col-md-3">
 
-                                <h4 class="st_check">Customer's Acceptance <br>Sign & Seal</h4>
-
-                            </div>
-                            <div class="col-md-3">
-                                <h4 class="st_check">Prepared By</h4>
-                            </div>
-                            <div class="col-md-3">
-                                <h4 class="st_check">Checked By</h4>
-                            </div>
-                            <div class="col-md-3">
-                                <h4 class="st_check">(Authorised Signatory)</h4>
-                            </div>
-
-                        </div>
                     </form>
                 </div>
             </div>
