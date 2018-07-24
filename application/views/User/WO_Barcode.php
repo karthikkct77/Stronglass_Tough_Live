@@ -165,18 +165,18 @@
 //                            ?>
 <!--                        </div>-->
                         <div class="row">
-                            <div class="col-md-6">
-                                <h3>Terms & Conditions</h3>
-                                <p style="font-size: 16px;text-align: justify;">
-                                    We Shall not be responsible for any type of Breakage/Loss in Transit.
-                                    At the time of transit Breakage/Loss insurance claim will be done by
-                                    the customer and not by the company.
-                                    Any discrepancies observed in the supply like quantity,specification,
-                                    quality, etc.
+                            <div class="col-md-5">
+                                <h3 style="font-size: 15px;">Terms & Conditions</h3>
+                                <p style="font-size: 8px;text-align: justify;">
+                                    Supply shall be against advance payment or Letter of credit or any other agreed
+                                    terms. Interest @2% per month will be charged for the payment delayed beyond
+                                    the terms agreed from the date of invoice. All payments made by third
+                                    party/consumer/contractor interested in the transaction shall be adjusted against
+                                    supplies made to buyer/consignee
                                 </p>
-                                <h3>Dear Customer</h3>
-                                <p style="font-size: 16px;text-align: justify;">
-                                <ul style="list-style: none;padding: 0;font-size: 16px;text-align: justify;">
+                                <h3 style="font-size: 15px;">Dear Customer</h3>
+                                <p style="font-size: 8px;text-align: justify;">
+                                <ul style="list-style: none;padding: 0;font-size: 8px;text-align: justify;">
                                     <li style="margin-bottom: 15px;">
                                         1.Please make sure to DOUBLE - CHECK the Pro-Forma Invoice in terms Billing & Delivery Address, Contact Name & Number, PAN NO, GST NO, complete Glass
                                         Specifications, Size, Quantity, Rates & Taxes.
@@ -190,12 +190,16 @@
                                         modification or cancellation shall be invoiced. The amount to be invoiced is solely at the discretion of the Seller and shall be final and non-negotiable
                                     </li>
                                 </ul>
-
-
                                 </p>
+                                <h4>Bank Details</h4>
+                                <h5>Stronglass Tough</h5>
+                                <h5>A/C Type: <span><?php echo $st[0]['ST_Bank_Account_Type']; ?></span></h5>
+                                <h5>A/C Number: <span><?php echo $st[0]['ST_Bank_Account_Number']; ?></span></h5>
+                                <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
+                                <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
 
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-7">
                                 <table class="table table-hover table-bordered" id="sampleTable1">
                                     <thead>
                                     <th>#</th>
@@ -297,12 +301,7 @@
                         <hr>
                         <div class="row">
                             <div class="col-md-6">
-                                <h4>Bank Details</h4>
-                                <h5>Stronglass Tough</h5>
-                                <h5>A/C Type: <span><?php echo $st[0]['ST_Bank_Account_Type']; ?></span></h5>
-                                <h5>A/C Number: <span><?php echo $st[0]['ST_Bank_Account_Number']; ?></span></h5>
-                                <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
-                                <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
+
                             </div>
                             <div class="col-md-6">
                                 <?php if($_SESSION['role'] == 6) { ?>
@@ -315,24 +314,6 @@
 
                             </div>
                         </div>
-                        <div class="row" style="margin-top: 150px;">
-                            <div class="col-md-3">
-
-                                <h4 class="st_check">Customer's Acceptance <br>Sign & Seal</h4>
-
-                            </div>
-                            <div class="col-md-3">
-                                <h4 class="st_check">Prepared By</h4>
-                            </div>
-                            <div class="col-md-3">
-                                <h4 class="st_check">Checked By</h4>
-                            </div>
-                            <div class="col-md-3">
-                                <h4 class="st_check">(Authorised Signatory)</h4>
-                            </div>
-
-                        </div>
-
                     </form>
                 </div>
             </div>
