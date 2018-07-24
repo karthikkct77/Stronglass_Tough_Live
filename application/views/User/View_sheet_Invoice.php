@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-md-12" >
             <div class="tile">
-                <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Save_Invoice'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save PI?');">
+                <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Save_Sheet_Invoice'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save PI?');">
                     <div class="row">
                         <div class="col-md-4">
                             <h5>Consignee</h5>
@@ -117,13 +117,9 @@
                             <th>No.of<br>Pieces</th>
                             <th>No.of<br>Holes</th>
                             <th>Cutouts</th>
-                            <th>Actucal<br>size(h)</th>
-                            <th>Actucal<br>siz(w)</th>
-                            <th>Chargable<br>siz(h)</th>
-                            <th>Chargable<br>size(w)</th>
-                            <th>Area<br>(sqmtr)</th>
-                            <th>Rate<br>(sqmtr)</th>
-                            <th>Total<br>Rs</th>
+                            <th>Actucal<br>size(H)</th>
+                            <th>Actucal<br>siz(W)</th>
+                            <th>Area<br>(SQMTR)</th>
                             </thead>
                             <tbody>
                             <?php $i=1; foreach ($invoice as $key) { ?>
@@ -137,9 +133,7 @@
                                     <td><input class="form-control" type="hidden" name="cutout[]" id="cutout<?php echo $i; ?>" value="<?php echo $key['cutout']; ?>" readonly><?php echo $key['cutout']; ?></td>
                                     <td><input class="form-control" type="hidden" name="height[]" id="height<?php echo $i; ?>" value="<?php echo $key['height']; ?>" readonly><?php echo $key['height']; ?></td>
                                     <td><input class="form-control" type="hidden" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['width']; ?>" readonly><?php echo $key['width']; ?></td>
-                                    <td><input class="form-control" type="number" name="ch_height[]" id="ch_height<?php echo $i; ?>" value="<?php echo $key['ch_height']; ?>" onkeyup="change_Charge_Height('<?php echo $i; ?>')" ></td>
-                                    <td><input class="form-control" type="number" name="ch_weight[]" id="ch_weight<?php echo $i; ?>" value="<?php echo $key['ch_weight']; ?>" onkeyup="change_Charge_Width('<?php echo $i; ?>')" ></td>
-                                    <?php
+                                      <?php
                                     if($key['area'] > 5)
                                     {
                                         ?>
@@ -149,19 +143,18 @@
                                     }
                                     else{
                                         ?>
-                                        <td><input class="form-control new_area1 pi_textbox" type="text"  name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['area']; ?>" readonly></td>
+                                        <td><input class="form-control new_area1 pi_textbox" type="hidden"  name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['area']; ?>" readonly><?php echo $key['area']; ?></td>
 
                                     <?php }
                                     ?>
-                                    <td><input class="form-control" type="number" name="rate[]" id="rate<?php echo $i; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
-                                    <td><input class="form-control" type="text" name="total[]" id="total<?php echo $i; ?>" readonly ></td>
+
 
                                 </tr>
                                 <?php $i++; } ?>
                             </tbody>
                             <tfoot>
                             <tr>
-                                <td></td>
+
                                 <td></td>
                                 <td></td>
                                 <td></td>
@@ -170,10 +163,8 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
-                                <td><input type="text" class="form-control pull-right" id="total_area" value="0"   readonly/></td>
-                                <td></td>
-                                <td> <input type="text" class="form-control pull-right" id="grand_total" value="0"   readonly/>(INR)</td>
+                                <td id="total_area1"><input type="hidden" class="form-control pull-right" id="total_area" value="0"   readonly/></td>
+
                             </tr>
                             </tfoot>
                         </table>
@@ -397,17 +388,17 @@
         }
         document.getElementById('total_area').value=sum_area;
         document.getElementById('total_area1').innerHTML = sum_area;
-//        var pices =document.getElementsByName("pics[]");
-//        var sum_pic = 0;
-//        for (var j = 0, iLen = pices.length; j < iLen; j++) {
-//            if (pices[j].value!==""){
-//                val=parseFloat(pices[j].value);
-//                sum_pic +=val;
-//            }
-//        }
-//
-//        document.getElementById('total_pic').value = parseInt(sum_pic);
-//        document.getElementById('total_pic1').innerHTML = parseInt(sum_pic);
+        var pices =document.getElementsByName("pics[]");
+        var sum_pic = 0;
+        for (var j = 0, iLen = pices.length; j < iLen; j++) {
+            if (pices[j].value!==""){
+                val=parseFloat(pices[j].value);
+                sum_pic +=val;
+            }
+        }
+
+        document.getElementById('total_pic').value = parseInt(sum_pic);
+        document.getElementById('total_pic1').innerHTML = parseInt(sum_pic);
     });
 
     // Get Company Addresss
