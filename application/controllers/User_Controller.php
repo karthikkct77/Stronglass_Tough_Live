@@ -398,6 +398,7 @@ class User_Controller extends CI_Controller
 
         if($check_H =='0' and $check_W =='0' and $check_P =='0' and $check_Holes =='0' and $check_Type =='0' )
         {
+            unlink('uploads/excel/'.$file_name);
             $this->load->view('User/header');
             $this->load->view('User/top');
             $this->load->view('User/left');
@@ -1005,10 +1006,9 @@ class User_Controller extends CI_Controller
         $this->load->view('User/footer');
 
     }
-    /** Upload excel data to list */
     public function Upload_Sheet_Invoice()
     {
-//        $configUpload['upload_path'] = FCPATH.'uploads/excel/';
+        $configUpload['upload_path'] = FCPATH.'uploads/excel/';
         $configUpload['allowed_types'] = 'xls|xlsx|csv';
         $configUpload['max_size'] = '5000';
         $this->load->library('upload', $configUpload);
@@ -1022,7 +1022,7 @@ class User_Controller extends CI_Controller
         //Set to read only
         $objReader->setReadDataOnly(true);
         //Load excel file
-        $objPHPExcel=$objReader->load($file_name);
+        $objPHPExcel=$objReader->load(FCPATH.'uploads/excel/'.$file_name);
         $totalrows=$objPHPExcel->setActiveSheetIndex(0)->getHighestRow();   //Count Numbe of rows avalable in excel
         $objWorksheet=$objPHPExcel->setActiveSheetIndex(0);
         //loop from first data untill last data
@@ -1126,19 +1126,18 @@ class User_Controller extends CI_Controller
 
         if($check_H =='0' and $check_W =='0' and $check_P =='0' and $check_Holes =='0' and $check_Type =='0' )
         {
+            unlink('uploads/excel/'.$file_name);
             $this->load->view('User/header');
             $this->load->view('User/top');
             $this->load->view('User/left');
-            $this->load->view('User/View_Invoice',$data,false);
+            $this->load->view('User/View_sheet_Invoice',$data,false);
             $this->load->view('User/footer');
         }
         else
         {
             $this->session->set_flashdata('feedback', 'Please Cross Check the values in the Excel Sheet.The Columns Height,Width,No.of.pieces,Holes Must have only Numeric values. Type must have only Alphabetic. Make corrections and load Again ..');
-            redirect('User_Controller/Proforma_Invoice');
+            redirect('User_Controller/Sheet_PI');
         }
-
-
 
     }
 
