@@ -57,7 +57,15 @@
         elseif ($_SESSION['role'] == 5)
         {   ?>
             <li><a class="app-menu__item " href="<?php echo site_url('User_Controller/dashboard'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
-            <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Proforma_Invoice'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Create PI</span></a></li>
+            <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Profoma Invoice</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+                <ul class="treeview-menu">
+                    <!--<li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Size_Master'); ?><!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>-->
+                    <li><a class="treeview-item" href="<?php echo site_url('User_Controller/Proforma_Invoice'); ?>"><i class="icon fa fa-circle-o"></i>Normal PI</a></li>
+                    <li><a class="treeview-item" href="<?php echo site_url('User_Controller/Sheet_PI'); ?>"><i class="icon fa fa-circle-o"></i>Sheet PI</a></li>
+                    <!--                   <li><a class="treeview-item" href="--><!--"><i class="icon fa fa-circle-o"></i>View Customers</a></li>-->
+
+                </ul>
+            </li>
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Invoice_List'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">View PI</span></a></li>
 
         <?php  }

@@ -995,6 +995,153 @@ class User_Controller extends CI_Controller
         $this->load->view('User/footer');
     }
 
+    //** Sheet PI */
+    public function Sheet_PI()
+    {
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/Sheet_Invoice');
+        $this->load->view('User/footer');
+
+    }
+    /** Upload excel data to list */
+    public function Upload_Sheet_Invoice()
+    {
+//        $configUpload['upload_path'] = FCPATH.'uploads/excel/';
+        $configUpload['allowed_types'] = 'xls|xlsx|csv';
+        $configUpload['max_size'] = '5000';
+        $this->load->library('upload', $configUpload);
+        $this->upload->do_upload('userfile');
+        $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
+        $file_name = $upload_data['file_name']; //uploded file name
+        $extension=$upload_data['file_ext'];    // uploded file extension
+
+        //$objReader =PHPExcel_IOFactory::createReader('Excel5');     //For excel 2003
+        $objReader= PHPExcel_IOFactory::createReader('Excel2007'); // For excel 2007
+        //Set to read only
+        $objReader->setReadDataOnly(true);
+        //Load excel file
+        $objPHPExcel=$objReader->load($file_name);
+        $totalrows=$objPHPExcel->setActiveSheetIndex(0)->getHighestRow();   //Count Numbe of rows avalable in excel
+        $objWorksheet=$objPHPExcel->setActiveSheetIndex(0);
+        //loop from first data untill last data
+        for($i=2;$i<=$totalrows;$i++)
+        {
+            $thickness=$objWorksheet->getCellByColumnAndRow(0,$i)->getValue();
+            $height=$objWorksheet->getCellByColumnAndRow(1,$i)->getValue();
+            if(is_numeric($height))
+            {
+                $charge_height = $height + 30;
+                $height_check[] ="";
+            }
+            else{
+                $height_check[] ='1';
+            }
+            $width=$objWorksheet->getCellByColumnAndRow(2,$i)->getValue();
+            if(is_numeric($width))
+            {
+                $charge_weigth = $width + 30;
+                $width_check[]="";
+            }
+            else{
+                $width_check[] ='1';
+            }
+            $pics=$objWorksheet->getCellByColumnAndRow(3,$i)->getValue();
+            if(is_numeric($pics))
+            {
+                $pics_check[]="";
+            }
+            else{
+
+                $pics_check[] ='1';
+            }
+            $holes=$objWorksheet->getCellByColumnAndRow(4,$i)->getValue();
+            if(is_numeric($holes))
+            {
+                $holes_check[]="";
+            }
+            else{
+                $holes_check[] ='1';
+            }
+            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
+            if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B')
+            {
+                $types_check[]="";
+            }
+            else{
+                $types_check[] ='1';
+            }
+            $cutout=$objWorksheet->getCellByColumnAndRow(6,$i)->getValue();
+//            if(is_numeric($cutout))
+//            {
+//                $cutout_check[]="";
+//            }
+//            else{
+//                $cutout_check[] ='1';
+//            }
+
+            $area1 = $charge_height/1000 * $charge_weigth/1000;
+            $area = number_format((float)$area1, 3, '.', '');
+            $data_user[]=array(
+                'Thickness'=>$thickness,
+                'height'=>$height,
+                'width'=>$width,
+                'pics'=>$pics,
+                'holes'=>$holes,
+                'type'=>$types,
+                'cutout'=>$cutout,
+                'ch_height'=>$charge_height,
+                'ch_weight'=>$charge_weigth,
+                'area'=>$area );
+        }
+        $month =date('m');
+        $data['invoice'] =  $data_user;
+        $data['st']= $this->admin_model->get_ST();
+        $data['customer']= $this->admin_model->get_all_customers();
+        $data['stock']= $this->admin_model->get_all_item();
+        $data['charges']= $this->admin_model->get_all_charges();
+        $data['tax']= $this->admin_model->get_Tax();
+        $perfoma = $this->admin_model->get_profoma_number($month);
+        if($perfoma == 0)
+        {
+            $data['profoma_number'] = $month .'-101';
+        }
+        else
+        {
+            $myString = $perfoma[0]['Proforma_Number'];
+            $myArray = explode('-', $myString);
+            $increment = $myArray[1] + 1;
+            $data['profoma_number'] = $month .'-'. $increment;
+
+        }
+
+        $check_H = count(array_keys($height_check, "1"));
+        $check_W = count(array_keys($width_check, "1"));
+        $check_P = count(array_keys($pics_check, "1"));
+        $check_Holes = count(array_keys($holes_check, "1"));
+        $check_Type = count(array_keys($types_check, "1"));
+//        $check_cutout = count(array_keys($cutout_check, "1"));
+
+
+        if($check_H =='0' and $check_W =='0' and $check_P =='0' and $check_Holes =='0' and $check_Type =='0' )
+        {
+            $this->load->view('User/header');
+            $this->load->view('User/top');
+            $this->load->view('User/left');
+            $this->load->view('User/View_Invoice',$data,false);
+            $this->load->view('User/footer');
+        }
+        else
+        {
+            $this->session->set_flashdata('feedback', 'Please Cross Check the values in the Excel Sheet.The Columns Height,Width,No.of.pieces,Holes Must have only Numeric values. Type must have only Alphabetic. Make corrections and load Again ..');
+            redirect('User_Controller/Proforma_Invoice');
+        }
+
+
+
+    }
+
 
 
 
