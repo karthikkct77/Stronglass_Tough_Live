@@ -31,19 +31,32 @@
                             <th>Customer</th>
                             <th>PI- Date</th>
                             <th>Total Amount</th>
+                            <th>Type</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php $i=1;
                         foreach ($invoice as $val)
                         {
+                        ?>
+                        <tr>
+                            <td><?php echo $i; ?></td>
+                            <td><?php echo $val['Proforma_Number']; ?></td>
+                            <td><?php echo $val['Customer_Company_Name']; ?></td>
+                            <td><?php echo $val['Proforma_Date']; ?></td>
+                            <td><?php echo $val['GrossTotal_Value']; ?></td>
+                            <?php
+                            if ($val['PI_Type'] == '1') { ?>
+                                <td>Sheet PI</td>
+                                <?php
+                            }
+                            else
+                            {
                             ?>
-                            <tr>
-                                <td><?php echo $i; ?></td>
-                                <td><?php echo $val['Proforma_Number']; ?></td>
-                                <td><?php echo $val['Customer_Company_Name']; ?></td>
-                                <td><?php echo $val['Proforma_Date']; ?></td>
-                                <td><?php echo $val['GrossTotal_Value']; ?></td>
+                                <td>Normal PI</td>
+                            <?php
+                            }
+                                ?>
 <!--                                <td> <a class="btn btn-info" href="--><?php //echo site_url('Admin_Controller/single_Invoice/') . $val['Proforma_Icode']; ?><!--">View</a></td>-->
                             </tr>
                             <?php
