@@ -812,7 +812,6 @@
             }
         }
         document.getElementById('total_pic').value = parseInt(sum_pic);
-        document.getElementById('total_pic1').innerHTML = parseInt(sum_pic);
         var charge =document.getElementsByName("tot_charge_amt[]");
         var sum_charge = 0;
         for (var j = 0, iLen = charge.length; j < iLen; j++) {

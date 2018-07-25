@@ -65,7 +65,7 @@
                             <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo date('Y-m-d'); ?>" readonly></h4>
                         </div>
                     </div>
-                    <h6 style="text-align: center">Total Number of Sheets used to Cut the following glassess</h6>
+                    <h6 style="text-align: center">Total Number of Sheets used to Cut the following glasses</h6>
                     <div class="row">
                         <table class="table table-hover table-bordered" id="sampleTable2">
                             <thead>
@@ -112,19 +112,23 @@
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
                             <th>#</th>
+                            <th>Material</th>
                             <th>Thickness</th>
                             <th>Special</th>
                             <th>No.of<br>Pieces</th>
                             <th>No.of<br>Holes</th>
                             <th>Cutouts</th>
-                            <th>Actucal<br>size(H)</th>
-                            <th>Actucal<br>siz(W)</th>
+                            <th>Actual<br>size(H)</th>
+                            <th>Actual<br>size(W)</th>
                             <th>Area<br>(SQMTR)</th>
                             </thead>
                             <tbody>
                             <?php $i=1; foreach ($invoice as $key) { ?>
                                 <tr id="row<?php echo $i; ?>">
                                     <td><?php echo $i; ?></td>
+                                    <td><select id="material" name="material" class="form-control">
+
+                                        </select> </td>
 
                                     <td><input class="form-control" type="hidden" name="hsn[]" id="hsn<?php echo $i; ?>" readonly ><input class="form-control" type="hidden" name="thickness[]" id="thckness<?php echo $i; ?>" value="<?php echo $key['Thickness']; ?>" readonly><?php echo $key['Thickness']; ?></td>
                                     <td><input class="form-control" type="hidden" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly><?php echo $key['type']; ?></td>
@@ -1169,6 +1173,7 @@
     }
     //** Sheet rate Chage**/
     function change_sheet_rate() {
+
         var tot_area = document.getElementById('sheet_Area').value;
         var rate = document.getElementById('sheet_Rate').value;
         var total = parseFloat(parseFloat(tot_area) * parseFloat(rate));
