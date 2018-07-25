@@ -236,7 +236,12 @@ class User_Model extends CI_Model
           AND YEAR(Created_On) = YEAR(CURRENT_DATE())  GROUP BY Date(Created_On)  ");
         return $query->result_array();
     }
-
+    //** get material */
+    public function get_material($id)
+    {
+        $query=$this->db->query("  SELECT  * from material_master WHERE Material_Icode ='$id' ");
+        return $query->row_array(0);
+    }
 
 
 

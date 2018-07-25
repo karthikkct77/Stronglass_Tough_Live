@@ -70,13 +70,13 @@
                         <table class="table table-hover table-bordered" id="sampleTable2">
                             <thead>
                             <th>Select Material</th>
-                            <th>No.of pieces</th>
+                            <th>No.of sheet</th>
                             <th>Act<br>Size(h)</th>
                             <th>Act<br>Size(w)</th>
                             <th>cha<br>Size(h)</th>
                             <th>cha<br>Size(w)</th>
-                            <th>Area<br>Size(w)</th>
-                            <th>Rate<br>Size(w)</th>
+                            <th>Area</th>
+                            <th>Rate</th>
                             <th>Amount</th>
                             <th></th>
                             </thead>
@@ -1235,6 +1235,30 @@
 
 
     }
+
+    // get Charges
+    $("#sheet_material").change(function () {
+        var mater =document.getElementsByName("sheet_material[]");
+        var material = [];
+        for (var j = 0, iLen = mater.length; j < iLen; j++) {
+            if (mater[j].value!==""){
+                material.push(mater[j].value);
+            }
+        }
+
+        $.ajax({
+            url:"<?php echo site_url('User_Controller/get_material'); ?>",
+            data: {Material: material},
+            type: "POST",
+            cache: false,
+            success:function(data){
+                $("#material").html(data);
+            }
+        });
+
+    });
+
+
 
 
 

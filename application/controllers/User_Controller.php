@@ -1224,6 +1224,25 @@ class User_Controller extends CI_Controller
         }
     }
 
+    //** Get Material Details */
+    public function get_material()
+    {
+        $material = $this->input->post('Material',TRUE);
+        foreach ($material as $key )
+        {
+            $data[] = $this->user_model->get_material($key);
+        }
+        $output = null;
+        foreach ( $data as $row)
+        {
+            $output .= "<option value='".$row['Material_Icode']."'>".$row['Material_Name']."</option>";
+        }
+        echo $output;
+
+
+
+    }
+
 
 
 
