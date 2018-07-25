@@ -1170,39 +1170,64 @@ class User_Controller extends CI_Controller
         $insert = $this->admin_model->Insert_Profoma_Invoice($data);
         if($insert != 0)
         {
-            $material_id = $this->input->post('material');
-            $hsn = $this->input->post('hsn');
-            $qty = $this->input->post('pics');
-            $special = $this->input->post('type');
-            $holes = $this->input->post('holes');
-            $cutout = $this->input->post('cutout');
-            $actual_W = $this->input->post('width');
-            $actual_H = $this->input->post('height');
-            $Charge_W = $this->input->post('ch_weight');
-            $Charge_H = $this->input->post('ch_height');
-            $Area = $this->input->post('area');
-            $Rate = $this->input->post('rate');
-            $cost = $this->input->post('total');
-            $count = sizeof($material_id);
+            $sheet_material_id = $this->input->post('sheet_material');
+            $no_sheet = $this->input->post('sheet_pieces');
+            $act_h = $this->input->post('sheet_Act_Size_H');
+            $act_w = $this->input->post('sheet_Act_Size_W');
+            $cha_h = $this->input->post('sheet_Cha_Size_H');
+            $cha_w = $this->input->post('sheet_Cha_Size_W');
+            $area = $this->input->post('sheet_Area');
+            $rate = $this->input->post('sheet_Rate');
+            $amount = $this->input->post('sheet_Rate_Amt');
+            $count = sizeof($sheet_material_id);
             for($i=0; $i<$count; $i++)
             {
                 $full_data =array( 'Proforma_Icode' => $insert,
-                    'Proforma_Date' => $this->input->post('invoice_date'),
-                    'Proforma_Material_Icode' => $material_id[$i],
-                    'Proforma_HSNCode' => $hsn[$i],
-                    'Proforma_Special' => $special[$i],
-                    'Proforma_Holes' => $holes[$i],
-                    'Proforma_Qty' => $qty[$i],
-                    'Proforma_Cutout'=>$cutout[$i],
-                    'Proforma_Actual_Size_Width' => $actual_W[$i],
-                    'Proforma_Actual_Size_Height' => $actual_H[$i],
-                    'Proforma_Chargeable_Size_Width' =>$Charge_W[$i],
-                    'Proforma_Chargeable_Size_Height' => $Charge_H[$i],
-                    'Proforma_Area_SQMTR' => $Area[$i],
-                    'Proforma_Material_Rate' => $Rate[$i],
-                    'Proforma_Material_Cost' => $cost[$i],
+                    'Proforma_Material_Icode' => $sheet_material_id[$i],
+                    'No_Of_Sheet' => $no_sheet[$i],
+                    'Actual_Height' => $act_h[$i],
+                    'Actual_Width' => $act_w[$i],
+                    'Chargable_Height' => $cha_h[$i],
+                    'Chargable_Width'=>$cha_w[$i],
+                    'Area' => $area[$i],
+                    'Rate' => $rate[$i],
+                    'Total_Amount' =>$amount[$i],
                     'created_by' => $this->session->userdata['userid']);
-                $insert_item = $this->admin_model->Insert_Profoma_Item($full_data);
+                $insert_sheet = $this->user_model->Insert_Profoma_Sheet($full_data);
+            }
+            if($insert_sheet != 0)
+            {
+                $material_id = $this->input->post('material');
+                $qty = $this->input->post('pics');
+                $special = $this->input->post('type');
+                $holes = $this->input->post('holes');
+                $cutout = $this->input->post('cutout');
+                $actual_W = $this->input->post('width');
+                $actual_H = $this->input->post('height');
+                $Charge_W = $this->input->post('ch_weight');
+                $Charge_H = $this->input->post('ch_height');
+                $Area = $this->input->post('area');
+                $Rate = $this->input->post('rate');
+                $cost = $this->input->post('total');
+                $count = sizeof($material_id);
+                for($i=0; $i<$count; $i++)
+                {
+                    $full_data =array( 'Proforma_Icode' => $insert,
+                        'pi_sheet_icode' =>$insert_sheet,
+                        'Proforma_Material_Icode' => $material_id[$i],
+                        'Proforma_Special' => $special[$i],
+                        'Proforma_Holes' => $holes[$i],
+                        'Proforma_Qty' => $qty[$i],
+                        'Proforma_Cutout'=>$cutout[$i],
+                        'Proforma_Actual_Size_Width' => $actual_W[$i],
+                        'Proforma_Actual_Size_Height' => $actual_H[$i],
+                        'Proforma_Chargeable_Size_Width' =>$actual_W[$i],
+                        'Proforma_Chargeable_Size_Height' => $actual_H[$i],
+                        'Proforma_Area_SQMTR' => $Area[$i],
+                        'created_by' => $this->session->userdata['userid']);
+                    $insert_item = $this->user_model->Insert_Profoma_Item_sheet($full_data);
+                }
+
             }
             $charges_id = $this->input->post('charges');
             $charges_count = $this->input->post('no_holes');

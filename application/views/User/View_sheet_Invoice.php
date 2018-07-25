@@ -100,7 +100,7 @@
                                 <td><input class="form-control" type="number" name="sheet_Act_Size_W[]" id="sheet_Act_Size_W" onkeyup="change_sheet_width()" required ></td>
                                 <td><input class="form-control" type="number" name="sheet_Cha_Size_H[]" id="sheet_Cha_Size_H" readonly required ></td>
                                 <td><input class="form-control" type="number" name="sheet_Cha_Size_W[]" id="sheet_Cha_Size_W" readonly  required></td>
-                                <td><input class="form-control" type="number" name="sheet_Area[]" id="sheet_Area" required ></td>
+                                <td><input class="form-control" type="text" name="sheet_Area[]" id="sheet_Area" required readonly ></td>
                                 <td><input class="form-control" type="number" name="sheet_Rate[]" id="sheet_Rate"  onkeyup="change_sheet_rate()" required ></td>
                                 <td><input class="form-control" type="text" name="sheet_Rate_Amt[]" id="sheet_Rate_Amt"  readonly></td>
                                 <td><input type="button" value="Add" id="Sheet_Add" /></td>
@@ -114,30 +114,31 @@
                             <th>#</th>
                             <th>Material</th>
                             <th>Thickness</th>
-                            <th>Special</th>
+                            <th>Actual<br>size(H)</th>
+                            <th>Actual<br>size(W)</th>
                             <th>No.of<br>Pieces</th>
                             <th>No.of<br>Holes</th>
                             <th>Cutouts</th>
-                            <th>Actual<br>size(H)</th>
-                            <th>Actual<br>size(W)</th>
+                            <th>Special</th>
                             <th>Area<br>(SQMTR)</th>
                             </thead>
                             <tbody>
                             <?php $i=1; foreach ($invoice as $key) { ?>
                                 <tr id="row<?php echo $i; ?>">
                                     <td><?php echo $i; ?></td>
-                                    <td><select id="material" name="material" class="form-control">
+                                    <td><select id="material<?php echo $i; ?>" name="material[]" class="form-control">
 
-                                        </select> </td>
-
+                                        </select>
+                                    </td>
                                     <td><input class="form-control" type="hidden" name="hsn[]" id="hsn<?php echo $i; ?>" readonly ><input class="form-control" type="hidden" name="thickness[]" id="thckness<?php echo $i; ?>" value="<?php echo $key['Thickness']; ?>" readonly><?php echo $key['Thickness']; ?></td>
-                                    <td><input class="form-control" type="hidden" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly><?php echo $key['type']; ?></td>
+                                    <td><input class="form-control" type="hidden" name="height[]" id="height<?php echo $i; ?>" value="<?php echo $key['height']; ?>" readonly><?php echo $key['height']; ?></td>
+                                    <td><input class="form-control" type="hidden" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['width']; ?>" readonly><?php echo $key['width']; ?></td>
                                     <td><input class="form-control" type="hidden" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['pics']; ?>" readonly><?php echo $key['pics']; ?></td>
                                     <td><input class="form-control" type="hidden" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['holes']; ?>" readonly><?php echo $key['holes']; ?></td>
                                     <td><input class="form-control" type="hidden" name="cutout[]" id="cutout<?php echo $i; ?>" value="<?php echo $key['cutout']; ?>" readonly><?php echo $key['cutout']; ?></td>
-                                    <td><input class="form-control" type="hidden" name="height[]" id="height<?php echo $i; ?>" value="<?php echo $key['height']; ?>" readonly><?php echo $key['height']; ?></td>
-                                    <td><input class="form-control" type="hidden" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['width']; ?>" readonly><?php echo $key['width']; ?></td>
-                                      <?php
+                                    <td><input class="form-control" type="hidden" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly><?php echo $key['type']; ?></td>
+
+                                    <?php
                                     if($key['area'] > 5)
                                     {
                                         ?>
@@ -162,10 +163,12 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
+                                <td></td>
                                 <td id="total_pic1"><input type="text" class="form-control pull-right" id="total_pic" readonly/></td>
                                 <td></td>
                                 <td></td>
-                                <td></td>
+
                                 <td></td>
                                 <td id="total_area1"><input type="hidden" class="form-control pull-right" id="total_area" value="0"   readonly/></td>
 
@@ -1245,6 +1248,7 @@
                 material.push(mater[j].value);
             }
         }
+        var counts = document.getElementsByName("pics[]");
 
         $.ajax({
             url:"<?php echo site_url('User_Controller/get_material'); ?>",
@@ -1252,7 +1256,11 @@
             type: "POST",
             cache: false,
             success:function(data){
-                $("#material").html(data);
+
+                for (var j = 0, iLen = counts.length; j <= iLen; j++) {
+                    $("#material"+j).html(data);
+                }
+
             }
         });
 

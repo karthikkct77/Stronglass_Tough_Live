@@ -242,6 +242,18 @@ class User_Model extends CI_Model
         $query=$this->db->query("  SELECT  * from material_master WHERE Material_Icode ='$id' ");
         return $query->row_array(0);
     }
+    //** Insert profoma sheet */
+    public  function Insert_Profoma_Sheet($data)
+    {
+        $this->db->insert('proforma_invoice_sheet', $data);
+        return 1;
+    }
+    //** item sheet */
+    public function  Insert_Profoma_Item_sheet($data)
+    {
+        $this->db->insert('proforma_invoice_item_sheet', $data);
+        return 1;
+    }
 
 
 
