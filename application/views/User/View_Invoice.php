@@ -71,14 +71,14 @@
                             <th>#</th>
                             <th>Material</th>
                             <th>Thickness</th>
-                            <th>Special</th>
+                            <th>Actual<br>size(h)</th>
+                            <th>Actual<br>size(w)</th>
+                            <th>Chargable<br>size(h)</th>
+                            <th>Chargable<br>size(w)</th>
                             <th>No.of<br>Pieces</th>
                             <th>No.of<br>Holes</th>
                             <th>Cutouts</th>
-                            <th>Actucal<br>size(h)</th>
-                            <th>Actucal<br>siz(w)</th>
-                            <th>Chargable<br>siz(h)</th>
-                            <th>Chargable<br>size(w)</th>
+                            <th>Special</th>
                             <th>Area<br>(sqmtr)</th>
                             <th>Rate<br>(sqmtr)</th>
                             <th>Total<br>Rs</th>
@@ -102,15 +102,15 @@
                                     <!--                                        <div id="autoSuggestionsList_material"></div>-->
                                     <!--                                    </div>-->
                                     <td><input class="form-control" type="hidden" name="hsn[]" id="hsn<?php echo $i; ?>" readonly ><input class="form-control" type="hidden" name="thickness[]" id="thckness<?php echo $i; ?>" value="<?php echo $key['Thickness']; ?>" readonly><?php echo $key['Thickness']; ?></td>
-                                    <td><input class="form-control" type="hidden" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly><?php echo $key['type']; ?></td>
-                                    <td><input class="form-control" type="hidden" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['pics']; ?>" readonly><?php echo $key['pics']; ?></td>
-                                    <td><input class="form-control" type="hidden" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['holes']; ?>" readonly><?php echo $key['holes']; ?></td>
-                                    <td><input class="form-control" type="hidden" name="cutout[]" id="cutout<?php echo $i; ?>" value="<?php echo $key['cutout']; ?>" readonly><?php echo $key['cutout']; ?></td>
                                     <td><input class="form-control" type="hidden" name="height[]" id="height<?php echo $i; ?>" value="<?php echo $key['height']; ?>" readonly><?php echo $key['height']; ?></td>
                                     <td><input class="form-control" type="hidden" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['width']; ?>" readonly><?php echo $key['width']; ?></td>
                                     <td><input class="form-control" type="number" name="ch_height[]" id="ch_height<?php echo $i; ?>" value="<?php echo $key['ch_height']; ?>" onkeyup="change_Charge_Height('<?php echo $i; ?>')" ></td>
                                     <td><input class="form-control" type="number" name="ch_weight[]" id="ch_weight<?php echo $i; ?>" value="<?php echo $key['ch_weight']; ?>" onkeyup="change_Charge_Width('<?php echo $i; ?>')" ></td>
-                                    <?php
+                                    <td><input class="form-control" type="hidden" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['pics']; ?>" readonly><?php echo $key['pics']; ?></td>
+                                    <td><input class="form-control" type="hidden" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['holes']; ?>" readonly><?php echo $key['holes']; ?></td>
+                                    <td><input class="form-control" type="hidden" name="cutout[]" id="cutout<?php echo $i; ?>" value="<?php echo $key['cutout']; ?>" readonly><?php echo $key['cutout']; ?></td>
+                                    <td><input class="form-control" type="hidden" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly><?php echo $key['type']; ?></td>
+                                     <?php
                                     if($key['area'] > 5)
                                     {
                                         ?>
@@ -136,14 +136,14 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td id="total_pic1"><input type="text" class="form-control pull-right" id="total_pic" readonly/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td id="total_pic1"><input type="hidden" class="form-control pull-right" id="total_pic" readonly/></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                                <td><input type="text" class="form-control pull-right" id="total_area" value="0"   readonly/></td>
+                                <td id="total_area1"><input type="hidden" class="form-control pull-right" id="total_area" value="0"   readonly/></td>
                                 <td></td>
                                 <td> <input type="text" class="form-control pull-right" id="grand_total" value="0"   readonly/>(INR)</td>
                             </tr>
@@ -369,17 +369,17 @@
         }
         document.getElementById('total_area').value=sum_area;
         document.getElementById('total_area1').innerHTML = sum_area;
-//        var pices =document.getElementsByName("pics[]");
-//        var sum_pic = 0;
-//        for (var j = 0, iLen = pices.length; j < iLen; j++) {
-//            if (pices[j].value!==""){
-//                val=parseFloat(pices[j].value);
-//                sum_pic +=val;
-//            }
-//        }
-//
-//        document.getElementById('total_pic').value = parseInt(sum_pic);
-//        document.getElementById('total_pic1').innerHTML = parseInt(sum_pic);
+        var pices =document.getElementsByName("pics[]");
+        var sum_pic = 0;
+        for (var j = 0, iLen = pices.length; j < iLen; j++) {
+            if (pices[j].value!==""){
+                val=parseFloat(pices[j].value);
+                sum_pic +=val;
+            }
+        }
+
+        document.getElementById('total_pic').value = parseInt(sum_pic);
+        document.getElementById('total_pic1').innerHTML = parseInt(sum_pic);
     });
 
     // Get Company Addresss
