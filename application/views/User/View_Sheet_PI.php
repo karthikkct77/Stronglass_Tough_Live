@@ -37,6 +37,7 @@
 
                 <div class="tile">
                     <div class="row invoice">
+                        <img style="position: absolute;width: 100px;height: auto;top: 1%;left: 1%;" src="<?php echo base_url('img/strong.png'); ?>" alt="User Image">
                         <h4><?php echo $st[0]['ST_Name']; ?></h4>
                         <h5><?php echo $st[0]['ST_Address_1']; ?>,&nbsp;<?php echo $st[0]['ST_Area']; ?>,&nbsp;<?php echo $st[0]['ST_City']; ?></h5>
                         <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
@@ -100,58 +101,81 @@
                                 <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly></h4>
                             </div>
                         </div>
+                        <h6 style="text-align: center">Total Number of Sheets used to Cut the following glasses</h6>
+                        <div class="row">
+                            <table class="table table-hover table-bordered" id="sampleTable2">
+                                <thead>
+                                <th>#</th>
+                                <th>Select Material</th>
+                                <th>No.of sheet</th>
+                                <th>Act<br>Size(h)</th>
+                                <th>Act<br>Size(w)</th>
+                                <th>cha<br>Size(h)</th>
+                                <th>cha<br>Size(w)</th>
+                                <th>Area</th>
+                                <th>Rate</th>
+                                <th>Amount</th>
+
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot>
+                                <?php $i=1; foreach ($sheet as $key) { ?>
+                                <tr>
+                                    <td><?php echo $i; ?></td>
+                                    <td><?php echo $key['Material_Name']; ?></td>
+                                    <td><?php echo $key['No_Of_Sheet']; ?></td>
+                                    <td><?php echo $key['Actual_Height']; ?></td>
+                                    <td><?php echo $key['Actual_Width']; ?></td>
+                                    <td><?php echo $key['Chargable_Height']; ?></td>
+                                    <td><?php echo $key['Chargable_Width']; ?></td>
+                                    <td><?php echo $key['Area']; ?></td>
+                                    <td><?php echo $key['Rate']; ?></td>
+                                    <td><?php echo $key['Total_Amount']; ?></td>
+                                </tr>
+                                </tfoot>
+                                <?php
+                                }
+                                ?>
+                            </table>
+                        </div>
                         <div class="row">
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
                                 <th>#</th>
                                 <th>Material</th>
-                                <th>Special</th>
-                                <th>No.of Pieces</th>
-                                <th>No.of Holes</th>
+                                <th>Actual<br>size(H)</th>
+                                <th>Actual<br>size(W)</th>
+                                <th>No.of<br>Pieces</th>
+                                <th>No.of<br>Holes</th>
                                 <th>Cutouts</th>
-                                <th>Actucal<br>SizeW)</th>
-                                <th>Actucal<br>SizeH)</th>
-                                <th>Chargable<br>SizeW)</th>
-                                <th>Chargable<br>SizeH)</th>
+                                <th>Special</th>
                                 <th>Area<br>(SQMTR)</th>
-                                <th>Rate<br>(SQMTR)</th>
-                                <th>Total<br>Rs</th>
                                 </thead>
                                 <tbody>
                                 <?php $i=1; foreach ($invoice_item as $key) { ?>
                                     <tr id="row<?php echo $i; ?>">
-                                        <input class="form-control" type="hidden" name="material[]"  value="<?php echo $key['Proforma_Invoice_Items_Icode']; ?>" >
-                                        <input class="form-control" type="hidden" name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" >
                                         <td><?php echo $i; ?></td>
                                         <td><?php echo $key['Material_Name']; ?></td>
-                                        <td><?php echo $key['Proforma_Special']; ?></td>
+                                        <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
+                                        <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
                                         <td><?php echo $key['Proforma_Qty']; ?></td>
                                         <td><?php echo $key['Proforma_Holes']; ?></td>
                                         <td><?php echo $key['Proforma_Cutout']; ?></td>
-                                        <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
-                                        <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
-                                        <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
-                                        <td><?php echo $key['Proforma_Chargeable_Size_Height']; ?></td>
+                                        <td><?php echo $key['Proforma_Special']; ?></td>
                                         <td><?php echo $key['Proforma_Area_SQMTR']; ?></td>
-                                        <td><?php echo $key['Proforma_Material_Rate']; ?></td>
-                                        <td><?php echo $key['Proforma_Material_Cost']; ?></td>
                                     </tr>
                                     <?php $i++; } ?>
                                 <tr>
                                     <td></td>
                                     <td></td>
-
+                                    <td></td>
                                     <td></td>
                                     <td><input type="hidden" class="form-control pull-right" id="total_pic" value="<?php echo $invoice_total[0]['qty']; ?>"readonly/><?php echo $invoice_total[0]['qty']; ?></td>
                                     <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td><?php echo $invoice_total[0]['cutout']; ?></td>
                                     <td></td>
                                     <td><input type="hidden" class="form-control pull-right" id="total_area" value="<?php echo round($invoice_total[0]['area'], 2); ?>"   readonly/><?php echo round($invoice_total[0]['area'], 3); ?></td>
-                                    <td></td>
-                                    <td> <input type="hidden" class="form-control pull-right" id="grand_total" value="<?php echo round($invoice_total[0]['rate'],2); ?>"   readonly/><?php echo round($invoice_total[0]['rate'],3); ?></td>
+
                                 </tr>
                                 </tbody>
                             </table>
@@ -222,19 +246,19 @@
                                         <td colspan="4" align="right">SUB-TOTAL</td>
 
                                         <td><input class="form-control" type="text" name="sub_tot" id="sub_tot" value="<?php echo $invoice[0]['Sub_Total']; ?>" readonly ></td>
-                                        <td></td>
+
                                     </tr>
                                     <tr>
                                         <td colspan="4" align="right">HANDLING CHARGE</td>
 
                                         <td><input class="form-control" type="text" name="insurance" id="insurance" value="<?php echo $invoice[0]['Insurance_Value']; ?>" required readonly></td>
-                                        <td></td>
+
                                     </tr>
                                     <tr>
                                         <td colspan="4" align="right">TRANSPORT</td>
 
                                         <td><input class="form-control" type="text" name="transport" id="transport"  value="<?php echo $invoice[0]['Transport']; ?>" readonly></td>
-                                        <td></td>
+
                                     </tr>
                                     <?php
                                     if($invoice[0]['IGST_Value'] == '0')
@@ -243,14 +267,14 @@
                                             <td colspan="4" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
 
                                             <td><input class="form-control" type="text" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ></td>
-                                            <td></td>
+
                                         </tr>
                                         <tr>
                                             <td colspan="4" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
                                                 <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
                                             </td>
                                             <td><input class="form-control" type="text" name="cgst" id="cgst" value="<?php echo $invoice[0]['CGST_Value']; ?>" readonly ></td>
-                                            <td></td>
+
                                         </tr>
 
                                     <?php }
@@ -261,7 +285,7 @@
                                                 <input type="hidden" id="gst" value="18">
                                             </td>
                                             <td><input class="form-control" type="text" name="igst" id="igst" value="<?php echo $invoice[0]['IGST_Value']; ?>" readonly ></td>
-                                            <td></td>
+
                                         </tr>
                                         <?php
                                     }
@@ -270,7 +294,7 @@
 
                                         <td colspan="4" align="right">GROSS TOTAL</td>
                                         <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" >(INR)</td>
-                                        <td></td>
+
                                     </tr>
                                     </tfoot>
                                 </table>
