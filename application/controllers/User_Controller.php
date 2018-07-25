@@ -1282,8 +1282,26 @@ class User_Controller extends CI_Controller
         }
         echo $output;
 
+    }
 
-
+    //** Edit Sheet Invoice */
+    public function Edit_Sheet_Invoice ()
+    {
+        $pi_icode = $this->uri->segment(3);
+        $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
+        $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
+        $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
+        $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
+        $data['sheet'] = $this->user_model->Get_Single_Sheet($pi_icode);
+        $data['stock']= $this->admin_model->get_all_item();
+        $data['tax']= $this->admin_model->get_Tax();
+        $data['st']= $this->admin_model->get_ST();
+        $data['charges']= $this->admin_model->get_all_charges();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/Edit_Sheet_Invoice',$data,false);
+        $this->load->view('User/footer');
     }
 
 

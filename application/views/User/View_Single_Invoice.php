@@ -99,7 +99,8 @@
                             <input class="form-control" type="hidden" name="PI_Icode"  id="PI_Icode" value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
                             <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly></h4>
                             <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly></h4>
-                        </div>
+                           <h3><?php echo $invoice[0]['PI_Type']; ?></h3>
+                         </div>
                     </div>
                     <div class="row">
                         <table class="table table-hover table-bordered" id="sampleTable">
@@ -223,19 +224,19 @@
                                     <td colspan="4" align="right">SUB-TOTAL</td>
 
                                     <td><input class="form-control" type="text" name="sub_tot" id="sub_tot" value="<?php echo $invoice[0]['Sub_Total']; ?>" readonly ></td>
-                                    <td></td>
+
                                 </tr>
                                 <tr>
                                     <td colspan="4" align="right">HANDLING CHARGE</td>
 
                                     <td><input class="form-control" type="text" name="insurance" id="insurance" value="<?php echo $invoice[0]['Insurance_Value']; ?>" required readonly></td>
-                                    <td></td>
+
                                 </tr>
                                 <tr>
                                     <td colspan="4" align="right">TRANSPORT</td>
 
                                     <td><input class="form-control" type="text" name="transport" id="transport"  value="<?php echo $invoice[0]['Transport']; ?>" readonly></td>
-                                    <td></td>
+
                                 </tr>
                                 <?php
                                 if($invoice[0]['IGST_Value'] == '0')
@@ -244,14 +245,14 @@
                                         <td colspan="4" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
 
                                         <td><input class="form-control" type="text" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ></td>
-                                        <td></td>
+
                                     </tr>
                                     <tr>
                                         <td colspan="4" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
                                             <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
                                         </td>
                                         <td><input class="form-control" type="text" name="cgst" id="cgst" value="<?php echo $invoice[0]['CGST_Value']; ?>" readonly ></td>
-                                        <td></td>
+
                                     </tr>
 
                                 <?php }
@@ -262,7 +263,7 @@
                                             <input type="hidden" id="gst" value="18">
                                         </td>
                                         <td><input class="form-control" type="text" name="igst" id="igst" value="<?php echo $invoice[0]['IGST_Value']; ?>" readonly ></td>
-                                        <td></td>
+
                                     </tr>
                                     <?php
                                 }
@@ -271,7 +272,7 @@
 
                                     <td colspan="4" align="right">GROSS TOTAL</td>
                                     <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" >(INR)</td>
-                                    <td></td>
+
                                 </tr>
                                 </tfoot>
                             </table>
@@ -306,7 +307,8 @@
                                 <input type="button" id="with_print" class="btn btn-info" onclick="Request_Approve()" value="Request Work Order">
                                 <button class="btn btn-danger pi_button " type="submit" id="with_print"><i class="fa fa-fw fa-lg fa-check-circle"></i>Send PI To Customer</button>
                                 <input  type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="Print PI">
-                                <a class="btn btn-success pi_button" id="with_print" href="<?php echo site_url('User_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT PI</a>
+
+                                    <a class="btn btn-success pi_button" id="with_print" href="<?php echo site_url('User_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT PI</a>
 
                             <?php } ?>
 

@@ -329,7 +329,7 @@
                                     <input type="button" id="with_print" class="btn btn-info" onclick="Request_Approve()" value="Request Work Order">
                                     <button class="btn btn-danger pi_button " type="submit" id="with_print"><i class="fa fa-fw fa-lg fa-check-circle"></i>Send PI To Customer</button>
                                     <input  type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="Print PI">
-                                    <a class="btn btn-success pi_button" id="with_print" href="<?php echo site_url('User_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT PI</a>
+                                    <a class="btn btn-success pi_button" id="with_print" href="<?php echo site_url('User_Controller/Edit_Sheet_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT PI</a>
 
                                 <?php } ?>
 
