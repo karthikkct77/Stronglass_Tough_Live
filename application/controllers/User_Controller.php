@@ -893,6 +893,24 @@ class User_Controller extends CI_Controller
         $this->load->view('User/View_Single_WO',$data,false);
         $this->load->view('User/footer');
     }
+    /** Get Single sheet */
+    public function single_sheet_Invoice()
+    {
+        $pi_icode = $this->uri->segment(3);
+        $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
+        $data['invoice_item'] = $this->user_model->Get_Single_Invoice_Item_Sheet($pi_icode);
+        $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
+        $data['invoice_total'] = $this->user_model->Get_Single_Invoice_Item_Sheet_Total($pi_icode);
+        $data['sheet'] = $this->user_model->Get_Single_Sheet($pi_icode);
+        $data['tax']= $this->admin_model->get_Tax();
+        $data['st']= $this->admin_model->get_ST();
+        $data['wo'] = $this->user_model->Get_Single_wo($pi_icode);
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/View_Sheet_PI',$data,false);
+        $this->load->view('User/footer');
+    }
 
     /** Request to Approve */
     public function Request_To_Approve()

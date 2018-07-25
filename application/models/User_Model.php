@@ -254,6 +254,26 @@ class User_Model extends CI_Model
         $this->db->insert('proforma_invoice_item_sheet', $data);
         return 1;
     }
+    /** Get single Perfoma invoice single item sheet */
+    public function Get_Single_Invoice_Item_Sheet($pi_id)
+    {
+        $query = $this->db->query("SELECT * FROM proforma_invoice_item_sheet A INNER JOIN material_master B on A.Proforma_Material_Icode=B.Material_Icode WHERE A.Proforma_Icode='$pi_id'");
+        return $query->result_array();
+    }
+    /** Get Invoice Item Total */
+    public function Get_Single_Invoice_Item_Sheet_Total($pi_id)
+    {
+        $query = $this->db->query("SELECT SUM(A.Proforma_Qty) as qty, SUM(A.Proforma_Area_SQMTR) as area, SUM(A.Proforma_Material_Cost) as rate FROM proforma_invoice_item_sheet A INNER JOIN material_master B on A.Proforma_Material_Icode=B.Material_Icode
+                                  WHERE A.Proforma_Icode='$pi_id'");
+        return $query->result_array();
+    }
+    //** Get Sheet Details */
+    public function Get_Single_Sheet($pi_id)
+    {
+
+        $query = $this->db->query("SELECT * FROM proforma_invoice_sheet A INNER JOIN material_master B on A.Proforma_Material_Icode=B.Material_Icode WHERE A.Proforma_Icode='$pi_id'");
+        return $query->result_array();
+    }
 
 
 

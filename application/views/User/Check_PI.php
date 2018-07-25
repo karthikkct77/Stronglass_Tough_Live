@@ -32,6 +32,7 @@
                             <th>Total Amount</th>
                             <th>PI Generated  By </th>
                             <th>Status</th>
+                            <th>Type</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -60,7 +61,30 @@
                                 { ?>
                                     <td>Yet to Review</td>
                                 <?php }?>
-                                <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/single_Invoice/') . $val['Proforma_Icode']; ?>">Review</a></td>
+                                <?php
+                                if ($val['PI_Type'] == '1') { ?>
+                                    <td>Sheet PI</td>
+                                    <?php
+                                }
+                                else
+                                {
+                                    ?>
+                                    <td>Normal PI</td>
+                                    <?php
+                                }
+                                ?>
+                                <?php
+                                if ($val['PI_Type'] == '1') { ?>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/single_sheet_Invoice/') . $val['Proforma_Icode']; ?>">Review</a></td>
+                                    <?php
+                                }
+                                else
+                                {
+                                    ?>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/single_Invoice/') . $val['Proforma_Icode']; ?>">Review</a></td>
+                                    <?php
+                                }
+                                ?>
                             </tr>
                             <?php
                             $i++;
