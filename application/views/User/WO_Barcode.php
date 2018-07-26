@@ -1,5 +1,5 @@
 <main class="app-content">
-    <div id="printableArea"  >
+    <div   >
         <div class="app-title">
             <div>
                 <h1><i class="fa fa-edit"></i>Work Order Barcode</h1>
@@ -140,30 +140,6 @@
                             </table>
 
                         </div>
-<!--                        <div >-->
-<!--                            --><?php
-//                            foreach ($invoice_item as $key)
-//                            {
-//                                $total = $key['Proforma_Qty'];
-//                                for ($i=1;$i<=$total;$i++)
-//                                { ?>
-<!---->
-<!--                                    <div style="width: 405.952756px; height: 204px; background: red">-->
-<!--                                        <h4 class="st">STRONGLASS TOUGH  <span class="special"><h2 style="position: absolute;top: 10px;margin-left: 15px;"> --><?php //echo $key['Proforma_Special']; ?><!-- </h2></span></h4>-->
-<!--                                        <h4>WO.NO : --><?php //echo $wo[0]['WO_Number']; ?><!-- <span class="customer">--><?php //echo $invoice[0]['Customer_Company_Name']; ?><!--</span></h4>-->
-<!--                                        <h4>Thickness: --><?php //echo $key['Material_Name']; ?><!-- <span style="margin-left: 70px;"> QTY: --><?php //echo $key['Proforma_Qty']; ?><!--</span></h4>-->
-<!--                                        <h1>SIZE :--><?php //echo $key['Proforma_Actual_Size_Width']; ?><!-- * --><?php //echo $key['Proforma_Actual_Size_Height']; ?><!--</h1>-->
-<!--                                        <h4>Holes: --><?php //echo $key['Proforma_Holes']; ?><!-- <span  style="margin-left: 25px;">Cutouts: --><?php //echo $key['Proforma_Cutout']; ?><!--</span><span  style="margin-left: 25px;">Other: C & W</span></h4>-->
-<!--                                    </div>-->
-<!---->
-<!--                                    <hr>-->
-<!--                                    --><?php
-//                                }
-//                                ?>
-<!--                                --><?php
-//                            }
-//                            ?>
-<!--                        </div>-->
                         <div class="row">
                             <div class="col-md-5">
                                 <h3 style="font-size: 15px;">Terms & Conditions</h3>
@@ -293,7 +269,7 @@
                                 <?php if($_SESSION['role'] == 6) { ?>
 
                                     <button class="btn btn-danger pi_button" id="with_print" type="submit"><i class="fa fa-fw fa-lg fa-print"></i> Barcode Print</button>
-                                    <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()"value="Print"/>
+                                    <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="printDiv('printableArea')" value="Print"/>
                                 <?php } elseif($_SESSION['role'] == 7){
                                     ?>
                                 <?php } ?>
@@ -301,6 +277,119 @@
                             </div>
                         </div>
                     </form>
+
+                    <div id="printableArea">
+                        <div class="row invoice">
+                            <img style="position: absolute;width: 100px;height: auto;" src="<?php echo base_url('img/strong.png'); ?>" alt="User Image">
+                            <h4><?php echo $st[0]['ST_Name']; ?></h4>
+                            <h5><?php echo $st[0]['ST_Address_1']; ?>,&nbsp;<?php echo $st[0]['ST_Area']; ?>,&nbsp;<?php echo $st[0]['ST_City']; ?></h5>
+                            <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div id="consign">
+                                    <h4><span>Work Order No</span>: <?php echo $wo[0]['WO_Number']; ?></h4>
+                                    <h4><span>Proforma No</span>  :<?php echo $wo[0]['WO_Number']; ?></h4>
+                                    <h4><span>Work Order Date</span> :<?php $date = $wo[0]['WO_Created_On']; echo date("H:i",strtotime($date)); ?></h4>
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6">
+                                <h4><span>Project </span>:<?php echo $invoice[0]['Customer_Company_Name']; ?></h4>
+                                <h4><span>Prepared Date</span>  :<?php echo date($wo[0]['WO_Date']); ?></h4>
+                                <h4><span>Work Order Date</span> :<?php $date = $wo[0]['WO_Date']; echo date('Y-m-d', strtotime($date. ' + 2 days')); ?></h4>
+
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <table class="table table-hover table-bordered" id="sampleTable">
+                                    <thead>
+                                    <th>#</th>
+                                    <th>Material</th>
+                                    <th>Actual<br>size(h)</th>
+                                    <th>Actual<br>size(w)</th>
+                                    <th>No.of<br>Pieces</th>
+                                    <th>No.of<br>Holes</th>
+                                    <th>Cutouts</th>
+                                    <th>Special</th>
+                                    <th>Area<br>(sqmtr)</th>
+                                    </thead>
+                                    <tbody>
+                                    <?php $i=1; foreach ($invoice_item as $key) { ?>
+                                        <tr id="row<?php echo $i; ?>">
+                                            <td><?php echo $i; ?></td>
+                                            <td><?php echo $key['Material_Name']; ?></td>
+                                            <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
+                                            <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
+                                            <td><?php echo $key['Proforma_Qty']; ?></td>
+                                            <td><input type="hidden" name="holes_print[]" value="<?php echo $key['Proforma_Holes']; ?>" ><?php echo $key['Proforma_Holes']; ?></td>
+                                            <td><input type="hidden" name="cutout_print[]" value="<?php echo $key['Proforma_Cutout']; ?>" ><?php echo $key['Proforma_Cutout']; ?></td>
+                                            <td><?php echo $key['Proforma_Special']; ?></td>
+                                            <td><?php echo $key['Proforma_Area_SQMTR']; ?></td>
+                                        </tr>
+                                        <?php $i++; } ?>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td><?php echo $invoice_total[0]['qty']; ?></td>
+                                        <td id="holes_print"></td>
+                                        <td id="cutout_print"></td>
+                                        <td></td>
+                                        <td><?php echo round($invoice_total[0]['area'], 2); ?></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                            <div class="col-md-4">
+                                <table class="table table-hover table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th>Extra Charges</th>
+                                        <th>Count</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    $i=1;
+                                    foreach ($invoice_Charges as $key) {
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $key['charge_name']; ?></td>
+                                            <td><?php echo $key['Proforma_Charge_Count']; ?></td>
+                                        </tr>
+                                        <?php
+                                        $i++;
+                                    }
+                                    ?>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row" style="margin-top: 150px;">
+                            <div class="col-md-3">
+
+                                <h4 class="st_check">Prepared By</h4>
+
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="st_check">Checked By</h4>
+                            </div>
+                            <div class="col-md-3">
+                                <h4 class="st_check">Production Manager</h4>
+                            </div>
+
+                        </div>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -312,15 +401,18 @@
         #with_print {
             display: none;
         }
+        @page { size: landscape; }
     }
-    @page {
-        margin: 0mm;  /* this affects the margin in the printer settings */
-    }
+
     #search_data {
         width: 200px;
         padding: 5px;
         margin: 5px 0;
         box-sizing: border-box;
+    }
+    h4 span{
+        width: 185px;
+        float: left;
     }
     #autoSuggestionsList > li {
         background: none repeat scroll 0 0 #F3F3F3;
@@ -369,6 +461,32 @@
 </style>
 
 <script type="text/javascript">
+
+    $( document ).ready(function() {
+        number_to_words();
+
+        var totals =document.getElementsByName("holes_print[]");
+        var sum1 = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum1 +=val;
+            }
+        }
+        document.getElementById('holes_print').innerHTML = sum1 ;
+
+        var totals_cut =document.getElementsByName("cutout_print[]");
+        var sum2 = 0;
+        for (var j = 0, iLen = totals_cut.length; j < iLen; j++) {
+            if (totals_cut[j].value!==""){
+                val=parseFloat(totals_cut[j].value);
+                sum2 +=val;
+            }
+        }
+        document.getElementById('cutout_print').innerHTML = sum2 ;
+
+    });
+
     function printDiv(divName) {
         var printContents = document.getElementById(divName).innerHTML;
         var originalContents = document.body.innerHTML;
@@ -376,9 +494,6 @@
         window.print();
         document.body.innerHTML = originalContents;
     }
-    $( document ).ready(function() {
-        number_to_words();
-    });
 </script>
 
 
