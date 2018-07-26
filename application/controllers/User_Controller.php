@@ -656,8 +656,19 @@ class User_Controller extends CI_Controller
                     'WO_Confirm_On'=>date('Y-m-d H:i:s'));
                 $this->db->where('Proforma_Icode',$id);
                 $this->db->update('proforma_invoice', $update);
-                $this->session->set_flashdata('feedback', 'Work Order Generated Successfully ..');
-                redirect('User_Controller/single_WO/'.$id);
+
+                $pi_type = $this->input->post('invoice_type');
+                if($pi_type == '1')
+                {
+                    $this->session->set_flashdata('feedback', 'Work Order Generated Successfully ..');
+                    redirect('User_Controller/single_sheet_WO/'.$id);
+                }
+                else
+                {
+                    $this->session->set_flashdata('feedback', 'Work Order Generated Successfully ..');
+                    redirect('User_Controller/single_WO/'.$id);
+                }
+
             }
         }
         elseif ($role == 7) // Pi Confirm

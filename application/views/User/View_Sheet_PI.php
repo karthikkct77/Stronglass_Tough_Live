@@ -46,6 +46,7 @@
                     <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Save_Work_Order'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
                         <div class="row">
                             <div class="col-md-4">
+                                <input type="text" name="invoice_type" id="invoice_type" value="<?php echo $invoice[0]['PI_Type']; ?>">
                                 <h5>Consignee</h5>
                                 <div id="consign">
                                     <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
