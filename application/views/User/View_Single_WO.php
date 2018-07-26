@@ -6,6 +6,7 @@
         </div>
         <div class="row invoice">
             <img style="position: absolute;width: 100px;height: auto;top: 1%;left: 1%;" src="<?php echo base_url('img/strong.png'); ?>" alt="User Image">
+            <h6>Work Order</h6>
             <h4><?php echo $st[0]['ST_Name']; ?></h4>
             <h5><?php echo $st[0]['ST_Address_1']; ?>,&nbsp;<?php echo $st[0]['ST_Area']; ?>,&nbsp;<?php echo $st[0]['ST_City']; ?></h5>
             <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
@@ -251,30 +252,11 @@
                                 </tfoot>
                             </table>
                         </div>
-                        <script>
-                            $("#insurance").on('change keyup paste', function() {
-                                var sub_tot =document.getElementById('sub_tot').value;
-                                var insurance =document.getElementById('insurance').value;
-                                var gst = document.getElementById('gst').value;
-                                var sum = ((parseFloat(sub_tot) + parseFloat(insurance)) * gst / 100 );
-                                document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
-                                document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
-                                var sgst = document.getElementById('sgst').value;
-                                var cgst = document.getElementById('cgst').value;
-                                var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst));
-                                document.getElementById('gross_tot').value = parseInt(grant);
-                            });
-                        </script>
                     </div>
                     <hr>
                     <div class="row">
                         <div class="col-md-6">
-                            <h4>Bank Details</h4>
-                            <h5>Stronglass Tough</h5>
-                            <h5>A/C Type: <span><?php echo $st[0]['ST_Bank_Account_Type']; ?></span></h5>
-                            <h5>A/C Number: <span><?php echo $st[0]['ST_Bank_Account_Number']; ?></span></h5>
-                            <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
-                            <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
+
                         </div>
                         <div class="col-md-6">
                             <a class="btn btn-success pull-right" href="<?php echo site_url('User_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT</a>
@@ -286,23 +268,6 @@
                             <?php } ?>
 
                         </div>
-                    </div>
-                    <div class="row" style="margin-top: 150px;">
-                        <div class="col-md-3">
-
-                            <h4 class="st_check">Customer's Acceptance <br>Sign & Seal</h4>
-
-                        </div>
-                        <div class="col-md-3">
-                            <h4 class="st_check">Prepared By</h4>
-                        </div>
-                        <div class="col-md-3">
-                            <h4 class="st_check">Checked By</h4>
-                        </div>
-                        <div class="col-md-3">
-                            <h4 class="st_check">(Authorised Signatory)</h4>
-                        </div>
-
                     </div>
 
                 </form>
