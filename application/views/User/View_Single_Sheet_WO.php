@@ -43,7 +43,7 @@
                         <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
                     </div>
                     <hr>
-                    <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Save_Work_Order'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
+                    <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Barcode'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
                         <div class="row">
                             <div class="col-md-4">
                                 <h5>Consignee</h5>
@@ -324,14 +324,10 @@
                             <div class="col-md-6">
                                 <?php if($_SESSION['role'] == 6) { ?>
 
-                                    <button id="with_print" class="btn btn-danger pi_button" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i> Generate WO</button>
-                                    <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="Print"/>
+                                    <button class="btn btn-danger pi_button" id="with_print" type="submit"><i class="fa fa-fw fa-lg fa-print"></i> Barcode Print</button>
+                                    <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()"value="Print"/>
                                 <?php } elseif($_SESSION['role'] == 7){
                                     ?>
-                                    <input type="button" id="with_print" class="btn btn-info" onclick="Request_Approve()" value="Request Work Order">
-                                    <button class="btn btn-danger pi_button " type="submit" id="with_print"><i class="fa fa-fw fa-lg fa-check-circle"></i>Send PI To Customer</button>
-                                    <input  type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="Print PI">
-                                    <a class="btn btn-success pi_button" id="with_print" href="<?php echo site_url('User_Controller/Edit_Sheet_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT PI</a>
 
                                 <?php } ?>
 
@@ -646,73 +642,7 @@
         }
     }
 
-    function get_row(id) {
-        $.ajax({
-            url:"<?php echo site_url('Admin_Controller/get_Customer_Address'); ?>",
-            data: {id:
-            id},
-            type: "POST",
-            success:function(server_response){
-                $("#company_name2").html(server_response);
-                $('#suggestions').hide();
-                $('#Buyer').show();
-                document.getElementById('coustomer1').innerHTML =  document.getElementById('coustomer').innerHTML;
-                document.getElementById('address1').innerHTML  = document.getElementById('address').innerHTML;
-                document.getElementById('phone1').innerHTML =  document.getElementById('phone').innerHTML
-                document.getElementById('gstn1').innerHTML =  document.getElementById('gstn').innerHTML;
-            }
-        });
-        $.ajax({
-            url:"<?php echo site_url('Admin_Controller/get_Customer_Details'); ?>",
-            data: {id:
-            id},
-            type: "POST",
-            success:function(server_response){
-                $('#suggestions').hide();
-                var data = $.parseJSON(server_response);
-                document.getElementById('search_data').value = data[0]['Customer_Company_Name'];
-                document.getElementById('company_name').value = data[0]['Customer_Icode'];
-                document.getElementById('coustomer').innerHTML = data[0]['Customer_Company_Name'];
-                document.getElementById('address').innerHTML = data[0]['Customer_Address_1'] + data[0]['Customer_Area']  + data[0]['Customer_City'];
-                document.getElementById('phone').innerHTML = "Mob :" + data[0]['Customer_Phone'];
-                document.getElementById('gstn').innerHTML = "GSTIN :" + data[0]['Customer_GSTIN'];
-                $('#Buyer').show();
-                $('#company_name2').hide();
-                document.getElementById('coustomer1').innerHTML =  document.getElementById('coustomer').innerHTML;
-                document.getElementById('address1').innerHTML  = document.getElementById('address').innerHTML;
-                document.getElementById('phone1').innerHTML =  document.getElementById('phone').innerHTML
-                document.getElementById('gstn1').innerHTML =  document.getElementById('gstn').innerHTML;
-            }
-        });
-    }
 
-    /** Request for Approve **/
-    function Request_Approve() {
-        if (confirm("Do you Want Request to Approve WO...!")) {
-            var pi_code = document.getElementById('PI_Icode').value;
-            $.ajax({
-                url:"<?php echo site_url('User_Controller/Request_To_Approve'); ?>",
-                data: {id: pi_code},
-                type: "POST",
-                success:function(data){
-                    if(data == '1')
-                    {
-                        swal({
-                                title: "Success!",
-                                text: 'PI Request Send Success',
-                                type: "success"
-                            },
-                            function(){
-                                window.location.href = document.referrer;
-                            });
-                    }
-
-                }
-            });
-
-        }
-
-    }
 
 
     // Number into words

@@ -45,7 +45,19 @@
                                 <td><?php echo $val['WO_Date']; ?></td>
                                 <td><?php echo $val['Proforma_Number']; ?></td>
                                 <td><?php echo $val['GrossTotal_Value']; ?></td>
-                                <td><a class="btn btn-info" href="<?php echo site_url('User_Controller/single_WO/') . $val['Proforma_Icode']; ?>">View</a></td>
+
+                                <?php
+                                if ($val['PI_Type'] == '1') { ?>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/single_sheet_WO/') . $val['Proforma_Icode']; ?>">View</a></td>
+                                    <?php
+                                }
+                                else
+                                {
+                                    ?>
+                                    <td><a class="btn btn-info" href="<?php echo site_url('User_Controller/single_WO/') . $val['Proforma_Icode']; ?>">View</a></td>
+                                    <?php
+                                }
+                                ?>
                             </tr>
                             <?php
                             $i++;
