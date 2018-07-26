@@ -100,7 +100,7 @@
                                 <td><input class="form-control" type="number" name="sheet_Act_Size_H[]" id="sheet_Act_Size_H"  onkeyup="change_sheet_height()" required ></td>
                                 <td><input class="form-control" type="number" name="sheet_Act_Size_W[]" id="sheet_Act_Size_W" onkeyup="change_sheet_width()" required ></td>
                                 <td><input class="form-control" type="number" name="sheet_Cha_Size_H[]" id="sheet_Cha_Size_H" readonly required ></td>
-                                <td><input class="form-control" type="number" name="sheet_Cha_Size_W[]" id="sheet_Cha_Size_W" readonly  required></td>
+                                <td><input class="form-control" type="number" name="sheet_Act_Size_W[]" id="sheet_Cha_Size_W" readonly  required></td>
                                 <td><input class="form-control" type="text" name="sheet_Area[]" id="sheet_Area" required readonly ></td>
                                 <td><input class="form-control" type="number" name="sheet_Rate[]" id="sheet_Rate"  onkeyup="change_sheet_rate()" required ></td>
                                 <td><input class="form-control" type="text" name="sheet_Rate_Amt[]" id="sheet_Rate_Amt"  readonly></td>

@@ -47,6 +47,9 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <h5>Consignee</h5>
+                                <input  class="form-control" style="display: none;" name="search_data" id="search_data" type="text" value="<?php echo $invoice[0]['Customer_Company_Name']; ?>" required readonly>
+                                <input  class="form-control" name="company_name" id="company_name" type="text" value="<?php echo $invoice[0]['consignee']; ?>">
+
                                 <div id="consign">
                                     <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
                                     <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; echo '&nbsp'; ?>,<?php echo $invoice[0]['Customer_Address_2']; echo '&nbsp';?>,<?php echo $invoice[0]['Customer_Area']; ?></h5>

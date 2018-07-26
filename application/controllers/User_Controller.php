@@ -1192,8 +1192,8 @@ class User_Controller extends CI_Controller
             $no_sheet = $this->input->post('sheet_pieces');
             $act_h = $this->input->post('sheet_Act_Size_H');
             $act_w = $this->input->post('sheet_Act_Size_W');
-            $cha_h = $this->input->post('sheet_Cha_Size_H');
-            $cha_w = $this->input->post('sheet_Cha_Size_W');
+            $cha_h = $this->input->post('sheet_Act_Size_H');
+            $cha_w = $this->input->post('sheet_Act_Size_W');
             $area = $this->input->post('sheet_Area');
             $rate = $this->input->post('sheet_Rate');
             $amount = $this->input->post('sheet_Rate_Amt');
@@ -1456,7 +1456,7 @@ class User_Controller extends CI_Controller
                 }
             }
             $this->session->set_flashdata('feedback', 'Updated Invoice..');
-            redirect('User_Controller/single_Invoice/'.$picode);
+            redirect('User_Controller/single_sheet_Invoice/'.$picode);
         }
     }
 
