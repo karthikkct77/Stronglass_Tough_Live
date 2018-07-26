@@ -1309,7 +1309,7 @@ class User_Controller extends CI_Controller
     public function Update_Sheet_Invoice()
     {
         $picode = $this->input->post('PI_Icode');
-        $history = $this->user_model->Invoice_Update($picode);
+        $history = $this->user_model->Invoice_sheet_Update($picode);
         if($history == '1')
         {
             $address =$this->input->post('company_address');
@@ -1337,17 +1337,43 @@ class User_Controller extends CI_Controller
             $this->db->where('Proforma_Icode',$picode);
             $this->db->update('proforma_invoice', $data);
 
+            $sheet_icode = $this->input->post('sheet_icode');
+            $sheet_material = $this->input->post('sheet_material');
+            $sheet_piece = $this->input->post('sheet_pieces');
+            $sheet_act_h = $this->input->post('sheet_Act_Size_H');
+            $sheet_act_w = $this->input->post('sheet_Act_Size_W');
+            $sheet_cha_h = $this->input->post('sheet_Cha_Size_H');
+            $sheet_cha_w = $this->input->post('sheet_Cha_Size_W');
+            $sheet_area = $this->input->post('sheet_Area');
+            $sheet_rate = $this->input->post('sheet_Rate');
+            $sheet_amt = $this->input->post('sheet_Rate_Amt');
+            $count_sheet = sizeof($sheet_icode);
+            for($i=0; $i<$count_sheet; $i++)
+            {
+                $full_data =array( 'Proforma_Icode' => $picode,
+                    'Proforma_Material_Icode' =>$sheet_material[$i],
+                    'No_Of_Sheet' => $sheet_piece[$i],
+                    'Actual_Height' => $sheet_act_h[$i],
+                    'Actual_Width' => $sheet_act_w[$i],
+                    'Chargable_Height' => $sheet_cha_h[$i],
+                    'Chargable_Width' => $sheet_cha_w[$i],
+                    'Area' => $sheet_area[$i],
+                    'Rate' => $sheet_rate[$i],
+                    'Total_Amount' =>$sheet_amt[$i],
+                    'Modified_By' => $this->session->userdata['userid'],
+                    'Modified_On' => date('Y-m-d H:i:s'));
+                $this->db->where('pi_sheet_icode',$sheet_icode[$i]);
+                $this->db->update('proforma_invoice_sheet', $full_data);
+            }
+
             $material_id = $this->input->post('material');
             $qty = $this->input->post('pics');
             $holes = $this->input->post('holes');
             $cutout = $this->input->post('cutout');
-            $cost = $this->input->post('total');
             $actual_W = $this->input->post('Actual_width');
             $actual_H = $this->input->post('Actual_height');
-            $Charge_W = $this->input->post('Charge_width');
+            $special = $this->input->post('type');
             $Area = $this->input->post('area');
-            $Charge_H = $this->input->post('Charge_height');
-            $Rate = $this->input->post('rate');
             $count = sizeof($material_id);
             for($i=0; $i<$count; $i++)
             {
@@ -1355,16 +1381,16 @@ class User_Controller extends CI_Controller
                     'Proforma_Holes' => $holes[$i],
                     'Proforma_Qty' => $qty[$i],
                     'Proforma_Cutout' => $cutout[$i],
-                    'Proforma_Material_Rate' => $Rate[$i],
-                    'Proforma_Material_Cost' => $cost[$i],
+                    'Proforma_Special'=>$special[$i],
                     'Proforma_Actual_Size_Width' => $actual_W[$i],
                     'Proforma_Actual_Size_Height' => $actual_H[$i],
-                    'Proforma_Chargeable_Size_Width' =>$Charge_W[$i],
-                    'Proforma_Chargeable_Size_Height' => $Charge_H[$i],
+                    'Proforma_Chargeable_Size_Width' =>$actual_W[$i],
+                    'Proforma_Chargeable_Size_Height' => $actual_H[$i],
                     'Proforma_Area_SQMTR' => $Area[$i],
-                    'Modified_By' => $this->session->userdata['userid'],'Modified_On' => date('Y-m-d H:i:s'));
+                    'Modified_By' => $this->session->userdata['userid'],
+                    'Modified_On' => date('Y-m-d H:i:s'));
                 $this->db->where('Proforma_Invoice_Items_Icode',$material_id[$i]);
-                $this->db->update('proforma_invoice_items', $full_data);
+                $this->db->update('proforma_invoice_item_sheet', $full_data);
             }
 
             $delete_item_id = $this->input->post('Delete_Item_Icode');

@@ -275,6 +275,39 @@ class User_Model extends CI_Model
         return $query->result_array();
     }
 
+    //** Update sheet Invoice history */
+    public function Invoice_sheet_Update($pi_id)
+    {
+        $user_icode =$this->session->userdata['userid'];
+        $query = $this->db->query("INSERT INTO pi_master_history (Proforma_Icode,Proforma_Number,Proforma_Date,Proforma_Customer_Icode,Proforma_Delivery_Address_Icode,Sub_Total,Insurance_Value,Transport,SGST_Value,CGST_Value,IGST_Value,GrossTotal_Value,Updated_By)
+                                   SELECT Proforma_Icode,Proforma_Number,Proforma_Date,Proforma_Customer_Icode,Proforma_Delivery_Address_Icode,Sub_Total,Insurance_Value,Transport,SGST_Value,CGST_Value,IGST_Value,GrossTotal_Value,'$user_icode'
+                                   FROM proforma_invoice WHERE Proforma_Icode='$pi_id' ");
+        if($query)
+        {
+            $query_sheet = $this->db->query("INSERT INTO pi_sheet_history (pi_sheet_icode,Proforma_Icode ,Proforma_Material_Icode,No_Of_Sheet,Actual_Height,Actual_Width,Chargable_Height,Chargable_Width,Area,Rate,Total_Amount,updated_by)
+                                   SELECT pi_sheet_icode,Proforma_Icode ,Proforma_Material_Icode,No_Of_Sheet,Actual_Height,Actual_Width,Chargable_Height,Chargable_Width,Area,Rate,Total_Amount,'$user_icode'
+                                   FROM proforma_invoice_sheet WHERE Proforma_Icode='$pi_id' ");
+
+            if($query_sheet)
+            {
+                $query_item = $this->db->query("INSERT INTO pi_item_sheet_history (pi_item_sheet_icode,pi_sheet_icode,Proforma_Icode,Proforma_Icode,Proforma_Special,Proforma_Qty,Proforma_Cutout,Proforma_Holes,Proforma_Actual_Size_Width,Proforma_Actual_Size_Height,Proforma_Chargeable_Size_Width,Proforma_Chargeable_Size_Height,Proforma_Area_SQMTR,updated_by)
+                                   SELECT pi_item_sheet_icode,pi_sheet_icode,Proforma_Icode,Proforma_Icode,Proforma_Special,Proforma_Qty,Proforma_Cutout,Proforma_Holes,Proforma_Actual_Size_Width,Proforma_Actual_Size_Height,Proforma_Chargeable_Size_Width,Proforma_Chargeable_Size_Height,Proforma_Area_SQMTR,'$user_icode'
+                                   FROM proforma_invoice_items WHERE Proforma_Icode='$pi_id' ");
+
+                if($query_item)
+                {
+                    $query_charges = $this->db->query("INSERT INTO pi_charges_history (Proforma_Material_PC_Icode,Proforma_Icode,Proforma_Charge_Icode,Proforma_Charge_Count,Proforma_Charge_Value,Proforma_Charge_Cost,Updated_By)
+                                   SELECT Proforma_Material_PC_Icode,Proforma_Icode,Proforma_Charge_Icode,Proforma_Charge_Count,Proforma_Charge_Value,Proforma_Charge_Cost,'$user_icode'
+                                   FROM proforma_material_processing_charges WHERE Proforma_Icode='$pi_id' ");
+                }
+                if($query_charges)
+                {
+                    return 1;
+                }
+            }
+        }
+    }
+
 
 
 }

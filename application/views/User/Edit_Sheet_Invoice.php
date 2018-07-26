@@ -120,7 +120,7 @@
                                 <tbody>
                                 <?php $i=1; foreach ($sheet as $key) { ?>
                                 <tr>
-                                    <td><?php echo $i; ?></td>
+                                    <td><?php echo $i; ?><input type="hidden" name="sheet_icode[]" value="<?php echo $key['pi_sheet_icode']; ?>"></td>
                                     <td>     <div class="form-group">
                                             <select name="sheet_material[]" class="form-control" id="sheet_material"  required >
                                                 <option value="<?php echo $key['Proforma_Material_Icode']; ?>" ><?php echo $key['Material_Name']; ?></option>
@@ -142,7 +142,6 @@
                                     <td><input class="form-control" type="text" name="sheet_Area[]" id="sheet_Area"  value="<?php echo $key['Area']; ?>" required readonly ></td>
                                     <td><input class="form-control" type="number" name="sheet_Rate[]" id="sheet_Rate"  value="<?php echo $key['Rate']; ?>"  onkeyup="change_sheet_rate()" required ></td>
                                     <td><input class="form-control" type="text" name="sheet_Rate_Amt[]" id="sheet_Rate_Amt"  value="<?php echo $key['Total_Amount']; ?>"  readonly></td>
-
                                 </tr>
                                 </tbody>
                                 <tfoot>
@@ -172,7 +171,7 @@
                                     <tr id="row<?php echo $i; ?>">
                                         <td><?php echo $i; ?></td>
                                         <td><select id="material<?php echo $i; ?>" name="material[]" class="form-control">
-                                                <option value="<?php echo $key['Proforma_Material_Icode']; ?>" ><?php echo $key['Material_Name']; ?></option>
+                                                <option value="<?php echo $key['pi_item_sheet_icode']; ?>" ><?php echo $key['Material_Name']; ?></option>
 
 
                                             </select>
