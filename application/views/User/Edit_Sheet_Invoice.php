@@ -107,7 +107,7 @@
                                 <thead>
                                 <th>#</th>
                                 <th>Select Material</th>
-                                <th>No.of sheet</th>
+                                <th style="width: 6%;">No.of<br>sheet</th>
                                 <th>Act<br>Size(h)</th>
                                 <th>Act<br>Size(w)</th>
                                 <th>cha<br>Size(h)</th>
@@ -158,12 +158,12 @@
                                 <thead>
                                 <th>#</th>
                                 <th>Material</th>
-                                <th>Actual<br>size(H)</th>
-                                <th>Actual<br>size(W)</th>
-                                <th>No.of<br>Pieces</th>
-                                <th>No.of<br>Holes</th>
-                                <th>Cutouts</th>
-                                <th>Special</th>
+                                <th style="width: 10%;">Actual<br>size(H)</th>
+                                <th style="width: 10%;">Actual<br>size(W)</th>
+                                <th style="width: 6%;">No.of<br>Pieces</th>
+                                <th style="width: 6%;">No.of<br>Holes</th>
+                                <th style="width: 6%;">Cutouts</th>
+                                <th style="width: 6%;">Special</th>
                                 <th>Area<br>(SQMTR)</th>
                                 </thead>
                                 <tbody>
@@ -177,12 +177,12 @@
 
                                             </select>
                                         </td>
-                                        <td><input class="form-control" type="hidden" name="height[]" id="height<?php echo $i; ?>" value="<?php echo $key['Proforma_Actual_Size_Height']; ?>" readonly><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
-                                        <td><input class="form-control" type="hidden" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['Proforma_Actual_Size_Width']; ?>" readonly><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
-                                        <td><input class="form-control" type="hidden" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['Proforma_Qty']; ?>" readonly><?php echo $key['Proforma_Qty']; ?></td>
-                                        <td><input class="form-control" type="hidden" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['Proforma_Holes']; ?>" readonly><?php echo $key['Proforma_Holes']; ?></td>
-                                        <td><input class="form-control" type="hidden" name="cutout[]" id="cutout<?php echo $i; ?>" value="<?php echo $key['Proforma_Cutout']; ?>" readonly><?php echo $key['Proforma_Cutout']; ?></td>
-                                        <td><input class="form-control" type="hidden" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['Proforma_Special']; ?>" readonly><?php echo $key['Proforma_Special']; ?></td>
+                                        <td><input class="form-control" type="text" name="height[]" id="height<?php echo $i; ?>" value="<?php echo $key['Proforma_Actual_Size_Height']; ?>" onkeyup="change_Charge_Height('<?php echo $i; ?>')"   required></td>
+                                        <td><input class="form-control" type="text" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['Proforma_Actual_Size_Width']; ?>" onkeyup="change_Charge_Width('<?php echo $i; ?>')" required></td>
+                                        <td><input class="form-control" type="text" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['Proforma_Qty']; ?>" onkeyup="change_no_piece('<?php echo $i; ?>')" required></td>
+                                        <td><input class="form-control" type="text" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['Proforma_Holes']; ?>" required></td>
+                                        <td><input class="form-control" type="text" name="cutout[]" id="cutout<?php echo $i; ?>" value="<?php echo $key['Proforma_Cutout']; ?>" required></td>
+                                        <td><input class="form-control" type="text" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['Proforma_Special']; ?>" required></td>
 
                                         <?php
                                         if($key['Proforma_Area_SQMTR'] > 5)
@@ -194,7 +194,7 @@
                                         }
                                         else{
                                             ?>
-                                            <td><input class="form-control new_area1 pi_textbox" type="hidden"  name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['Proforma_Area_SQMTR']; ?>" readonly><?php echo $key['Proforma_Area_SQMTR']; ?></td>
+                                            <td><input class="form-control new_area1 pi_textbox" type="text"  name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['Proforma_Area_SQMTR']; ?>" readonly></td>
 
                                         <?php }
                                         ?>
@@ -207,11 +207,11 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td><input type="hidden" class="form-control pull-right" id="total_pic" value="<?php echo $invoice_total[0]['qty']; ?>"readonly/><?php echo $invoice_total[0]['qty']; ?></td>
+                                    <td><input type="text" class="form-control pull-right" id="total_pic" value="<?php echo $invoice_total[0]['qty']; ?>"readonly/></td>
                                     <td></td>
                                     <td><?php echo $invoice_total[0]['cutout']; ?></td>
                                     <td></td>
-                                    <td><input type="hidden" class="form-control pull-right" id="total_area" value="<?php echo round($invoice_total[0]['area'], 2); ?>"   readonly/><?php echo round($invoice_total[0]['area'], 3); ?></td>
+                                    <td><input type="text" class="form-control pull-right" id="total_area" value="<?php echo round($invoice_total[0]['area'], 2); ?>"   readonly/></td>
 
                                 </tr>
                                 </tbody>
@@ -1382,6 +1382,81 @@
         number_to_words();
 
     }
+
+    /** Change Charge Width */
+    function change_Charge_Width(id) {
+        var Charge_W = document.getElementById('width'+id).value;
+        var Charge_H = document.getElementById('height'+id).value;
+        var pcs = document.getElementById('pics'+id).value;
+
+        var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000;
+        var tot_area =parseInt(pcs) * parseFloat(areas);
+        document.getElementById('area'+id).value = parseFloat(tot_area).toFixed(3);
+        var totals_area =document.getElementsByName("area[]");
+        var sum_area = 0;
+        for (var j = 0, iLen = totals_area.length; j < iLen; j++) {
+            if (totals_area[j].value!==""){
+                val=parseFloat(totals_area[j].value);
+                sum_area +=val;
+            }
+        }
+        document.getElementById('total_area').value = parseFloat(sum_area).toFixed(2);
+
+
+    }
+    /** Change Charge Width */
+
+    /** Change Charge Height */
+    function change_Charge_Height(id) {
+        var Charge_W = document.getElementById('width'+id).value;
+        var Charge_H = document.getElementById('height'+id).value;
+        var pcs = document.getElementById('pics'+id).value;
+
+            var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000;
+            var tot_area =parseInt(pcs) * parseFloat(areas);
+            document.getElementById('area'+id).value = parseFloat(tot_area).toFixed(3);
+        var totals_area =document.getElementsByName("area[]");
+        var sum_area = 0;
+        for (var j = 0, iLen = totals_area.length; j < iLen; j++) {
+            if (totals_area[j].value!==""){
+                val=parseFloat(totals_area[j].value);
+                sum_area +=val;
+            }
+        }
+        document.getElementById('total_area').value = parseFloat(sum_area).toFixed(2);
+    }
+    /** Change Charge Height */
+
+    /** Change no of pieces */
+    function change_no_piece(id) {
+        var Charge_W = document.getElementById('width'+id).value;
+        var Charge_H = document.getElementById('height'+id).value;
+        var pcs = document.getElementById('pics'+id).value;
+
+        var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000;
+        var tot_area =parseInt(pcs) * parseFloat(areas);
+        document.getElementById('area'+id).value = parseFloat(tot_area).toFixed(3);
+        var totals_area =document.getElementsByName("area[]");
+        var sum_area = 0;
+        for (var j = 0, iLen = totals_area.length; j < iLen; j++) {
+            if (totals_area[j].value!==""){
+                val=parseFloat(totals_area[j].value);
+                sum_area +=val;
+            }
+        }
+        document.getElementById('total_area').value = parseFloat(sum_area).toFixed(2);
+        var pices =document.getElementsByName("pics[]");
+        var sum_pic = 0;
+        for (var j = 0, iLen = pices.length; j < iLen; j++) {
+            if (pices[j].value!==""){
+                val=parseFloat(pices[j].value);
+                sum_pic +=val;
+            }
+        }
+        document.getElementById('total_pic').value = parseInt(sum_pic);
+    }
+    /** Change  no of pieces */
+
 
 
     // Number into words
