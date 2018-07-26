@@ -43,7 +43,7 @@
                         <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
                     </div>
                     <hr>
-                    <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Save_Work_Order'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
+                    <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Update_Sheet_Invoice'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
                         <div class="row">
                             <div class="col-md-4">
                                 <h5>Consignee</h5>
@@ -181,7 +181,7 @@
                                         <td><input class="form-control" type="text" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['Proforma_Actual_Size_Width']; ?>" onkeyup="change_Charge_Width('<?php echo $i; ?>')" required></td>
                                         <td><input class="form-control" type="text" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['Proforma_Qty']; ?>" onkeyup="change_no_piece('<?php echo $i; ?>')" required></td>
                                         <td><input class="form-control" type="text" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['Proforma_Holes']; ?>" required></td>
-                                        <td><input class="form-control" type="text" name="cutout[]" id="cutout<?php echo $i; ?>" value="<?php echo $key['Proforma_Cutout']; ?>" required></td>
+                                        <td><input class="form-control" type="text" name="cutout[]" id="cutout<?php echo $i; ?>" value="<?php echo $key['Proforma_Cutout']; ?>" onkeyup="change_cutout('<?php echo $i; ?>')" required></td>
                                         <td><input class="form-control" type="text" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['Proforma_Special']; ?>" required></td>
 
                                         <?php
@@ -209,7 +209,7 @@
                                     <td></td>
                                     <td><input type="text" class="form-control pull-right" id="total_pic" value="<?php echo $invoice_total[0]['qty']; ?>"readonly/></td>
                                     <td></td>
-                                    <td><?php echo $invoice_total[0]['cutout']; ?></td>
+                                    <td><input type="text" class="form-control pull-right" id="total_cutout" value="<?php echo $invoice_total[0]['cutout']; ?>"readonly/></td>
                                     <td></td>
                                     <td><input type="text" class="form-control pull-right" id="total_area" value="<?php echo round($invoice_total[0]['area'], 2); ?>"   readonly/></td>
 
@@ -387,18 +387,7 @@
                             <div class="col-md-6">
                             </div>
                             <div class="col-md-6">
-                                <?php if($_SESSION['role'] == 6) { ?>
-
-                                    <button id="with_print" class="btn btn-danger pi_button" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i> Generate WO</button>
-                                    <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="Print"/>
-                                <?php } elseif($_SESSION['role'] == 7){
-                                    ?>
-                                    <input type="button" id="with_print" class="btn btn-info" onclick="Request_Approve()" value="Request Work Order">
-                                    <button class="btn btn-danger pi_button " type="submit" id="with_print"><i class="fa fa-fw fa-lg fa-check-circle"></i>Send PI To Customer</button>
-                                    <input  type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="Print PI">
-                                    <a class="btn btn-success pi_button" id="with_print" href="<?php echo site_url('User_Controller/Edit_Sheet_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT PI</a>
-
-                                <?php } ?>
+                                <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update PI</button>
 
                             </div>
                         </div>
@@ -1456,6 +1445,18 @@
         document.getElementById('total_pic').value = parseInt(sum_pic);
     }
     /** Change  no of pieces */
+    // change Cutout
+    function change_cutout(id) {
+        var cutout =document.getElementsByName("cutout[]");
+        var sum_cutout = 0;
+        for (var j = 0, iLen = cutout.length; j < iLen; j++) {
+            if (cutout[j].value!==""){
+                val=parseFloat(cutout[j].value);
+                sum_cutout +=val;
+            }
+        }
+        document.getElementById('total_cutout').value = parseInt(sum_cutout);
+    }
 
 
 
