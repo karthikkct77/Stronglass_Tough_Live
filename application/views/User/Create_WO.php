@@ -48,7 +48,18 @@
                                 <td><?php echo $val['GrossTotal_Value']; ?></td>
                                 <td><?php echo $val['User_Name']; ?></td>
                                 <td><?php echo $val['PI_Confirm_Date']; ?></td>
-                                <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/single_Invoice/') . $val['Proforma_Icode']; ?>">View</a></td>
+                                <?php
+                                if ($val['PI_Type'] == '1') { ?>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/single_sheet_Invoice/') . $val['Proforma_Icode']; ?>">Review</a></td>
+                                    <?php
+                                }
+                                else
+                                {
+                                    ?>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/single_Invoice/') . $val['Proforma_Icode']; ?>">Review</a></td>
+                                    <?php
+                                }
+                                ?>
                             </tr>
                             <?php
                             $i++;
