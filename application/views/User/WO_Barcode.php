@@ -278,7 +278,7 @@
                         </div>
                     </form>
 
-                    <div id="printableArea">
+                    <div id="printableArea" >
                         <div class="row invoice">
                             <img style="position: absolute;width: 100px;height: auto;" src="<?php echo base_url('img/strong.png'); ?>" alt="User Image">
                             <h4><?php echo $st[0]['ST_Name']; ?></h4>
@@ -494,6 +494,8 @@
         window.print();
         document.body.innerHTML = originalContents;
     }
+
+
 </script>
 
 
