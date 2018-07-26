@@ -461,10 +461,8 @@
 </style>
 
 <script type="text/javascript">
-
     $( document ).ready(function() {
         number_to_words();
-
         var totals =document.getElementsByName("holes_print[]");
         var sum1 = 0;
         for (var j = 0, iLen = totals.length; j < iLen; j++) {
@@ -484,9 +482,7 @@
             }
         }
         document.getElementById('cutout_print').innerHTML = sum2 ;
-
     });
-
     function printDiv(divName) {
         var printContents = document.getElementById(divName).innerHTML;
         var originalContents = document.body.innerHTML;
@@ -494,7 +490,6 @@
         window.print();
         document.body.innerHTML = originalContents;
     }
-
 
 </script>
 
