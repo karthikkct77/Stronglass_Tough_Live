@@ -290,9 +290,9 @@ class User_Model extends CI_Model
 
             if($query_sheet)
             {
-                $query_item = $this->db->query("INSERT INTO pi_item_sheet_history (pi_item_sheet_icode,pi_sheet_icode,Proforma_Icode,Proforma_Icode,Proforma_Special,Proforma_Qty,Proforma_Cutout,Proforma_Holes,Proforma_Actual_Size_Width,Proforma_Actual_Size_Height,Proforma_Chargeable_Size_Width,Proforma_Chargeable_Size_Height,Proforma_Area_SQMTR,updated_by)
-                                   SELECT pi_item_sheet_icode,pi_sheet_icode,Proforma_Icode,Proforma_Icode,Proforma_Special,Proforma_Qty,Proforma_Cutout,Proforma_Holes,Proforma_Actual_Size_Width,Proforma_Actual_Size_Height,Proforma_Chargeable_Size_Width,Proforma_Chargeable_Size_Height,Proforma_Area_SQMTR,'$user_icode'
-                                   FROM proforma_invoice_items WHERE Proforma_Icode='$pi_id' ");
+                $query_item = $this->db->query("INSERT INTO pi_item_sheet_history (pi_item_sheet_icode,pi_sheet_icode,Proforma_Icode,Proforma_Special,Proforma_Qty,Proforma_Cutout,Proforma_Holes,Proforma_Actual_Size_Width,Proforma_Actual_Size_Height,Proforma_Chargeable_Size_Width,Proforma_Chargeable_Size_Height,Proforma_Area_SQMTR,updated_by)
+                                   SELECT pi_item_sheet_icode,pi_sheet_icode,Proforma_Icode,Proforma_Special,Proforma_Qty,Proforma_Cutout,Proforma_Holes,Proforma_Actual_Size_Width,Proforma_Actual_Size_Height,Proforma_Chargeable_Size_Width,Proforma_Chargeable_Size_Height,Proforma_Area_SQMTR,'$user_icode'
+                                   FROM proforma_invoice_item_sheet WHERE Proforma_Icode='$pi_id' ");
 
                 if($query_item)
                 {

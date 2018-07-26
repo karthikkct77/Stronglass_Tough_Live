@@ -1389,7 +1389,7 @@ class User_Controller extends CI_Controller
                     'Proforma_Area_SQMTR' => $Area[$i],
                     'Modified_By' => $this->session->userdata['userid'],
                     'Modified_On' => date('Y-m-d H:i:s'));
-                $this->db->where('Proforma_Invoice_Items_Icode',$material_id[$i]);
+                $this->db->where('pi_item_sheet_icode',$material_id[$i]);
                 $this->db->update('proforma_invoice_item_sheet', $full_data);
             }
 
