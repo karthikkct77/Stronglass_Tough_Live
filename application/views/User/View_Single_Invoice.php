@@ -108,16 +108,16 @@
                             <thead>
                             <th>#</th>
                             <th>Material</th>
-                            <th>Actucal<br>SizeW)</th>
-                            <th>Actucal<br>SizeH)</th>
-                            <th>Chargable<br>SizeW)</th>
-                            <th>Chargable<br>SizeH)</th>
-                            <th>No.of Pieces</th>
-                            <th>No.of Holes</th>
+                            <th>Actual<br>size(h)</th>
+                            <th>Actual<br>size(w)</th>
+                            <th>Chargable<br>size(h)</th>
+                            <th>Chargable<br>size(w)</th>
+                            <th>No.of<br>Pieces</th>
+                            <th>No.of<br>Holes</th>
                             <th>Cutouts</th>
                             <th>Special</th>
-                            <th>Area<br>(SQMTR)</th>
-                            <th>Rate<br>(SQMTR)</th>
+                            <th>Area<br>(sqmtr)</th>
+                            <th>Rate<br>(sqmtr)</th>
                             <th>Total<br>Rs</th>
                             </thead>
                             <tbody>

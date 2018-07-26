@@ -87,18 +87,17 @@
                                 <thead>
                                 <th>#</th>
                                 <th>Material</th>
-                                <th>Hsn code</th>
-                                <th>Special</th>
-                                <th>No.of Pieces</th>
-                                <th>No.of Holes</th>
+                                <th>Actual<br>size(h)</th>
+                                <th>Actual<br>size(w)</th>
+                                <th>Chargable<br>size(h)</th>
+                                <th>Chargable<br>size(w)</th>
+                                <th>No.of<br>Pieces</th>
+                                <th>No.of<br>Holes</th>
                                 <th>Cutouts</th>
-                                <th>Actucal Size(W)(MM)</th>
-                                <th>Actucal Size(H)(MM)</th>
-                                <th>Chargable Size(W)(MM)</th>
-                                <th>Chargable Size(H)(MM)</th>
-                                <th>Area(SQMTR)</th>
-                                <th>Rate(SQMTR)</th>
-                                <th>Total(INR)</th>
+                                <th>Special</th>
+                                <th>Area<br>(sqmtr)</th>
+                                <th>Rate<br>(sqmtr)</th>
+                                <th>Total<br>Rs</th>
                                 </thead>
                                 <tbody>
                                 <?php $i=1; foreach ($invoice_item as $key) { ?>
@@ -107,15 +106,14 @@
                                         <input class="form-control" type="hidden" name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" >
                                         <td><?php echo $i; ?></td>
                                         <td><?php echo $key['Material_Name']; ?></td>
-                                        <td><?php echo $key['Proforma_HSNCode']; ?></td>
-                                        <td><?php echo $key['Proforma_Special']; ?></td>
-                                        <td><?php echo $key['Proforma_Qty']; ?></td>
-                                        <td><?php echo $key['Proforma_Holes']; ?></td>
-                                        <td><?php echo $key['Proforma_Cutout']; ?></td>
                                         <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                         <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
                                         <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
                                         <td><?php echo $key['Proforma_Chargeable_Size_Height']; ?></td>
+                                        <td><?php echo $key['Proforma_Qty']; ?></td>
+                                        <td><?php echo $key['Proforma_Holes']; ?></td>
+                                        <td><?php echo $key['Proforma_Cutout']; ?></td>
+                                        <td><?php echo $key['Proforma_Special']; ?></td>
                                         <td><?php echo $key['Proforma_Area_SQMTR']; ?></td>
                                         <td><?php echo $key['Proforma_Material_Rate']; ?></td>
                                         <td><?php echo $key['Proforma_Material_Cost']; ?></td>
@@ -126,16 +124,17 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td><input type="text" class="form-control pull-right" id="total_pic" value="<?php echo $invoice_total[0]['qty']; ?>"   readonly/></td>
+                                    <td></td>
+                                    <td></td>
+
+                                    <td><input type="hidden" class="form-control pull-right" id="total_pic" value="<?php echo $invoice_total[0]['qty']; ?>"   readonly/><?php echo $invoice_total[0]['qty']; ?></td>
+
                                     <td></td>
                                     <td></td>
                                     <td></td>
+                                    <td><input type="hidden" class="form-control pull-right" id="total_area" value="<?php echo round($invoice_total[0]['area'], 2); ?>"   readonly/><?php echo round($invoice_total[0]['area'], 2); ?></td>
                                     <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td><input type="text" class="form-control pull-right" id="total_area" value="<?php echo round($invoice_total[0]['area'], 2); ?>"   readonly/></td>
-                                    <td></td>
-                                    <td> <input type="text" class="form-control pull-right" id="grand_total" value="<?php echo round($invoice_total[0]['rate'],2); ?>"   readonly/>(INR)</td>
+                                    <td> <input type="hidden" class="form-control pull-right" id="grand_total" value="<?php echo round($invoice_total[0]['rate'],2); ?>"   readonly/><?php echo round($invoice_total[0]['rate'],2); ?></td>
                                 </tr>
                                 </tbody>
                             </table>
