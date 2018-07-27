@@ -677,6 +677,18 @@ class User_Controller extends CI_Controller
             $email =$this->input->post('email');
             $picode=$this->input->post('PI_Icode');
 
+            $this->load->library('pdf');
+            $data['invoice'] = $this->admin_model->Get_Single_Invoice($picode);
+            $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($picode);
+            $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($picode);
+            $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($picode);
+            $data['tax']= $this->admin_model->get_Tax();
+            $data['st']= $this->admin_model->get_ST();
+            $body = $this->load->view('User/email',$data,TRUE);
+            $this->pdf->loadHtml($body);
+            $this->pdf->render();
+            $this->pdf->stream("ST.pdf", array("Attachment"=>0));
+
             if($email == "")
             {
                 $this->session->set_flashdata('feedback1', 'Sorry, No Email Address in this Customer...');
