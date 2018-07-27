@@ -1491,6 +1491,53 @@ class User_Controller extends CI_Controller
         $this->load->view('User/View_Single_Sheet_WO',$data,false);
         $this->load->view('User/footer');
     }
+    //** Print Work Order */
+    public function Print_WO()
+    {
+        $data['wo'] = $this->user_model->get_All_WO();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/WO_Print',$data,false);
+        $this->load->view('User/footer');
+    }
+    //** Print Work Orders */
+    public function Print_Sheet()
+    {
+        $pi_icode = $this->uri->segment(3);
+        $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
+        $data['invoice_item'] = $this->user_model->Get_Single_Invoice_Item_Sheet($pi_icode);
+        $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
+        $data['invoice_total'] = $this->user_model->Get_Single_Invoice_Item_Sheet_Total($pi_icode);
+        $data['sheet'] = $this->user_model->Get_Single_Sheet($pi_icode);
+        $data['tax']= $this->admin_model->get_Tax();
+        $data['st']= $this->admin_model->get_ST();
+        $data['stock']= $this->admin_model->get_all_item();
+        $data['wo'] = $this->user_model->Get_Single_wo($pi_icode);
+        $data['charges']= $this->admin_model->get_all_charges();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/Print_Sheet',$data,false);
+        $this->load->view('User/footer');
+    }
+    //** Print Normal Work Order */
+    public function Print_Normal()
+    {
+        $pi_icode = $this->uri->segment(3);
+        $data['wo'] = $this->admin_model->Get_Work_Order($pi_icode);
+        $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
+        $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
+        $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
+        $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
+        $data['tax']= $this->admin_model->get_Tax();
+        $data['st']= $this->admin_model->get_ST();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/Print_Normal',$data,false);
+        $this->load->view('User/footer');
+    }
 
 
 
