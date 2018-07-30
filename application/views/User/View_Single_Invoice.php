@@ -33,7 +33,7 @@
                     });
             </script>
         <?php endif; ?>
-        <div class="col-md-12" >
+        <div class="col-md-12" id="pagewidth" >
 
             <div class="tile">
                 <div class="row invoice">
@@ -100,7 +100,7 @@
                             <input class="form-control" type="hidden" name="PI_Icode"  id="PI_Icode" value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
                             <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly></h4>
                             <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly></h4>
-                           <h3><?php echo $invoice[0]['PI_Type']; ?></h3>
+
                          </div>
                     </div>
                     <div class="row">
@@ -140,6 +140,26 @@
                                     <td><?php echo $key['Proforma_Material_Cost']; ?></td>
                                 </tr>
                                 <?php $i++; } ?>
+                            <?php $j=3;
+                            for ($a =0; $a <= $j; $a++)
+                            {?>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+
+                          <?php } ?>
                             <tr>
                                 <td></td>
                                 <td></td>
@@ -161,7 +181,7 @@
                         </table>
 
                     </div>
-                    <div class="row">
+                    <div class="row" id="page_inside">
                         <div class="col-md-6">
                             <h3 style="font-size: 15px;">Terms & Conditions</h3>
                             <p style="font-size: 8px;text-align: justify;">
@@ -222,6 +242,11 @@
                                     $i++;
                                 }
                                 ?>
+                                </tfoot>
+                            </table>
+
+                            <div  style="float: right;" id="totals">
+                            <table>
                                 <tr>
                                     <td colspan="4" align="right">SUB-TOTAL</td>
 
@@ -276,8 +301,8 @@
                                     <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" >(INR)</td>
 
                                 </tr>
-                                </tfoot>
                             </table>
+                            </div>
                         </div>
                         <div>Amount in Words: <span id="word" style="font-size: 20px;margin-left: 10px;"></span></div>
                     </div>
@@ -299,7 +324,6 @@
                                     <a class="btn btn-success pi_button" id="with_print" href="<?php echo site_url('User_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT PI</a>
 
                             <?php } ?>
-
                         </div>
                     </div>
                 </form>
@@ -313,12 +337,23 @@
     {
         margin: 0mm;  /* this affects the margin in the printer settings */
     }
+    #pagewidth {
+        margin: 0px auto 0px auto ;
+        overflow: hidden ;
+        width: 500px ;
+    }
 </style>
 <style>
     @media print {
         #with_print {
             display: none;
         }
+        table { page-break-after:auto }
+        tr    { page-break-inside:avoid; page-break-after:auto }
+        td    { page-break-inside:avoid; page-break-after:auto }
+        thead { display:table-header-group }
+        tfoot { display:table-footer-group }
+        #page_inside {  page-break-inside: avoid;        }
     }
     #search_data {
         width: 200px;
@@ -345,11 +380,7 @@
         margin-right: 15px;
         float: right;
     }
-    .st_check{
-        padding-top: 15px;
-        border-top: 1px solid #000000;
-        text-align: center;
-    }
+
 </style>
 
 

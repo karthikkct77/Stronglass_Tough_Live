@@ -185,7 +185,7 @@
                             </table>
 
                         </div>
-                        <div class="row">
+                        <div class="row"  id="page_inside">
                             <div class="col-md-6">
                                 <h3 style="font-size: 15px;">Terms & Conditions</h3>
                                 <p style="font-size: 8px;text-align: justify;">
@@ -246,62 +246,67 @@
                                         $i++;
                                     }
                                     ?>
-                                    <tr>
-                                        <td colspan="4" align="right">SUB-TOTAL</td>
+                                    </tfoot>
+                                </table>
 
-                                        <td><input class="form-control" type="text" name="sub_tot" id="sub_tot" value="<?php echo $invoice[0]['Sub_Total']; ?>" readonly ></td>
-
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4" align="right">HANDLING CHARGE</td>
-
-                                        <td><input class="form-control" type="text" name="insurance" id="insurance" value="<?php echo $invoice[0]['Insurance_Value']; ?>" required readonly></td>
-
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4" align="right">TRANSPORT</td>
-
-                                        <td><input class="form-control" type="text" name="transport" id="transport"  value="<?php echo $invoice[0]['Transport']; ?>" readonly></td>
-
-                                    </tr>
-                                    <?php
-                                    if($invoice[0]['IGST_Value'] == '0')
-                                    { ?>
+                                <div  style="float: right;" id="totals">
+                                    <table>
                                         <tr>
-                                            <td colspan="4" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
+                                            <td colspan="4" align="right">SUB-TOTAL</td>
 
-                                            <td><input class="form-control" type="text" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ></td>
+                                            <td><input class="form-control" type="text" name="sub_tot" id="sub_tot" value="<?php echo $invoice[0]['Sub_Total']; ?>" readonly ></td>
 
                                         </tr>
                                         <tr>
-                                            <td colspan="4" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
-                                                <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
-                                            </td>
-                                            <td><input class="form-control" type="text" name="cgst" id="cgst" value="<?php echo $invoice[0]['CGST_Value']; ?>" readonly ></td>
+                                            <td colspan="4" align="right">HANDLING CHARGE</td>
+
+                                            <td><input class="form-control" type="text" name="insurance" id="insurance" value="<?php echo $invoice[0]['Insurance_Value']; ?>" required readonly></td>
 
                                         </tr>
-
-                                    <?php }
-                                    else
-                                    {?>
                                         <tr>
-                                            <td colspan="4" align="right">IGST @18%
-                                                <input type="hidden" id="gst" value="18">
-                                            </td>
-                                            <td><input class="form-control" type="text" name="igst" id="igst" value="<?php echo $invoice[0]['IGST_Value']; ?>" readonly ></td>
+                                            <td colspan="4" align="right">TRANSPORT</td>
+
+                                            <td><input class="form-control" type="text" name="transport" id="transport"  value="<?php echo $invoice[0]['Transport']; ?>" readonly></td>
 
                                         </tr>
                                         <?php
-                                    }
-                                    ?>
-                                    <tr>
+                                        if($invoice[0]['IGST_Value'] == '0')
+                                        { ?>
+                                            <tr>
+                                                <td colspan="4" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
 
-                                        <td colspan="4" align="right">GROSS TOTAL</td>
-                                        <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" >(INR)</td>
+                                                <td><input class="form-control" type="text" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ></td>
 
-                                    </tr>
-                                    </tfoot>
-                                </table>
+                                            </tr>
+                                            <tr>
+                                                <td colspan="4" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
+                                                    <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
+                                                </td>
+                                                <td><input class="form-control" type="text" name="cgst" id="cgst" value="<?php echo $invoice[0]['CGST_Value']; ?>" readonly ></td>
+
+                                            </tr>
+
+                                        <?php }
+                                        else
+                                        {?>
+                                            <tr>
+                                                <td colspan="4" align="right">IGST @18%
+                                                    <input type="hidden" id="gst" value="18">
+                                                </td>
+                                                <td><input class="form-control" type="text" name="igst" id="igst" value="<?php echo $invoice[0]['IGST_Value']; ?>" readonly ></td>
+
+                                            </tr>
+                                            <?php
+                                        }
+                                        ?>
+                                        <tr>
+
+                                            <td colspan="4" align="right">GROSS TOTAL</td>
+                                            <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" >(INR)</td>
+
+                                        </tr>
+                                    </table>
+                                </div>
                             </div>
                             <div>Amount in Words: <span id="word" style="font-size: 20px;margin-left: 10px;"></span></div>
                         </div>
@@ -343,36 +348,22 @@
             display: none;
         }
     }
-    #search_data {
-        width: 200px;
-        padding: 5px;
-        margin: 5px 0;
-        box-sizing: border-box;
-    }
-    #autoSuggestionsList > li {
-        background: none repeat scroll 0 0 #F3F3F3;
-        border-bottom: 1px solid #E3E3E3;
-        list-style: none outside none;
-        padding: 3px 15px 3px 15px;
-        text-align: left;
-    }
-
-    #autoSuggestionsList > li a { color: #800000; }
-
-    .auto_list {
-        border: 1px solid #E3E3E3;
-        border-radius: 5px 5px 5px 5px;
-        position: absolute;
+    @media print {
+        #with_print {
+            display: none;
+        }
+        table { page-break-after:auto }
+        tr    { page-break-inside:avoid; page-break-after:auto }
+        td    { page-break-inside:avoid; page-break-after:auto }
+        thead { display:table-header-group }
+        tfoot { display:table-footer-group }
+        #page_inside {  page-break-inside: avoid;        }
     }
     .pi_button{
         margin-right: 15px;
         float: right;
     }
-    .st_check{
-        padding-top: 15px;
-        border-top: 1px solid #000000;
-        text-align: center;
-    }
+
 </style>
 
 
