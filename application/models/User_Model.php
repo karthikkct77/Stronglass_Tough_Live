@@ -320,6 +320,18 @@ class User_Model extends CI_Model
         $query = $this->db->query("SELECT * FROM st_print_type");
         return $query->result_array();
     }
+    //** Get Fabrication Details in Sheeted PI */
+    public function Get_fabrication_Sheet($pi_icode)
+    {
+        $query = $this->db->query("SELECT * FROM proforma_invoice_item_sheet A INNER JOIN material_master B on A.Proforma_Material_Icode=B.Material_Icode WHERE A.Proforma_Special !='B' and A.Proforma_Icode='$pi_icode'");
+        return $query->result_array();
+    }
+    //** Get Fabrication Details in PI */
+    public function Get_fabrication($pi_icode)
+    {
+        $query = $this->db->query("SELECT * FROM proforma_invoice_items A INNER JOIN material_master B on A.Proforma_Material_Icode=B.Material_Icode WHERE A.Proforma_Special !='B' and A.Proforma_Icode='$pi_icode'");
+        return $query->result_array();
+    }
 
 
 

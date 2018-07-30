@@ -1530,6 +1530,7 @@ class User_Controller extends CI_Controller
         $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
         $data['invoice_total'] = $this->user_model->Get_Single_Invoice_Item_Sheet_Total($pi_icode);
         $data['sheet'] = $this->user_model->Get_Single_Sheet($pi_icode);
+        $data['fab'] = $this->user_model->Get_fabrication_Sheet($pi_icode);
         $data['tax']= $this->admin_model->get_Tax();
         $data['st']= $this->admin_model->get_ST();
         $data['stock']= $this->admin_model->get_all_item();
@@ -1551,6 +1552,7 @@ class User_Controller extends CI_Controller
         $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
         $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
         $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
+        $data['fab'] = $this->user_model->Get_fabrication($pi_icode);
         $data['print'] = $this->user_model->Get_Print_Type();
         $data['tax']= $this->admin_model->get_Tax();
         $data['st']= $this->admin_model->get_ST();

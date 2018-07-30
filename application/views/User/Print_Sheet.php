@@ -50,75 +50,153 @@
                             </div>
                         </div>
                         <hr>
-                        <div class="row">
-                            <div class="col-md-10">
-                                <table class="table table-hover table-bordered" id="sampleTable">
-                                    <thead>
-                                    <th  class="heading">#</th>
-                                    <th  class="heading">Material</th>
-                                    <th  class="heading">Actual<br>size(h)</th>
-                                    <th  class="heading">Actual<br>size(w)</th>
-                                    <th  class="heading">No.of<br>Pieces</th>
-                                    <th  class="heading">No.of<br>Holes</th>
-                                    <th  class="heading">Cutouts</th>
-                                    <th  class="heading">Special</th>
-                                    <th  class="heading">Area<br>(sqmtr)</th>
-                                    </thead>
-                                    <tbody>
-                                    <?php $i=1; foreach ($invoice_item as $key) { ?>
-                                        <tr id="row<?php echo $i; ?>">
-                                            <td  class="heading"><?php echo $i; ?></td>
-                                            <td class="heading"><?php echo $key['Material_Name']; ?></td>
-                                            <td class="heading"><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
-                                            <td class="heading"><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
-                                            <td class="heading"><?php echo $key['Proforma_Qty']; ?></td>
-                                            <td class="heading"><input type="hidden" name="holes_print[]" value="<?php echo $key['Proforma_Holes']; ?>" ><?php echo $key['Proforma_Holes']; ?></td>
-                                            <td class="heading"><input type="hidden" name="cutout_print[]" value="<?php echo $key['Proforma_Cutout']; ?>" ><?php echo $key['Proforma_Cutout']; ?></td>
-                                            <td class="heading"><?php echo $key['Proforma_Special']; ?></td>
-                                            <td class="heading"><?php echo $key['Proforma_Area_SQMTR']; ?></td>
-                                        </tr>
-                                        <?php $i++; } ?>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td class="heading"><?php echo $invoice_total[0]['qty']; ?></td>
-                                        <td id="holes_print" class="heading"></td>
-                                        <td id="cutout_print" class="heading"></td>
-                                        <td></td>
-                                        <td class="heading"><?php echo round($invoice_total[0]['area'], 2); ?></td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-
-                            </div>
-                            <div class="col-md-2">
-                                <table class="table table-hover table-bordered">
-                                    <thead>
-                                    <tr>
-                                        <th class="heading">Exta</th>
-                                        <th class="heading">Count</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <?php
-                                    $i=1;
-                                    foreach ($invoice_Charges as $key) {
-                                        ?>
+                        <?php
+                        if($val['print_id'] == '5')  // FABRICATION
+                        { ?>
+                            <div class="row">
+                                <div class="col-md-10">
+                                    <table class="table table-hover table-bordered" id="sampleTable">
+                                        <thead>
+                                        <th  class="heading">#</th>
+                                        <th  class="heading">Material</th>
+                                        <th  class="heading">Actual<br>size(h)</th>
+                                        <th  class="heading">Actual<br>size(w)</th>
+                                        <th  class="heading">No.of<br>Pieces</th>
+                                        <th  class="heading">No.of<br>Holes</th>
+                                        <th  class="heading">Cutouts</th>
+                                        <th  class="heading">Special</th>
+                                        <th  class="heading">Area<br>(sqmtr)</th>
+                                        </thead>
+                                        <tbody>
+                                        <?php $i=1; foreach ($fab as $key) { ?>
+                                            <tr id="row<?php echo $i; ?>">
+                                                <td  class="heading"><?php echo $i; ?></td>
+                                                <td class="heading"><?php echo $key['Material_Name']; ?></td>
+                                                <td class="heading"><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
+                                                <td class="heading"><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
+                                                <td class="heading"><?php echo $key['Proforma_Qty']; ?></td>
+                                                <td class="heading"><input type="hidden" name="holes_print[]" value="<?php echo $key['Proforma_Holes']; ?>" ><?php echo $key['Proforma_Holes']; ?></td>
+                                                <td class="heading"><input type="hidden" name="cutout_print[]" value="<?php echo $key['Proforma_Cutout']; ?>" ><?php echo $key['Proforma_Cutout']; ?></td>
+                                                <td class="heading"><?php echo $key['Proforma_Special']; ?></td>
+                                                <td class="heading"><?php echo $key['Proforma_Area_SQMTR']; ?></td>
+                                            </tr>
+                                            <?php $i++; } ?>
                                         <tr>
-                                            <td class="heading"><?php echo $key['charge_name']; ?></td>
-                                            <td class="heading"><?php echo $key['Proforma_Charge_Count']; ?></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td class="heading"><?php echo $invoice_total[0]['qty']; ?></td>
+                                            <td id="holes_print" class="heading"></td>
+                                            <td id="cutout_print" class="heading"></td>
+                                            <td></td>
+                                            <td class="heading"><?php echo round($invoice_total[0]['area'], 2); ?></td>
                                         </tr>
-                                        <?php
-                                        $i++;
-                                    }
-                                    ?>
+                                        </tbody>
+                                    </table>
 
-                                    </tbody>
-                                </table>
+                                </div>
+                                <div class="col-md-2">
+                                    <table class="table table-hover table-bordered">
+                                        <thead>
+                                        <tr>
+                                            <th class="heading">Exta</th>
+                                            <th class="heading">Count</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <?php
+                                        $i=1;
+                                        foreach ($invoice_Charges as $key) {
+                                            ?>
+                                            <tr>
+                                                <td class="heading"><?php echo $key['charge_name']; ?></td>
+                                                <td class="heading"><?php echo $key['Proforma_Charge_Count']; ?></td>
+                                            </tr>
+                                            <?php
+                                            $i++;
+                                        }
+                                        ?>
+
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
+
+                       <?php }
+                       else
+                       { ?>
+                           <div class="row">
+                               <div class="col-md-10">
+                                   <table class="table table-hover table-bordered" id="sampleTable">
+                                       <thead>
+                                       <th  class="heading">#</th>
+                                       <th  class="heading">Material</th>
+                                       <th  class="heading">Actual<br>size(h)</th>
+                                       <th  class="heading">Actual<br>size(w)</th>
+                                       <th  class="heading">No.of<br>Pieces</th>
+                                       <th  class="heading">No.of<br>Holes</th>
+                                       <th  class="heading">Cutouts</th>
+                                       <th  class="heading">Special</th>
+                                       <th  class="heading">Area<br>(sqmtr)</th>
+                                       </thead>
+                                       <tbody>
+                                       <?php $i=1; foreach ($invoice_item as $key) { ?>
+                                           <tr id="row<?php echo $i; ?>">
+                                               <td  class="heading"><?php echo $i; ?></td>
+                                               <td class="heading"><?php echo $key['Material_Name']; ?></td>
+                                               <td class="heading"><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
+                                               <td class="heading"><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
+                                               <td class="heading"><?php echo $key['Proforma_Qty']; ?></td>
+                                               <td class="heading"><input type="hidden" name="holes_print[]" value="<?php echo $key['Proforma_Holes']; ?>" ><?php echo $key['Proforma_Holes']; ?></td>
+                                               <td class="heading"><input type="hidden" name="cutout_print[]" value="<?php echo $key['Proforma_Cutout']; ?>" ><?php echo $key['Proforma_Cutout']; ?></td>
+                                               <td class="heading"><?php echo $key['Proforma_Special']; ?></td>
+                                               <td class="heading"><?php echo $key['Proforma_Area_SQMTR']; ?></td>
+                                           </tr>
+                                           <?php $i++; } ?>
+                                       <tr>
+                                           <td></td>
+                                           <td></td>
+                                           <td></td>
+                                           <td></td>
+                                           <td class="heading"><?php echo $invoice_total[0]['qty']; ?></td>
+                                           <td id="holes_print" class="heading"></td>
+                                           <td id="cutout_print" class="heading"></td>
+                                           <td></td>
+                                           <td class="heading"><?php echo round($invoice_total[0]['area'], 2); ?></td>
+                                       </tr>
+                                       </tbody>
+                                   </table>
+
+                               </div>
+                               <div class="col-md-2">
+                                   <table class="table table-hover table-bordered">
+                                       <thead>
+                                       <tr>
+                                           <th class="heading">Exta</th>
+                                           <th class="heading">Count</th>
+                                       </tr>
+                                       </thead>
+                                       <tbody>
+                                       <?php
+                                       $i=1;
+                                       foreach ($invoice_Charges as $key) {
+                                           ?>
+                                           <tr>
+                                               <td class="heading"><?php echo $key['charge_name']; ?></td>
+                                               <td class="heading"><?php echo $key['Proforma_Charge_Count']; ?></td>
+                                           </tr>
+                                           <?php
+                                           $i++;
+                                       }
+                                       ?>
+
+                                       </tbody>
+                                   </table>
+                               </div>
+                           </div>
+                       <?php } ?>
+
                         <hr>
                         <div class="row" style="margin-top: 150px;">
                             <div class="col-md-3">
