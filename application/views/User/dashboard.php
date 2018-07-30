@@ -85,6 +85,11 @@
 
 
                     <?php  }
+                    elseif ($_SESSION['role'] == 9)
+                    { ?>
+                        <p><b>Fabrication</b></p>
+
+                    <?php  }
                     ?>
 
             </div>

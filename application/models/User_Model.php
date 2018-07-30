@@ -48,6 +48,12 @@ class User_Model extends CI_Model
                                         INNER JOIN material_master C on B.Proforma_Material_Icode=C.Material_Icode WHERE A.Furnace_Status in('2','3') and  A.Dispatch_Status !='3' AND A.WO_Icode='$wo_id'");
             return $query->result_array();
         }
+        elseif ($role == 9) //Fabrication
+        {
+            $query = $this->db->query("SELECT * FROM wo_processing A INNER JOIN proforma_invoice_items B ON A.Proforma_Invoice_Item_Icode=B.Proforma_Invoice_Items_Icode 
+                                        INNER JOIN material_master C on B.Proforma_Material_Icode=C.Material_Icode WHERE A.Furnace_Status in('2','3') and  A.Dispatch_Status !='3' AND A.WO_Icode='$wo_id'");
+            return $query->result_array();
+        }
     }
 
     /** Get single work ordetr */
@@ -306,6 +312,12 @@ class User_Model extends CI_Model
                 }
             }
         }
+    }
+
+    //** Get Fabrication Work Order */
+    public function get_fabrication_WO($wo_id)
+    {
+
     }
 
 
