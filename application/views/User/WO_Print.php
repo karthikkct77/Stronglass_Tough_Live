@@ -48,13 +48,13 @@
 
                                 <?php
                                 if ($val['PI_Type'] == '1') { ?>
-                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/Print_Sheet/') . $val['Proforma_Icode']; ?>">View</a></td>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/Print_Sheet/') . $val['Proforma_Icode']; ?>">prints</a></td>
                                     <?php
                                 }
                                 else
                                 {
                                     ?>
-                                    <td><a class="btn btn-info" href="<?php echo site_url('User_Controller/Print_Normal/') . $val['Proforma_Icode']; ?>">View</a></td>
+                                    <td><a class="btn btn-info" href="<?php echo site_url('User_Controller/Print_Normal/') . $val['Proforma_Icode']; ?>" >print</a></td>
                                     <?php
                                 }
                                 ?>

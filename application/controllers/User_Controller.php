@@ -1535,6 +1535,7 @@ class User_Controller extends CI_Controller
         $data['stock']= $this->admin_model->get_all_item();
         $data['wo'] = $this->user_model->Get_Single_wo($pi_icode);
         $data['charges']= $this->admin_model->get_all_charges();
+        $data['print'] = $this->user_model->Get_Print_Type();
         $this->load->view('User/header');
         $this->load->view('User/top');
         $this->load->view('User/left');

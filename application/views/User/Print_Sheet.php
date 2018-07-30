@@ -20,14 +20,17 @@
                 </script>
             <?php endif; ?>
             <div class="col-md-12" >
-
-                <div class="tile">
-                    <div class="row invoice">
-                        <img style="position: absolute;width: 100px;height: auto;" src="<?php echo base_url('img/strong.png'); ?>" alt="User Image">
-                        <h5><?php echo $st[0]['ST_Name']; ?></h5>
-                        <h6><?php echo $st[0]['ST_Address_1']; ?>,&nbsp;<?php echo $st[0]['ST_Area']; ?>,&nbsp;<?php echo $st[0]['ST_City']; ?></h6>
-                        <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
-                    </div>
+                <?php
+                foreach ($print as $val)
+                { ?>
+                    <div class="tile">
+                        <div class="row invoice">
+                            <img style="position: absolute;width: 100px;height: auto;" src="<?php echo base_url('img/strong.png'); ?>" alt="User Image">
+                            <h5><?php echo $st[0]['ST_Name']; ?></h5>
+                            <h6><?php echo $st[0]['ST_Address_1']; ?>,&nbsp;<?php echo $st[0]['ST_Area']; ?>,&nbsp;<?php echo $st[0]['ST_City']; ?></h6>
+                            <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
+                            <h6>Department: <?php echo $val['print_type']; ?></h6>
+                        </div>
                         <hr>
                         <div class="row">
                             <div class="col-md-6">
@@ -48,7 +51,7 @@
                         </div>
                         <hr>
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-10">
                                 <table class="table table-hover table-bordered" id="sampleTable">
                                     <thead>
                                     <th  class="heading">#</th>
@@ -90,8 +93,6 @@
                                 </table>
 
                             </div>
-                            <div class="col-md-6">
-                            </div>
                             <div class="col-md-2">
                                 <table class="table table-hover table-bordered">
                                     <thead>
@@ -131,10 +132,16 @@
                             <div class="col-md-3">
                                 <h4 class="st_check">Production Manager</h4>
                             </div>
+                            <div class="col-md-3">
+                                <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()"value="Print"/>
+                            </div>
 
                         </div>
 
                     </div>
+
+               <?php }
+                ?>
                 </div>
             </div>
         </div>
@@ -190,6 +197,7 @@
 
 <script type="text/javascript">
     $( document ).ready(function() {
+        window.print()
         number_to_words();
         var totals =document.getElementsByName("holes_print[]");
         var sum1 = 0;

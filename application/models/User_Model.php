@@ -314,10 +314,11 @@ class User_Model extends CI_Model
         }
     }
 
-    //** Get Fabrication Work Order */
-    public function get_fabrication_WO($wo_id)
+    //** Getall print type */
+    public function Get_Print_Type()
     {
-
+        $query = $this->db->query("SELECT * FROM st_print_type");
+        return $query->result_array();
     }
 
 
