@@ -23,7 +23,7 @@
                 <?php
                 foreach ($print as $val)
                 { ?>
-                    <div class="tile">
+                    <div class="tile" id="page_setup">
                         <div class="row invoice">
                             <img style="position: absolute;width: 100px;height: auto;" src="<?php echo base_url('img/strong.png'); ?>" alt="User Image">
                             <h5><?php echo $st[0]['ST_Name']; ?></h5>
@@ -153,6 +153,8 @@
         #with_print {
             display: none;
         }
+        #page_setup {   page-break-before: always;
+                 }
 
     }
 
