@@ -673,15 +673,23 @@ class User_Controller extends CI_Controller
         }
         elseif ($role == 7) // Pi Confirm
         {
-
             $email =$this->input->post('email');
             $picode=$this->input->post('PI_Icode');
+            $type = $this->input->post('PI_Type');
 
             $this->load->library('pdf');
+            if($type == '1')
+            {
+                $data['invoice_item'] = $this->admin_model->Get_Single_Sheet_Invoice_Item($picode);
+                $data['invoice_total'] = $this->user_model->Get_Single_Invoice_Item_Sheet_Total($picode);
+                $data['sheet'] = $this->admin_model->Get_Sheet_Details($picode);
+            }
+            else
+            {
+                $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($picode);
+                $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($picode);
+            }
             $data['invoice'] = $this->admin_model->Get_Single_Invoice($picode);
-            $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($picode);
-            $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($picode);
-            $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($picode);
             $data['tax']= $this->admin_model->get_Tax();
             $data['st']= $this->admin_model->get_ST();
             $body = $this->load->view('User/email',$data,TRUE);
@@ -689,45 +697,45 @@ class User_Controller extends CI_Controller
             $this->pdf->render();
             $this->pdf->stream("ST.pdf", array("Attachment"=>0));
 
-            if($email == "")
-            {
-                $this->session->set_flashdata('feedback1', 'Sorry, No Email Address in this Customer...');
-                redirect('User_Controller/single_Invoice/'.$picode);
-            }
-            else{
-              $id=$this->input->post('PI_Icode');
-            $update = array('Email_Send_Status' => '1',
-                'Email_Send_Date'=>date('Y-m-d H:i:s'));
-            $this->db->where('Proforma_Icode',$id);
-            $this->db->update('proforma_invoice', $update);
-
-            $userEmail='vignesh@ibtemail.com';
-            $subject='Test';
-            $config = Array(
-                'mailtype' => 'html',
-                'charset' => 'utf-8',
-                'priority' => '1'
-            );
-        $this->load->library('email', $config);
-       $this->email->set_newline("\r\n");
-            $pi_icode= $this->input->post('PI_Icode');
-
-        $this->email->from('karthik@ibtemail.com', 'Stronglass Tough');
-            $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
-            $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
-            $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
-            $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
-            $data['tax']= $this->admin_model->get_Tax();
-            $data['st']= $this->admin_model->get_ST();
-        $this->email->to($userEmail);  // replace it with receiver mail id
-        $this->email->subject($subject); // replace it with relevant subject
-          //  $this->load->view('User/email',$data,false);
-        $body = $this->load->view('User/email',$data,TRUE);
-        $this->email->message($body);
-        $this->email->send();
-            $this->session->set_flashdata('feedback', 'Email Send Successfully ..');
-            redirect('User_Controller/Check_PI');
-            }
+//            if($email == "")
+//            {
+//                $this->session->set_flashdata('feedback1', 'Sorry, No Email Address in this Customer...');
+//                redirect('User_Controller/single_Invoice/'.$picode);
+//            }
+//            else{
+//              $id=$this->input->post('PI_Icode');
+//            $update = array('Email_Send_Status' => '1',
+//                'Email_Send_Date'=>date('Y-m-d H:i:s'));
+//            $this->db->where('Proforma_Icode',$id);
+//            $this->db->update('proforma_invoice', $update);
+//
+//            $userEmail='vignesh@ibtemail.com';
+//            $subject='Test';
+//            $config = Array(
+//                'mailtype' => 'html',
+//                'charset' => 'utf-8',
+//                'priority' => '1'
+//            );
+//        $this->load->library('email', $config);
+//       $this->email->set_newline("\r\n");
+//            $pi_icode= $this->input->post('PI_Icode');
+//
+//        $this->email->from('karthik@ibtemail.com', 'Stronglass Tough');
+//            $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
+//            $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
+//            $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
+//            $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
+//            $data['tax']= $this->admin_model->get_Tax();
+//            $data['st']= $this->admin_model->get_ST();
+//        $this->email->to($userEmail);  // replace it with receiver mail id
+//        $this->email->subject($subject); // replace it with relevant subject
+//          //  $this->load->view('User/email',$data,false);
+//        $body = $this->load->view('User/email',$data,TRUE);
+//        $this->email->message($body);
+//        $this->email->send();
+//            $this->session->set_flashdata('feedback', 'Email Send Successfully ..');
+//            redirect('User_Controller/Check_PI');
+//            }
 
         }
 

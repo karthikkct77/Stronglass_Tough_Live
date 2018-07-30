@@ -352,6 +352,11 @@ class Admin_Model extends CI_Model
         $query = $this->db->query("SELECT * FROM proforma_invoice_items A INNER JOIN material_master B on A.Proforma_Material_Icode=B.Material_Icode WHERE A.Proforma_Icode='$pi_id'");
         return $query->result_array();
     }
+    public function Get_Single_Sheet_Invoice_Item($pi_id)
+    {
+        $query = $this->db->query("SELECT * FROM proforma_invoice_item_sheet A INNER JOIN material_master B on A.Proforma_Material_Icode=B.Material_Icode WHERE A.Proforma_Icode='$pi_id'");
+        return $query->result_array();
+    }
     /** Get single invoice charges */
     public function Get_Single_Invoice_Charges($pi_id)
     {
