@@ -1,5 +1,19 @@
 <html>
 <head>
+    <style>
+        table,tr,td,thead,tbody,th{
+            border: 1px solid #cccccc;
+            border-collapse: collapse;
+        }
+        th{
+            font-weight: bold;
+        }
+        table{
+            width: 100%;
+            text-align: center;
+
+        }
+    </style>
 </head>
 <body>
 <div style="width: 100%; display: block;text-align: center;">
@@ -34,91 +48,112 @@
     </div>
     <br style="width:100%;clear:both;">
     <hr>
-    <br>
-
     <?php if($invoice[0]['PI_Type'] == '1')
     { ?>
         <h6 style="text-align: center">Total Number of Sheets used to Cut the following glasses</h6>
-        <table  border="1"  >
-            <thead>
-            <tr>
-            <td width="10" align="center">#</td>
-            <td width="10" align="center">Select Material</td>
-            <td width="10" align="center">No.of sheet</td>
-            <td width="10" align="center">Act<br>Size(h)</td>
-            <td width="10" align="center">Act<br>Size(w)</td>
-            <td width="30" align="center">cha<br>Size(h)</td>
-            <td width="30" align="center">cha<br>Size(w)</td>
-            <td width="30" align="center">Area</td>
-            <td width="30" align="center">Rate</td>
-            <td width="30" align="center">Amount</td>
+        <table>
+            <thead >
+            <tr >
+            <th>#</th>
+            <th >Material</th>
+            <th>No.of sheet</th>
+            <th >ActSize(h)</th>
+            <th >ActSize(w)</th>
+            <th >chaSize(h)</th>
+            <th>chaSize(w)</th>
+            <th >Area</th>
+            <th >Rate</th>
+            <th >Amount</th>
             </tr>
             </thead>
-            <tbody></tbody>
-            <tfoot>
             <?php $i=1; foreach ($sheet as $key) { ?>
             <tr>
-                <td width="10"><?php echo $i; ?></td>
-                <td width="10"><?php echo $key['Material_Name']; ?></td>
-                <td width="10"><?php echo $key['No_Of_Sheet']; ?></td>
-                <td width="10"><?php echo $key['Actual_Height']; ?></td>
-                <td width="10"><?php echo $key['Actual_Width']; ?></td>
-                <td width="10"><?php echo $key['Chargable_Height']; ?></td>
-                <td width="10"><?php echo $key['Chargable_Width']; ?></td>
-                <td width="10"><?php echo $key['Area']; ?></td>
-                <td width="10"><?php echo $key['Rate']; ?></td>
-                <td width="10"><?php echo $key['Total_Amount']; ?></td>
+                <td><?php echo $i; ?></td>
+                <td><?php echo $key['Material_Name']; ?></td>
+                <td><?php echo $key['No_Of_Sheet']; ?></td>
+                <td><?php echo $key['Actual_Height']; ?></td>
+                <td><?php echo $key['Actual_Width']; ?></td>
+                <td><?php echo $key['Chargable_Height']; ?></td>
+                <td><?php echo $key['Chargable_Width']; ?></td>
+                <td><?php echo $key['Area']; ?></td>
+                <td><?php echo $key['Rate']; ?></td>
+                <td><?php echo $key['Total_Amount']; ?></td>
             </tr>
-            </tfoot>
             <?php
             }
             ?>
         </table>
         <br style="width:100%;clear:both;">
         <hr>
-<!--        <br>-->
-        <table border="1" >
+        <br>
+        <table>
             <thead>
-            <tr style="background-color:#FFFF00;color:#0000FF;">
-                <td width="10" align="center">#</td>
-                <td width="10" align="center">Material</td>
-                <td width="10" align="center">Special</td>
-                <td width="10" align="center">Pieces</td>
-                <td width="10" align="center"> Holes</td>
-                <td width="10" align="center">Actucal Size(W)</td>
-                <td width="10" align="center">Actucal Size(H)</td>
-                <td width="30" align="center">Chargable Size(W)</td>
-                <td width="30" align="center">Chargable Size(H)</td>
-                <td width="30" align="center">Area</td>
-                <td width="30" align="center">Rate</td>
-                <td width="30" align="center">Total</td>
+            <tr>
+                <th>#</th>
+                <th>Material</th>
+                <th>Actucal Size(W)</th>
+                <th>Actucal Size(H)</th>
+                <th>No.of .Pieces</th>
+                <th>Holes</th>
+                <th>cutout</th>
+                <th>Special</th>
+                <th>Area</th>
             </tr>
             </thead>
             <?php $i=1; foreach ($invoice_item as $key) { ?>
                 <tr>
-                    <td width="10"><?php echo $i; ?></td>
-                    <td width="10"><?php echo $key['Material_Name']; ?></td>
-                    <td width="10"><?php echo $key['Proforma_Special']; ?></td>
-                    <td width="10"><?php echo $key['Proforma_Qty']; ?></td>
-                    <td width="10"><?php echo $key['Proforma_Holes']; ?></td>
-                    <td width="10"><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
-                    <td width="30"><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
-                    <td width="30"><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
-                    <td width="30"><?php echo $key['Proforma_Chargeable_Size_Height']; ?></td>
-                    <td width="30"><?php echo $key['Proforma_Area_SQMTR']; ?></td>
-                    <td width="30"><?php echo $key['Proforma_Material_Rate']; ?></td>
-                    <td width="30"><?php echo $key['Proforma_Material_Cost']; ?></td>
+                    <td><?php echo $i; ?></td>
+                    <td><?php echo $key['Material_Name']; ?></td>
+                    <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
+                    <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
+                    <td><?php echo $key['Proforma_Qty']; ?></td>
+                    <td><?php echo $key['Proforma_Holes']; ?></td>
+                    <td><?php echo $key['Proforma_Cutout']; ?></td>
+                    <td><?php echo $key['Proforma_Special']; ?></td>
+                    <td><?php echo $key['Proforma_Area_SQMTR']; ?></td>
                 </tr>
                 <?php $i++; } ?>
-<!---->
-<!---->
-<!---->
-<!--        </table>-->
-
+        </table>
 
    <?php }
    else
    { ?>
+       <table>
+           <thead>
+           <tr>
+               <th>#</th>
+               <th>Material</th>
+               <th>Actual<br>size(h)</th>
+               <th>Actual<br>size(w)</th>
+               <th>Chargable<br>size(h)</th>
+               <th>Chargable<br>size(w)</th>
+               <th>No.of<br>Pieces</th>
+               <th>No.of<br>Holes</th>
+               <th>Cutouts</th>
+               <th>Special</th>
+               <th>Area<br>(sqmtr)</th>
+               <th>Rate<br>(sqmtr)</th>
+               <th>Total<br>Rs</th>
+           </tr>
+           </thead>
+           <?php $i=1; foreach ($invoice_item as $key) { ?>
+               <tr>
+                   <td><?php echo $i; ?></td>
+                   <td><?php echo $key['Material_Name']; ?></td>
+                   <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
+                   <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
+                   <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
+                   <td><?php echo $key['Proforma_Chargeable_Size_Height']; ?></td>
+                   <td><?php echo $key['Proforma_Qty']; ?></td>
+                   <td><?php echo $key['Proforma_Holes']; ?></td>
+                   <td><?php echo $key['Proforma_Cutout']; ?></td>
+                   <td><?php echo $key['Proforma_Special']; ?></td>
+                   <td><?php echo $key['Proforma_Area_SQMTR']; ?></td>
+                   <td><?php echo $key['Proforma_Material_Rate']; ?></td>
+                   <td><?php echo $key['Proforma_Material_Cost']; ?></td>
+               </tr>
+               <?php $i++; } ?>
+       </table>
 
    <?php } ?>
 
