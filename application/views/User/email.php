@@ -35,42 +35,29 @@
     <br style="width:100%;clear:both;">
     <hr>
     <br>
-    <table border="1" cellpadding="2" cellspacing="2">
+    <table border="1" style="width: 100%">
         <thead>
-        <tr style="background-color:#FFFF00;color:#0000FF;">
-            <td width="10" align="center">Material</td>
-            <td width="10" align="center">Special</td>
-            <td width="10" align="center">Pieces</td>
-            <td width="10" align="center"> Holes</td>
-            <td width="10" align="center">Actucal Size(W)</td>
-            <td width="10" align="center">Actucal Size(H)</td>
-            <td width="30" align="center">Chargable Size(W)</td>
-            <td width="30" align="center">Chargable Size(H)</td>
-            <td width="30" align="center">Area</td>
-            <td width="30" align="center">Rate</td>
-            <td width="30" align="center">Total</td>
+        <tr>
+        <th>#</th>
+        <th>Material</th>
+        <th>Hsn code</th>
+        <th>Special</th>
+        <th>No.of Pieces</th>
+        <th>No.of Holes</th>
         </tr>
         </thead>
+        <tbody>
         <?php $i=1; foreach ($invoice_item as $key) { ?>
             <tr>
-                <td width="30"><?php echo $i; ?></td>
-                <td width="30"><?php echo $key['Material_Name']; ?></td>
-                <td width="30"><?php echo $key['Proforma_HSNCode']; ?></td>
-                <td width="30"><?php echo $key['Proforma_Special']; ?></td>
-                <td width="30"><?php echo $key['Proforma_Qty']; ?></td>
-                <td width="30"><?php echo $key['Proforma_Holes']; ?></td>
-                <td width="30"><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
-                <td width="30"><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
-                <td width="30"><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
-                <td width="30"><?php echo $key['Proforma_Chargeable_Size_Height']; ?></td>
-                <td width="30"><?php echo $key['Proforma_Area_SQMTR']; ?></td>
-                <td width="30"><?php echo $key['Proforma_Material_Rate']; ?></td>
-                <td width="30"><?php echo $key['Proforma_Material_Cost']; ?></td>
+                <td>1</td>
+                <td>dgdgdsgdgdgd</td>
+                <td>szdgdsgdsgdsgds</td>
+                <td>dsgdsgdsgdgdsgdsg</td>
+                <td>dgdsagdsgdsgdsgdg</td>
+
             </tr>
             <?php $i++; } ?>
-
-
-
+        </tbody>
     </table>
 </div>
 </body>
