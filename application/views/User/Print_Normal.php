@@ -23,12 +23,14 @@
                 <?php
                 foreach ($print as $val)
                 { ?>
-                <div class="tile">
+                <div class="tile" id="page_setup">
                     <div class="row invoice">
                         <img style="position: absolute;width: 100px;height: auto;" src="<?php echo base_url('img/strong.png'); ?>" alt="User Image">
                         <h5><?php echo $st[0]['ST_Name']; ?></h5>
                         <h6><?php echo $st[0]['ST_Address_1']; ?>,&nbsp;<?php echo $st[0]['ST_Area']; ?>,&nbsp;<?php echo $st[0]['ST_City']; ?></h6>
                         <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
+                        <h6 style="text-align: right; padding-right: 1%;">Department: <?php echo $val['print_type']; ?></h6>
+
                     </div>
                     <hr>
                     <div class="row">
@@ -218,6 +220,14 @@
 </main>
 
 <style>
+    @media print {
+        #with_print {
+            display: none;
+        }
+        #page_setup {   page-break-before: always;
+        }
+
+    }
     h4 span{
         width: 185px;
         float: left;
@@ -233,16 +243,10 @@
 
 </style>
 <script type="text/javascript">
-    $( document ).ready(function() {
+    $(document).ready(function(){
         window.print();
-        function printDiv(divName) {
-            var printContents = document.getElementById(divName).innerHTML;
-            var originalContents = document.body.innerHTML;
-            document.body.innerHTML = printContents;
-            window.print();
-            document.body.innerHTML = originalContents;
-        }
-
+        history.back();
+    });
 </script>
 
 

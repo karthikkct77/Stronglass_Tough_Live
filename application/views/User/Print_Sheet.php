@@ -29,7 +29,7 @@
                             <h5><?php echo $st[0]['ST_Name']; ?></h5>
                             <h6><?php echo $st[0]['ST_Address_1']; ?>,&nbsp;<?php echo $st[0]['ST_Area']; ?>,&nbsp;<?php echo $st[0]['ST_City']; ?></h6>
                             <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
-                            <h6>Department: <?php echo $val['print_type']; ?></h6>
+                            <h6 style="text-align: right; padding-right: 1%;">Department: <?php echo $val['print_type']; ?></h6>
                         </div>
                         <hr>
                         <div class="row">
@@ -276,15 +276,11 @@
 </style>
 
 <script type="text/javascript">
-    $( document ).ready(function() {
+    $(document).ready(function(){
         window.print();
-    function printDiv(divName) {
-        var printContents = document.getElementById(divName).innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-    }
+        history.back();
+    });
+
 
 </script>
 
