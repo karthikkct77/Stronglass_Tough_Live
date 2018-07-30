@@ -20,6 +20,9 @@
                 </script>
             <?php endif; ?>
             <div class="col-md-12" >
+                <?php
+                foreach ($print as $val)
+                { ?>
                 <div class="tile">
                     <div class="row invoice">
                         <img style="position: absolute;width: 100px;height: auto;" src="<?php echo base_url('img/strong.png'); ?>" alt="User Image">
@@ -127,13 +130,11 @@
                         <div class="col-md-3">
                             <h4 class="st_check">Production Manager</h4>
                         </div>
-                        <div class="col-md-3">
-                            <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()"value="Print"/>
-                        </div>
-
                     </div>
 
                 </div>
+                <?php }
+                ?>
             </div>
         </div>
     </div>
@@ -155,6 +156,18 @@
     /* In CSS, not JavaScript */
 
 </style>
+<script type="text/javascript">
+    $( document ).ready(function() {
+        window.print();
+        function printDiv(divName) {
+            var printContents = document.getElementById(divName).innerHTML;
+            var originalContents = document.body.innerHTML;
+            document.body.innerHTML = printContents;
+            window.print();
+            document.body.innerHTML = originalContents;
+        }
+
+</script>
 
 
 
