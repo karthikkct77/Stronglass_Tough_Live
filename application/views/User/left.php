@@ -79,6 +79,7 @@
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Generate_WO'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">View PI List</span></a></li>
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/View_WO'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">View WO List</span></a></li>
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Print_WO'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Print WO</span></a></li>
+            <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Re_Cut'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Recut</span></a></li>
 
         <?php  }
         elseif ($_SESSION['role'] == 7)
