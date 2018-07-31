@@ -11,7 +11,20 @@
         table{
             width: 100%;
             text-align: center;
-
+            font-size: 12px;
+        }
+        .width_td{
+            width: 10%;
+            max-width: 30px;
+            table-layout: fixed;
+        }
+        #page {
+            page-break-inside: avoid;
+        }
+        .acc span
+        {
+            width: 100px;
+            float: left;
         }
     </style>
 </head>
@@ -139,7 +152,7 @@
            <?php $i=1; foreach ($invoice_item as $key) { ?>
                <tr>
                    <td><?php echo $i; ?></td>
-                   <td><?php echo $key['Material_Name']; ?></td>
+                   <td class="width_td"><?php echo $key['Material_Name']; ?></td>
                    <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                    <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
                    <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
@@ -153,13 +166,151 @@
                    <td><?php echo $key['Proforma_Material_Cost']; ?></td>
                </tr>
                <?php $i++; } ?>
+           <tr>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td style="font-weight: bold;"><?php echo $invoice_total[0]['qty']; ?></td>
+               <td></td>
+               <td></td>
+               <td></td>
+               <td style="font-weight: bold;"><?php echo round($invoice_total[0]['area'], 3); ?></td>
+               <td></td>
+               <td style="font-weight: bold;"><?php echo round($invoice_total[0]['rate'],3); ?></td>
+           </tr>
        </table>
-
    <?php } ?>
+    <br style="width:100%;">
+    <hr>
+    <div id="page"style="display: block; vertical-align: top;">
+        <div style="width: 49.5%; text-align: left; display: inline-block; vertical-align: top;">
+            <h3 style="font-size: 15px;">Terms & Conditions</h3>
+            <p style="font-size: 8px;text-align: justify;">
+                Supply shall be against advance payment or Letter of credit or any other agreed
+                terms. Interest @2% per month will be charged for the payment delayed beyond
+                the terms agreed from the date of invoice. All payments made by third
+                party/consumer/contractor interested in the transaction shall be adjusted against
+                supplies made to buyer/consignee
+            </p>
+            <h3 style="font-size: 15px;">Dear Customer</h3>
+            <p style="font-size: 8px;text-align: justify;">
+            <ul style="list-style: none;padding: 0;font-size: 8px;text-align: justify;">
+                <li style="margin-bottom: 15px;">
+                    1.Please make sure to DOUBLE - CHECK the Pro-Forma Invoice in terms Billing & Delivery Address, Contact Name & Number, PAN NO, GST NO, complete Glass
+                    Specifications, Size, Quantity, Rates & Taxes.
+                </li>
+                <li style="margin-bottom: 15px;">
+                    2.If there is any item not as per your requirement, please get the same modified to be reflected in the Pro-Forma Invoice before confirmation. PI terms mentioned are
+                    final and shall supersede PO terms, no dispute will be entertained after order released for production pertaining to terms agreed in Pro-Forma invoice.
+                </li>
+                <li>
+                    3.In the event the order is modified or cancelled once issued to production, all material expenses, processing costs and cancellation penalties up to the date of
+                    modification or cancellation shall be invoiced. The amount to be invoiced is solely at the discretion of the Seller and shall be final and non-negotiable
+                </li>
+            </ul>
+            </p>
+
+            <h3 style="font-size: 15px;">Bank Details</h3>
+            <p>Stronglass Tough</p>
+            <p class="acc"><span>A/C Type</span>:<?php echo $st[0]['ST_Bank_Account_Type']; ?></p>
+            <p class="acc"><span>A/C Number</span>:<?php echo $st[0]['ST_Bank_Account_Number']; ?></p>
+            <p class="acc"><span>Name</span>:<?php echo $st[0]['ST_Bank']; ?></p>
+            <p class="acc"><span>IFSC</span>:<?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?> </p>
 
 
+        </div>
+        <div style="width: 49.5%; display: inline-block; vertical-align: top;">
+            <table>
+                <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Select Charges</th>
+                    <th>No.of pieces</th>
+                    <th>Price</th>
+                    <th>Total(INR)</th>
+                </tr>
+                </thead>
+                <?php
+                $i=1;
+                foreach ($invoice_Charges as $key) {
+                    ?>
+                    <tr>
+                        <td><?php echo $i; ?></td>
+                        <td><?php echo $key['charge_name']; ?></td>
+                        <td><?php echo $key['Proforma_Charge_Count']; ?></td>
+                        <td><?php echo $key['Proforma_Charge_Value']; ?></td>
+                        <td><?php echo $key['Proforma_Charge_Cost']; ?></td>
+                    </tr>
+                    <?php
+                    $i++;
+                }
+                ?>
+            </table>
+            <div  style="float: right;" id="totals">
+            <table>
+                <tr>
+                    <td colspan="4" align="right">SUB-TOTAL</td>
+
+                    <td><input class="form-control" type="text" name="sub_tot" id="sub_tot" value="<?php echo $invoice[0]['Sub_Total']; ?>" readonly ></td>
+
+                </tr>
+                <tr>
+                    <td colspan="4" align="right">HANDLING CHARGE</td>
+
+                    <td><input class="form-control" type="text" name="insurance" id="insurance" value="<?php echo $invoice[0]['Insurance_Value']; ?>" required readonly></td>
+
+                </tr>
+                <tr>
+                    <td colspan="4" align="right">TRANSPORT</td>
+
+                    <td><input class="form-control" type="text" name="transport" id="transport"  value="<?php echo $invoice[0]['Transport']; ?>" readonly></td>
+
+                </tr>
+                <?php
+                if($invoice[0]['IGST_Value'] == '0')
+                { ?>
+                    <tr>
+                        <td colspan="4" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
+
+                        <td><input class="form-control" type="text" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ></td>
+
+                    </tr>
+                    <tr>
+                        <td colspan="4" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
+                            <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
+                        </td>
+                        <td><input class="form-control" type="text" name="cgst" id="cgst" value="<?php echo $invoice[0]['CGST_Value']; ?>" readonly ></td>
+
+                    </tr>
+
+                <?php }
+                else
+                {?>
+                    <tr>
+                        <td colspan="4" align="right">IGST @18%
+                            <input type="hidden" id="gst" value="18">
+                        </td>
+                        <td><input class="form-control" type="text" name="igst" id="igst" value="<?php echo $invoice[0]['IGST_Value']; ?>" readonly ></td>
+
+                    </tr>
+                    <?php
+                }
+                ?>
+                <tr>
+
+                    <td colspan="4" align="right">GROSS TOTAL</td>
+                    <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" >(INR)</td>
+
+                </tr>
+            </table>
+            </div>
+
+        </div>
+    </div>
 
 
-</div>
 </body>
 </html>
