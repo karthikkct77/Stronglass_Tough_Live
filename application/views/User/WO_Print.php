@@ -1,7 +1,7 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-edit"></i> Work order List</h1>
+            <h1><i class="fa fa-edit"></i> Work order Print</h1>
         </div>
     </div>
     <div class="row">
