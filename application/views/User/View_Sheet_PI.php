@@ -33,8 +33,7 @@
                         });
                 </script>
             <?php endif; ?>
-            <div class="col-md-12" >
-
+            <div class="col-md-12" id="pagewidth" >
                 <div class="tile">
                     <div class="row invoice">
                         <img style="position: absolute;width: 100px;height: auto;top: 1%;left: 1%;" src="<?php echo base_url('img/strong.png'); ?>" alt="User Image">
@@ -337,9 +336,9 @@
     </div>
 </main>
 <style type="text/css" media="print">
-    @page
-    {
-        margin: 0mm;  /* this affects the margin in the printer settings */
+    #pagewidth {
+        overflow: hidden ;
+        width: 500px ;
     }
 </style>
 <style>

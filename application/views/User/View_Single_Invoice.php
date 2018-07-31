@@ -126,7 +126,7 @@
                                     <input class="form-control" type="hidden" name="material[]"  value="<?php echo $key['Proforma_Invoice_Items_Icode']; ?>" >
                                     <input class="form-control" type="hidden" name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" >
                                     <td><?php echo $i; ?></td>
-                                    <td><p style="width: 250px; word-wrap: break-word;"><?php echo $key['Material_Name']; ?></p></td>
+                                    <td><p style="width: 230px; word-wrap: break-word;"><?php echo $key['Material_Name']; ?></p></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
                                     <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
@@ -333,14 +333,9 @@
     </div>
 </main>
 <style type="text/css" media="print">
-    @page
-    {
-        margin: 0mm;  /* this affects the margin in the printer settings */
-    }
     #pagewidth {
-        margin: 0px auto 0px auto ;
         overflow: hidden ;
-        width: 500px ;
+        width: 600px ;
     }
 </style>
 <style>
