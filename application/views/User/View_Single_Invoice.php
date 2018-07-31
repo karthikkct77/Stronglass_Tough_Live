@@ -107,15 +107,15 @@
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
                             <th>#</th>
-                            <th>Material</th>
-                            <th>Actual<br>size(h)</th>
-                            <th>Actual<br>size(w)</th>
-                            <th>Chargable<br>size(h)</th>
-                            <th>Chargable<br>size(w)</th>
-                            <th>No.of<br>Pieces</th>
-                            <th>No.of<br>Holes</th>
-                            <th>Cutouts</th>
-                            <th>Special</th>
+                            <th style="width: 50px;">Material</th>
+                            <th>Actual<br>sz(h)</th>
+                            <th>Actual<br>sz(w)</th>
+                            <th>Charge<br>sz(h</th>
+                            <th>Charge<br>sz(w)</th>
+                            <th style="width: 10px;">No.of<br>Pcs</th>
+                            <th style="width: 10px;">No.of<br>Holes</th>
+                            <th style="width: 10px;">Cutout</th>
+                            <th style="width: 10px;">Special</th>
                             <th>Area<br>(sqmtr)</th>
                             <th>Rate<br>(sqmtr)</th>
                             <th>Total<br>Rs</th>
@@ -126,7 +126,7 @@
                                     <input class="form-control" type="hidden" name="material[]"  value="<?php echo $key['Proforma_Invoice_Items_Icode']; ?>" >
                                     <input class="form-control" type="hidden" name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" >
                                     <td><?php echo $i; ?></td>
-                                    <td><?php echo $key['Material_Name']; ?></td>
+                                    <td><p style="width: 250px; word-wrap: break-word;"><?php echo $key['Material_Name']; ?></p></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
                                     <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
