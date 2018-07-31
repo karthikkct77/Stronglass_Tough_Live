@@ -724,17 +724,10 @@ class User_Controller extends CI_Controller
             $pi_icode= $this->input->post('PI_Icode');
 
         $this->email->from('karthik@ibtemail.com', 'Stronglass Tough');
-            $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
-            $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
-            $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
-            $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
-            $data['tax']= $this->admin_model->get_Tax();
-            $data['st']= $this->admin_model->get_ST();
         $this->email->to($userEmail);  // replace it with receiver mail id
         $this->email->subject($subject); // replace it with relevant subject
-          //  $this->load->view('User/email',$data,false);
-        $body = $this->load->view('User/email',$data,TRUE);
-        $this->email->message($body);
+        $file_location =FCPATH."uploads/pdf/".$pdf_name.".pdf";
+        $this->email->attach($file_location);
         $this->email->send();
             $this->session->set_flashdata('feedback', 'Email Send Successfully ..');
             redirect('User_Controller/Check_PI');
