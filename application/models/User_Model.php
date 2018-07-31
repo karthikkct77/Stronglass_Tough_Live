@@ -25,6 +25,11 @@ class User_Model extends CI_Model
             $query = $this->db->query("SELECT * FROM work_order A INNER JOIN wo_processing B on A.WO_Icode=B.WO_Icode WHERE B.Furnace_Status in('2','3') and  B.Dispatch_Status !='3' GROUP by A.WO_Icode");
             return $query->result_array();
         }
+        elseif ($role == '9')
+        {
+            $query = $this->db->query("SELECT * FROM work_order A INNER JOIN wo_processing B on A.WO_Icode=B.WO_Icode WHERE B.Cutting_Status in('2' ,'3')  GROUP by A.WO_Icode");
+            return $query->result_array();
+        }
 
     }
 
@@ -51,7 +56,7 @@ class User_Model extends CI_Model
         elseif ($role == 9) //Fabrication
         {
             $query = $this->db->query("SELECT * FROM wo_processing A INNER JOIN proforma_invoice_items B ON A.Proforma_Invoice_Item_Icode=B.Proforma_Invoice_Items_Icode 
-                                        INNER JOIN material_master C on B.Proforma_Material_Icode=C.Material_Icode WHERE A.Furnace_Status in('2','3') and  A.Dispatch_Status !='3' AND A.WO_Icode='$wo_id'");
+                                        INNER JOIN material_master C on B.Proforma_Material_Icode=C.Material_Icode WHERE A.Cutting_Status in('2' ,'3') AND A.WO_Icode='$wo_id' and B.Proforma_Special !='B'");
             return $query->result_array();
         }
     }

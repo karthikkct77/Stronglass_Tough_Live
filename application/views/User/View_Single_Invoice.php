@@ -106,19 +106,19 @@
                     <div class="row">
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
-                            <th>#</th>
-                            <th style="width: 50px;">Material</th>
-                            <th>Actual<br>sz(h)</th>
-                            <th>Actual<br>sz(w)</th>
-                            <th>Charge<br>sz(h</th>
-                            <th>Charge<br>sz(w)</th>
+                            <th style="width: 10px;">#</th>
+                            <th style="width: 20px;">Material</th>
+                            <th style="width: 20px;">Actual<br>sz(h)</th>
+                            <th style="width: 20px;">Actual<br>sz(w)</th>
+                            <th style="width: 20px;">Charge<br>sz(h</th>
+                            <th style="width: 20px;">Charge<br>sz(w)</th>
                             <th style="width: 10px;">No.of<br>Pcs</th>
                             <th style="width: 10px;">No.of<br>Holes</th>
                             <th style="width: 10px;">Cutout</th>
                             <th style="width: 10px;">Special</th>
-                            <th>Area<br>(sqmtr)</th>
-                            <th>Rate<br>(sqmtr)</th>
-                            <th>Total<br>Rs</th>
+                            <th style="width: 20px;">Area<br>(sqmtr)</th>
+                            <th style="width: 20px;">Rate<br>(sqmtr)</th>
+                            <th style="width: 20px;">Total<br>Rs</th>
                             </thead>
                             <tbody>
                             <?php $i=1; foreach ($invoice_item as $key) { ?>
@@ -126,7 +126,7 @@
                                     <input class="form-control" type="hidden" name="material[]"  value="<?php echo $key['Proforma_Invoice_Items_Icode']; ?>" >
                                     <input class="form-control" type="hidden" name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" >
                                     <td><?php echo $i; ?></td>
-                                    <td><p style="width: 230px; word-wrap: break-word;"><?php echo $key['Material_Name']; ?></p></td>
+                                    <td><p style="width: 200px; word-wrap: break-word;"><?php echo $key['Material_Name']; ?></p></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
                                     <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
@@ -335,7 +335,7 @@
 <style type="text/css" media="print">
     #pagewidth {
         overflow: hidden ;
-        width: 600px ;
+        width: 500px ;
     }
 </style>
 <style>
