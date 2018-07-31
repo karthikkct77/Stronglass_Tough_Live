@@ -326,12 +326,7 @@
         </div>
     </div>
 </main>
-<style type="text/css" media="print">
-    @page
-    {
-        margin: 0mm;  /* this affects the margin in the printer settings */
-    }
-</style>
+
 <style>
     @media print {
         #with_print {

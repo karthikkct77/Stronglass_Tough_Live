@@ -276,6 +276,11 @@
     </div>
 </main>
 <style>
+    @media print {
+        #with_print {
+            display: none;
+        }
+    }
     #search_data {
         width: 200px;
         padding: 5px;
