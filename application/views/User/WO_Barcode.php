@@ -77,8 +77,8 @@
                             </div>
                             <div class="col-md-3">
                                 <input class="form-control" type="hidden" name="PI_Icode"  id="PI_Icode" value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
-                                <h4>Work Order No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $wo[0]['WO_Number']; ?>" readonly></h4>
-                                <h4>Work Order Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo $wo[0]['WO_Date']; ?>" readonly></h4>
+                                <h5>Work Order No <input type="hidden" name="invoice_no" id="invoice_no" value="<?php echo $wo[0]['WO_Number']; ?>" readonly><h4><?php echo $wo[0]['WO_Number']; ?></h4></h5>
+                                <h5>Work Order Date<input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo $wo[0]['WO_Date']; ?>" readonly><h4><?php echo $wo[0]['WO_Date']; ?></h4></h5>
                             </div>
                         </div>
                         <div class="row">
@@ -140,7 +140,7 @@
 
                         </div>
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-6">
                                 <h3 style="font-size: 15px;">Terms & Conditions</h3>
                                 <p style="font-size: 8px;text-align: justify;">
                                     Supply shall be against advance payment or Letter of credit or any other agreed
@@ -174,7 +174,7 @@
                                 <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
 
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-6">
                                 <table class="table table-hover table-bordered" id="sampleTable1">
                                     <thead>
                                     <th>#</th>
@@ -204,19 +204,19 @@
                                         <td colspan="4" align="right">SUB-TOTAL</td>
 
                                         <td><input class="form-control" type="text" name="sub_tot" id="sub_tot" value="<?php echo $invoice[0]['Sub_Total']; ?>" readonly ></td>
-                                        <td></td>
+
                                     </tr>
                                     <tr>
                                         <td colspan="4" align="right">HANDLING CHARGE</td>
 
                                         <td><input class="form-control" type="text" name="insurance" id="insurance" value="<?php echo $invoice[0]['Insurance_Value']; ?>" required readonly></td>
-                                        <td></td>
+
                                     </tr>
                                     <tr>
                                         <td colspan="4" align="right">TRANSPORT</td>
 
                                         <td><input class="form-control" type="text" name="transport" id="transport"  value="<?php echo $invoice[0]['Transport']; ?>" readonly></td>
-                                        <td></td>
+
                                     </tr>
                                     <?php
                                     if($invoice[0]['IGST_Value'] == '0')
@@ -225,14 +225,14 @@
                                             <td colspan="4" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
 
                                             <td><input class="form-control" type="text" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ></td>
-                                            <td></td>
+
                                         </tr>
                                         <tr>
                                             <td colspan="4" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
                                                 <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
                                             </td>
                                             <td><input class="form-control" type="text" name="cgst" id="cgst" value="<?php echo $invoice[0]['CGST_Value']; ?>" readonly ></td>
-                                            <td></td>
+
                                         </tr>
 
                                     <?php }
@@ -243,7 +243,7 @@
                                                 <input type="hidden" id="gst" value="18">
                                             </td>
                                             <td><input class="form-control" type="text" name="igst" id="igst" value="<?php echo $invoice[0]['IGST_Value']; ?>" readonly ></td>
-                                            <td></td>
+
                                         </tr>
                                         <?php
                                     }
@@ -252,7 +252,7 @@
 
                                         <td colspan="4" align="right">GROSS TOTAL</td>
                                         <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" >(INR)</td>
-                                        <td></td>
+
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -268,9 +268,10 @@
                                 <?php if($_SESSION['role'] == 6) { ?>
 
                                     <button class="btn btn-danger pi_button" id="with_print" type="submit"><i class="fa fa-fw fa-lg fa-print"></i> Barcode Print</button>
-                                    <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="printDiv('printableArea')" value="Print"/>
+                                    <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()"value="Print"/>
                                 <?php } elseif($_SESSION['role'] == 7){
                                     ?>
+
                                 <?php } ?>
 
                             </div>
@@ -287,7 +288,6 @@
         #with_print {
             display: none;
         }
-        @page { size: landscape; }
     }
 
     #search_data {

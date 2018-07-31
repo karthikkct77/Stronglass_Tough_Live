@@ -99,7 +99,7 @@
                             <div class="col-md-3">
                                 <input class="form-control" type="hidden" name="PI_Icode"  id="PI_Icode" value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
                                 <h5>Work Order No <input type="hidden" name="invoice_no" id="invoice_no" value="<?php echo $wo[0]['WO_Number']; ?>" readonly><h4><?php echo $wo[0]['WO_Number']; ?></h4></h5>
-                                <h5>Work Order Date<input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo $wo[0]['WO_Date']; ?>" readonly><h4><?php echo $wo[0]['WO_Number']; ?></h4></h5>
+                                <h5>Work Order Date<input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo $wo[0]['WO_Date']; ?>" readonly><h4><?php echo $wo[0]['WO_Date']; ?></h4></h5>
                             </div>
                         </div>
                         <h6 style="text-align: center">Total Number of Sheets used to Cut the following glasses</h6>
