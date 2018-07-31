@@ -70,8 +70,8 @@
                         </div>
                         <div class="col-md-3">
                             <input class="form-control" type="hidden" name="PI_Icode"  value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
-                            <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly></h4>
-                            <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly></h4>
+                            <h5>Work Order No<input type="hidden" name="invoice_no" id="invoice_no" value="<?php echo $wo[0]['WO_Number']; ?>" readonly><h4><?php echo $wo[0]['WO_Number']; ?></h4></h5>
+                            <h5>Work Order Date<input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo $wo[0]['WO_Date']; ?>" readonly><h4><?php echo $wo[0]['WO_Number']; ?></h4></h5>
                         </div>
                     </div>
                     <div class="row">

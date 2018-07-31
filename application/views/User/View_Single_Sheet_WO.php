@@ -38,6 +38,7 @@
                 <div class="tile">
                     <div class="row invoice">
                         <img style="position: absolute;width: 100px;height: auto;top: 1%;left: 1%;" src="<?php echo base_url('img/strong.png'); ?>" alt="User Image">
+                        <h6>Work Order</h6>
                         <h4><?php echo $st[0]['ST_Name']; ?></h4>
                         <h5><?php echo $st[0]['ST_Address_1']; ?>,&nbsp;<?php echo $st[0]['ST_Area']; ?>,&nbsp;<?php echo $st[0]['ST_City']; ?></h5>
                         <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
@@ -97,8 +98,8 @@
                             </div>
                             <div class="col-md-3">
                                 <input class="form-control" type="hidden" name="PI_Icode"  id="PI_Icode" value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
-                                <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly></h4>
-                                <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly></h4>
+                                <h5>Work Order No <input type="hidden" name="invoice_no" id="invoice_no" value="<?php echo $wo[0]['WO_Number']; ?>" readonly><h4><?php echo $wo[0]['WO_Number']; ?></h4></h5>
+                                <h5>Work Order Date<input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo $wo[0]['WO_Date']; ?>" readonly><h4><?php echo $wo[0]['WO_Number']; ?></h4></h5>
                             </div>
                         </div>
                         <h6 style="text-align: center">Total Number of Sheets used to Cut the following glasses</h6>
