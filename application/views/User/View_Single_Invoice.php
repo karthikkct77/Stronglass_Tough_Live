@@ -126,7 +126,7 @@
                                     <input class="form-control" type="hidden" name="material[]"  value="<?php echo $key['Proforma_Invoice_Items_Icode']; ?>" >
                                     <input class="form-control" type="hidden" name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" >
                                     <td><?php echo $i; ?></td>
-                                    <td><p style="width: 200px; word-wrap: break-word;"><?php echo $key['Material_Name']; ?></p></td>
+                                    <td><p style="width: 180px; word-wrap: break-word;"><?php echo $key['Material_Name']; ?></p></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
                                     <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
