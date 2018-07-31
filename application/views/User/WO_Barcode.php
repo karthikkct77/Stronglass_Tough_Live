@@ -251,7 +251,7 @@
                                     <tr>
 
                                         <td colspan="4" align="right">GROSS TOTAL</td>
-                                        <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" >(INR)</td>
+                                        <td><input class="form-control" type="hidden" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" ><h4><?php echo $invoice[0]['GrossTotal_Value']; ?> /-</h4></td>
 
                                     </tr>
                                     </tfoot>
