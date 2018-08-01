@@ -1559,6 +1559,17 @@ class User_Controller extends CI_Controller
         $this->load->view('User/footer');
     }
 
+    //** Recut */
+    public function Re_Cut()
+    {
+        $data['wo'] = $this->user_model->Get_Not_Completed_WO();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/Re_Cut',$data,false);
+        $this->load->view('User/footer');
+    }
+
 
 
 

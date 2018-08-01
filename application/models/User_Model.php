@@ -338,6 +338,15 @@ class User_Model extends CI_Model
         return $query->result_array();
     }
 
+    //** Get un completed Work Order */
+    public function Get_Not_Completed_WO()
+    {
+        $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                      WHERE  A.WO_Completed = '0'");
+        return $query->result_array();
+
+    }
+
 
 
 }
