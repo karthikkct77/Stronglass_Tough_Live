@@ -638,37 +638,55 @@ class User_Controller extends CI_Controller
             {
                 $item_icode =  $this->input->post('material');
                 $count = sizeof($item_icode);
-                for($i=0; $i<$count; $i++)
-                {
-                    $data1 = array(
-                        'WO_Icode' =>  $insert,
-                        'Proforma_Icode' => $this->input->post('PI_Icode'),
-                        'Proforma_Invoice_Item_Icode' => $item_icode[$i],
-                        'Total_Qty' =>$Qty[$i] ,
-                        'Cutting_Remaining_Qty' =>$Qty[$i],
-                        'Furnace_Remaining_Qty' =>'0',
-                        'Dispatch_Remaining_Qty' =>'0');
-                    $insert_process = $this->admin_model->Insert_WO_Process($data1);
-                }
-                $id=$this->input->post('PI_Icode');
-                $update = array('WO_Confirm' => '1',
-                    'WO_Confirm_By'=>$this->session->userdata['userid'],
-                    'WO_Confirm_On'=>date('Y-m-d H:i:s'));
-                $this->db->where('Proforma_Icode',$id);
-                $this->db->update('proforma_invoice', $update);
 
                 $pi_type = $this->input->post('invoice_type');
                 if($pi_type == '1')
                 {
+                    for($i=0; $i<$count; $i++)
+                    {
+                        $data1 = array(
+                            'WO_Icode' =>  $insert,
+                            'Proforma_Icode' => $this->input->post('PI_Icode'),
+                            'Proforma_Invoice_Item_Icode' => '0',
+                            'PI_Sheet_Item_Icode' =>$item_icode[$i],
+                            'Total_Qty' =>$Qty[$i] ,
+                            'Cutting_Remaining_Qty' =>$Qty[$i],
+                            'Furnace_Remaining_Qty' =>'0',
+                            'Dispatch_Remaining_Qty' =>'0');
+                        $insert_process = $this->admin_model->Insert_WO_Process($data1);
+                    }
+                    $id=$this->input->post('PI_Icode');
+                    $update = array('WO_Confirm' => '1',
+                        'WO_Confirm_By'=>$this->session->userdata['userid'],
+                        'WO_Confirm_On'=>date('Y-m-d H:i:s'));
+                    $this->db->where('Proforma_Icode',$id);
+                    $this->db->update('proforma_invoice', $update);
                     $this->session->set_flashdata('feedback', 'Work Order Generated Successfully ..');
                     redirect('User_Controller/single_sheet_WO/'.$id);
                 }
-                else
-                {
+                else{
+                    for($i=0; $i<$count; $i++)
+                    {
+                        $data1 = array(
+                            'WO_Icode' =>  $insert,
+                            'Proforma_Icode' => $this->input->post('PI_Icode'),
+                            'Proforma_Invoice_Item_Icode' => $item_icode[$i],
+                            'PI_Sheet_Item_Icode' =>'0',
+                            'Total_Qty' =>$Qty[$i] ,
+                            'Cutting_Remaining_Qty' =>$Qty[$i],
+                            'Furnace_Remaining_Qty' =>'0',
+                            'Dispatch_Remaining_Qty' =>'0');
+                        $insert_process = $this->admin_model->Insert_WO_Process($data1);
+                    }
+                    $id=$this->input->post('PI_Icode');
+                    $update = array('WO_Confirm' => '1',
+                        'WO_Confirm_By'=>$this->session->userdata['userid'],
+                        'WO_Confirm_On'=>date('Y-m-d H:i:s'));
+                    $this->db->where('Proforma_Icode',$id);
+                    $this->db->update('proforma_invoice', $update);
                     $this->session->set_flashdata('feedback', 'Work Order Generated Successfully ..');
                     redirect('User_Controller/single_WO/'.$id);
                 }
-
             }
         }
         elseif ($role == 7) // Pi Confirm
