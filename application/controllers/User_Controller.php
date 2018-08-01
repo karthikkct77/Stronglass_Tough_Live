@@ -720,9 +720,8 @@ class User_Controller extends CI_Controller
                 'priority' => '1'
             );
         $this->load->library('email', $config);
-       $this->email->set_newline("\r\n");
-            $pi_icode= $this->input->post('PI_Icode');
-
+        $this->email->set_newline("\r\n");
+        $pi_icode= $this->input->post('PI_Icode');
         $this->email->from('karthik@ibtemail.com', 'Stronglass Tough');
         $this->email->to($userEmail);  // replace it with receiver mail id
         $this->email->subject($subject); // replace it with relevant subject
