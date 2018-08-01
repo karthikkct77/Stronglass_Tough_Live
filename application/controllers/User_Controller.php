@@ -103,11 +103,11 @@ class User_Controller extends CI_Controller
             $balance =  $this->input->post('Balance',true);
             $remain = $this->input->post('Qty',true);
             $Income = $balance - $remain;
-
             $wo_icode = $this->input->post('Process_Icode',true);
             $data =array('WO_Icode' => $this->input->post('Wo_Icode',true),
                 'WO_Process_Icode' => $this->input->post('Process_Icode',true),
                 'Proforma_Invoice_Items_Icode' => $this->input->post('Item_Icode',true),
+                'PI_Type' =>$this->input->post('PI_type',true),
                 'Cutting_Qty'=>$Income,
                 'Cutting_Remaining_Qty  ' => $this->input->post('Qty',true),
                 'Remaining_Comments' => $this->input->post('Comments',true),
@@ -165,6 +165,7 @@ class User_Controller extends CI_Controller
                 'WO_Process_Icode' => $this->input->post('Process_Icode',true),
                 'Proforma_Invoice_Items_Icode' => $this->input->post('Item_Icode',true),
                 'Cutting_Income' => $this->input->post('Furnace_Income',true),
+                'PI_Type' =>$this->input->post('PI_type',true),
                 'Furnace_qty'=>$Income,
                 'Furnace_Remaining_Qty  ' => $this->input->post('Qty',true),
                 'Remaining_Comments' => $this->input->post('Comments',true),
@@ -222,6 +223,7 @@ class User_Controller extends CI_Controller
                 'WO_Process_Icode' => $this->input->post('Process_Icode',true),
                 'Proforma_Invoice_Items_Icode' => $this->input->post('Item_Icode',true),
                 'Dispatch_Qty' =>$Income,
+                'PI_Type' =>$this->input->post('PI_type',true),
                 'Dispatch_Remaining_Qty  ' => $this->input->post('Qty',true),
                 'Furnace_Income' => $this->input->post('Dispatch_Income',true),
                 'Remaining_Comments' => $this->input->post('Comments',true),

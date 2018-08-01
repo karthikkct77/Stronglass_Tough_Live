@@ -92,7 +92,7 @@ class User_Model extends CI_Model
     /** Get single work ordetr */
     public function get_Single_Work_Order($wo_id)
     {
-        $query = $this->db->query("SELECT * FROM `work_order` WHERE WO_Icode='$wo_id'");
+        $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B ON A.Proforma_Icode=B.Proforma_Icode WHERE A.WO_Icode='$wo_id'");
         return $query->result_array();
     }
 

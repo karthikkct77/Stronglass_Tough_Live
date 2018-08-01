@@ -87,6 +87,8 @@
                             <div class="col-md-3 wo_right">
                                 <h4><?php echo $work_order[0]['WO_Date']; ?></h4>
 
+                                <input type="hidden" id="pi_type" name="pi_type" value="<?php echo $work_order[0]['PI_Type']; ?>">
+
                             </div>
                             </div>
                         </div>
@@ -180,23 +182,33 @@
                                         <option value="">Select Status</option>
                                     </select></td>
                                 <td>
+                                    <?php
+                                    if($work_order[0]['PI_Type'] == '1')
+                                    { ?>
+                                      <input type="text" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['PI_Sheet_Item_Icode']; ?>">
+
+                                    <?php }
+                                    else
+                                    { ?>
+                                        <input type="text" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Proforma_Invoice_Item_Icode']; ?>">
+
+                                   <?php }
+                                    ?>
+
+
                                     <?php if($_SESSION['role'] == 2)
                                     { ?>
+
                                         <button class="btn btn-success" onclick="Save_cutting_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
-                                        <input type="hidden" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Proforma_Invoice_Item_Icode']; ?>"
-                                        ">
                                         <?php }
                                     elseif($_SESSION['role'] == 3)
                                     { ?>
                                         <button class="btn btn-success" onclick="Save_furnance_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
-                                        <input type="hidden" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Proforma_Invoice_Item_Icode']; ?>"
-                                        ">
+
                                     <?php }
                                     elseif($_SESSION['role'] == 4) {?>
+                                      <button class="btn btn-success" onclick="Save_Dispatch_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
 
-                                        <button class="btn btn-success" onclick="Save_Dispatch_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
-                                        <input type="hidden" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Proforma_Invoice_Item_Icode']; ?>"
-                                        ">
                                     <?php }?>
 
                                 </td>
@@ -231,6 +243,7 @@
             var furnace_income = document.getElementById('Fur_income' + id).value;
             var dispatch_income = document.getElementById('dis_income' + id).value;
             var Cutting_balance = document.getElementById('Cutting_balance_qty' + id).value;
+            var type = document.getElementById('pi_type').value;
 
 
             if(Cutting_balance == '0')
@@ -268,7 +281,8 @@
                         Total_Qty: total_qty,
                         Furnace_Income: furnace_income,
                         Dispatch_Income: dispatch_income,
-                        Balance: Cutting_balance
+                        Balance: Cutting_balance,
+                        PI_type:  type
                     },
                     type: "POST",
                     context: document.body,
@@ -310,6 +324,7 @@
 
 
             var Cutting_balance = document.getElementById('Furnance_balance_qty' + id).value;
+            var type = document.getElementById('pi_type').value;
 
             if(Cutting_balance == '0')
             {
@@ -345,7 +360,8 @@
                         Total_Qty: total_qty,
                         Furnace_Income: furnace_income,
                         Dispatch_Income: dispatch_income,
-                        Balance: Cutting_balance
+                        Balance: Cutting_balance,
+                        PI_type:  type
                     },
                     type: "POST",
                     context: document.body,
@@ -382,6 +398,7 @@
             var dispatch_income = document.getElementById('dis_income' + id).value;
 
             var Cutting_balance = document.getElementById('Dispatch_balance_qty' + id).value;
+            var type = document.getElementById('pi_type').value;
 
             if(Cutting_balance == '0')
             {
@@ -415,7 +432,8 @@
                         Total_Qty: total_qty,
                         Furnace_Income: furnace_income,
                         Dispatch_Income: dispatch_income,
-                        Balance: Cutting_balance
+                        Balance: Cutting_balance,
+                        PI_type:  type
                     },
                     type: "POST",
                     context: document.body,
