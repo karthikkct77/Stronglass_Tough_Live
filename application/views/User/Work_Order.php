@@ -47,7 +47,19 @@
                                 <td><?php echo $val['WO_Number']; ?></td>
                                 <td><?php echo $val['WO_Date']; ?></td>
                                 <td><?php echo $val['Proforma_Number']; ?></td>
-                                <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/Start_Work_Order/') . $val['WO_Icode']; ?>">Start</a></td>
+
+                                <?php
+                                if ($val['PI_Type'] == '1') { ?>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/Start_Sheet_Work_Order/') . $val['Proforma_Icode']; ?>">Viewss</a></td>
+                                    <?php
+                                }
+                                else
+                                {
+                                    ?>
+                                    <td><a class="btn btn-info" href="<?php echo site_url('User_Controller/Start_Work_Order/') . $val['Proforma_Icode']; ?>">View</a></td>
+                                    <?php
+                                }
+                                ?>
                             </tr>
                             <?php
                             $i++;
