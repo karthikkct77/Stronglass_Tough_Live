@@ -713,7 +713,7 @@ class User_Controller extends CI_Controller
             $this->db->update('proforma_invoice', $update);
 
             $userEmail='vignesh@ibtemail.com';
-            $subject='Test';
+            $subject='Stronglass Tough Quote PI.NO:'.$data['invoice'][0]['Proforma_Number'];
             $config = Array(
                 'mailtype' => 'html',
                 'charset' => 'utf-8',
@@ -727,14 +727,15 @@ class User_Controller extends CI_Controller
         $this->email->to($userEmail);  // replace it with receiver mail id
         $this->email->subject($subject); // replace it with relevant subject
         $file_location =FCPATH."uploads/pdf/".$pdf_name.".pdf";
+        $body = $this->load->view('User/email_body',$data,TRUE);
+        $this->email->message($body);
+        $this->email->message($body);
         $this->email->attach($file_location);
         $this->email->send();
-            $this->session->set_flashdata('feedback', 'Email Send Successfully ..');
-            redirect('User_Controller/Check_PI');
+        $this->session->set_flashdata('feedback', 'Email Send Successfully ..');
+        redirect('User_Controller/Check_PI');
             }
-
         }
-
     }
     /** Edit Profroma Invoice */
     public function Edit_Invoice($id)
@@ -1558,6 +1559,8 @@ class User_Controller extends CI_Controller
         $this->load->view('User/Print_Normal',$data,false);
         $this->load->view('User/footer');
     }
+
+
 
 
 
