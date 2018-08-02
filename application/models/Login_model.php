@@ -8,6 +8,7 @@ class Login_model extends CI_Model
     //** check login */
     public function check_login($data)
     {
+        print_r($data);
         $user_name = $data['user_name'];
         $password = $data['password'];
         $query= $this->db->query("SELECT * FROM st_admin  WHERE admin_name = '".$user_name."'  AND admin_password = '".$password."' "); // Admin side
@@ -33,8 +34,6 @@ class Login_model extends CI_Model
                     'userid' => $row->User_Icode,
                     'user_name' => $row->User_Name,
                     'role' => $row->Role_Icode,
-                    'active' =>$row->User_Leave_Approval_Rights,
-                    'gender' =>$row->User_Gender,
                     'validated' => true
                 );
                 $this->session->set_userdata($data);

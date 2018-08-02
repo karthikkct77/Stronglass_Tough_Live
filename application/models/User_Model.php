@@ -372,7 +372,13 @@ class User_Model extends CI_Model
         $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
                                       WHERE  A.WO_Completed = '0'");
         return $query->result_array();
-
+    }
+    //** Get All Sheet */
+    public function get_Sheet_Work_Order($wo_id)
+    {
+        $query = $this->db->query("SELECT * FROM wo_processing A INNER JOIN proforma_invoice_item_sheet B ON A.PI_Sheet_Item_Icode=B.pi_item_sheet_icode 
+                                        INNER JOIN material_master C on B.Proforma_Material_Icode=C.Material_Icode WHERE A.Dispatch_Status !='3' AND  A.WO_Icode='$wo_id'");
+        return $query->result_array();
     }
 
 
