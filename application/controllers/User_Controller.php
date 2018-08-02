@@ -1417,8 +1417,8 @@ class User_Controller extends CI_Controller
             $qty = $this->input->post('pics');
             $holes = $this->input->post('holes');
             $cutout = $this->input->post('cutout');
-            $actual_W = $this->input->post('Actual_width');
-            $actual_H = $this->input->post('Actual_height');
+            $actual_W = $this->input->post('width');
+            $actual_H = $this->input->post('height');
             $special = $this->input->post('type');
             $Area = $this->input->post('area');
             $count = sizeof($material_id);
