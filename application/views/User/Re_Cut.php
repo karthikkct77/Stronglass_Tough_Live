@@ -45,16 +45,15 @@
                                 <td><?php echo $val['WO_Date']; ?></td>
                                 <td><?php echo $val['Proforma_Number']; ?></td>
                                 <td><?php echo $val['GrossTotal_Value']; ?></td>
-
                                 <?php
                                 if ($val['PI_Type'] == '1') { ?>
-                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/Print_Sheet/') . $val['Proforma_Icode']; ?>">prints</a></td>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/Start_Sheet_Re_Cut/') . $val['Proforma_Icode']; ?>">Viewss</a></td>
                                     <?php
                                 }
                                 else
                                 {
                                     ?>
-                                    <td><a class="btn btn-info" href="<?php echo site_url('User_Controller/Print_Normal/') . $val['Proforma_Icode']; ?>" >print</a></td>
+                                    <td><a class="btn btn-info" href="<?php echo site_url('User_Controller/Start_Re_Cut/') . $val['Proforma_Icode']; ?>">View</a></td>
                                     <?php
                                 }
                                 ?>
