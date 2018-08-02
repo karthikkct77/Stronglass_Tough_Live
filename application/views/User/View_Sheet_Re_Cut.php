@@ -83,7 +83,7 @@
                                 <div class="col-md-3 wo_right">
                                     <h4><?php echo $work_order[0]['WO_Date']; ?></h4>
 
-                                    <input type="text" id="pi_type" name="pi_type" value="<?php echo $work_order[0]['PI_Type']; ?>">
+                                    <input type="hidden" id="pi_type" name="pi_type" value="<?php echo $work_order[0]['PI_Type']; ?>">
 
                                 </div>
                             </div>
@@ -139,31 +139,17 @@
                                     <?php
                                     if($work_order[0]['PI_Type'] == '1')
                                     { ?>
-                                        <input type="text" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['PI_Sheet_Item_Icode']; ?>">
+                                        <input type="hidden" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['PI_Sheet_Item_Icode']; ?>">
 
                                     <?php }
                                     else
                                     { ?>
-                                        <input type="text" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Proforma_Invoice_Item_Icode']; ?>">
+                                        <input type="hidden" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Proforma_Invoice_Item_Icode']; ?>">
 
                                     <?php }
                                     ?>
+                                        <button class="btn btn-success" onclick="Save_Re_Cut('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
 
-
-                                    <?php if($_SESSION['role'] == 2)
-                                    { ?>
-
-                                        <button class="btn btn-success" onclick="Save_cutting_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
-                                    <?php }
-                                    elseif($_SESSION['role'] == 3)
-                                    { ?>
-                                        <button class="btn btn-success" onclick="Save_furnance_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
-
-                                    <?php }
-                                    elseif($_SESSION['role'] == 4) {?>
-                                        <button class="btn btn-success" onclick="Save_Dispatch_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
-
-                                    <?php }?>
 
                                 </td>
                             </tr>
@@ -182,7 +168,7 @@
 </main>
 <script>$('#sampleTable').DataTable();</script>
 <script>
-    function Save_cutting_Status(id)
+    function Save_Re_Cut(id)
     {
         if (confirm("Do you want to Save ")) {
             var wo_icode = document.getElementById('wo_icode').value;
@@ -221,157 +207,6 @@
             else if(remaining_qty > qty )
             {
                 alert("Remaining QTY is Greater then Total Qty ");
-            }
-            else {
-                $.ajax({
-                    url: "<?php echo site_url('User_Controller/Save_WO_Item'); ?>",
-                    data: {
-                        Qty: remaining_qty,
-                        Comments: remaining_comments,
-                        Status: status,
-                        Item_Icode: profoma_item_icode,
-                        Wo_Icode: wo_icode,
-                        Process_Icode: id,
-                        Total_Qty: total_qty,
-                        Furnace_Income: furnace_income,
-                        Dispatch_Income: dispatch_income,
-                        Balance: Cutting_balance,
-                        PI_type:  type
-                    },
-                    type: "POST",
-                    context: document.body,
-                    success: function (data) {
-                        if (data == 1) {
-                            swal({
-                                    title: "Success!",
-                                    text: "Data Saved..",
-                                    type: "success"
-                                },
-                                function () {
-                                    location.reload();
-                                });
-
-                        }
-                    }
-                });
-            }
-        }
-    }
-
-    function Save_furnance_Status(id)
-    {
-        if (confirm("Do you want to Save ")) {
-            var wo_icode = document.getElementById('wo_icode').value;
-            var remaining_qty = document.getElementById('remain_qty' + id).value;
-            var remaining_comments = document.getElementById('comments' + id).value;
-
-            var profoma_item_icode = document.getElementById('profoma_item_icode' + id).value;
-            var status = document.getElementById('status' + id).value;
-
-
-            var total_qty = document.getElementById('tot_qty' + id).value;
-
-
-            var furnace_income = document.getElementById('Fur_income' + id).value;
-
-            var dispatch_income = document.getElementById('dis_income' + id).value;
-
-
-            var Cutting_balance = document.getElementById('Furnance_balance_qty' + id).value;
-            var type = document.getElementById('pi_type').value;
-
-            if(Cutting_balance == '0')
-            {
-                var qty = furnace_income;
-            }
-            else
-            {
-                var qty = Cutting_balance;
-            }
-
-
-            if (remaining_qty == "" ) {
-                alert("Please Select Remaining qty and Status");
-            }
-            else if (remaining_qty != 0 && remaining_comments == "") {
-                alert("Please Type Reason for Remaining Qty");
-            }
-            else if(remaining_qty > qty )
-            {
-                alert("Remaining QTY is Wrong");
-            }
-            else {
-
-                $.ajax({
-                    url: "<?php echo site_url('User_Controller/Save_WO_Item'); ?>",
-                    data: {
-                        Qty: remaining_qty,
-                        Comments: remaining_comments,
-                        Status: status,
-                        Item_Icode: profoma_item_icode,
-                        Wo_Icode: wo_icode,
-                        Process_Icode: id,
-                        Total_Qty: total_qty,
-                        Furnace_Income: furnace_income,
-                        Dispatch_Income: dispatch_income,
-                        Balance: Cutting_balance,
-                        PI_type:  type
-                    },
-                    type: "POST",
-                    context: document.body,
-                    success: function (data) {
-                        if (data == 1) {
-                            swal({
-                                    title: "Success!",
-                                    text: "Data Saved..",
-                                    type: "success"
-                                },
-                                function () {
-                                    location.reload();
-                                });
-
-                        }
-                    }
-                });
-            }
-        }
-    }
-    function Save_Dispatch_Status(id)
-    {
-        if (confirm("Do you want to Save ")) {
-            var wo_icode = document.getElementById('wo_icode').value;
-            var remaining_qty = document.getElementById('remain_qty' + id).value;
-            var remaining_comments = document.getElementById('comments' + id).value;
-
-            var profoma_item_icode = document.getElementById('profoma_item_icode' + id).value;
-            var status = document.getElementById('status' + id).value;
-
-            var total_qty = document.getElementById('tot_qty' + id).value;
-
-            var furnace_income = document.getElementById('Fur_income' + id).value;
-            var dispatch_income = document.getElementById('dis_income' + id).value;
-
-            var Cutting_balance = document.getElementById('Dispatch_balance_qty' + id).value;
-            var type = document.getElementById('pi_type').value;
-
-            if(Cutting_balance == '0')
-            {
-                var qty = dispatch_income;
-            }
-            else
-            {
-                var qty = Cutting_balance;
-            }
-
-            if (remaining_qty == "" ) {
-                alert("Please Select Remaining qty and Status");
-            }
-            else if (remaining_qty != 0 && remaining_comments == "") {
-                alert("Please Type Reason for Remaining Qty");
-            }
-            else if(remaining_qty > qty )
-            {
-                alert("Remaining QTY is Wrong");
             }
             else {
                 $.ajax({

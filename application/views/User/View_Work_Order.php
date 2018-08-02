@@ -185,12 +185,12 @@
                                     <?php
                                     if($work_order[0]['PI_Type'] == '1')
                                     { ?>
-                                      <input type="text" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['PI_Sheet_Item_Icode']; ?>">
+                                      <input type="hidden" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['PI_Sheet_Item_Icode']; ?>">
 
                                     <?php }
                                     else
                                     { ?>
-                                        <input type="text" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Proforma_Invoice_Item_Icode']; ?>">
+                                        <input type="hidden" id="profoma_item_icode<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Proforma_Invoice_Item_Icode']; ?>">
 
                                    <?php }
                                     ?>

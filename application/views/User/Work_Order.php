@@ -50,7 +50,7 @@
 
                                 <?php
                                 if ($val['PI_Type'] == '1') { ?>
-                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/Start_Sheet_Work_Order/') . $val['Proforma_Icode']; ?>">Viewss</a></td>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/Start_Sheet_Work_Order/') . $val['Proforma_Icode']; ?>">View</a></td>
                                     <?php
                                 }
                                 else
