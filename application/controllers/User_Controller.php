@@ -441,6 +441,7 @@ class User_Controller extends CI_Controller
             'Credit_Limit'=>$this->input->post('credit_limit'),
             'Material_Area'=>$this->input->post('material_area'),
             'Transport' => $this->input->post('transport'),
+            'Delivery_Days'=>$this->input->post('delivery'),
             'GrossTotal_Value' => $this->input->post('gross_tot'),
             'Amt_Words' =>$this->input->post('amt_words'),
             'Proforma_Generated_By' => $this->session->userdata['userid']);
@@ -807,6 +808,10 @@ class User_Controller extends CI_Controller
                 'IGST_Value' => $this->input->post('igst'),
                 'GrossTotal_Value' => $this->input->post('gross_tot'),
                 'Amt_Words' =>$this->input->post('amt_words'),
+                'Total_Outstanding'=>$this->input->post('outstanding'),
+                'Credit_Limit'=>$this->input->post('credit_limit'),
+                'Material_Area'=>$this->input->post('material_area'),
+                'Delivery_Days'=>$this->input->post('delivery'),
                 'Modified_By' => $this->session->userdata['userid'],
                 'Modified_Status' => '1',
                 'Modified_On' => date('Y-m-d H:i:s'));
@@ -1239,6 +1244,7 @@ class User_Controller extends CI_Controller
             'Total_Outstanding'=>$this->input->post('outstanding'),
             'Credit_Limit'=>$this->input->post('credit_limit'),
             'Material_Area'=>$this->input->post('material_area'),
+            'Delivery_Days'=>$this->input->post('delivery'),
             'Transport' => $this->input->post('transport'),
             'PI_Type' =>'1',
             'GrossTotal_Value' => $this->input->post('gross_tot'),

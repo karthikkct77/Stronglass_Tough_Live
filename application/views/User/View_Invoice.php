@@ -76,6 +76,7 @@
                             <textarea class="form-control" name="material_area"  placeholder="Enter Extra Glass"></textarea>
                         </div>
                     </div>
+                    <br>
                     <div class="row">
                         <table class="table table-hover table-bordered" id="sampleTable">
                             <thead>
@@ -179,7 +180,13 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <h3 style="font-size: 15px;">Terms & Conditions</h3>
+                            <div style="padding-left: 20px;" class="form-group row">
+                                <label class="control-label" style="font-weight: bold;">Delivery Period</label>
+                                <div class="col-md-8">
+                                    <input class="form-control col-md-3" type="text" name="delivery" required>
+                                </div>
+                            </div>
+                            <h3 style="font-size: 13px;">Terms & Conditions</h3>
                             <p style="font-size: 8px;text-align: justify;">
                                 Supply shall be against advance payment or Letter of credit or any other agreed
                                 terms. Interest @2% per month will be charged for the payment delayed beyond
@@ -187,7 +194,7 @@
                                 party/consumer/contractor interested in the transaction shall be adjusted against
                                 supplies made to buyer/consignee
                             </p>
-                            <h3 style="font-size: 15px;">Dear Customer</h3>
+                            <h3 style="font-size: 13px;">Dear Customer</h3>
                             <p style="font-size: 8px;text-align: justify;">
                             <ul style="list-style: none;padding: 0;font-size: 8px;text-align: justify;">
                                 <li style="margin-bottom: 15px;">
@@ -204,12 +211,14 @@
                                 </li>
                             </ul>
                             </p>
-                            <h4>Bank Details</h4>
-                            <h5>Stronglass Tough</h5>
-                            <h5>A/C Type: <span><?php echo $st[0]['ST_Bank_Account_Type']; ?></span></h5>
-                            <h5>A/C Number: <span><?php echo $st[0]['ST_Bank_Account_Number']; ?></span></h5>
-                            <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
-                            <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
+                            <div id="account">
+                                <h3 style="font-size: 13px;">Bank Details</h3>
+                                <h5><span>Account Name</span> :Stronglass Tough</h5>
+                                <h5><span>Bank Name</span>:<?php echo $st[0]['ST_Bank']; ?></span></h5>
+                                <h5><span>Account Number</span>:<?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
+                                <h5><span>IFSC</span>:<?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
+                            </div>
+
 
                         </div>
                         <div class="col-md-6">
@@ -373,6 +382,11 @@
     h4 span{
         float: left;
         width: 100px;
+    }
+    #account h5 span {
+        float: left;
+        width: 150px;
+        font-weight: normal;
     }
 
 </style>

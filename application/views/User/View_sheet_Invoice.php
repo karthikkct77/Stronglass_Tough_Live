@@ -206,6 +206,12 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
+                            <div style="padding-left: 20px;" class="form-group row">
+                                <label class="control-label" style="font-weight: bold;">Delivery Period</label>
+                                <div class="col-md-8">
+                                    <input class="form-control col-md-3" type="text" name="delivery" required>
+                                </div>
+                            </div>
                             <h3 style="font-size: 15px;">Terms & Conditions</h3>
                             <p style="font-size: 12px;text-align: justify;">
                                 Supply shall be against advance payment or Letter of credit or any other agreed
@@ -231,12 +237,13 @@
                                 </li>
                             </ul>
                             </p>
-                            <h4>Bank Details</h4>
-                            <h5>Stronglass Tough</h5>
-                            <h5>A/C Type: <span><?php echo $st[0]['ST_Bank_Account_Type']; ?></span></h5>
-                            <h5>A/C Number: <span><?php echo $st[0]['ST_Bank_Account_Number']; ?></span></h5>
-                            <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
-                            <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
+                            <div id="account">
+                                <h3 style="font-size: 13px;">Bank Details</h3>
+                                <h5><span>Account Name</span> :Stronglass Tough</h5>
+                                <h5><span>Bank Name</span>:<?php echo $st[0]['ST_Bank']; ?></span></h5>
+                                <h5><span>Account Number</span>:<?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
+                                <h5><span>IFSC</span>:<?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
+                            </div>
 
                         </div>
                         <div class="col-md-6">
@@ -401,6 +408,11 @@
     .table thead th
     {
         font-size: 12px;
+    }
+    #account h5 span {
+        float: left;
+        width: 150px;
+        font-weight: normal;
     }
 
 </style>
