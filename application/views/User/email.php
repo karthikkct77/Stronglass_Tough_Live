@@ -37,6 +37,7 @@
 <body>
 <div style="width: 100%; display: block;text-align: center;">
     <img style="position: absolute;width: 100px;height: auto;left: 1%;" src="<?php echo base_url('img/strong.png'); ?>" alt="User Image">
+    <h6>Proforma Invoice</h6>
     <h4 style="margin-bottom: 10px;"><?php echo $st[0]['ST_Name']; ?></h4>
     <h5 style="margin: 0;"><?php echo $st[0]['ST_Address_1']; ?>,&nbsp;<?php echo $st[0]['ST_Area']; ?>,&nbsp;<?php echo $st[0]['ST_City']; ?></h5>
     <h6 style="margin: 0;"><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
