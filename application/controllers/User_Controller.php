@@ -439,6 +439,7 @@ class User_Controller extends CI_Controller
             'IGST_Value' => $this->input->post('igst'),
             'Transport' => $this->input->post('transport'),
             'GrossTotal_Value' => $this->input->post('gross_tot'),
+            'Amt_Words' =>$this->input->post('amt_words'),
             'Proforma_Generated_By' => $this->session->userdata['userid']);
         $insert = $this->admin_model->Insert_Profoma_Invoice($data);
         if($insert != 0)
@@ -802,6 +803,7 @@ class User_Controller extends CI_Controller
                 'CGST_Value' => $this->input->post('cgst'),
                 'IGST_Value' => $this->input->post('igst'),
                 'GrossTotal_Value' => $this->input->post('gross_tot'),
+                'Amt_Words' =>$this->input->post('amt_words'),
                 'Modified_By' => $this->session->userdata['userid'],
                 'Modified_Status' => '1',
                 'Modified_On' => date('Y-m-d H:i:s'));

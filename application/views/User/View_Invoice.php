@@ -278,7 +278,8 @@
                                 </tfoot>
                             </table>
                         </div>
-                        <div>Amount in Words: <span id="word"></span></div>
+                        <div>Amount in Words: <span id="word"></span>
+                            <input type="hidden" name="amt_words" id="amt_words"></div>
                         <script>
                             $('#insurance').click(function () {
                                 var sub_tot =document.getElementById('sub_tot').value;
@@ -1234,6 +1235,7 @@
             }
         }
         document.getElementById('word').innerHTML = str;
+        document.getElementById('amt_words').value = str;
         if (x != s.length) {
             var y = s.length;
             str += 'point ';
