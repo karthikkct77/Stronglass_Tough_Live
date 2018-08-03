@@ -965,6 +965,7 @@ class User_Controller extends CI_Controller
         $data['tax']= $this->admin_model->get_Tax();
         $data['st']= $this->admin_model->get_ST();
         $data['wo'] = $this->user_model->Get_Single_wo($pi_icode);
+        $data['User']=$this->user_model->Get_User_Details($pi_icode);
         $this->load->view('User/header');
         $this->load->view('User/top');
         $this->load->view('User/left');

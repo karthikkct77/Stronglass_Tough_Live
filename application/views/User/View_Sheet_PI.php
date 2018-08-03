@@ -44,7 +44,7 @@
                     <hr>
                     <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Save_Work_Order'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="border-right: 1px solid #000;">
                                 <input type="hidden" name="invoice_type" id="invoice_type" value="<?php echo $invoice[0]['PI_Type']; ?>">
                                 <h5>Consignee</h5>
                                 <div id="consign">
@@ -58,14 +58,7 @@
                                 </div>
 
                             </div>
-                            <div class="col-md-1">
-                                <div class="form-group">
-                                    <!--                                <input type="checkbox" name="check" id="check" checked onclick="FillBilling()">-->
-                                    <!--                                <em>Check this box if Current Address and Mailing permanent are the same.</em>-->
-                                </div>
-
-                            </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="border-right: 1px solid #000;">
                                 <h5>Buyer (if other than consignee)</h5>
                                 <div id="Buyer">
                                     <?php
@@ -95,22 +88,17 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <input class="form-control" type="hidden" name="PI_Icode"  id="PI_Icode" value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
                                 <input class="form-control" type="hidden" name="PI_Type"  id="PI_Icode" value="<?php echo $invoice[0]['PI_Type']; ?>" >
-                                <h4><span>Date</span>: <input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly><?php echo $invoice[0]['Proforma_Date']; ?></h4>
-                                <h4><span>P.INV.NO</span>: <input type="hidden" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly><?php echo $invoice[0]['Proforma_Number']; ?></h4>
-                                <h4><span>Total Outstanding</span>:<?php echo $invoice[0]['Total_Outstanding']; ?></h4>
-                                <h4><span>Credit Limit Amt</span>:<?php echo $invoice[0]['Credit_Limit']; ?> </h4>
+                                <h5><span>Date</span><input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly><?php echo $invoice[0]['Proforma_Date']; ?></h5>
+                                <h5><span>P.INV.NO</span><input type="hidden" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly><?php echo $invoice[0]['Proforma_Number']; ?></h5>
+                                <h5><span>Total Outstanding</span><?php echo $invoice[0]['Total_Outstanding']; ?></h5>
+                                <h5><span>Credit Limit Amt</span><?php echo $invoice[0]['Credit_Limit']; ?> </h5>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-3">
-
-                            </div>
-                            <div class="col-md-6">
-                                <textarea class="form-control" name="material_area"  placeholder="Enter Extra Glass" readonly><?php echo $invoice[0]['Material_Area']; ?></textarea>
-                            </div>
+                        <div class="row details_tag">
+                            <div><?php echo $invoice[0]['Material_Area']; ?></div>
                         </div>
                         <h6 style="text-align: center">Total Number of Sheets used to Cut the following glasses</h6>
                         <div class="row">
@@ -203,6 +191,7 @@
                         </div>
                         <div class="row"  id="page_inside">
                             <div class="col-md-6">
+                                <h3 style="font-weight: normal;">Delivery Period: <span style="font-weight: bold; padding-left: 5px;"><?php echo $invoice[0]['Delivery_Days']; ?> </span>Working Days </h3>
                                 <h3 style="font-size: 15px;">Terms & Conditions</h3>
                                 <p style="font-size: 8px;text-align: justify;">
                                     Supply shall be against advance payment or Letter of credit or any other agreed
@@ -228,13 +217,13 @@
                                     </li>
                                 </ul>
                                 </p>
-                                <h4>Bank Details</h4>
-                                <h5>Stronglass Tough</h5>
-                                <h5>A/C Type: <span><?php echo $st[0]['ST_Bank_Account_Type']; ?></span></h5>
-                                <h5>A/C Number: <span><?php echo $st[0]['ST_Bank_Account_Number']; ?></span></h5>
-                                <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
-                                <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
-
+                                <div id="account">
+                                    <h3 style="font-size: 13px;">Bank Details</h3>
+                                    <h5><span>Account Name</span> :STRONGLASS TOUGH</h5>
+                                    <h5><span>Bank Name</span>:<?php echo $st[0]['ST_Bank']; ?></span></h5>
+                                    <h5><span>Account Number</span>:<?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
+                                    <h5><span>IFSC</span>:<?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
+                                </div>
                             </div>
                             <div class="col-md-6">
                                 <table class="table table-hover table-bordered" id="sampleTable1">
@@ -318,12 +307,28 @@
                                     </tr>
                                     </tfoot>
                                 </table>
+                                <div>Amount in Words: <span id="word" style="font-size: 15px;"></span></div>
                                 </div>
                             </div>
-                            <div>Amount in Words: <span id="word" style="font-size: 20px;margin-left: 10px;"></span></div>
+                        <p>For Stronglass Tough</p>
+                        <div class="row" id="signature" style="margin-top: 150px;">
+                            <div class="col-md-3">
+                                <h6 class="st_check">Customer's Acceptance<br>Sign & Seal</h6>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="st_check">Prepared By</h6>
+                                <p class="dynamic_data"><?php echo $User[0]['User_Name']; ?></p>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="st_check">Checked By</h6>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="st_check">(Authorised Signatory)</h6>
+                            </div>
                         </div>
-                        <hr>
-                        <div class="row">
+                        </div>
+
+                        <div class="row" id="with_print">
                             <div class="col-md-6">
                             </div>
                             <div class="col-md-6">
@@ -359,6 +364,10 @@
         #with_print {
             display: none;
         }
+        #signature
+        {
+            page-break-inside: avoid;
+        }
     }
     @media print {
         #with_print {
@@ -375,7 +384,7 @@
         margin-right: 15px;
         float: right;
     }
-    h4 span{
+    h5 span{
         float: left;
         width: 200px;
         font-weight: normal;
@@ -383,7 +392,33 @@
     table td {
         text-align: center;
     }
-
+    #account h5 span {
+        float: left;
+        width: 150px;
+        font-weight: normal;
+    }
+    .details_tag{
+        border: 1px solid #ccc;
+        height: 50px;
+        width: 100%;
+        margin: 0px auto;
+        padding: 5px;
+        text-align: justify;
+    }
+    .st_check{
+        padding-top: 15px;
+        border-top: 1px solid #000000;
+        text-align: center;
+    }
+    .dynamic_data{
+        position: relative;
+        top: -90px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 20px;
+        margin: 0px;
+        margin-top: 5px;
+    }
 </style>
 
 
