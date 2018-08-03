@@ -714,8 +714,11 @@ class User_Controller extends CI_Controller
             $data['st']= $this->admin_model->get_ST();
             $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($picode);
             $body = $this->load->view('User/email',$data,TRUE);
+//            print_r($body);
+
             $this->pdf->loadHtml($body);
             $this->pdf->render();
+            $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
             $pdf = $this->pdf->output();
             $pdf_name = $data['invoice'][0]['Customer_Company_Name'];
             $file_location =FCPATH."uploads/pdf/".$pdf_name.".pdf";
