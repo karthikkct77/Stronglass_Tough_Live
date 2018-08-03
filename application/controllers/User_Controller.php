@@ -1628,7 +1628,7 @@ class User_Controller extends CI_Controller
         $this->load->view('User/header');
         $this->load->view('User/top');
         $this->load->view('User/left');
-        $this->load->view('User/View_Sheet_Re_Cut',$data, FALSE);
+        $this->load->view('User/View_Re_Cut',$data, FALSE);
         $this->load->view('User/footer');
     }
 

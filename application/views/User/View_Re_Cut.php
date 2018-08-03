@@ -1,7 +1,7 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-edit"></i>Sheet Re_Cut Work Order</h1>
+            <h1><i class="fa fa-edit"></i>Re_Cut Work Order</h1>
         </div>
     </div>
     <div class="row">
@@ -102,6 +102,7 @@
                             <th>Colour</th>
                             <th>Recut Qty</th>
                             <th>Recut Reason</th>
+                            <th>Status</th>
                             <th></th>
                         </tr>
                         </thead>
@@ -134,6 +135,7 @@
                                         <option value="Washing">Washing</option>
                                         <option value="Furnace">Furnace</option>
                                     </select></td>
+
                                 <td>
                                     <?php
                                     if($work_order[0]['PI_Type'] == '1')
@@ -147,7 +149,7 @@
 
                                     <?php }
                                     ?>
-                                        <button class="btn btn-success" onclick="Save_Re_Cut('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
+                                    <button class="btn btn-success" onclick="Save_Re_Cut('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
 
 
                                 </td>
