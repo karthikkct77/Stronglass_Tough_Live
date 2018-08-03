@@ -46,7 +46,7 @@
                 <hr>
                 <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Save_Work_Order'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="border-right: 1px solid #000;">
                             <h5>Consignee</h5>
                             <div id="consign">
                                 <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
@@ -59,14 +59,7 @@
                             </div>
 
                         </div>
-                        <div class="col-md-1">
-                            <div class="form-group">
-<!--                                <input type="checkbox" name="check" id="check" checked onclick="FillBilling()">-->
-<!--                                <em>Check this box if Current Address and Mailing permanent are the same.</em>-->
-                            </div>
-
-                        </div>
-                        <div class="col-md-4">
+                        <div class="col-md-4" style="border-right: 1px solid #000;">
                             <h5>Buyer (if other than consignee)</h5>
                             <div id="Buyer">
                                 <?php
@@ -96,12 +89,16 @@
 
                             </div>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-4">
                             <input class="form-control" type="hidden" name="PI_Icode"  id="PI_Icode" value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
-                            <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly></h4>
-                            <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly></h4>
-
-                         </div>
+                            <h5><span>Date</span><input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly><?php echo $invoice[0]['Proforma_Date']; ?></h5>
+                            <h5><span>P.INV.NO</span><input type="hidden" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly><?php echo $invoice[0]['Proforma_Number']; ?></h5>
+                            <h5><span>Total Outstanding</span><?php echo $invoice[0]['Total_Outstanding']; ?></h5>
+                            <h5><span>Credit Limit Amt</span><?php echo $invoice[0]['Credit_Limit']; ?> </h5>
+                        </div>
+                    </div>
+                    <div class="row details_tag">
+                        <div><?php echo $invoice[0]['Material_Area']; ?></div>
                     </div>
                     <div class="row">
                         <table class="table table-hover table-bordered" id="sampleTable">
@@ -126,7 +123,7 @@
                                     <input class="form-control" type="hidden" name="material[]"  value="<?php echo $key['Proforma_Invoice_Items_Icode']; ?>" >
                                     <input class="form-control" type="hidden" name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" >
                                     <td><?php echo $i; ?></td>
-                                    <td><p style="width: 180px; word-wrap: break-word;"><?php echo $key['Material_Name']; ?></p></td>
+                                    <td style="text-align: left;"><p style="width: 180px; word-wrap: break-word;"><?php echo $key['Material_Name']; ?></p></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
                                     <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
@@ -140,9 +137,6 @@
                                     <td><?php echo $key['Proforma_Material_Cost']; ?></td>
                                 </tr>
                                 <?php $i++; } ?>
-                            <?php $j=3;
-                            for ($a =0; $a <= $j; $a++)
-                            {?>
                                 <tr>
                                     <td></td>
                                     <td></td>
@@ -158,20 +152,11 @@
                                     <td></td>
                                     <td></td>
                                 </tr>
-
-                          <?php } ?>
                             <tr>
-                                <td></td>
-                                <td></td>
-
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td colspan="6" style="font-weight: bold;text-align: right;" >Total Summary</td>
                                 <td><input type="hidden" class="form-control pull-right" id="total_pic" value="<?php echo $invoice_total[0]['qty']; ?>"readonly/><?php echo $invoice_total[0]['qty']; ?></td>
-
-                                <td></td>
-                                <td></td>
+                                <td><?php echo $invoice_total[0]['holes']; ?></td>
+                                <td><?php echo $invoice_total[0]['cutout']; ?></td>
                                 <td></td>
                                 <td><input type="hidden" class="form-control pull-right" id="total_area" value="<?php echo round($invoice_total[0]['area'], 2); ?>"   readonly/><?php echo round($invoice_total[0]['area'], 3); ?></td>
                                 <td></td>
@@ -183,7 +168,8 @@
                     </div>
                     <div class="row" id="page_inside">
                         <div class="col-md-6">
-                            <h3 style="font-size: 15px;">Terms & Conditions</h3>
+                            <h3 style="font-weight: normal;font-size: 15px;">Delivery Period: <span style="font-weight: bold; padding-left: 5px;"><?php echo $invoice[0]['Delivery_Days']; ?> </span>Working Days </h3>
+                            <h3 style="font-size: 13px;">Terms & Conditions</h3>
                             <p style="font-size: 8px;text-align: justify;">
                                 Supply shall be against advance payment or Letter of credit or any other agreed
                                 terms. Interest @2% per month will be charged for the payment delayed beyond
@@ -191,7 +177,7 @@
                                 party/consumer/contractor interested in the transaction shall be adjusted against
                                 supplies made to buyer/consignee
                             </p>
-                            <h3 style="font-size: 8px;">Dear Customer</h3>
+                            <h3 style="font-size: 13px;">Dear Customer</h3>
                             <p style="font-size: 8px;text-align: justify;">
                                 <ul style="list-style: none;padding: 0;font-size: 8px;text-align: justify;">
                                 <li style="margin-bottom: 15px;">
@@ -208,13 +194,13 @@
                                 </li>
                             </ul>
                             </p>
-                            <h4>Bank Details</h4>
-                            <h5>Stronglass Tough</h5>
-                            <h5>A/C Type: <span><?php echo $st[0]['ST_Bank_Account_Type']; ?></span></h5>
-                            <h5>A/C Number: <span><?php echo $st[0]['ST_Bank_Account_Number']; ?></span></h5>
-                            <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
-                            <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
-
+                            <div id="account">
+                                <h3 style="font-size: 13px;">Bank Details</h3>
+                                <h5><span>Account Name</span> :STRONGLASS TOUGH</h5>
+                                <h5><span>Bank Name</span>:<?php echo $st[0]['ST_Bank']; ?></span></h5>
+                                <h5><span>Account Number</span>:<?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
+                                <h5><span>IFSC</span>:<?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <table class="table table-hover table-bordered" id="sampleTable1">
@@ -233,7 +219,7 @@
                                     ?>
                                     <tr>
                                         <td><?php echo $i; ?></td>
-                                        <td><?php echo $key['charge_name']; ?></td>
+                                        <td style="text-align: left;"><?php echo $key['charge_name']; ?></td>
                                         <td><?php echo $key['Proforma_Charge_Count']; ?></td>
                                         <td><?php echo $key['Proforma_Charge_Value']; ?></td>
                                         <td><?php echo $key['Proforma_Charge_Cost']; ?></td>
@@ -242,43 +228,38 @@
                                     $i++;
                                 }
                                 ?>
-                                </tfoot>
-                            </table>
-
-                            <div  style="float: right;" id="totals">
-                            <table>
                                 <tr>
-                                    <td colspan="4" align="right">SUB-TOTAL</td>
+                                    <td colspan="4" style="text-align: right;">SUB-TOTAL</td>
 
-                                    <td><input class="form-control" type="text" name="sub_tot" id="sub_tot" value="<?php echo $invoice[0]['Sub_Total']; ?>" readonly ></td>
+                                    <td><input class="form-control" type="hidden" name="sub_tot" id="sub_tot" value="<?php echo $invoice[0]['Sub_Total']; ?>" readonly ><?php echo $invoice[0]['Sub_Total']; ?></td>
 
                                 </tr>
                                 <tr>
-                                    <td colspan="4" align="right">HANDLING CHARGE</td>
+                                    <td colspan="4" style="text-align: right;">HANDLING CHARGE</td>
 
-                                    <td><input class="form-control" type="text" name="insurance" id="insurance" value="<?php echo $invoice[0]['Insurance_Value']; ?>" required readonly></td>
+                                    <td><input class="form-control" type="hidden" name="insurance" id="insurance" value="<?php echo $invoice[0]['Insurance_Value']; ?>" required readonly><?php echo $invoice[0]['Insurance_Value']; ?></td>
 
                                 </tr>
                                 <tr>
-                                    <td colspan="4" align="right">TRANSPORT</td>
+                                    <td colspan="4" style="text-align: right;">TRANSPORT</td>
 
-                                    <td><input class="form-control" type="text" name="transport" id="transport"  value="<?php echo $invoice[0]['Transport']; ?>" readonly></td>
+                                    <td><input class="form-control" type="hidden" name="transport" id="transport"  value="<?php echo $invoice[0]['Transport']; ?>" readonly><?php echo $invoice[0]['Transport']; ?></td>
 
                                 </tr>
                                 <?php
                                 if($invoice[0]['IGST_Value'] == '0')
                                 { ?>
                                     <tr>
-                                        <td colspan="4" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
+                                        <td colspan="4" style="text-align: right;">SGST @<?php echo $tax[0]['SGST%']; ?></td>
 
-                                        <td><input class="form-control" type="text" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ></td>
+                                        <td><input class="form-control" type="hidden" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ><?php echo $invoice[0]['SGST_Value']; ?></td>
 
                                     </tr>
                                     <tr>
-                                        <td colspan="4" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
+                                        <td colspan="4" style="text-align: right;">CGST @<?php echo $tax[0]['CGST%']; ?>
                                             <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
                                         </td>
-                                        <td><input class="form-control" type="text" name="cgst" id="cgst" value="<?php echo $invoice[0]['CGST_Value']; ?>" readonly ></td>
+                                        <td><input class="form-control" type="hidden" name="cgst" id="cgst" value="<?php echo $invoice[0]['CGST_Value']; ?>" readonly ><?php echo $invoice[0]['CGST_Value']; ?></td>
 
                                     </tr>
 
@@ -286,10 +267,10 @@
                                 else
                                 {?>
                                     <tr>
-                                        <td colspan="4" align="right">IGST @18%
+                                        <td colspan="4" style="text-align: right;">IGST @18%
                                             <input type="hidden" id="gst" value="18">
                                         </td>
-                                        <td><input class="form-control" type="text" name="igst" id="igst" value="<?php echo $invoice[0]['IGST_Value']; ?>" readonly ></td>
+                                        <td><input class="form-control" type="hidden" name="igst" id="igst" value="<?php echo $invoice[0]['IGST_Value']; ?>" readonly ><?php echo $invoice[0]['IGST_Value']; ?></td>
 
                                     </tr>
                                     <?php
@@ -297,19 +278,32 @@
                                 ?>
                                 <tr>
 
-                                    <td colspan="4" align="right">GROSS TOTAL</td>
-                                    <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" >(INR)</td>
+                                    <td colspan="4" style="text-align: right;">GROSS TOTAL</td>
+                                    <td><input class="form-control" type="hidden" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" ><h4><?php echo $invoice[0]['GrossTotal_Value']; ?> /-</h4></td>
 
                                 </tr>
+                                </tfoot>
                             </table>
+                            <div>Amount in Words: <span id="word" style="font-size: 15px;"></span></div>
                             </div>
+                    </div>
+                    <p>For Stronglass Tough</p>
+                    <div class="row" id="signature" style="margin-top: 150px;">
+                        <div class="col-md-3">
+                            <h6 class="st_check">Customer's Acceptance<br>Sign & Seal</h6>
                         </div>
-                        <div>Amount in Words: <span id="word" style="font-size: 20px;margin-left: 10px;"></span>
-                            <input type="hidden" name="amt_words" id="amt_words">
+                        <div class="col-md-3">
+                            <h6 class="st_check">Prepared By</h6>
+                            <p class="dynamic_data"><?php echo $User[0]['User_Name']; ?></p>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 class="st_check">Checked By</h6>
+                        </div>
+                        <div class="col-md-3">
+                            <h6 class="st_check">(Authorised Signatory)</h6>
                         </div>
                     </div>
-                    <hr>
-                    <div class="row">
+                    <div class="row" id="with_print">
                         <div class="col-md-6">
                         </div>
                         <div class="col-md-6">
@@ -352,30 +346,44 @@
         tfoot { display:table-footer-group }
         #page_inside {  page-break-inside: avoid;        }
     }
-    #search_data {
-        width: 200px;
-        padding: 5px;
-        margin: 5px 0;
-        box-sizing: border-box;
-    }
-    #autoSuggestionsList > li {
-        background: none repeat scroll 0 0 #F3F3F3;
-        border-bottom: 1px solid #E3E3E3;
-        list-style: none outside none;
-        padding: 3px 15px 3px 15px;
-        text-align: left;
-    }
-
-    #autoSuggestionsList > li a { color: #800000; }
-
-    .auto_list {
-        border: 1px solid #E3E3E3;
-        border-radius: 5px 5px 5px 5px;
-        position: absolute;
-    }
     .pi_button{
         margin-right: 15px;
         float: right;
+    }
+    table td {
+        text-align: center;
+    }
+    #account h5 span {
+        float: left;
+        width: 150px;
+        font-weight: normal;
+    }
+    h5 span{
+        float: left;
+        width: 200px;
+        font-weight: normal;
+    }
+    .details_tag{
+        border: 1px solid #ccc;
+        height: 50px;
+        width: 100%;
+        margin: 0px auto;
+        padding: 5px;
+        text-align: justify;
+    }
+    .st_check{
+        padding-top: 15px;
+        border-top: 1px solid #000000;
+        text-align: center;
+    }
+    .dynamic_data{
+        position: relative;
+        top: -90px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 20px;
+        margin: 0px;
+        margin-top: 5px;
     }
 
 </style>

@@ -373,7 +373,7 @@ class Admin_Model extends CI_Model
     /** Get Invoice Item Total */
     public function Get_Single_Invoice_Item_Total($pi_id)
     {
-        $query = $this->db->query("SELECT SUM(A.Proforma_Qty) as qty, SUM(A.Proforma_Area_SQMTR) as area, SUM(A.Proforma_Material_Cost) as rate FROM proforma_invoice_items A INNER JOIN material_master B on A.Proforma_Material_Icode=B.Material_Icode
+        $query = $this->db->query("SELECT SUM(A.Proforma_Qty) as qty, SUM(A.Proforma_Area_SQMTR) as area, SUM(A.Proforma_Material_Cost) as rate,SUM(A.Proforma_Holes) as holes,SUM(A.Proforma_Cutout) as cutout FROM proforma_invoice_items A INNER JOIN material_master B on A.Proforma_Material_Icode=B.Material_Icode
                                   WHERE A.Proforma_Icode='$pi_id'");
         return $query->result_array();
     }

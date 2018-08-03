@@ -603,6 +603,7 @@ class User_Controller extends CI_Controller
         $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
         $data['tax']= $this->admin_model->get_Tax();
         $data['st']= $this->admin_model->get_ST();
+        $data['User']=$this->user_model->Get_User_Details($pi_icode);
         $this->load->view('User/header');
         $this->load->view('User/top');
         $this->load->view('User/left');
