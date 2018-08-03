@@ -1,4 +1,47 @@
-    <main class="app-content">
+<style>
+    #search_data {
+        width: 200px;
+        padding: 5px;
+        margin: 5px 0;
+        box-sizing: border-box;
+    }
+    #autoSuggestionsList > li {
+        background: none repeat scroll 0 0 #F3F3F3;
+        border-bottom: 1px solid #E3E3E3;
+        list-style: none outside none;
+        padding: 3px 15px 3px 15px;
+        text-align: left;
+    }
+
+    #autoSuggestionsList > li a { color: #800000; }
+
+    .auto_list {
+        border: 1px solid #E3E3E3;
+        border-radius: 5px 5px 5px 5px;
+        position: absolute;
+    }
+
+    /* For Firefox */
+    input[type='number'] {
+        -moz-appearance:textfield;
+    }
+    /* Webkit browsers like Safari and Chrome */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    h4 span{
+        float: left;
+        width: 100px;
+    }
+    #account h5 span {
+        float: left;
+        width: 150px;
+        font-weight: normal;
+    }
+</style>
+<main class="app-content">
         <div class="app-title">
             <div>
                 <h1><i class="fa fa-edit"></i>Edit PI</h1>
@@ -32,9 +75,6 @@
                                     <h5 id="email">Email: <?php echo $invoice[0]['Customer_Email_Id_1']; ?></h5>
                                     <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
                                 </div>
-                            </div>
-                            <div class="col-md-1">
-
                             </div>
                             <div class="col-md-4">
                                 <h5>Buyer (if other than consignee)</h5>
@@ -70,25 +110,37 @@
 
                                 </div>
                             </div>
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <input class="form-control" type="hidden" name="PI_Icode"  value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
-                                <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly></h4>
-                                <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly></h4>
+                                <h4><span>P.INV.No</span>: <input type="hidden" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly><?php echo $invoice[0]['Proforma_Number']; ?></h4>
+                                <h4><span>Date </span>:<input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly><?php echo $invoice[0]['Proforma_Date']; ?></h4>
+                                <h6><span>Total Outstanding</span>:<input type="text" class="form-control" name="outstanding" id="outstanding" value="<?php echo $invoice[0]['Total_Outstanding']; ?>" required> </h6>
+                                <h6><span>Credit Limit Amt</span>:<input type="text" class="form-control" name="credit_limit" id="credit_limit" value="<?php echo $invoice[0]['Credit_Limit']; ?>" required> </h6>
+
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-3">
+
+                            </div>
+                            <div class="col-md-6">
+                                <textarea class="form-control" name="material_area"  placeholder="Enter Extra Glass" value="<?php echo $invoice[0]['Material_Area']; ?>"><?php echo $invoice[0]['Material_Area']; ?></textarea>
+                            </div>
+                        </div>
+                        <br>
                         <div class="row">
                             <table class="table table-hover table-bordered" id="sampleTabless">
                                 <thead>
                                 <th>#</th>
                                 <th>Material</th>
-                                <th>Special</th>
-                                <th style="width: 5%;">No.of<br>Pcs</th>
-                                <th style="width: 6%;">No.of<br>Holes</th>
-                                <th style="width: 5%;">Cutout</th>
                                 <th>Actucal<br>size(h)</th>
                                 <th>Actucal<br>size(w)</th>
                                 <th>Charge<br>size(h)</th>
                                 <th>Charge<br>size(w)</th>
+                                <th style="width: 5%;">No.of<br>Pcs</th>
+                                <th style="width: 6%;">No.of<br>Holes</th>
+                                <th style="width: 5%;">Cutout</th>
+                                <th>Special</th>
                                 <th>Area<br>(sqmtr)</th>
                                 <th>Rate<br>(sqmtr)</th>
                                 <th style="width: 10%;">Total Rs</th>
@@ -111,48 +163,38 @@
                                                     endforeach; ?>
                                                 </select>
                                             </div></td>
-                                        <td><?php echo $key['Proforma_Special']; ?></td>
-                                        <td><input class="form-control" type="number" id="pics<?php echo $i; ?>"  name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
-                                        <td><input class="form-control" type="number" name="holes[]"  value="<?php echo $key['Proforma_Holes']; ?>" ></td>
-                                        <td><input class="form-control" type="number" name="cutout[]"  value="<?php echo $key['Proforma_Cutout']; ?>" ></td>
-
                                         <td><input class="form-control" type="number" id="Actual_width<?php echo $i; ?>" name="Actual_width[]"  value="<?php echo $key['Proforma_Actual_Size_Width']; ?>"  onkeyup="change_Actual_Width('<?php echo $i; ?>')" ></td>
                                         <td><input class="form-control" type="number" id="Actual_height<?php echo $i; ?>" name="Actual_height[]"  value="<?php echo $key['Proforma_Actual_Size_Height']; ?>"  onkeyup="change_Actual_Height('<?php echo $i; ?>')" ></td>
                                         <td><input class="form-control" type="number" id="Charge_width<?php echo $i; ?>" name="Charge_width[]"  value="<?php echo $key['Proforma_Chargeable_Size_Width']; ?>"  onkeyup="change_Charge_Width('<?php echo $i; ?>')" ></td>
                                         <td><input class="form-control" type="number" id="Charge_height<?php echo $i; ?>" name="Charge_height[]"  value="<?php echo $key['Proforma_Chargeable_Size_Height']; ?>"  onkeyup="change_Charge_Height('<?php echo $i; ?>')" ></td>
+                                        <td><input class="form-control" type="number" id="pics<?php echo $i; ?>"  name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
+                                        <td><input class="form-control" type="number" name="holes[]"  value="<?php echo $key['Proforma_Holes']; ?>" onkeyup="change_holes('<?php echo $i; ?>')" ></td>
+                                        <td><input class="form-control" type="number" name="cutout[]"  value="<?php echo $key['Proforma_Cutout']; ?>" onkeyup="change_cutout('<?php echo $i; ?>')" ></td>
+                                        <td><?php echo $key['Proforma_Special']; ?></td>
                                         <td><input class="form-control" type="number" name="area[]" id="area<?php echo $i; ?>" value="<?php echo $key['Proforma_Area_SQMTR']; ?>" readonly></td>
                                         <td><input class="form-control" type="number" name="rate[]" value="<?php echo $key['Proforma_Material_Rate']; ?>" id="rate<?php echo $i; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
-                                        <td><input class="form-control" type="number" name="total[]" value="<?php echo $key['Proforma_Material_Cost']; ?>" id="total<?php echo $i; ?>" readonly></td>
+                                        <td><input class="form-control" type="number" name="total[]" value="<?php echo $key['Proforma_Material_Cost']; ?>" id="total<?php echo $i; ?>" readonly  ></td>
                                         <td><a  style="color: red;" href="javascript:;"><i class="fa fa-trash"  onclick="delete_items('<?php echo $i; ?>','<?php echo $key['Proforma_Invoice_Items_Icode']; ?>')" aria-hidden="true"></i></a>
                                            </td>
                                     </tr>
                                     <?php $i++; } ?>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td colspan="6" align="right" style="font-weight: bold;" >Total Summary</td>
                                     <td><input type="text" class="form-control pull-right" id="total_pic" value="<?php echo $invoice_total[0]['qty']; ?>"   readonly/></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td><input type="text" class="form-control pull-right" id="total_holes" value="<?php echo $invoice_total[0]['holes']; ?>"   readonly/></td>
+                                    <td><input type="text" class="form-control pull-right" id="total_cutout" value="<?php echo $invoice_total[0]['cutout']; ?>"   readonly/></td>
                                     <td></td>
                                     <td><input type="text" class="form-control pull-right" id="total_area" value="<?php echo round($invoice_total[0]['area'], 2); ?>"   readonly/></td>
                                     <td></td>
                                     <td> <input type="text" class="form-control pull-right" id="grand_total" value="<?php echo round($invoice_total[0]['rate'],2); ?>"   readonly/>(INR)</td>
                                 </tr>
                                 </tbody>
-
-
                             </table>
-
                             <div >
                                 <table id="my_item_table">
                                     <thead></thead>
                                     <tbody></tbody>
                                 </table>
-
                             </div>
                             <script>
                                 $("#grand_total").on('click', function() {
@@ -167,7 +209,13 @@
                             </script>
                         </div>
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-6">
+                                <div style="" class="form-group row">
+                                    <label class="control-label" style="font-weight: bold;">Delivery Period</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control col-md-3" type="text" name="delivery"  value="<?php echo $invoice[0]['Delivery_Days']; ?>" required>
+                                    </div>
+                                </div>
                                 <h3 style="font-size: 15px;">Terms & Conditions</h3>
                                 <p style="font-size: 8px;text-align: justify;">
                                     Supply shall be against advance payment or Letter of credit or any other agreed
@@ -193,15 +241,16 @@
                                     </li>
                                 </ul>
                                 </p>
-                                <h4>Bank Details</h4>
-                                <h5>Stronglass Tough</h5>
-                                <h5>A/C Type: <span><?php echo $st[0]['ST_Bank_Account_Type']; ?></span></h5>
-                                <h5>A/C Number: <span><?php echo $st[0]['ST_Bank_Account_Number']; ?></span></h5>
-                                <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
-                                <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
+                                <div id="account">
+                                    <h3 style="font-size: 13px;">Bank Details</h3>
+                                    <h5><span>Account Name</span> :STRONGLASS TOUGH</h5>
+                                    <h5><span>Bank Name</span>:<?php echo $st[0]['ST_Bank']; ?></span></h5>
+                                    <h5><span>Account Number</span>:<?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
+                                    <h5><span>IFSC</span>:<?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
+                                </div>
 
                             </div>
-                            <div class="col-md-7">
+                            <div class="col-md-6">
                                 <table class="table table-hover table-bordered" id="sampleTable">
                                     <thead>
                                     <th>Select Charges</th>
@@ -342,48 +391,6 @@
             </div>
         </div>
     </main>
-
-    <style>
-        .st_check{
-            padding-top: 15px;
-            border-top: 1px solid #000000;
-            text-align: center;
-        }
-        #search_data {
-            width: 200px;
-            padding: 5px;
-            margin: 5px 0;
-            box-sizing: border-box;
-        }
-        #autoSuggestionsList > li {
-            background: none repeat scroll 0 0 #F3F3F3;
-            border-bottom: 1px solid #E3E3E3;
-            list-style: none outside none;
-            padding: 3px 15px 3px 15px;
-            text-align: left;
-        }
-
-        #autoSuggestionsList > li a { color: #800000; }
-
-        .auto_list {
-            border: 1px solid #E3E3E3;
-            border-radius: 5px 5px 5px 5px;
-            position: absolute;
-        }
-
-        /* For Firefox */
-        input[type='number'] {
-            -moz-appearance:textfield;
-        }
-        /* Webkit browsers like Safari and Chrome */
-        input[type=number]::-webkit-inner-spin-button,
-        input[type=number]::-webkit-outer-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-    </style>
-
-
     <script>
         $( document ).ready(function() {
             number_to_words();

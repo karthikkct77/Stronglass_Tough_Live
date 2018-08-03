@@ -1,3 +1,57 @@
+<style>
+    .st_check{
+        padding-top: 15px;
+        border-top: 1px solid #000000;
+        text-align: center;
+    }
+    #search_data {
+        width: 200px;
+        padding: 5px;
+        margin: 5px 0;
+        box-sizing: border-box;
+    }
+    #autoSuggestionsList {
+        z-index: 99;
+        max-height: 400px;
+        overflow-y: auto;
+        min-height: auto;
+    }
+    #autoSuggestionsList > li {
+        background: none repeat scroll 0 0 #F3F3F3;
+        border-bottom: 1px solid #E3E3E3;
+        list-style: none outside none;
+        padding: 3px 15px 3px 15px;
+        text-align: left;
+    }
+
+    #autoSuggestionsList > li a { color: #800000; }
+
+    .auto_list {
+        border: 1px solid #E3E3E3;
+        border-radius: 5px 5px 5px 5px;
+        position: absolute;
+    }
+
+    /* For Firefox */
+    input[type='number'] {
+        -moz-appearance:textfield;
+    }
+    /* Webkit browsers like Safari and Chrome */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+    .table thead th
+    {
+        font-size: 12px;
+    }
+    h4 span{
+        float: left;
+        width: 100px;
+    }
+
+</style>
 <main class="app-content">
     <div class="app-title">
         <div>
@@ -180,13 +234,13 @@
                     </div>
                     <div class="row">
                         <div class="col-md-6">
-                            <div style="padding-left: 20px;" class="form-group row">
+                            <div style="" class="form-group row">
                                 <label class="control-label" style="font-weight: bold;">Delivery Period</label>
                                 <div class="col-md-8">
                                     <input class="form-control col-md-3" type="text" name="delivery" required>
                                 </div>
                             </div>
-                            <h3 style="font-size: 13px;">Terms & Conditions</h3>
+                            <h3 style="font-size: 15px;">Terms & Conditions</h3>
                             <p style="font-size: 8px;text-align: justify;">
                                 Supply shall be against advance payment or Letter of credit or any other agreed
                                 terms. Interest @2% per month will be charged for the payment delayed beyond
@@ -194,7 +248,7 @@
                                 party/consumer/contractor interested in the transaction shall be adjusted against
                                 supplies made to buyer/consignee
                             </p>
-                            <h3 style="font-size: 13px;">Dear Customer</h3>
+                            <h3 style="font-size: 15px;">Dear Customer</h3>
                             <p style="font-size: 8px;text-align: justify;">
                             <ul style="list-style: none;padding: 0;font-size: 8px;text-align: justify;">
                                 <li style="margin-bottom: 15px;">
@@ -213,13 +267,11 @@
                             </p>
                             <div id="account">
                                 <h3 style="font-size: 13px;">Bank Details</h3>
-                                <h5><span>Account Name</span> :Stronglass Tough</h5>
+                                <h5><span>Account Name</span> :STRONGLASS TOUGH</h5>
                                 <h5><span>Bank Name</span>:<?php echo $st[0]['ST_Bank']; ?></span></h5>
                                 <h5><span>Account Number</span>:<?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
                                 <h5><span>IFSC</span>:<?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
                             </div>
-
-
                         </div>
                         <div class="col-md-6">
                             <table class="table table-hover table-bordered" id="sampleTable1">
@@ -328,70 +380,6 @@
         </div>
     </div>
 </main>
-<!--<script>$('#sampleTable').DataTable({-->
-<!--        scrollX: true,-->
-<!--    });</script>-->
-<style>
-    .st_check{
-        padding-top: 15px;
-        border-top: 1px solid #000000;
-        text-align: center;
-    }
-    #search_data {
-        width: 200px;
-        padding: 5px;
-        margin: 5px 0;
-        box-sizing: border-box;
-    }
-    #autoSuggestionsList {
-        z-index: 99;
-        max-height: 400px;
-        overflow-y: auto;
-        min-height: auto;
-    }
-    #autoSuggestionsList > li {
-        background: none repeat scroll 0 0 #F3F3F3;
-        border-bottom: 1px solid #E3E3E3;
-        list-style: none outside none;
-        padding: 3px 15px 3px 15px;
-        text-align: left;
-    }
-
-    #autoSuggestionsList > li a { color: #800000; }
-
-    .auto_list {
-        border: 1px solid #E3E3E3;
-        border-radius: 5px 5px 5px 5px;
-        position: absolute;
-    }
-
-    /* For Firefox */
-    input[type='number'] {
-        -moz-appearance:textfield;
-    }
-    /* Webkit browsers like Safari and Chrome */
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-    .table thead th
-    {
-        font-size: 12px;
-    }
-    h4 span{
-        float: left;
-        width: 100px;
-    }
-    #account h5 span {
-        float: left;
-        width: 150px;
-        font-weight: normal;
-    }
-
-</style>
-
-
 <script>
     $( document ).ready(function() {
         var areas =document.getElementsByName("area[]");
