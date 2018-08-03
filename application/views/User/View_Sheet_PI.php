@@ -98,8 +98,18 @@
                             <div class="col-md-3">
                                 <input class="form-control" type="hidden" name="PI_Icode"  id="PI_Icode" value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
                                 <input class="form-control" type="hidden" name="PI_Type"  id="PI_Icode" value="<?php echo $invoice[0]['PI_Type']; ?>" >
-                                <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly></h4>
-                                <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly></h4>
+                                <h4><span>Date</span>: <input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly><?php echo $invoice[0]['Proforma_Date']; ?></h4>
+                                <h4><span>P.INV.NO</span>: <input type="hidden" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly><?php echo $invoice[0]['Proforma_Number']; ?></h4>
+                                <h4><span>Total Outstanding</span>:<?php echo $invoice[0]['Total_Outstanding']; ?></h4>
+                                <h4><span>Credit Limit Amt</span>:<?php echo $invoice[0]['Credit_Limit']; ?> </h4>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+
+                            </div>
+                            <div class="col-md-6">
+                                <textarea class="form-control" name="material_area"  placeholder="Enter Extra Glass" readonly><?php echo $invoice[0]['Material_Area']; ?></textarea>
                             </div>
                         </div>
                         <h6 style="text-align: center">Total Number of Sheets used to Cut the following glasses</h6>
@@ -123,7 +133,7 @@
                                 <?php $i=1; foreach ($sheet as $key) { ?>
                                 <tr>
                                     <td><?php echo $i; ?></td>
-                                    <td><?php echo $key['Material_Name']; ?></td>
+                                    <td style="text-align: left;"><?php echo $key['Material_Name']; ?></td>
                                     <td><?php echo $key['No_Of_Sheet']; ?></td>
                                     <td><?php echo $key['Actual_Height']; ?></td>
                                     <td><?php echo $key['Actual_Width']; ?></td>
@@ -158,7 +168,7 @@
                                     <input class="form-control" type="hidden" name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" >
                                     <tr id="row<?php echo $i; ?>">
                                         <td><?php echo $i; ?></td>
-                                        <td><?php echo $key['Material_Name']; ?></td>
+                                        <td style="text-align: left;"><?php echo $key['Material_Name']; ?></td>
                                         <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                         <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
                                         <td><?php echo $key['Proforma_Qty']; ?></td>
@@ -168,13 +178,20 @@
                                         <td><?php echo $key['Proforma_Area_SQMTR']; ?></td>
                                     </tr>
                                     <?php $i++; } ?>
+                                <tr><td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td colspan="4" style="font-weight: bold;text-align: right;" >Total Summary</td>
                                     <td><input type="hidden" class="form-control pull-right" id="total_pic" value="<?php echo $invoice_total[0]['qty']; ?>"readonly/><?php echo $invoice_total[0]['qty']; ?></td>
-                                    <td></td>
+                                    <td><?php echo $invoice_total[0]['holes']; ?></td>
                                     <td><?php echo $invoice_total[0]['cutout']; ?></td>
                                     <td></td>
                                     <td><input type="hidden" class="form-control pull-right" id="total_area" value="<?php echo round($invoice_total[0]['area'], 2); ?>"   readonly/><?php echo round($invoice_total[0]['area'], 3); ?></td>
@@ -236,7 +253,7 @@
                                         ?>
                                         <tr>
                                             <td><?php echo $i; ?></td>
-                                            <td><?php echo $key['charge_name']; ?></td>
+                                            <td style="text-align: left;"><?php echo $key['charge_name']; ?></td>
                                             <td><?php echo $key['Proforma_Charge_Count']; ?></td>
                                             <td><?php echo $key['Proforma_Charge_Value']; ?></td>
                                             <td><?php echo $key['Proforma_Charge_Cost']; ?></td>
@@ -245,66 +262,62 @@
                                         $i++;
                                     }
                                     ?>
-                                    </tfoot>
-                                </table>
+                                    <tr>
+                                        <td colspan="4" style="text-align: right;">SUB-TOTAL</td>
 
-                                <div  style="float: right;" id="totals">
-                                    <table>
+                                        <td><input class="form-control" type="hidden" name="sub_tot" id="sub_tot" value="<?php echo $invoice[0]['Sub_Total']; ?>" readonly ><?php echo $invoice[0]['Sub_Total']; ?></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" style="text-align: right;">HANDLING CHARGE</td>
+
+                                        <td><input class="form-control" type="hidden" name="insurance" id="insurance" value="<?php echo $invoice[0]['Insurance_Value']; ?>" required readonly><?php echo $invoice[0]['Insurance_Value']; ?></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" style="text-align: right;">TRANSPORT</td>
+
+                                        <td><input class="form-control" type="hidden" name="transport" id="transport"  value="<?php echo $invoice[0]['Transport']; ?>" readonly><?php echo $invoice[0]['Transport']; ?></td>
+
+                                    </tr>
+                                    <?php
+                                    if($invoice[0]['IGST_Value'] == '0')
+                                    { ?>
                                         <tr>
-                                            <td colspan="4" align="right">SUB-TOTAL</td>
+                                            <td colspan="4" style="text-align: right;">SGST @<?php echo $tax[0]['SGST%']; ?></td>
 
-                                            <td><input class="form-control" type="text" name="sub_tot" id="sub_tot" value="<?php echo $invoice[0]['Sub_Total']; ?>" readonly ></td>
+                                            <td><input class="form-control" type="hidden" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ><?php echo $invoice[0]['SGST_Value']; ?></td>
 
                                         </tr>
                                         <tr>
-                                            <td colspan="4" align="right">HANDLING CHARGE</td>
-
-                                            <td><input class="form-control" type="text" name="insurance" id="insurance" value="<?php echo $invoice[0]['Insurance_Value']; ?>" required readonly></td>
+                                            <td colspan="4" style="text-align: right;">CGST @<?php echo $tax[0]['CGST%']; ?>
+                                                <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
+                                            </td>
+                                            <td><input class="form-control" type="hidden" name="cgst" id="cgst" value="<?php echo $invoice[0]['CGST_Value']; ?>" readonly ><?php echo $invoice[0]['CGST_Value']; ?></td>
 
                                         </tr>
-                                        <tr>
-                                            <td colspan="4" align="right">TRANSPORT</td>
 
-                                            <td><input class="form-control" type="text" name="transport" id="transport"  value="<?php echo $invoice[0]['Transport']; ?>" readonly></td>
+                                    <?php }
+                                    else
+                                    {?>
+                                        <tr>
+                                            <td colspan="4" style="text-align: right;">IGST @18%
+                                                <input type="hidden" id="gst" value="18">
+                                            </td>
+                                            <td><input class="form-control" type="hidden" name="igst" id="igst" value="<?php echo $invoice[0]['IGST_Value']; ?>" readonly ><?php echo $invoice[0]['IGST_Value']; ?></td>
 
                                         </tr>
                                         <?php
-                                        if($invoice[0]['IGST_Value'] == '0')
-                                        { ?>
-                                            <tr>
-                                                <td colspan="4" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
+                                    }
+                                    ?>
+                                    <tr>
 
-                                                <td><input class="form-control" type="text" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ></td>
+                                        <td colspan="4" style="text-align: right;">GROSS TOTAL</td>
+                                        <td><input class="form-control" type="hidden" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" ><h4><?php echo $invoice[0]['GrossTotal_Value']; ?> /-</h4></td>
 
-                                            </tr>
-                                            <tr>
-                                                <td colspan="4" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
-                                                    <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
-                                                </td>
-                                                <td><input class="form-control" type="text" name="cgst" id="cgst" value="<?php echo $invoice[0]['CGST_Value']; ?>" readonly ></td>
-
-                                            </tr>
-
-                                        <?php }
-                                        else
-                                        {?>
-                                            <tr>
-                                                <td colspan="4" align="right">IGST @18%
-                                                    <input type="hidden" id="gst" value="18">
-                                                </td>
-                                                <td><input class="form-control" type="text" name="igst" id="igst" value="<?php echo $invoice[0]['IGST_Value']; ?>" readonly ></td>
-
-                                            </tr>
-                                            <?php
-                                        }
-                                        ?>
-                                        <tr>
-
-                                            <td colspan="4" align="right">GROSS TOTAL</td>
-                                            <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" >(INR)</td>
-
-                                        </tr>
-                                    </table>
+                                    </tr>
+                                    </tfoot>
+                                </table>
                                 </div>
                             </div>
                             <div>Amount in Words: <span id="word" style="font-size: 20px;margin-left: 10px;"></span></div>
@@ -361,6 +374,14 @@
     .pi_button{
         margin-right: 15px;
         float: right;
+    }
+    h4 span{
+        float: left;
+        width: 200px;
+        font-weight: normal;
+    }
+    table td {
+        text-align: center;
     }
 
 </style>
