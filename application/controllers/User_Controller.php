@@ -719,7 +719,7 @@ class User_Controller extends CI_Controller
 
             $this->pdf->loadHtml($body);
             $this->pdf->render();
-            $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
+//            $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
             $pdf = $this->pdf->output();
             $pdf_name = $data['invoice'][0]['Customer_Company_Name'];
             $file_location =FCPATH."uploads/pdf/".$pdf_name.".pdf";

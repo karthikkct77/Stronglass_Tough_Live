@@ -303,10 +303,10 @@
             </table>
 
             </div>
-       <p id="word"></p>
+       <p id="word" style="float: left;">Amount in Words: <?php echo $invoice[0]['Amt_Words'];?></p>
         </div>
-    <div id="page"style="display: block;">
-        <div style="width: 49.5%; text-align: left; display: inline-block;">
+    <div id="page"style="display: block;vertical-align: top;">
+        <div style="width: 49.5%; text-align: left; display: inline-block;vertical-align: top;">
             <h3 style="font-size: 14px;">Bank Details</h3>
             <p class="acc">Stronglass Tough</p>
             <p class="acc"><span>A/C Type</span>:<?php echo $st[0]['ST_Bank_Account_Type']; ?></p>
