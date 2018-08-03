@@ -5,7 +5,6 @@
 
         </div>
         <div class="row invoice">
-            <img style="position: absolute;width: 100px;height: auto;top: 1%;left: 1%;" src="<?php echo base_url('img/strong.png'); ?>" alt="User Image">
             <h4><?php echo $st[0]['ST_Name']; ?></h4>
             <h5><?php echo $st[0]['ST_Address_1']; ?>,&nbsp;<?php echo $st[0]['ST_Area']; ?>,&nbsp;<?php echo $st[0]['ST_City']; ?></h5>
             <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
@@ -62,8 +61,19 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $profoma_number; ?>" readonly></h4>
-                            <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo date('Y-m-d'); ?>" readonly></h4>
+                            <h4><span>P.INV.No</span>: <input type="hidden" name="invoice_no" id="invoice_no" value="<?php echo $profoma_number; ?>" readonly><?php echo $profoma_number; ?></h4>
+                            <h4><span>Date </span>:<input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo date('Y-m-d'); ?>" readonly><?php echo date('Y-m-d'); ?></h4>
+                            <h6><span>Total Outstanding</span>:<input type="text" class="form-control" name="outstanding" id="outstanding" required> </h6>
+                            <h6><span>Credit Limit Amt</span>:<input type="text" class="form-control" name="credit_limit" id="credit_limit" required> </h6>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+
+                        </div>
+                        <div class="col-md-6">
+                            <textarea class="form-control" name="material_area"  placeholder="Enter Extra Glass"></textarea>
                         </div>
                     </div>
                     <div class="row">
@@ -140,9 +150,14 @@
                                 <td></td>
                                 <td></td>
                                 <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td colspan="7" align="right" style="font-weight: bold;" >Total Summary</td>
                                 <td id="total_pic1"><input type="hidden" class="form-control pull-right" id="total_pic" readonly/></td>
-                                <td></td>
-                                <td></td>
+                                <td id="total_holes1"><input type="hidden" class="form-control pull-right" id="total_holes" readonly/></td>
+                                <td id="total_cutout1"><input type="hidden" class="form-control pull-right" id="total_cutout" readonly/></td>
                                 <td></td>
                                 <td id="total_area1"><input type="hidden" class="form-control pull-right" id="total_area" value="0"   readonly/></td>
                                 <td></td>
@@ -355,6 +370,10 @@
     {
         font-size: 12px;
     }
+    h4 span{
+        float: left;
+        width: 100px;
+    }
 
 </style>
 
@@ -370,7 +389,7 @@
             }
         }
         document.getElementById('total_area').value=sum_area;
-        document.getElementById('total_area1').innerHTML = sum_area;
+        document.getElementById('total_area1').innerHTML =  parseFloat(sum_area).toFixed(3);
         var pices =document.getElementsByName("pics[]");
         var sum_pic = 0;
         for (var j = 0, iLen = pices.length; j < iLen; j++) {
@@ -379,10 +398,34 @@
                 sum_pic +=val;
             }
         }
-
         document.getElementById('total_pic').value = parseInt(sum_pic);
         document.getElementById('total_pic1').innerHTML = parseInt(sum_pic);
+
+        //Total Holes
+        var holes =document.getElementsByName("holes[]");
+        var sum_holes = 0;
+        for (var j = 0, iLen = holes.length; j < iLen; j++) {
+            if (holes[j].value!==""){
+                val=parseFloat(holes[j].value);
+                sum_holes +=val;
+            }
+        }
+        document.getElementById('total_holes').value = parseInt(sum_holes);
+        document.getElementById('total_holes1').innerHTML = parseInt(sum_holes);
+
+        //Total Cutouts
+        var cutout =document.getElementsByName("cutout[]");
+        var sum_cutout = 0;
+        for (var j = 0, iLen = cutout.length; j < iLen; j++) {
+            if (cutout[j].value!==""){
+                val=parseFloat(cutout[j].value);
+                sum_cutout +=val;
+            }
+        }
+        document.getElementById('total_cutout').value = parseInt(sum_cutout);
+        document.getElementById('total_cutout1').innerHTML = parseInt(sum_cutout);
     });
+
 
     // Get Company Addresss
     $("#company_name2").change(function () {
