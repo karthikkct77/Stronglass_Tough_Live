@@ -78,7 +78,7 @@
                                 </div>
                                 <div class="col-md-3 wo_right">
                                     <h4><?php echo $work_order[0]['WO_Date']; ?></h4>
-                                    <input type="text" id="pi_type" name="pi_type" value="<?php echo $work_order[0]['PI_Type']; ?>">
+                                    <input type="hidden" id="pi_type" name="pi_type" value="<?php echo $work_order[0]['PI_Type']; ?>">
                                 </div>
                             </div>
                         </div>
