@@ -1652,7 +1652,6 @@ class User_Controller extends CI_Controller
         $this->load->view('User/View_Re_Cut',$data, FALSE);
         $this->load->view('User/footer');
     }
-
     // Save Recut NOrmal
     public  function Save_Normal_Recut()
     {

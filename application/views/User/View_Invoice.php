@@ -139,8 +139,8 @@
                             <th>Thickness</th>
                             <th>Actual<br>size(h)</th>
                             <th>Actual<br>size(w)</th>
-                            <th>Chargable<br>size(h)</th>
-                            <th>Chargable<br>size(w)</th>
+                            <th>Chargeable<br>size(h)</th>
+                            <th>Chargeable<br>size(w)</th>
                             <th>No.of<br>Pieces</th>
                             <th>No.of<br>Holes</th>
                             <th>Cutouts</th>
@@ -167,15 +167,15 @@
                                     <!--                                    <div id="suggestions_material">-->
                                     <!--                                        <div id="autoSuggestionsList_material"></div>-->
                                     <!--                                    </div>-->
-                                    <td><input class="form-control" type="hidden" name="hsn[]" id="hsn<?php echo $i; ?>" readonly ><input class="form-control" type="hidden" name="thickness[]" id="thckness<?php echo $i; ?>" value="<?php echo $key['Thickness']; ?>" readonly><?php echo $key['Thickness']; ?></td>
+                                    <td style="width: 20px;"><input class="form-control" type="hidden" name="hsn[]" id="hsn<?php echo $i; ?>" readonly ><input class="form-control" type="hidden" name="thickness[]" id="thckness<?php echo $i; ?>" value="<?php echo $key['Thickness']; ?>" readonly><?php echo $key['Thickness']; ?></td>
                                     <td><input class="form-control" type="hidden" name="height[]" id="height<?php echo $i; ?>" value="<?php echo $key['height']; ?>" readonly><?php echo $key['height']; ?></td>
                                     <td><input class="form-control" type="hidden" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['width']; ?>" readonly><?php echo $key['width']; ?></td>
                                     <td style="width: 90px;"><input class="form-control" type="number" name="ch_height[]" id="ch_height<?php echo $i; ?>" value="<?php echo $key['ch_height']; ?>" onkeyup="change_Charge_Height('<?php echo $i; ?>')" ></td>
                                     <td style="width: 90px;"><input class="form-control" type="number" name="ch_weight[]" id="ch_weight<?php echo $i; ?>" value="<?php echo $key['ch_weight']; ?>" onkeyup="change_Charge_Width('<?php echo $i; ?>')" ></td>
-                                    <td><input class="form-control" type="hidden" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['pics']; ?>" readonly><?php echo $key['pics']; ?></td>
-                                    <td><input class="form-control" type="hidden" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['holes']; ?>" readonly><?php echo $key['holes']; ?></td>
-                                    <td><input class="form-control" type="hidden" name="cutout[]" id="cutout<?php echo $i; ?>" value="<?php echo $key['cutout']; ?>" readonly><?php echo $key['cutout']; ?></td>
-                                    <td><input class="form-control" type="hidden" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly><?php echo $key['type']; ?></td>
+                                    <td style="width: 20px;"><input class="form-control" type="hidden" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['pics']; ?>" readonly><?php echo $key['pics']; ?></td>
+                                    <td style="width: 20px;"><input class="form-control" type="hidden" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['holes']; ?>" readonly><?php echo $key['holes']; ?></td>
+                                    <td style="width: 20px;"><input class="form-control" type="hidden" name="cutout[]" id="cutout<?php echo $i; ?>" value="<?php echo $key['cutout']; ?>" readonly><?php echo $key['cutout']; ?></td>
+                                    <td style="width: 20px;"><input class="form-control" type="hidden" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly><?php echo $key['type']; ?></td>
                                      <?php
                                     if($key['area'] > 5)
                                     {
@@ -1018,7 +1018,7 @@
         var actual_H = document.getElementById('height'+id).value;
         var Charge_W = document.getElementById('ch_weight'+id).value;
         var Charge_H = document.getElementById('ch_height'+id).value;
-        if(actual_H > Charge_H)
+        if(parseInt(actual_H) > parseInt(Charge_H))
         {
             alert("Chargable Height should be greater then Actual Height ");
         }
@@ -1111,7 +1111,7 @@
         var Charge_W = parseFloat(document.getElementById('ch_weight'+id).value);
         var Charge_H = document.getElementById('ch_height'+id).value;
 
-        if(actual_W > Charge_W)
+        if(parseInt(actual_W) > parseInt(Charge_W))
         {
             alert("Chargable Width should be greater then Actual Width");
         }
