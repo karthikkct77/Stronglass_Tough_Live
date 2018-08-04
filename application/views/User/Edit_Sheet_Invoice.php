@@ -1,3 +1,46 @@
+<style type="text/css" media="print">
+    @page
+    {
+        margin: 0mm;  /* this affects the margin in the printer settings */
+    }
+</style>
+<style>
+    @media print {
+        #with_print {
+            display: none;
+        }
+    }
+    #search_data {
+        width: 200px;
+        padding: 5px;
+        margin: 5px 0;
+        box-sizing: border-box;
+    }
+    #autoSuggestionsList > li {
+        background: none repeat scroll 0 0 #F3F3F3;
+        border-bottom: 1px solid #E3E3E3;
+        list-style: none outside none;
+        padding: 3px 15px 3px 15px;
+        text-align: left;
+    }
+
+    #autoSuggestionsList > li a { color: #800000; }
+
+    .auto_list {
+        border: 1px solid #E3E3E3;
+        border-radius: 5px 5px 5px 5px;
+        position: absolute;
+    }
+    .pi_button{
+        margin-right: 15px;
+        float: right;
+    }
+    .st_check{
+        padding-top: 15px;
+        border-top: 1px solid #000000;
+        text-align: center;
+    }
+</style>
 <main class="app-content">
     <div>
         <div class="app-title">
@@ -100,10 +143,21 @@
                             </div>
                             <div class="col-md-3">
                                 <input class="form-control" type="hidden" name="PI_Icode"  id="PI_Icode" value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
-                                <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly></h4>
-                                <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly></h4>
+                                <h4><span>P.INV.No</span>: <input type="hidden" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly><?php echo $invoice[0]['Proforma_Number']; ?></h4>
+                                <h4><span>Date </span>:<input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly><?php echo $invoice[0]['Proforma_Date']; ?></h4>
+                                <h6><span>Total Outstanding</span>:<input type="text" class="form-control" name="outstanding" id="outstanding" value="<?php echo $invoice[0]['Total_Outstanding']; ?>" required> </h6>
+                                <h6><span>Credit Limit Amt</span>:<input type="text" class="form-control" name="credit_limit" id="credit_limit" value="<?php echo $invoice[0]['Credit_Limit']; ?>" required> </h6>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-md-3">
+
+                            </div>
+                            <div class="col-md-6">
+                                <textarea class="form-control" name="material_area"  placeholder="Enter Extra Glass" value="<?php echo $invoice[0]['Material_Area']; ?>"><?php echo $invoice[0]['Material_Area']; ?></textarea>
+                            </div>
+                        </div>
+                        <br>
                         <h6 style="text-align: center">Total Number of Sheets used to Cut the following glasses</h6>
                         <div class="row">
                             <table class="table table-hover table-bordered" id="sampleTable2">
@@ -205,12 +259,9 @@
                                     </tr>
                                     <?php $i++; } ?>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td colspan="4" align="right" style="font-weight: bold;" >Total Summary</td>
                                     <td><input type="text" class="form-control pull-right" id="total_pic" value="<?php echo $invoice_total[0]['qty']; ?>"readonly/></td>
-                                    <td></td>
+                                    <td><input type="text" class="form-control pull-right" id="total_holes" value="<?php echo $invoice_total[0]['holes']; ?>"   readonly/></td>
                                     <td><input type="text" class="form-control pull-right" id="total_cutout" value="<?php echo $invoice_total[0]['cutout']; ?>"readonly/></td>
                                     <td></td>
                                     <td><input type="text" class="form-control pull-right" id="total_area" value="<?php echo round($invoice_total[0]['area'], 2); ?>"   readonly/></td>
@@ -222,7 +273,13 @@
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <h3 style="font-size: 15px;">Terms & Conditions</h3>
+                                <div style="" class="form-group row">
+                                    <label class="control-label" style="font-weight: bold;">Delivery Period</label>
+                                    <div class="col-md-8">
+                                        <input class="form-control col-md-3" type="text" name="delivery"  value="<?php echo $invoice[0]['Delivery_Days']; ?>" required>
+                                    </div>
+                                </div>
+                                <h3 style="font-size: 13px;">Terms & Conditions</h3>
                                 <p style="font-size: 8px;text-align: justify;">
                                     Supply shall be against advance payment or Letter of credit or any other agreed
                                     terms. Interest @2% per month will be charged for the payment delayed beyond
@@ -230,7 +287,7 @@
                                     party/consumer/contractor interested in the transaction shall be adjusted against
                                     supplies made to buyer/consignee
                                 </p>
-                                <h3 style="font-size: 8px;">Dear Customer</h3>
+                                <h3 style="font-size: 13px;">Dear Customer</h3>
                                 <p style="font-size: 8px;text-align: justify;">
                                 <ul style="list-style: none;padding: 0;font-size: 8px;text-align: justify;">
                                     <li style="margin-bottom: 15px;">
@@ -400,51 +457,6 @@
         </div>
     </div>
 </main>
-<style type="text/css" media="print">
-    @page
-    {
-        margin: 0mm;  /* this affects the margin in the printer settings */
-    }
-</style>
-<style>
-    @media print {
-        #with_print {
-            display: none;
-        }
-    }
-    #search_data {
-        width: 200px;
-        padding: 5px;
-        margin: 5px 0;
-        box-sizing: border-box;
-    }
-    #autoSuggestionsList > li {
-        background: none repeat scroll 0 0 #F3F3F3;
-        border-bottom: 1px solid #E3E3E3;
-        list-style: none outside none;
-        padding: 3px 15px 3px 15px;
-        text-align: left;
-    }
-
-    #autoSuggestionsList > li a { color: #800000; }
-
-    .auto_list {
-        border: 1px solid #E3E3E3;
-        border-radius: 5px 5px 5px 5px;
-        position: absolute;
-    }
-    .pi_button{
-        margin-right: 15px;
-        float: right;
-    }
-    .st_check{
-        padding-top: 15px;
-        border-top: 1px solid #000000;
-        text-align: center;
-    }
-</style>
-
-
 <script>
 
     $( document ).ready(function() {

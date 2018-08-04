@@ -1397,6 +1397,10 @@ class User_Controller extends CI_Controller
                 'CGST_Value' => $this->input->post('cgst'),
                 'IGST_Value' => $this->input->post('igst'),
                 'GrossTotal_Value' => $this->input->post('gross_tot'),
+                'Total_Outstanding'=>$this->input->post('outstanding'),
+                'Credit_Limit'=>$this->input->post('credit_limit'),
+                'Material_Area'=>$this->input->post('material_area'),
+                'Delivery_Days'=>$this->input->post('delivery'),
                 'Modified_By' => $this->session->userdata['userid'],
                 'Modified_Status' => '1',
                 'Modified_On' => date('Y-m-d H:i:s'));
