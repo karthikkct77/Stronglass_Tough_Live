@@ -401,6 +401,20 @@ class User_Model extends CI_Model
                                         INNER JOIN material_master C on B.Proforma_Material_Icode=C.Material_Icode WHERE   A.WO_Icode='$wo_id'");
         return $query->result_array();
     }
+    //** Insert Recut */
+    public function Insert_Recut($data)
+    {
+        $this->db->insert('recut_normal_item', $data);
+        $insert_id = $this->db->insert_id();
+        if($insert_id != '0')
+        {
+            return 1;
+        }
+        else{
+            return 0;
+        }
+
+    }
 
 
 

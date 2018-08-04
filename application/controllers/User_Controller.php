@@ -339,7 +339,7 @@ class User_Controller extends CI_Controller
                 $holes_check[] ='1';
             }
             $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
-            if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B')
+            if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B' || $types == 'D' )
             {
                  $types_check[]="";
             }
@@ -398,7 +398,7 @@ class User_Controller extends CI_Controller
 //        $check_cutout = count(array_keys($cutout_check, "1"));
 
 
-        if($check_H =='0' and $check_W =='0' and $check_P =='0' and $check_Holes =='0' and $check_Type =='0' )
+        if($check_H =='0' and $check_W =='0' and $check_P =='0' and $check_Holes =='0'  )
         {
             unlink('uploads/excel/'.$file_name);
             $this->load->view('User/header');
@@ -1653,6 +1653,26 @@ class User_Controller extends CI_Controller
         $this->load->view('User/footer');
     }
 
+    // Save Recut NOrmal
+    public  function Save_Normal_Recut()
+    {
+        $full_data =array( 'Work_Order_Icode' => $this->input->post('Wo_Icode',true),
+            'Proforma_Icode' =>$this->input->post('Proforma_icode',true),
+            'Item_Icode' => $this->input->post('Item_Icode',true),
+            'Recut_Qty' => $this->input->post('Qty',true),
+            'Recut_Reason' => $this->input->post('Comments',true),
+            'Created_By' => $this->session->userdata['userid']);
+        $insert_item = $this->user_model->Insert_Recut($full_data);
+        if($insert_item == '1')
+        {
+            echo "1";
+        }
+        else
+        {
+          echo "0";
+        }
+
+    }
 
 
 
