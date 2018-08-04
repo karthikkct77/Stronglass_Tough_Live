@@ -719,50 +719,52 @@ class User_Controller extends CI_Controller
             $data['tax']= $this->admin_model->get_Tax();
             $data['st']= $this->admin_model->get_ST();
             $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($picode);
+            $data['User']=$this->user_model->Get_User_Details($picode);
+            $data['check_user']=$this->user_model->Get_Check_User_Details();
             $body = $this->load->view('User/email',$data,TRUE);
 //            print_r($body);
 
             $this->pdf->loadHtml($body);
             $this->pdf->render();
-//            $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
-            $pdf = $this->pdf->output();
-            $pdf_name = $data['invoice'][0]['Customer_Company_Name'];
-            $file_location =FCPATH."uploads/pdf/".$pdf_name.".pdf";
-            file_put_contents($file_location,$pdf);
-            if($email == "")
-            {
-                $this->session->set_flashdata('feedback1', 'Sorry, No Email Address in this Customer...');
-                redirect('User_Controller/single_Invoice/'.$picode);
-            }
-            else{
-              $id=$this->input->post('PI_Icode');
-            $update = array('Email_Send_Status' => '1',
-                'Email_Send_Date'=>date('Y-m-d H:i:s'));
-            $this->db->where('Proforma_Icode',$id);
-            $this->db->update('proforma_invoice', $update);
-
-            $userEmail='vignesh@ibtemail.com';
-            $subject='Stronglass Tough Quote PI.NO:'.$data['invoice'][0]['Proforma_Number'];
-            $config = Array(
-                'mailtype' => 'html',
-                'charset' => 'utf-8',
-                'priority' => '1'
-            );
-        $this->load->library('email', $config);
-        $this->email->set_newline("\r\n");
-        $pi_icode= $this->input->post('PI_Icode');
-        $this->email->from('karthik@ibtemail.com', 'Stronglass Tough');
-        $this->email->to($userEmail);  // replace it with receiver mail id
-        $this->email->subject($subject); // replace it with relevant subject
-        $file_location =FCPATH."uploads/pdf/".$pdf_name.".pdf";
-        $body = $this->load->view('User/email_body',$data,TRUE);
-        $this->email->message($body);
-        $this->email->message($body);
-        $this->email->attach($file_location);
-        $this->email->send();
-        $this->session->set_flashdata('feedback', 'Email Send Successfully ..');
-        redirect('User_Controller/Check_PI');
-            }
+            $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
+//            $pdf = $this->pdf->output();
+//            $pdf_name = $data['invoice'][0]['Customer_Company_Name'];
+//            $file_location =FCPATH."uploads/pdf/".$pdf_name.".pdf";
+//            file_put_contents($file_location,$pdf);
+//            if($email == "")
+//            {
+//                $this->session->set_flashdata('feedback1', 'Sorry, No Email Address in this Customer...');
+//                redirect('User_Controller/single_Invoice/'.$picode);
+//            }
+//            else{
+//              $id=$this->input->post('PI_Icode');
+//            $update = array('Email_Send_Status' => '1',
+//                'Email_Send_Date'=>date('Y-m-d H:i:s'));
+//            $this->db->where('Proforma_Icode',$id);
+//            $this->db->update('proforma_invoice', $update);
+//
+//            $userEmail='vignesh@ibtemail.com';
+//            $subject='Stronglass Tough Quote PI.NO:'.$data['invoice'][0]['Proforma_Number'];
+//            $config = Array(
+//                'mailtype' => 'html',
+//                'charset' => 'utf-8',
+//                'priority' => '1'
+//            );
+//        $this->load->library('email', $config);
+//        $this->email->set_newline("\r\n");
+//        $pi_icode= $this->input->post('PI_Icode');
+//        $this->email->from('karthik@ibtemail.com', 'Stronglass Tough');
+//        $this->email->to($userEmail);  // replace it with receiver mail id
+//        $this->email->subject($subject); // replace it with relevant subject
+//        $file_location =FCPATH."uploads/pdf/".$pdf_name.".pdf";
+//        $body = $this->load->view('User/email_body',$data,TRUE);
+//        $this->email->message($body);
+//        $this->email->message($body);
+//        $this->email->attach($file_location);
+//        $this->email->send();
+//        $this->session->set_flashdata('feedback', 'Email Send Successfully ..');
+//        redirect('User_Controller/Check_PI');
+//            }
         }
     }
     /** Edit Profroma Invoice */

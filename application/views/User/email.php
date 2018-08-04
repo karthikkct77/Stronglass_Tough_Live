@@ -10,13 +10,14 @@
         }
         table{
             width: 100%;
-            text-align: left;
+            text-align: center;
             font-size: 12px;
         }
         .width_td{
             width: 10%;
             max-width: 30px;
             table-layout: fixed;
+            text-align:left;
         }
         #page {
             page-break-inside: avoid;
@@ -31,6 +32,38 @@
         .acc {
             font-size: 12px;
             font-weight: bold;
+        }
+        .details_tag{
+            border: 1px solid #ccc;
+            height: 10px;
+            width: 100%;
+            margin: 0px auto;
+            padding: 5px;
+            text-align: center;
+            font-size: 12px;
+        }
+        .total
+        {
+            font-weight: bold;
+        }
+        #account h5 span {
+            float: left;
+            width: 150px;
+            font-weight: normal;
+        }
+        .st_check{
+            padding-top: 15px;
+            border-top: 1px solid #000000;
+            text-align: center;
+        }
+        .dynamic_data{
+            position: relative;
+            top: -90px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 20px;
+            margin: 0px;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -63,10 +96,16 @@
         <div style="width:20%;float: left;text-align: left;">
             <p style="margin: 0;margin-bottom:5px;font-size: 14px;">Date<br><span style="font-size: 18px !important;font-weight: bold;"><?php echo $invoice[0]['Proforma_Date']; ?></span></p>
             <p style="margin: 0 0 15px 0;margin-bottom:5px;font-size: 14px;">P.INV. NO<br><span style="font-size: 18px !important;font-weight: bold;"><?php echo $invoice[0]['Proforma_Number']; ?></span></p>
+            <p style="margin: 0 0 15px 0;margin-bottom:5px;font-size: 14px;">Total Outstanding<br><span style="font-size: 18px !important;font-weight: bold;"><?php echo $invoice[0]['Total_Outstanding']; ?></span></p>
+            <p style="margin: 0 0 15px 0;margin-bottom:5px;font-size: 14px;">Credit Limit Amt<br><span style="font-size: 18px !important;font-weight: bold;"><?php echo $invoice[0]['Credit_Limit']; ?></span></p>
         </div>
     </div>
     <br style="width:100%;clear:both;">
     <hr>
+    <div class="row details_tag">
+        <div><?php echo $invoice[0]['Material_Area']; ?></div>
+    </div>
+    <br style="width:100%;clear:both;">
     <?php if($invoice[0]['PI_Type'] == '1')
     { ?>
         <h6 style="text-align: center">Total Number of Sheets used to Cut the following glasses</h6>
@@ -88,7 +127,7 @@
             <?php $i=1; foreach ($sheet as $key) { ?>
             <tr>
                 <td><?php echo $i; ?></td>
-                <td><?php echo $key['Material_Name']; ?></td>
+                <td style="text-align: left;"><?php echo $key['Material_Name']; ?></td>
                 <td><?php echo $key['No_Of_Sheet']; ?></td>
                 <td><?php echo $key['Actual_Height']; ?></td>
                 <td><?php echo $key['Actual_Width']; ?></td>
@@ -122,7 +161,7 @@
             <?php $i=1; foreach ($invoice_item as $key) { ?>
                 <tr>
                     <td><?php echo $i; ?></td>
-                    <td><?php echo $key['Material_Name']; ?></td>
+                    <td style="text-align: left;"><?php echo $key['Material_Name']; ?></td>
                     <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                     <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
                     <td><?php echo $key['Proforma_Qty']; ?></td>
@@ -132,6 +171,27 @@
                     <td><?php echo $key['Proforma_Area_SQMTR']; ?></td>
                 </tr>
                 <?php $i++; } ?>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td colspan="4" style="font-weight: bold;text-align: right;" >Total Summary</td>
+                <td><input type="hidden" class="form-control pull-right" id="total_pic" value="<?php echo $invoice_total[0]['qty']; ?>"readonly/><?php echo $invoice_total[0]['qty']; ?></td>
+                <td><?php echo $invoice_total[0]['holes']; ?></td>
+                <td><?php echo $invoice_total[0]['cutout']; ?></td>
+                <td></td>
+                <td><input type="hidden" class="form-control pull-right" id="total_area" value="<?php echo round($invoice_total[0]['area'], 2); ?>"   readonly/><?php echo round($invoice_total[0]['area'], 3); ?></td>
+
+            </tr>
+
         </table>
 
    <?php }
@@ -173,19 +233,14 @@
                </tr>
                <?php $i++; } ?>
            <tr>
+               <td colspan="6" style="font-weight: bold;text-align: right;" >Total Summary</td>
+               <td class="total"><?php echo $invoice_total[0]['qty']; ?></td>
+               <td class="total"><?php echo $invoice_total[0]['holes']; ?></td>
+               <td class="total"><?php echo $invoice_total[0]['cutout']; ?></td>
                <td></td>
+               <td class="total"><?php echo round($invoice_total[0]['area'], 3); ?></td>
                <td></td>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td style="font-weight: bold;"><?php echo $invoice_total[0]['qty']; ?></td>
-               <td></td>
-               <td></td>
-               <td></td>
-               <td style="font-weight: bold;"><?php echo round($invoice_total[0]['area'], 3); ?></td>
-               <td></td>
-               <td style="font-weight: bold;"><?php echo round($invoice_total[0]['rate'],3); ?></td>
+               <td class="total"><?php echo round($invoice_total[0]['rate'],3); ?></td>
            </tr>
        </table>
    <?php } ?>
@@ -193,7 +248,8 @@
     <hr>
     <div id="page"style="display: block; vertical-align: top;">
         <div style="width: 49.5%; text-align: left; display: inline-block; vertical-align: top;">
-            <h3 style="font-size: 13px;">Terms & Conditions</h3>
+            <h3 style="font-weight: normal;font-size: 12px;">Delivery Period: <span style="font-weight: bold; padding-left: 5px;"><?php echo $invoice[0]['Delivery_Days']; ?> </span>Working Days </h3>
+            <h3 style="font-size: 12px;">Terms & Conditions</h3>
             <p style="font-size: 8px;text-align: justify;">
                 Supply shall be against advance payment or Letter of credit or any other agreed
                 terms. Interest @2% per month will be charged for the payment delayed beyond
@@ -201,7 +257,7 @@
                 party/consumer/contractor interested in the transaction shall be adjusted against
                 supplies made to buyer/consignee
             </p>
-            <h3 style="font-size: 13px;">Dear Customer</h3>
+            <h3 style="font-size: 12px;">Dear Customer</h3>
             <p style="font-size: 8px;text-align: justify;">
             <ul style="list-style: none;padding: 0;font-size: 8px;text-align: justify;">
                 <li style="margin-bottom: 15px;">
@@ -236,7 +292,7 @@
                     ?>
                     <tr>
                         <td><?php echo $i; ?></td>
-                        <td><?php echo $key['charge_name']; ?></td>
+                        <td style="text-align: left;"><?php echo $key['charge_name']; ?></td>
                         <td><?php echo $key['Proforma_Charge_Count']; ?></td>
                         <td><?php echo $key['Proforma_Charge_Value']; ?></td>
                         <td><?php echo $key['Proforma_Charge_Cost']; ?></td>
@@ -271,14 +327,14 @@
                     <tr>
                         <td colspan="4" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
 
-                        <td><input class="form-control" type="hidden" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ><?php echo $invoice[0]['SGST_Value']; ?></td>
+                        <td><?php echo $invoice[0]['SGST_Value']; ?></td>
 
                     </tr>
                     <tr>
                         <td colspan="4" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
                             <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
                         </td>
-                        <td><input class="form-control" type="hidden" name="cgst" id="cgst" value="<?php echo $invoice[0]['CGST_Value']; ?>" readonly ><?php echo $invoice[0]['CGST_Value']; ?></td>
+                        <td><?php echo $invoice[0]['CGST_Value']; ?></td>
 
                     </tr>
 
@@ -289,7 +345,7 @@
                         <td colspan="4" align="right">IGST @18%
                             <input type="hidden" id="gst" value="18">
                         </td>
-                        <td><input class="form-control" type="hidden" name="igst" id="igst" value="<?php echo $invoice[0]['IGST_Value']; ?>" readonly ><?php echo $invoice[0]['IGST_Value']; ?></td>
+                        <td><?php echo $invoice[0]['IGST_Value']; ?></td>
 
                     </tr>
                     <?php
@@ -298,85 +354,43 @@
                 <tr>
 
                     <td colspan="4" align="right">GROSS TOTAL</td>
-                    <td style="font-size: 15px;font-weight: bold;"><input class="form-control" type="hidden" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" ><?php echo $invoice[0]['GrossTotal_Value']; ?>(INR)</td>
+                    <td style="font-size: 15px;font-weight: bold;"><?php echo $invoice[0]['GrossTotal_Value']; ?>(INR)</td>
 
                 </tr>
             </table>
-
+            <p style="float: left; font-size: 12px;padding-left: 5px;">Amount in Words: <?php echo $invoice[0]['Amt_Words'];?></p>
             </div>
-       <p id="word" style="float: left;">Amount in Words: <?php echo $invoice[0]['Amt_Words'];?></p>
         </div>
     <div id="page"style="display: block;vertical-align: top;">
         <div style="width: 49.5%; text-align: left; display: inline-block;vertical-align: top;">
-            <h3 style="font-size: 14px;">Bank Details</h3>
-            <p class="acc">Stronglass Tough</p>
-            <p class="acc"><span>A/C Type</span>:<?php echo $st[0]['ST_Bank_Account_Type']; ?></p>
-            <p class="acc"><span>A/C Number</span>:<?php echo $st[0]['ST_Bank_Account_Number']; ?></p>
-            <p class="acc"><span>Name</span>:<?php echo $st[0]['ST_Bank']; ?></p>
-            <p class="acc"><span>IFSC</span>:<?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?> </p>
+            <div id="account">
+                <h3 style="font-size: 13px;">Bank Details</h3>
+                <h5><span>Account Name</span> :STRONGLASS TOUGH</h5>
+                <h5><span>Bank Name</span>:<?php echo $st[0]['ST_Bank']; ?></span></h5>
+                <h5><span>Account Number</span>:<?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
+                <h5><span>IFSC</span>:<?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
+            </div>
+            <p>For Stronglass Tough</p>
         </div>
         <div style="width: 49.5%; display: inline-block; vertical-align: top;">
+        </div>
+        <div style="width: 100%; text-align: left; display:block;vertical-align: top;">
+            <div style="width: 25%;text-align: left; display: inline-block;vertical-align: top;">
+                <h6 class="st_check">Customer's Acceptance<br>Sign & Seal</h6>
+            </div>
+            <div style="width: 25%;text-align: left; display: inline-block;vertical-align: top;">
+                <h6 class="st_check">Prepared By</h6>
+                <p class="dynamic_data"><?php echo $User[0]['User_Name']; ?></p>
+            </div>
+            <div style="width: 25%;text-align: left; display: inline-block;vertical-align: top;">
+                <h6 class="st_check">Checked By</h6>
+                <p class="dynamic_data"><?php echo $check_user[0]['User_Name']; ?>
+            </div>
+            <div style="width: 25%;text-align: left; display: inline-block;vertical-align: top;">
+                <h6 class="st_check">(Authorised Signatory)</h6>
+            </div>
         </div>
     </div>
     </div>
 </body>
 </html>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-
-    $( document ).ready(function() {
-        number_to_words();
-    });
-
-    // Number into words
-    function number_to_words() {
-        var th = ['', 'thousand', 'million', 'billion', 'trillion'];
-
-        var dg = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
-
-        var tn = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
-
-        var tw = ['twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
-
-        var s = document.getElementById('gross_tot').value;
-
-        s = s.toString();
-        s = s.replace(/[\, ]/g, '');
-        if (s != parseFloat(s)) return 'not a number';
-        var x = s.indexOf('.');
-        if (x == -1) x = s.length;
-        if (x > 15) return 'too big';
-        var n = s.split('');
-        var str = '';
-        var sk = 0;
-        for (var i = 0; i < x; i++) {
-            if ((x - i) % 3 == 2) {
-                if (n[i] == '1') {
-                    str += tn[Number(n[i + 1])] + ' ';
-                    i++;
-                    sk = 1;
-                } else if (n[i] != 0) {
-                    str += tw[n[i] - 2] + ' ';
-                    sk = 1;
-                }
-            } else if (n[i] != 0) {
-                str += dg[n[i]] + ' ';
-                if ((x - i) % 3 == 0) str += 'hundred ';
-                sk = 1;
-            }
-            if ((x - i) % 3 == 1) {
-                if (sk) str += th[(x - i - 1) / 3] + ' ';
-                sk = 0;
-            }
-        }
-        document.getElementById('word').innerHTML=str;
-        $("#amt_word").append("<p> str</p>");
-        if (x != s.length) {
-            var y = s.length;
-            str += 'point ';
-            for (var i = x + 1; i < y; i++) str += dg[n[i]] + ' ';
-        }
-        return str.replace(/\s+/g, ' ');
-    }
-
-</script>
