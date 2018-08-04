@@ -404,7 +404,7 @@ class User_Model extends CI_Model
     //** Insert Recut */
     public function Insert_Recut($data)
     {
-        $this->db->insert('recut_normal_item', $data);
+        $this->db->insert('recut_item_details', $data);
         $insert_id = $this->db->insert_id();
         if($insert_id != '0')
         {

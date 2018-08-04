@@ -184,7 +184,8 @@
                         Item_Icode: profoma_item_icode,
                         Wo_Icode: wo_icode,
                         Proforma_icode: pi_icode,
-                        PI_type:  type
+                        PI_type:  type,
+                        Sheet_Icode: '0'
                     },
                     type: "POST",
                     context: document.body,
