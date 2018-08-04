@@ -1660,8 +1660,8 @@ class User_Controller extends CI_Controller
             'Item_Icode' => $this->input->post('Item_Icode',true),
             'Recut_Qty' => $this->input->post('Qty',true),
             'Recut_Reason' => $this->input->post('Comments',true),
-            'Sheet_Item_Icode'=>$this->input->post('Comments',true),
-            'PI_Type'=>$this->input->post('Comments',true),
+            'Sheet_Item_Icode'=>$this->input->post('Sheet_Icode',true),
+            'PI_Type'=>$this->input->post('PI_type',true),
             'Created_By' => $this->session->userdata['userid']);
         $insert_item = $this->user_model->Insert_Recut($full_data);
         if($insert_item == '1')

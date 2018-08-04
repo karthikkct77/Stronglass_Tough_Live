@@ -78,7 +78,7 @@
                                 </div>
                                 <div class="col-md-3 wo_right">
                                     <h4><?php echo $work_order[0]['WO_Date']; ?></h4>
-                                    <input type="hidden" id="pi_type" name="pi_type" value="<?php echo $work_order[0]['PI_Type']; ?>">
+                                    <input type="text" id="pi_type" name="pi_type" value="<?php echo $work_order[0]['PI_Type']; ?>">
                                 </div>
                             </div>
                         </div>
@@ -181,10 +181,11 @@
                     data: {
                         Qty: remaining_qty,
                         Comments: remaining_comments,
-                        Item_Icode: profoma_item_icode,
+                        Item_Icode: '0',
                         Wo_Icode: wo_icode,
                         Proforma_icode: pi_icode,
-                        PI_type:  type
+                        PI_type:  type,
+                        Sheet_Icode: profoma_item_icode,
                     },
                     type: "POST",
                     context: document.body,
