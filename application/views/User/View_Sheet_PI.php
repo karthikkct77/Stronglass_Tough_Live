@@ -1,38 +1,37 @@
 <main class="app-content">
-    <div>
         <div class="app-title">
             <div>
                 <h1><i class="fa fa-edit"></i>Profoma Invoice</h1>
             </div>
         </div>
-        <div class="row">
-            <?php if($this->session->flashdata('feedback')): ?>
-                <script>
-                    var ssd = "<?php echo $this->session->flashdata('feedback'); ?>";
-                    swal({
-                            title: "Success!",
-                            text: ssd,
-                            type: "success"
-                        },
-                        function(){
-                            location.reload();
-                        });
-                </script>
-            <?php endif; ?>
+    <?php if($this->session->flashdata('feedback')): ?>
+        <script>
+            var ssd = "<?php echo $this->session->flashdata('feedback'); ?>";
+            swal({
+                    title: "Success!",
+                    text: ssd,
+                    type: "success"
+                },
+                function(){
+                    location.reload();
+                });
+        </script>
+    <?php endif; ?>
 
-            <?php if($this->session->flashdata('feedback1')): ?>
-                <script>
-                    var ssd = "<?php echo $this->session->flashdata('feedback1'); ?>";
-                    swal({
-                            title: "Error!",
-                            text: ssd,
-                            type: "warning"
-                        },
-                        function(){
-                            location.reload();
-                        });
-                </script>
-            <?php endif; ?>
+    <?php if($this->session->flashdata('feedback1')): ?>
+        <script>
+            var ssd = "<?php echo $this->session->flashdata('feedback1'); ?>";
+            swal({
+                    title: "Error!",
+                    text: ssd,
+                    type: "warning"
+                },
+                function(){
+                    location.reload();
+                });
+        </script>
+    <?php endif; ?>
+        <div class="row">
             <div class="col-md-12" id="pagewidth" >
                 <div class="tile">
                     <div class="row invoice">
@@ -188,7 +187,6 @@
                                 </tr>
                                 </tbody>
                             </table>
-
                         </div>
                         <div class="row"  id="page_inside">
                             <div class="col-md-6">
@@ -311,8 +309,9 @@
                                 <div>Amount in Words: <span id="word" style="font-size: 15px;"></span></div>
                                 </div>
                         </div>
+                        <div id="Signature">
                         <p>For Stronglass Tough</p>
-                        <div class="row" id="signature" style="margin-top: 150px;">
+                        <div class="row"  style="margin-top: 150px;">
                             <div class="col-md-3">
                                 <h6 class="st_check">Customer's Acceptance<br>Sign & Seal</h6>
                             </div>
@@ -322,10 +321,12 @@
                             </div>
                             <div class="col-md-3">
                                 <h6 class="st_check">Checked By</h6>
+                                <p class="dynamic_data"><?php echo $check_user[0]['User_Name']; ?>
                             </div>
                             <div class="col-md-3">
                                 <h6 class="st_check">(Authorised Signatory)</h6>
                             </div>
+                        </div>
                         </div>
                         <div class="row" id="with_print">
                             <div class="col-md-6">
@@ -339,7 +340,7 @@
                                     ?>
                                     <input type="button" id="with_print" class="btn btn-info" onclick="Request_Approve()" value="Request Work Order">
                                     <button class="btn btn-danger pi_button " type="submit" id="with_print"><i class="fa fa-fw fa-lg fa-check-circle"></i>Send PI To Customer</button>
-                                    <input  type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="Print PI">
+                                    <input  type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="Print PIs">
                                     <a class="btn btn-success pi_button" id="with_print" href="<?php echo site_url('User_Controller/Edit_Sheet_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT PI</a>
 
                                 <?php } ?>
@@ -349,36 +350,27 @@
                     </form>
                 </div>
             </div>
-        </div>
-    </div>
 </main>
 <style type="text/css" media="print">
     #pagewidth {
         overflow: hidden ;
         width: 500px ;
     }
-</style>
-<style>
     @media print {
-        #with_print {
-            display: none;
-        }
-        #signature
-        {
-            page-break-inside: avoid;
-        }
-    }
-    @media print {
-        #with_print {
-            display: none;
-        }
         table { page-break-after:auto }
         tr    { page-break-inside:avoid; page-break-after:auto }
         td    { page-break-inside:avoid; page-break-after:auto }
         thead { display:table-header-group }
         tfoot { display:table-footer-group }
-        #page_inside {  page-break-inside: avoid;        }
+        #page_inside {  page-break-inside: avoid;  }
+        #with_print {
+            display: none;
+        }
+        #Signature { page-break-inside: avoid;}
     }
+</style>
+<style>
+
     .pi_button{
         margin-right: 15px;
         float: right;

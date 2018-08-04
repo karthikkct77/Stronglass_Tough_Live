@@ -604,6 +604,7 @@ class User_Controller extends CI_Controller
         $data['tax']= $this->admin_model->get_Tax();
         $data['st']= $this->admin_model->get_ST();
         $data['User']=$this->user_model->Get_User_Details($pi_icode);
+        $data['check_user']=$this->user_model->Get_Check_User_Details();
         $this->load->view('User/header');
         $this->load->view('User/top');
         $this->load->view('User/left');
@@ -968,6 +969,7 @@ class User_Controller extends CI_Controller
         $data['st']= $this->admin_model->get_ST();
         $data['wo'] = $this->user_model->Get_Single_wo($pi_icode);
         $data['User']=$this->user_model->Get_User_Details($pi_icode);
+        $data['check_user']=$this->user_model->Get_Check_User_Details();
         $this->load->view('User/header');
         $this->load->view('User/top');
         $this->load->view('User/left');

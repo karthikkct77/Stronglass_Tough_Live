@@ -287,20 +287,23 @@
                             <div>Amount in Words: <span id="word" style="font-size: 15px;"></span></div>
                             </div>
                     </div>
-                    <p>For Stronglass Tough</p>
-                    <div class="row" id="signature" style="margin-top: 150px;">
-                        <div class="col-md-3">
-                            <h6 class="st_check">Customer's Acceptance<br>Sign & Seal</h6>
-                        </div>
-                        <div class="col-md-3">
-                            <h6 class="st_check">Prepared By</h6>
-                            <p class="dynamic_data"><?php echo $User[0]['User_Name']; ?></p>
-                        </div>
-                        <div class="col-md-3">
-                            <h6 class="st_check">Checked By</h6>
-                        </div>
-                        <div class="col-md-3">
-                            <h6 class="st_check">(Authorised Signatory)</h6>
+                    <div id="Signature">
+                        <p>For Stronglass Tough</p>
+                        <div class="row"  style="margin-top: 150px;">
+                            <div class="col-md-3">
+                                <h6 class="st_check">Customer's Acceptance<br>Sign & Seal</h6>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="st_check">Prepared By</h6>
+                                <p class="dynamic_data"><?php echo $User[0]['User_Name']; ?></p>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="st_check">Checked By</h6>
+                                <p class="dynamic_data"><?php echo $check_user[0]['User_Name']; ?>
+                            </div>
+                            <div class="col-md-3">
+                                <h6 class="st_check">(Authorised Signatory)</h6>
+                            </div>
                         </div>
                     </div>
                     <div class="row" id="with_print">
@@ -333,8 +336,6 @@
         overflow: hidden ;
         width: 500px ;
     }
-</style>
-<style>
     @media print {
         #with_print {
             display: none;
@@ -344,8 +345,11 @@
         td    { page-break-inside:avoid; page-break-after:auto }
         thead { display:table-header-group }
         tfoot { display:table-footer-group }
-        #page_inside {  page-break-inside: avoid;        }
+        #page_inside {  page-break-inside: avoid; }
+        #Signature { page-break-inside: avoid;}
     }
+</style>
+<style>
     .pi_button{
         margin-right: 15px;
         float: right;
