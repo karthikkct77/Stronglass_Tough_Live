@@ -586,4 +586,10 @@ class Admin_Model extends CI_Model
                                   GROUP BY  DATE_FORMAT(WO_Completed_On, '%b') order by WO_Completed_On ASC  ");
         return $query->result_array();
     }
+    //** Get All Stock Details */
+    public function get_all_stock()
+    {
+        $query = $this->db->query("SELECT * FROM Stock_Master");
+        return $query->result();
+    }
 }

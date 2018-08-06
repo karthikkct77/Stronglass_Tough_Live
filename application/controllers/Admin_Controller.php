@@ -1252,6 +1252,16 @@ class Admin_Controller extends CI_Controller
         $data_count= $this->admin_model->Monthly_WO_Complete();
         print_r(json_encode($data_count, true));
     }
+    //** Add New Stock */
+    public function New_Stock()
+    {
+        $data['stock']= $this->admin_model->get_all_stock();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Create_Work_Order',$data, FALSE);
+        $this->load->view('Admin/footer');
+    }
 
 
 

@@ -24,9 +24,17 @@
                 <!--<li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Size_Master'); ?><!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>-->
                 <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Stock_Entry'); ?>"><i class="icon fa fa-circle-o"></i> Material Entry</a></li>
                 <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Charges_Entry'); ?>"><i class="icon fa fa-circle-o"></i>Charges Entry</a></li>
-                <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Inventry'); ?>"><i class="icon fa fa-circle-o"></i> Material Inventry</a></li>
+<!--                <li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Inventry'); ?><!--"><i class="icon fa fa-circle-o"></i> Material Inventry</a></li>-->
             </ul>
         </li>
+           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-plus-square"></i><span class="app-menu__label">Stock Entry</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+               <ul class="treeview-menu">
+                   <!--<li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Size_Master'); ?><!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>-->
+                   <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/New_Stock'); ?>"><i class="icon fa fa-circle-o"></i>New Stock</a></li>
+                   <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Charges_Entry'); ?>"><i class="icon fa fa-circle-o"></i>Charges Entry</a></li>
+                   <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Inventry'); ?>"><i class="icon fa fa-circle-o"></i> Material Inventry</a></li>
+               </ul>
+           </li>
         <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Customer Entry</span><i class="treeview-indicator fa fa-angle-right"></i></a>
             <ul class="treeview-menu">
                 <!--<li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Size_Master'); ?><!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>-->
