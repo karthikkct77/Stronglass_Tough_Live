@@ -449,6 +449,19 @@ class User_Model extends CI_Model
         }
     }
 
+    //** Insert Recut History */
+    public function Insert_Recut_History($data)
+    {
+        $this->db->insert('Recut_History', $data);
+        $insert_id = $this->db->insert_id();
+        if($insert_id != '0')
+        {
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
 
 
 }

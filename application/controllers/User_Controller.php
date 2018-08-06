@@ -1678,12 +1678,34 @@ class User_Controller extends CI_Controller
     public function Production_Re_Cut()
     {
         $data['Recut']= $this->user_model->get_Production_Recut();
-        print_r($data['Recut']);
         $this->load->view('User/header');
         $this->load->view('User/top');
         $this->load->view('User/left');
         $this->load->view('User/Production_Re_Cut',$data, FALSE);
         $this->load->view('User/footer');
+    }
+
+    // Save Recut ITEm
+    public function Save_Recut_Item()
+    {
+        $recut_icode =  $this->input->post('Recut_Icode',true);
+        $full_data =array( 'Cutting_Status' => '1');
+        $this->db->where('Recut_Icode',$recut_icode);
+        $this->db->update('recut_item_details', $full_data);
+        $data =array( 'WO_Icode' => $this->input->post('Work_Oder',true),
+            'Recut_Icode' =>$this->input->post('Recut_Icode',true),
+            'Production_Type' => $this->input->post('Type',true),
+            'Created_By' => $this->session->userdata['userid']);
+        $insert_item = $this->user_model->Insert_Recut_History($data);
+        if($insert_item == '1')
+        {
+            echo '1';
+        }
+        else
+        {
+            echo '0';
+        }
+
     }
 
 
