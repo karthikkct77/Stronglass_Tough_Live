@@ -592,4 +592,17 @@ class Admin_Model extends CI_Model
         $query = $this->db->query("SELECT * FROM Stock_Master");
         return $query->result();
     }
+    //** Insert Stock Details */
+    public function Insert_Stock($data)
+    {
+        $this->db->insert('Stock_Master', $data);
+        $insert_id = $this->db->insert_id();
+        if($insert_id != '0')
+        {
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
 }

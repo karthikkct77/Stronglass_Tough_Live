@@ -1253,14 +1253,27 @@ class Admin_Controller extends CI_Controller
         print_r(json_encode($data_count, true));
     }
     //** Add New Stock */
-    public function New_Stock()
+    public function Godown_Stock()
     {
         $data['stock']= $this->admin_model->get_all_stock();
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
         $this->load->view('Admin/left');
-        $this->load->view('Admin/Create_Work_Order',$data, FALSE);
+        $this->load->view('Admin/Godown_Stock',$data, FALSE);
         $this->load->view('Admin/footer');
+    }
+    //** Insert Stock */
+    public function Insert_Stock()
+    {
+        $data=array(
+            'Stock_Name'=>$this->input->post('stock_name'),
+            'Created_By'=>$this->session->userdata['userid']);
+        $insert= $this->admin_model->Insert_Stock($data);
+        if($insert == '1')
+        {
+            $this->session->set_flashdata('feedback', 'Stock Added Successfully ..');
+            redirect('Admin_Controller/New_Stock');
+        }
     }
 
 
