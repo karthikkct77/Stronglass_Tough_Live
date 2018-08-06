@@ -611,4 +611,16 @@ class Admin_Model extends CI_Model
         $query = $this->db->query("SELECT * FROM Stock_Master WHERE Stock_Icode ='$stock_icode'");
         return $query->result_array();
     }
+    //** Get All Godown Stock Details */
+    public function get_all_godown_stock()
+    {
+        $query = $this->db->query("SELECT * FROM godown_stock_inventry A INNER JOIN stock_master B on A.Stock_Icode=B.Stock_Icode");
+        return $query->result_array();
+    }
+    //** Get Material QTY */
+    public function get_stock_quantity($stock_id)
+    {
+        $query = $this->db->query("SELECT * FROM godown_stock_inventry WHERE Stock_Icode='$stock_id'");
+        return $query->result_array();
+    }
 }

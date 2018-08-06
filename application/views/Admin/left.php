@@ -31,7 +31,7 @@
                <ul class="treeview-menu">
                    <!--<li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Size_Master'); ?><!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>-->
                    <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/New_Stock'); ?>"><i class="icon fa fa-circle-o"></i>New Stock</a></li>
-                   <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Charges_Entry'); ?>"><i class="icon fa fa-circle-o"></i>Charges Entry</a></li>
+                   <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Godown_Entry'); ?>"><i class="icon fa fa-circle-o"></i>Godown Stock Entry</a></li>
                    <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Inventry'); ?>"><i class="icon fa fa-circle-o"></i> Material Inventry</a></li>
                </ul>
            </li>

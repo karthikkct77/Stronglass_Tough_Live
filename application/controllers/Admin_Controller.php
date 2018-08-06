@@ -1296,6 +1296,25 @@ class Admin_Controller extends CI_Controller
             $this->session->set_flashdata('feedback', 'Successfully Updated..');
             redirect('Admin_Controller/New_Stock');
     }
+    //** Godown Entry */
+    public function Godown_Entry()
+    {
+        $data['godown']= $this->admin_model->get_all_godown_stock();
+        $data['stock']= $this->admin_model->get_all_stock();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Godown_Stock',$data, FALSE);
+        $this->load->view('Admin/footer');
+    }
+    //** Get Godown Stock Qty */
+    public function get_stock_quantity()
+    {
+        $material_id = $this->input->post('id',true);
+        $data = $this->admin_model->get_stock_quantity($material_id);
+        echo  json_encode($data);
+    }
+
 
 
 
