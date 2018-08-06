@@ -79,6 +79,11 @@ class Admin_Model extends CI_Model
         $this->db->insert('material_inventory', $data);
         return 1;
     }
+    /*insert godown  Inventary*/
+    public function insert_Godown_inventary($data){
+        $this->db->insert('godown_stock_inventry', $data);
+        return 1;
+    }
     //* Insert inventry history*/
     public function insert_inventary_history($data)
     {
@@ -622,5 +627,11 @@ class Admin_Model extends CI_Model
     {
         $query = $this->db->query("SELECT * FROM godown_stock_inventry WHERE Stock_Icode='$stock_id'");
         return $query->result_array();
+    }
+    //** Get Godown Inventry */
+    public function get_godown_inventry($material_id)
+    {
+        $query = $this->db->query("Select * from godown_stock_inventry WHERE Stock_Icode = '$material_id' ");
+        return $query->num_rows();
     }
 }

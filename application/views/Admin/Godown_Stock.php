@@ -20,6 +20,7 @@
                 <?php } ?>
                 <h3 class="tile-title">Inventory</h3>
                 <div class="tile-body">
+                    <form method="post" enctype="multipart/form-data" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Godown_Inward'); ?>" name="data_register">
                     <table class="table  table-bordered" id="sampleTable1" border="2">
                         <thead>
                         <tr>
@@ -67,7 +68,8 @@
                         </tr>
                         </tfoot>
                     </table>
-                    <button class="btn btn-primary" type="submit" onclick="Save_inventry()"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>&nbsp;
+                    <button class="btn btn-primary" type="submit" ><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>&nbsp;
+                    </form>
                 </div>
             </div>
         </div>

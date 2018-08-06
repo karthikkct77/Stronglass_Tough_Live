@@ -1314,6 +1314,56 @@ class Admin_Controller extends CI_Controller
         $data = $this->admin_model->get_stock_quantity($material_id);
         echo  json_encode($data);
     }
+    //** Save Godown Inventry */
+    public function Save_Godown_Inward()
+    {
+        $Materials =  $this->input->post('material',true);
+        $new_quantity = $this->input->post('new_qty',true);
+        $total_quantity = $this->input->post('total_qty',true);
+        $company = $this->input->post('company_name',true);
+        $vehicle = $this->input->post('vehicle_no',true);
+        $count = sizeof($Materials);
+        for($i=0; $i<$count; $i++)
+        {
+            if ($Materials[$i] == "") {
+
+            }
+            else{
+                $data = $this->admin_model->get_godown_inventry($Materials[$i]);
+
+                if ($data == 0)
+                {
+                    $insert = array('Stock_Icode' => $Materials[$i],
+                        'Current_Qty' =>$total_quantity[$i],
+                        'Last_Added_Qty' =>$new_quantity[$i],
+                        'Company_Name' =>$company[$i],
+                        'Vehicle_No' =>$vehicle[$i],
+                        'Created_By' => $this->session->userdata['userid']);
+                    $insert_inventary = $this->admin_model->insert_Godown_inventary($insert);
+                }
+                else
+                {
+                    $insert = array('Material_Icode' => $Materials[$i],
+                        'Material_Quantity_Added' =>$new_quantity[$i],
+                        'Material_Qty_Last_Added_By' => $this->session->userdata['userid']);
+                    $insert_history = $this->admin_model->insert_inventary_history($insert);
+                    if($insert_history == 1)
+                    {
+                        $data = array(  'Material_Current_Quantity' => $total_quantity[$i],
+                            'Material_Stock_Qty_Last_Added' =>$new_quantity[$i],
+                            'Material_Qty_Last_Added_Date' =>date('Y-m-d H:i:s'));
+                        $this->db->where('Material_Icode',$Materials[$i]);
+                        $this->db->update('material_inventory', $data);
+                    }
+                    else{
+                        echo 0;
+                    }
+                }
+            }
+        }
+        echo 1;
+
+    }
 
 
 
