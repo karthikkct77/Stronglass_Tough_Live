@@ -125,6 +125,8 @@
                 document.getElementById('material_height').value = height;
                 var width =data[0]['Stock_Width'];
                 document.getElementById('material_width').value = width;
+                var stock_id =data[0]['Stock_Icode'];
+                document.getElementById('Stock_icode').value = stock_id;
             }
         });
     }

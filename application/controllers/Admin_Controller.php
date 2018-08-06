@@ -1277,12 +1277,24 @@ class Admin_Controller extends CI_Controller
             redirect('Admin_Controller/New_Stock');
         }
     }
-    //** Edit Material */
+    //** Edit Stock */
     public function Edit_Stock()
     {
         $material_id = $this->input->post('id',true);
         $data = $this->admin_model->get_Stock($material_id);
         echo  json_encode($data);
+    }
+    //** Update Stock */
+    public function Update_Stock()
+    {
+            $stock_icode = $this->input->post('Stock_icode');
+            $data = array(  'Stock_Name' => $this->input->post('material_name'),
+                'Stock_Height' =>$this->input->post('material_height'),
+                'Stock_Width' => $this->input->post('material_width'));
+            $this->db->where('Stock_Icode',$stock_icode);
+            $this->db->update('stock_master', $data);
+            $this->session->set_flashdata('feedback', 'Successfully Updated..');
+            redirect('Admin_Controller/New_Stock');
     }
 
 
