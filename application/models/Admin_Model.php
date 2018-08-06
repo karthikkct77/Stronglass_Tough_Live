@@ -590,7 +590,7 @@ class Admin_Model extends CI_Model
     public function get_all_stock()
     {
         $query = $this->db->query("SELECT * FROM Stock_Master");
-        return $query->result();
+        return $query->result_array();
     }
     //** Insert Stock Details */
     public function Insert_Stock($data)
@@ -604,5 +604,11 @@ class Admin_Model extends CI_Model
         else{
             return 0;
         }
+    }
+    //** Get Perticular Task */
+    public function get_Stock($stock_icode)
+    {
+        $query = $this->db->query("SELECT * FROM Stock_Master WHERE Stock_Icode ='$stock_icode'");
+        return $query->result_array();
     }
 }

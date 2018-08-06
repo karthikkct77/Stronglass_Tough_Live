@@ -1,14 +1,8 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-edit"></i>Godown Stock</h1>
-
+            <h1><i class="fa fa-edit"></i>Stock Master</h1>
         </div>
-        <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item">Master Entry</li>
-            <li class="breadcrumb-item"><a href="#">Material Entry</a></li>
-        </ul>
     </div>
     <div class="row">
         <?php if($this->session->flashdata('feedback')): ?>
@@ -27,20 +21,20 @@
 
         <div class="col-md-6" id="add">
             <div class="tile">
-                <h3 class="tile-title">Material</h3>
+                <h3 class="tile-title">Add New Stock</h3>
                 <div class="tile-body">
-                    <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Stock'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save?');">
+                    <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Insert_Stock'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save?');">
                         <div class="form-group">
                             <label class="control-label">Material Name</label>
                             <input class="form-control" type="text" name="stock_name" placeholder="Enter stock name" required>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Material Price</label>
-                            <input class="form-control" type="number" name="stock_price"  placeholder="Enter Amount" min="0"  >
+                            <label class="control-label">Height</label>
+                            <input class="form-control" type="number" name="stock_height"  placeholder="Enter Height" min="0"  >
                         </div>
                         <div class="form-group">
-                            <label class="control-label">HSN Code</label>
-                            <input class="form-control" type="number" name="HSN"  value="70071900"  required>
+                            <label class="control-label">Width</label>
+                            <input class="form-control" type="number" name="stock_width" placeholder="Enter Width" min="0"  required>
                         </div>
                         <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>&nbsp;
                     </form>
@@ -51,21 +45,21 @@
         <!-- Update  Details -->
         <div class="col-md-6" id="update" style="display: none">
             <div class="tile">
-                <h3 class="tile-title pull-left">Edit Material</h3>
+                <h3 class="tile-title pull-left">Edit Stock</h3>
                 <div class="tile-body">
-                    <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Update_Material'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Update The Material Datas?');">
+                    <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Update_Stock'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Update The Material Datas?');">
                         <div class="form-group">
                             <label class="control-label">Material Name</label>
-                            <input class="form-control" type="text" name="material_name" id="material" placeholder="Enter Charges name" readonly required>
-                            <input type="hidden" name="material_icode" id="material_icode">
+                            <input class="form-control" type="text" name="material_name" id="material" readonly required>
+                            <input type="hidden" name="Stock_icode" id="Stock_icode">
                         </div>
                         <div class="form-group">
-                            <label class="control-label">Material Price</label>
-                            <input class="form-control" type="number" name="material_price" id="price" placeholder="Enter Amount" min="0" step="1" required>
+                            <label class="control-label">Material Height</label>
+                            <input class="form-control" type="number" name="material_height" id="material_height"  min="0" step="1" required>
                         </div>
                         <div class="form-group">
-                            <label class="control-label">HSN Code</label>
-                            <input class="form-control" type="number" name="HSN" id="HSN" placeholder="Enter HSN Code"  required>
+                            <label class="control-label">Material Width</label>
+                            <input class="form-control" type="number" name="material_width" id="material_width"   min="0" step="1" required>
                         </div>
                         <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>&nbsp;
                         <button class="btn btn-danger" type="button" onClick="window.location.reload();">Close</button>
@@ -77,16 +71,16 @@
         <!-- view Stock Details -->
         <div class="col-md-6">
             <div class="tile">
-                <h3 class="tile-title ">Material List</h3>
-                <a class="btn btn-success pull-right" href="<?php echo site_url('Admin_Controller/Revice_History'); ?>">Revising History</a>
+                <h3 class="tile-title ">View Stock List</h3>
+<!--                <a class="btn btn-success pull-right" href="--><?php //echo site_url('Admin_Controller/Revice_History'); ?><!--">Revising History</a>-->
                 <div class="tile-body">
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                         <tr>
                             <th>#</th>
                             <th>Stock Name</th>
-                            <th>Stock Price</th>
-                            <th>HSN Code</th>
+                            <th>Stock Height</th>
+                            <th>Stock Width</th>
                             <th>Action</th>
                         </tr>
                         </thead>
@@ -97,10 +91,10 @@
                             ?>
                             <tr>
                                 <td><?php echo $i; ?></td>
-                                <td><?php echo $val['Material_Name']; ?></td>
-                                <td><?php echo $val['Material_Current_Price']; ?></td>
-                                <td><?php echo $val['HSN_Code']; ?></td>
-                                <td><button class="btn btn-info" onclick="edit_material('<?php echo $val['Material_Icode']; ?> ')">Edit</button></td>
+                                <td><?php echo $val['Stock_Name']; ?></td>
+                                <td><?php echo $val['Stock_Height']; ?></td>
+                                <td><?php echo $val['Stock_Width']; ?></td>
+                                <td><button class="btn btn-info" onclick="edit_material('<?php echo $val['Stock_Icode']; ?> ')">Edit</button></td>
                             </tr>
                             <?php
                             $i++;
@@ -117,7 +111,7 @@
 <script>
     function edit_material (id) {
         $.ajax({
-            url:"<?php echo site_url('Admin_Controller/Edit_Material'); ?>",
+            url:"<?php echo site_url('Admin_Controller/Edit_Stock'); ?>",
             data: {id: id},
             type: "POST",
             cache: false,
@@ -125,14 +119,12 @@
                 $("#update").show();
                 $("#add").hide();
                 var data = $.parseJSON(server_response);
-                var charges_name = data[0]['Material_Name'];
+                var charges_name = data[0]['Stock_Name'];
                 document.getElementById('material').value = charges_name;
-                var price = data[0]['Material_Current_Price'];
-                document.getElementById('price').value = price;
-                var icode =data[0]['Material_Icode'];
-                document.getElementById('material_icode').value = icode;
-                var hsn =data[0]['HSN Code'];
-                document.getElementById('HSN').value = icode;
+                var height = data[0]['Stock_Height'];
+                document.getElementById('material_height').value = height;
+                var width =data[0]['Stock_Width'];
+                document.getElementById('material_width').value = width;
             }
         });
     }
