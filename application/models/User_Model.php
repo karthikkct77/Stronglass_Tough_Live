@@ -413,7 +413,40 @@ class User_Model extends CI_Model
         else{
             return 0;
         }
+    }
 
+    //** Get All Production Recut */
+    public function get_Production_Recut()
+    {
+        $role = $this->session->userdata['role'];
+        if ($role == 2) //Cutting
+        {
+            $query = $this->db->query("SELECT * FROM recut_item_details A INNER JOIN work_order B on A.Work_Order_Icode=B.WO_Icode INNER JOIN proforma_invoice_item_sheet C on A.Sheet_Item_Icode=C.pi_item_sheet_icode INNER JOIN material_master D on C.Proforma_Material_Icode=D.Material_Icode WHERE A.Cutting_Status='0'");
+             $array1 = $query->result_array();
+            $query1 = $this->db->query("SELECT * FROM recut_item_details A INNER JOIN work_order B on A.Work_Order_Icode=B.WO_Icode INNER JOIN proforma_invoice_items C on A.Item_Icode=C.Proforma_Invoice_Items_Icode INNER JOIN material_master D on C.Proforma_Material_Icode=D.Material_Icode WHERE A.Cutting_Status='0'");
+            $array2 =  $query1->result_array();
+            return array_merge($array1, $array2);
+        } elseif ($role == 3) //Furnace
+        {
+            $query = $this->db->query("SELECT * FROM recut_item_details A INNER JOIN work_order B on A.Work_Order_Icode=B.WO_Icode INNER JOIN proforma_invoice_item_sheet C on A.Sheet_Item_Icode=C.pi_item_sheet_icode INNER JOIN material_master D on C.Proforma_Material_Icode=D.Material_Icode WHERE A.Cutting_Status='1' and A.Furnace_Status='0'");
+            $array1 = $query->result_array();
+            $query1 = $this->db->query("SELECT * FROM recut_item_details A INNER JOIN work_order B on A.Work_Order_Icode=B.WO_Icode INNER JOIN proforma_invoice_items C on A.Item_Icode=C.Proforma_Invoice_Items_Icode INNER JOIN material_master D on C.Proforma_Material_Icode=D.Material_Icode WHERE A.Cutting_Status='1' and A.Furnace_Status='0'");
+            $array2 =  $query1->result_array();
+            return array_merge($array1, $array2);
+        } elseif ($role == 4) //Dispatch
+        {
+            $query = $this->db->query("SELECT * FROM recut_item_details A INNER JOIN work_order B on A.Work_Order_Icode=B.WO_Icode INNER JOIN proforma_invoice_item_sheet C on A.Sheet_Item_Icode=C.pi_item_sheet_icode INNER JOIN material_master D on C.Proforma_Material_Icode=D.Material_Icode WHERE A.Dispatch_Status='0' and A.Furnace_Status='1'");
+            $array1 = $query->result_array();
+            $query1 = $this->db->query("SELECT * FROM recut_item_details A INNER JOIN work_order B on A.Work_Order_Icode=B.WO_Icode INNER JOIN proforma_invoice_items C on A.Item_Icode=C.Proforma_Invoice_Items_Icode INNER JOIN material_master D on C.Proforma_Material_Icode=D.Material_Icode WHERE A.Dispatch_Status='0' and A.Furnace_Status='1'");
+            $array2 =  $query1->result_array();
+            return array_merge($array1, $array2);
+        }
+        elseif ($role == 9) //Fabrication
+        {
+            $query = $this->db->query("SELECT * FROM wo_processing A INNER JOIN proforma_invoice_item_sheet B ON A.PI_Sheet_Item_Icode=B.pi_item_sheet_icode 
+                                        INNER JOIN material_master C on B.Proforma_Material_Icode=C.Material_Icode WHERE A.Cutting_Status in('2' ,'3') AND A.WO_Icode='$wo_id' and B.Proforma_Special !='B'");
+            return $query->result_array();
+        }
     }
 
 

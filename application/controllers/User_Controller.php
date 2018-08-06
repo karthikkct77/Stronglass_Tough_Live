@@ -1672,7 +1672,18 @@ class User_Controller extends CI_Controller
         {
           echo "0";
         }
+    }
 
+    // Production Re Cut
+    public function Production_Re_Cut()
+    {
+        $data['Recut']= $this->user_model->get_Production_Recut();
+        print_r($data['Recut']);
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/Production_Re_Cut',$data, FALSE);
+        $this->load->view('User/footer');
     }
 
 

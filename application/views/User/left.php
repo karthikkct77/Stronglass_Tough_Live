@@ -44,6 +44,8 @@
         { ?>
             <li><a class="app-menu__item " href="<?php echo site_url('User_Controller/dashboard'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Work_Order'); ?>"><i class="app-menu__icon fa fa-sitemap"></i><span class="app-menu__label">Work Order</span></a></li>
+            <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Production_Re_Cut'); ?>"><i class="app-menu__icon fa fa-scissors"></i><span class="app-menu__label">Recut</span></a></li>
+
 
         <?php   }
         elseif ($_SESSION['role'] == 3)
