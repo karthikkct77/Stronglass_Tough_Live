@@ -1343,17 +1343,21 @@ class Admin_Controller extends CI_Controller
                 }
                 else
                 {
-                    $insert = array('Material_Icode' => $Materials[$i],
-                        'Material_Quantity_Added' =>$new_quantity[$i],
-                        'Material_Qty_Last_Added_By' => $this->session->userdata['userid']);
-                    $insert_history = $this->admin_model->insert_inventary_history($insert);
+                    $insert = array('Stock_Icode' => $Materials[$i],
+                        'Last_Added_Qty' =>$new_quantity[$i],
+                        'Company_Name' =>$company[$i],
+                        'Vehicle_No' =>$vehicle[$i],
+                        'Last_Added_By' => $this->session->userdata['userid']);
+                    $insert_history = $this->admin_model->insert_Godown_inventary_history($insert);
                     if($insert_history == 1)
                     {
-                        $data = array(  'Material_Current_Quantity' => $total_quantity[$i],
-                            'Material_Stock_Qty_Last_Added' =>$new_quantity[$i],
-                            'Material_Qty_Last_Added_Date' =>date('Y-m-d H:i:s'));
-                        $this->db->where('Material_Icode',$Materials[$i]);
-                        $this->db->update('material_inventory', $data);
+                        $data = array(  'Current_Qty' => $total_quantity[$i],
+                            'Last_Added_Qty' =>$new_quantity[$i],
+                            'Company_Name' =>$company[$i],
+                            'Vehicle_No' =>$vehicle[$i],
+                            'Created_On' =>date('Y-m-d H:i:s'));
+                        $this->db->where('Stock_Icode',$Materials[$i]);
+                        $this->db->update('godown_stock_inventry', $data);
                     }
                     else{
                         echo 0;
@@ -1361,8 +1365,40 @@ class Admin_Controller extends CI_Controller
                 }
             }
         }
-        echo 1;
-
+        $this->session->set_flashdata('feedback', 'Successfully Updated..');
+        redirect('Admin_Controller/Godown_Entry');
+    }
+    /** Godown Inward History */
+    public function Godown_Inward_History()
+    {
+        $from_date = date('Y-m-01');
+        $to_date = date('Y-m-d');
+        $data['inventary']= $this->admin_model->get_Date_Godown_inventary($from_date,$to_date);
+        $data['stock']= $this->admin_model->get_all_stock();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Godown_Inventry_History');
+        $this->load->view('Admin/footer');
+    }
+    //** get date rage Godown inventry history details */
+    public function Get_Date_Godown_inventry_history()
+    {
+        $from_date = $this->input->post('from_date',true);
+        $to_date = $this->input->post('to_date',true);
+        $data = $this->admin_model->get_Date_Godown_inventary($from_date,$to_date);
+        $i=1;
+        $output =null;
+        foreach ($data as $key)
+        {
+            $output .="<tr>";
+            $output .="<td>".$i ."</td>";
+            $output .="<td>".$key['Material_Name']."</td>";
+            $output .="<td>".$key['Counts']."</td>";
+            $output .="</tr>";
+            $i++;
+        }
+        echo $output;
     }
 
 

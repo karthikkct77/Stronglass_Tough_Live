@@ -619,7 +619,7 @@ class Admin_Model extends CI_Model
     //** Get All Godown Stock Details */
     public function get_all_godown_stock()
     {
-        $query = $this->db->query("SELECT * FROM godown_stock_inventry A INNER JOIN stock_master B on A.Stock_Icode=B.Stock_Icode");
+        $query = $this->db->query("SELECT A.*,B.*,A.Created_On as added_Date FROM godown_stock_inventry A INNER JOIN stock_master B on A.Stock_Icode=B.Stock_Icode");
         return $query->result_array();
     }
     //** Get Material QTY */
@@ -633,5 +633,25 @@ class Admin_Model extends CI_Model
     {
         $query = $this->db->query("Select * from godown_stock_inventry WHERE Stock_Icode = '$material_id' ");
         return $query->num_rows();
+    }
+    //** get date wise inventry */
+    public function get_Date_Godown_inventary($from_date,$to_date)
+    {
+        $query = $this->db->query("SELECT SUM(A.Material_Quantity_Added) as Counts, B.Material_Name FROM material_inventory_inward_history A INNER JOIN material_master B on A.Material_ICode=B.Material_Icode
+                                    WHERE  date(A.Material_Qty_Last_Added_Date) >= '$from_date' and date(A.Material_Qty_Last_Added_Date) <= '$to_date' GROUP by A.Material_ICode");
+        return $query->result_array();
+    }
+    //**Insert Godown History
+    public function insert_Godown_inventary_history($data)
+    {
+        $this->db->insert('godown_inventory_inward_history', $data);
+        $insert_id = $this->db->insert_id();
+        if($insert_id != '0')
+        {
+            return 1;
+        }
+        else{
+            return 0;
+        }
     }
 }

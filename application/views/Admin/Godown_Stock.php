@@ -6,10 +6,10 @@
     </div>
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#5a" role="tab" aria-controls="pills-home" aria-selected="true">Delay</a>
+            <a class="nav-link active" href="<?php echo site_url('Admin_Controller/Godown_Entry'); ?>" id="pills-home-tab" data-toggle="pill" href="#5a" role="tab" aria-controls="pills-home" aria-selected="true">Add Stock to Godown</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#1a" role="tab" aria-controls="pills-profile" aria-selected="false">Within 8 Hours</a>
+            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#1a" role="tab" aria-controls="pills-profile" aria-selected="false">Get Godown Stock to Factory </a>
         </li>
     </ul>
     <div class="row">
@@ -41,7 +41,7 @@
                         <tr>
                             <td>
                                 <div class="form-group">
-                                    <select name="material[]" class="form-control" id="material" required >
+                                    <select name="material[]" class="form-control" id="material"  >
                                         <option value="" >Select material</option>
                                         <?php foreach ($stock as $row):
                                         {
@@ -77,7 +77,7 @@
         </div>
         <div class="col-md-6">
             <div class="tile">  <h3 class="tile-title">Godown Inventory List</h3>
-                <a class="btn btn-success pull-right" href="<?php echo site_url('Admin_Controller/Inward_History'); ?>">Inward History</a>
+                <a class="btn btn-success pull-right" href="<?php echo site_url('Admin_Controller/Godown_Inward_History'); ?>">Inward History</a>
                 <div class="tile-body">
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
@@ -97,10 +97,10 @@
                             ?>
                             <tr>
                                 <td><?php echo $i; ?></td>
-                                <td><?php echo $key['Stock_Name']; ?><br>(<?php echo $row['Stock_Height']; ?>*<?php echo $row['Stock_Width']; ?>)</td>
+                                <td><?php echo $key['Stock_Name']; ?><br>(<?php echo $key['Stock_Height']; ?>*<?php echo $key['Stock_Width']; ?>)</td>
                                 <td><?php echo $key['Current_Qty']; ?></td>
                                 <td><?php echo $key['Company_Name']; ?></td>
-                                <td><?php echo $key['Created_On']; ?></td>
+                                <td><?php echo $key['added_Date']; ?></td>
                             </tr>
                             <?php
                             $i++;
@@ -224,13 +224,13 @@
         company.val(company_name);
         cell.append(company);
         var cell = $(row.insertCell(-1));
-        var company = $("<input />");
-        company.attr("type", "text");
-        company.attr("class", "form-control");
-        company.attr("name", "company_name[]");
-        company.attr('readonly', true);
-        company.val(company_name);
-        cell.append(company);
+        var vehicle = $("<input />");
+        vehicle.attr("type", "text");
+        vehicle.attr("class", "form-control");
+        vehicle.attr("name", "vehicle_no[]");
+        vehicle.attr('readonly', true);
+        vehicle.val(vehicle_no);
+        cell.append(vehicle);
 
         var cell = $(row.insertCell(-1));
         var cty2 = $("<input />");
