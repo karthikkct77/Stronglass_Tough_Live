@@ -637,8 +637,8 @@ class Admin_Model extends CI_Model
     //** get date wise inventry */
     public function get_Date_Godown_inventary($from_date,$to_date)
     {
-        $query = $this->db->query("SELECT SUM(A.Material_Quantity_Added) as Counts, B.Material_Name FROM material_inventory_inward_history A INNER JOIN material_master B on A.Material_ICode=B.Material_Icode
-                                    WHERE  date(A.Material_Qty_Last_Added_Date) >= '$from_date' and date(A.Material_Qty_Last_Added_Date) <= '$to_date' GROUP by A.Material_ICode");
+        $query = $this->db->query("SELECT SUM(A.Last_Added_Date) as Counts, B.Material_Name FROM godown_inventory_inward_history A INNER JOIN stock_master B on A.Stock_Icode=B.Stock_Icode
+                                    WHERE  date(A.Last_Added_Date) >= '$from_date' and date(A.Last_Added_Date) <= '$to_date' GROUP by A.Stock_Icode");
         return $query->result_array();
     }
     //**Insert Godown History

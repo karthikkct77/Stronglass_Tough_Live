@@ -1,8 +1,8 @@
-
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-edit"></i> Godown Inward History</h1>
+            <h1><i class="fa fa-edit"></i> Godown Inventry Inward History</h1>
+
         </div>
     </div>
     <div class="row">
@@ -41,20 +41,23 @@
                                 <th>Stock Name</th>
                                 <th>Counts</th>
                                 <th>Company Name</th>
+                                <th>Vehicle NO</th>
                                 <th>Date</th>
                             </tr>
                             </thead>
                             <tbody>
                             <?php $i=1;
-                            foreach ($inventary as $key)
+                            foreach ($inventary as $val)
                             {
                                 ?>
                                 <tr>
                                     <td><?php echo $i; ?></td>
-                                    <td><?php echo $key['Stock_Name']; ?><br>(<?php echo $key['Stock_Height']; ?>*<?php echo $key['Stock_Width']; ?>)</td>
-                                    <td><?php echo $key['Current_Qty']; ?></td>
-                                    <td><?php echo $key['Company_Name']; ?></td>
-                                    <td><?php echo $key['added_Date']; ?></td>
+                                    <td><?php echo $val['Stock_Name']; ?><br>(<?php echo $val['Stock_Height']; ?> * <?php echo $val['Stock_Width']; ?> ) </td>
+                                    <td><?php echo $val['Current_Qty']; ?></td>
+                                    <td><?php echo $val['Company_Name']; ?></td>
+                                    <td><?php echo $val['Vehicle_No']; ?></td>
+                                    <td><?php echo $val['Created_On']; ?></td>
+                                    <!--                                <td>--><?php //echo Date('Y-m-d',strtotime($val['Material_Qty_Last_Added_Date'])); ?><!--</td>-->
                                 </tr>
                                 <?php
                                 $i++;
@@ -79,6 +82,7 @@
                 </div>
             </div>
         </div>
+
     </div>
 </main>
 <script>$('#sampleTable').DataTable();</script>

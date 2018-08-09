@@ -1371,14 +1371,12 @@ class Admin_Controller extends CI_Controller
     /** Godown Inward History */
     public function Godown_Inward_History()
     {
-        $from_date = date('Y-m-01');
-        $to_date = date('Y-m-d');
-        $data['inventary']= $this->admin_model->get_Date_Godown_inventary($from_date,$to_date);
+        $data['inventary']= $this->admin_model->get_all_godown_stock();
         $data['stock']= $this->admin_model->get_all_stock();
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
         $this->load->view('Admin/left');
-        $this->load->view('Admin/Godown_Inventry_History');
+        $this->load->view('Admin/Godown_Inventry_History',$data, FALSE);
         $this->load->view('Admin/footer');
     }
     //** get date rage Godown inventry history details */
