@@ -1,24 +1,26 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-edit"></i> Material Inventory</h1>
-
+            <h1><i class="fa fa-edit"></i>Godown Inventory</h1>
         </div>
-        <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item">Master Entry</li>
-            <li class="breadcrumb-item"><a href="#">Inventory</a></li>
-        </ul>
     </div>
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#5a" role="tab" aria-controls="pills-home" aria-selected="true">Delay</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#1a" role="tab" aria-controls="pills-profile" aria-selected="false">Within 8 Hours</a>
+        </li>
+    </ul>
     <div class="row">
-        <div class="col-md-7" id="add">
+        <div class="col-md-6" id="add">
             <div class="tile">
                 <?php if($this->session->flashdata('message')){?>
                     <div class="alert alert-success">
                         <?php echo $this->session->flashdata('message')?>
                     </div>
                 <?php } ?>
-                <h3 class="tile-title">Inventory</h3>
+                <h3 class="tile-title">Godown Inward Inventory</h3>
                 <div class="tile-body">
                     <form method="post" enctype="multipart/form-data" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Godown_Inward'); ?>" name="data_register">
                     <table class="table  table-bordered" id="sampleTable1" border="2">
@@ -73,28 +75,32 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-5">
-            <div class="tile">  <h3 class="tile-title">Material Inventory List</h3>
+        <div class="col-md-6">
+            <div class="tile">  <h3 class="tile-title">Godown Inventory List</h3>
                 <a class="btn btn-success pull-right" href="<?php echo site_url('Admin_Controller/Inward_History'); ?>">Inward History</a>
                 <div class="tile-body">
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                         <tr>
                             <th>#</th>
-                            <th>Material</th>
+                            <th>Stock Name</th>
                             <th>Current Quantity</th>
+                            <th>Company Name</th>
+                            <th>Date</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php
                         $i=1;
-                        foreach ($inventary as $key)
+                        foreach ($godown as $key)
                         {
                             ?>
                             <tr>
                                 <td><?php echo $i; ?></td>
-                                <td><?php echo $key['Material_Name']; ?></td>
-                                <td><?php echo $key['Material_Current_Quantity']; ?></td>
+                                <td><?php echo $key['Stock_Name']; ?><br>(<?php echo $row['Stock_Height']; ?>*<?php echo $row['Stock_Width']; ?>)</td>
+                                <td><?php echo $key['Current_Qty']; ?></td>
+                                <td><?php echo $key['Company_Name']; ?></td>
+                                <td><?php echo $key['Created_On']; ?></td>
                             </tr>
                             <?php
                             $i++;
@@ -105,7 +111,8 @@
                 </div>
             </div>
         </div>
-
+    </div>
+        </div>
     </div>
 </main>
 <script>
