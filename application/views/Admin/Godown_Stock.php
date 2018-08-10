@@ -9,7 +9,7 @@
             <a class="nav-link active" href="<?php echo site_url('Admin_Controller/Godown_Entry'); ?>" id="pills-home-tab" data-toggle="pill" href="#5a" role="tab" aria-controls="pills-home" aria-selected="true">Add Stock to Godown</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#1a" role="tab" aria-controls="pills-profile" aria-selected="false">Get Godown Stock to Factory </a>
+            <a class="nav-link" id="pills-profile-tab" href="<?php echo site_url('Admin_Controller/Godown_To_Factory'); ?>" data-toggle="pill" href="#1a" role="tab" aria-controls="pills-profile" aria-selected="false">Get Godown Stock to Factory </a>
         </li>
     </ul>
     <div class="row">

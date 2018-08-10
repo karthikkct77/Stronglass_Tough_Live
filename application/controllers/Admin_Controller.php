@@ -1399,6 +1399,18 @@ class Admin_Controller extends CI_Controller
         echo $output;
     }
 
+    //** GET GODOWN to FACTORY */
+    public function Godown_To_Factory()
+    {
+        $data['godown']= $this->admin_model->get_all_godown_stock();
+        $data['stock']= $this->admin_model->get_all_stock();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Godown_To_Factory',$data, FALSE);
+        $this->load->view('Admin/footer');
+    }
+
 
 
 
