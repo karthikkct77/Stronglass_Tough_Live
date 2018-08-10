@@ -1265,6 +1265,7 @@ class Admin_Controller extends CI_Controller
     //** Insert Stock */
     public function Insert_Stock()
     {
+
         $data=array(
             'Stock_Name'=>$this->input->post('stock_name'),
             'Stock_Height'=>$this->input->post('stock_height'),
@@ -1274,6 +1275,15 @@ class Admin_Controller extends CI_Controller
         if($insert == '1')
         {
             $this->session->set_flashdata('feedback', 'Stock Added Successfully ..');
+            redirect('Admin_Controller/New_Stock');
+        }
+        else if($insert == '2')
+        {
+            $this->session->set_flashdata('feedback1', 'Already Insert This Stock ..');
+            redirect('Admin_Controller/New_Stock');
+        }
+        else{
+            $this->session->set_flashdata('feedback1', 'Insert Failed ..');
             redirect('Admin_Controller/New_Stock');
         }
     }

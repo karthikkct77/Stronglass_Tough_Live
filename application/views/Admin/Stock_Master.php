@@ -19,6 +19,20 @@
             </script>
         <?php endif; ?>
 
+        <?php if($this->session->flashdata('feedback1')): ?>
+            <script>
+                var ssd = "<?php echo $this->session->flashdata('feedback1'); ?>";
+                swal({
+                        title: "Error!",
+                        text: ssd,
+                        type: "warning"
+                    },
+                    function(){
+                        location.reload();
+                    });
+            </script>
+        <?php endif; ?>
+
         <div class="col-md-6" id="add">
             <div class="tile">
                 <h3 class="tile-title">Add New Stock</h3>

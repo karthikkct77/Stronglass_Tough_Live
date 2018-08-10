@@ -600,14 +600,21 @@ class Admin_Model extends CI_Model
     //** Insert Stock Details */
     public function Insert_Stock($data)
     {
-        $this->db->insert('Stock_Master', $data);
-        $insert_id = $this->db->insert_id();
-        if($insert_id != '0')
-        {
-            return 1;
+        $sname = $data['Stock_Name'];
+        $height = $data['Stock_Height'];
+        $width = $data['Stock_Width'];
+        $query= $this->db->query("SELECT * FROM stock_master  WHERE Stock_Name = '".$sname."'  AND Stock_Height = '".$height."' AND Stock_Width = '".$width."' "); // Admin side
+        if($query->num_rows() == 0) {
+            $this->db->insert('Stock_Master', $data);
+            $insert_id = $this->db->insert_id();
+            if ($insert_id != '0') {
+                return 1;
+            } else {
+                return 0;
+            }
         }
         else{
-            return 0;
+            return 2;
         }
     }
     //** Get Perticular Task */
