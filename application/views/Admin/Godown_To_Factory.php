@@ -6,10 +6,10 @@
     </div>
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="<?php echo site_url('Admin_Controller/Godown_Entry'); ?>" id="pills-home-tab" data-toggle="pill" href="#5a" role="tab" aria-controls="pills-home" aria-selected="true">Add Stock to Godown</a>
+            <a class="nav-link " href="<?php echo site_url('Admin_Controller/Godown_Entry'); ?>" >Add Stock to Godown</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="pills-profile-tab" href="<?php echo site_url('Admin_Controller/Godown_To_Factory'); ?>" data-toggle="pill" role="tab" aria-controls="pills-profile" aria-selected="false">Godown Outwards </a>
+            <a class="nav-link active" id="pills-profile-tab" href="<?php echo site_url('Admin_Controller/Godown_To_Factory'); ?>" data-toggle="pill" role="tab" aria-controls="pills-profile" aria-selected="false">Godown Outwards </a>
         </li>
     </ul>
     <div class="row">
