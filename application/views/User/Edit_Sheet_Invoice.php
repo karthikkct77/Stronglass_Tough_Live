@@ -480,9 +480,9 @@
         });
     });
     $("#no_holes").on('change keyup paste', function() {
-        var holes = parseInt($(this).val());
-        var amt = parseInt($('#charge_amt').val());
-        var total =  parseInt(holes * amt);
+        var holes = parseFloat($(this).val());
+        var amt = parseFloat($('#charge_amt').val());
+        var total =  parseFloat(holes * amt);
         document.getElementById('tot_charge_amount').value = total;
 
         var totals =document.getElementsByName("tot_charge_amt[]");
@@ -547,9 +547,9 @@
     });
     // Charge Amount
     $("#charge_amt").on('change keyup paste', function() {
-        var amt = parseInt($('#charge_amt').val());
-        var holes = parseInt($('#no_holes').val());
-        var total =  parseInt(holes * amt);
+        var amt = parseFloat($('#charge_amt').val());
+        var holes = parseFloat($('#no_holes').val());
+        var total =  parseFloat(holes * amt);
         document.getElementById('tot_charge_amount').value = total;
 
         var totals =document.getElementsByName("tot_charge_amt[]");
