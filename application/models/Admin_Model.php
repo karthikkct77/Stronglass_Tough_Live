@@ -654,4 +654,17 @@ class Admin_Model extends CI_Model
             return 0;
         }
     }
+    //**Insert Godown outward History
+    public function insert_godown_outward_history($data)
+    {
+        $this->db->insert('godown_stock_outward_history', $data);
+        $insert_id = $this->db->insert_id();
+        if($insert_id != '0')
+        {
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
 }

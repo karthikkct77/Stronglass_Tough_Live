@@ -1410,6 +1410,55 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/Godown_To_Factory',$data, FALSE);
         $this->load->view('Admin/footer');
     }
+    //** Save OUTWARD  */
+    public function Save_Godown_Outward()
+    {
+        $Materials =  $this->input->post('material',true);
+        $new_quantity = $this->input->post('new_qty',true);
+        $total_quantity = $this->input->post('total_qty',true);
+        $count = sizeof($Materials);
+        for($i=0; $i<$count; $i++)
+        {
+            if ($Materials[$i] == "") {
+
+            }
+            else{
+                $data = $this->admin_model->get_godown_inventry($Materials[$i]);
+
+                if ($data == 0)
+                {
+//                    $insert = array('Stock_Icode' => $Materials[$i],
+//                        'Current_Qty' =>$total_quantity[$i],
+//                        'Stock_Out_Qty' =>$new_quantity[$i],
+//                        'Updated_By' => $this->session->userdata['userid'],
+//                        'Updated_On' =>date('Y-m-d H:i:s'));
+//                    $insert_inventary = $this->admin_model->insert_Godown_inventary($insert);
+                }
+                else
+                {
+                    $insert = array('Stock_Icode' => $Materials[$i],
+                        'Stock_Out_Qty' =>$new_quantity[$i],
+                        'Stock_Getting_By' => $this->session->userdata['userid']);
+                    $insert_history = $this->admin_model->insert_godown_outward_history($insert);
+                    if($insert_history == 1)
+                    {
+                        $data = array('Current_Qty' => $total_quantity[$i],
+                            'Stock_Out_Qty' =>$new_quantity[$i],
+                            'Updated_By' => $this->session->userdata['userid'],
+                            'Updated_On' =>date('Y-m-d H:i:s'));
+                        $this->db->where('Stock_Icode',$Materials[$i]);
+                        $this->db->update('godown_stock_inventry', $data);
+                    }
+                    else{
+                        echo 0;
+                    }
+                }
+            }
+        }
+        $this->session->set_flashdata('feedback', 'Successfully Updated..');
+        redirect('Admin_Controller/Godown_Entry');
+
+    }
 
 
 

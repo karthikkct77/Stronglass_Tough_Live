@@ -1,15 +1,15 @@
 <main class="app-content">
     <div class="app-title">
         <div>
-            <h1><i class="fa fa-edit"></i>Godown Inventory</h1>
+            <h1><i class="fa fa-edit"></i>Godown To Factory</h1>
         </div>
     </div>
     <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
         <li class="nav-item">
-            <a class="nav-link active" href="<?php echo site_url('Admin_Controller/Godown_Entry'); ?>">Add Stock to Godown</a>
+            <a class="nav-link active" href="<?php echo site_url('Admin_Controller/Godown_Entry'); ?>" id="pills-home-tab" data-toggle="pill" href="#5a" role="tab" aria-controls="pills-home" aria-selected="true">Add Stock to Godown</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" id="pills-profile-tab" href="<?php echo site_url('Admin_Controller/Godown_To_Factory'); ?>">Godown Outwards</a>
+            <a class="nav-link" id="pills-profile-tab" href="<?php echo site_url('Admin_Controller/Godown_To_Factory'); ?>" data-toggle="pill" role="tab" aria-controls="pills-profile" aria-selected="false">Godown Outwards </a>
         </li>
     </ul>
     <div class="row">
@@ -20,57 +20,49 @@
                         <?php echo $this->session->flashdata('message')?>
                     </div>
                 <?php } ?>
-                <h3 class="tile-title">Godown Inward Inventory</h3>
+                <h3 class="tile-title">Godown Outward Inventory</h3>
                 <div class="tile-body">
-                    <form method="post" enctype="multipart/form-data" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Godown_Inward'); ?>" name="data_register">
-                    <table class="table  table-bordered" id="sampleTable1" border="2">
-                        <thead>
-                        <tr>
-                            <th>Select Meterial</th>
-                            <th>Current<br>qty</th>
-                            <th>To Added<br>qty</th>
-                            <th>Company Name</th>
-                            <th>Vehicle NO</th>
-                            <th>Total</th>
-                            <th></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                        <tfoot>
-                        <tr>
-                            <td>
-                                <div class="form-group">
-                                    <select name="material[]" class="form-control" id="material"  >
-                                        <option value="" >Select material</option>
-                                        <?php foreach ($stock as $row):
-                                        {
-                                            echo '<option value= "'.$row['Stock_Icode'].'">' . $row['Stock_Name'] . '(' .$row['Stock_Height']. '*' .$row['Stock_Width']. ')'.'</option>';
-                                        }
-                                        endforeach; ?>
-                                    </select>
-                                </div>
-                            </td>
-                            <td>
-                                <input  class="form-control" type="text" id="current_qty" readonly>
-                            </td>
-                            <td>
-                                <input class="form-control" type="number" name="new_qty[]" id="qty"  placeholder="Enter qty" min="0" step="1" required>
-                            </td>
-                            <td>
-                                <input class="form-control" type="text" name="company_name[]" id="company_name"  placeholder="Enter Company " required>
-                            </td>
-                            <td>
-                                <input class="form-control" type="text" name="vehicle_no[]" id="vehicle_no"  placeholder="vehicle NO"  required>
-                            </td>
-                            <td>
-                                <input class="form-control" type="text" name="total_qty[]" id="total_qty"  readonly>
-                            </td>
-                            <td><input type="button" onclick="Add_one()" value="Add" id="Add" /></td>
-                        </tr>
-                        </tfoot>
-                    </table>
-                    <button class="btn btn-primary" type="submit" ><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>&nbsp;
+                    <form method="post" enctype="multipart/form-data" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Godown_Outward'); ?>" name="data_register">
+                        <table class="table  table-bordered" id="sampleTable1" border="2">
+                            <thead>
+                            <tr>
+                                <th>Select Meterial</th>
+                                <th>Current<br>qty</th>
+                                <th>Out<br>qty</th>
+                                <th>Total</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                            <tfoot>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <select name="material[]" class="form-control" id="material"  >
+                                            <option value="" >Select material</option>
+                                            <?php foreach ($stock as $row):
+                                            {
+                                                echo '<option value= "'.$row['Stock_Icode'].'">' . $row['Stock_Name'] . '(' .$row['Stock_Height']. '*' .$row['Stock_Width']. ')'.'</option>';
+                                            }
+                                            endforeach; ?>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <input  class="form-control" type="text" id="current_qty" readonly>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="number" name="new_qty[]" id="qty"  placeholder="Enter qty" min="0" step="1" required>
+                                </td>
+                                <td>
+                                    <input class="form-control" type="text" name="total_qty[]" id="total_qty"  readonly>
+                                </td>
+                                <td><input type="button" onclick="Add_one()" value="Add" id="Add" /></td>
+                            </tr>
+                            </tfoot>
+                        </table>
+                        <button class="btn btn-primary" type="submit" ><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>&nbsp;
                     </form>
                 </div>
             </div>
@@ -112,7 +104,7 @@
             </div>
         </div>
     </div>
-        </div>
+    </div>
     </div>
 </main>
 <script>
@@ -142,7 +134,7 @@
     $("#qty").on('change keyup paste', function() {
         var qty = parseInt($(this).val());
         var current_qty = parseInt($('#current_qty').val());
-        var total =  parseInt(qty + current_qty);
+        var total =  parseInt(current_qty) - parseInt(qty);
         document.getElementById('total_qty').value = total;
 
 
