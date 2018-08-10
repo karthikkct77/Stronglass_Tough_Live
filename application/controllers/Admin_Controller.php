@@ -1495,6 +1495,28 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/Factory_Stock',$data, FALSE);
         $this->load->view('Admin/footer');
     }
+    //** View Reviced Stock */
+    public function View_Revice_Stock()
+    {
+        $stock_id = $this->input->post('id',true);
+        $data = $this->admin_model->get_revised_godown_stock($stock_id);
+        $i=1;
+        $output =null;
+        foreach ($data as $key)
+        {
+            $output .="<tr>";
+            $output .="<td>".$i ."</td>";
+            $output .="<td>".$key['Stock_Name']."<br>" .$key['Stock_Height']. "*" .$key['Stock_Width']. "</td>";
+            $output .="<td>".$key['Last_Added_Qty']."</td>";
+            $output .="<td>".$key['Company_Name']."</td>";
+            $output .="<td>".$key['Vehicle_No']."</td>";
+            $output .="<td>".$key['Last_Added_Date']."</td>";
+            $output .="</tr>";
+            $i++;
+        }
+        echo $output;
+
+    }
 
 
 
