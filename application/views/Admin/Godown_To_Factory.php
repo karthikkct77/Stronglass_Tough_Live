@@ -134,10 +134,16 @@
     $("#qty").on('change keyup paste', function() {
         var qty = parseInt($(this).val());
         var current_qty = parseInt($('#current_qty').val());
-        var total =  parseInt(current_qty) - parseInt(qty);
-        document.getElementById('total_qty').value = total;
 
-
+        if(current_qty < qty)
+        {
+            alert("Out QTY greater then Current QTY");
+        }
+        else
+        {
+            var total =  parseInt(current_qty) - parseInt(qty);
+            document.getElementById('total_qty').value = total;
+        }
     });
 
     $("#Add").click(function () {
@@ -158,17 +164,15 @@
         else
         {
             var stocks = $("#material option:selected").text();
-            AddRow($('#material').val(), $("#current_qty").val(),$("#qty").val(),$("#company_name").val(),$("#vehicle_no").val(),$("#total_qty").val(),stocks);
+            AddRow($('#material').val(), $("#current_qty").val(),$("#qty").val(),$("#total_qty").val(),stocks);
             $("#material").val("");
             $("#current_qty").val("");
             $("#qty").val("");
-            $("#company_name").val("");
-            $("#vehicle_no").val("");
             $("#total_qty").val("");
         }
     });
 
-    function AddRow(material,current_qty,newqty,company_name,vehicle_no,total_qty,stocks) {
+    function AddRow(material,current_qty,newqty,total_qty,stocks) {
 
         var tBody = $("#sampleTable1 > TBODY")[0];
         //Add Row.
@@ -206,23 +210,6 @@
         cty1.attr('readonly', true);
         cty1.val(newqty);
         cell.append(cty1);
-
-        var cell = $(row.insertCell(-1));
-        var company = $("<input />");
-        company.attr("type", "text");
-        company.attr("class", "form-control");
-        company.attr("name", "company_name[]");
-        company.attr('readonly', true);
-        company.val(company_name);
-        cell.append(company);
-        var cell = $(row.insertCell(-1));
-        var vehicle = $("<input />");
-        vehicle.attr("type", "text");
-        vehicle.attr("class", "form-control");
-        vehicle.attr("name", "vehicle_no[]");
-        vehicle.attr('readonly', true);
-        vehicle.val(vehicle_no);
-        cell.append(vehicle);
 
         var cell = $(row.insertCell(-1));
         var cty2 = $("<input />");

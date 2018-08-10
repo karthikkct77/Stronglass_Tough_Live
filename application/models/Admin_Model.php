@@ -667,4 +667,25 @@ class Admin_Model extends CI_Model
             return 0;
         }
     }
+    //**Insert factory stock
+    public function insert_factory_stock($data)
+    {
+        $this->db->insert('Factory_Stock_details', $data);
+        $insert_id = $this->db->insert_id();
+        if($insert_id != '0')
+        {
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+
+
+    //** Get Factory Stock */
+    public function get_factory_stock($material_id)
+    {
+        $query = $this->db->query("Select * from Factory_Stock_details WHERE Stock_Icode = '$material_id' ");
+        return $query->num_rows();
+    }
 }
