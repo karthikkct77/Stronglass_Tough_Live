@@ -450,11 +450,10 @@
 
     // No of  Pieces
     $("#no_holes").on('change keyup paste', function() {
-        var holes = parseInt($('#no_holes').val());
-        var amt = parseInt($('#charge_amt').val());
-        var total =  parseInt(holes * amt);
-        document.getElementById('tot_charge_amt').value = total;
-
+        var holes = parseFloat($('#no_holes').val());
+        var amt = parseFloat($('#charge_amt').val());
+        var total = parseFloat(holes)* parseFloat(amt);
+        document.getElementById('tot_charge_amt').value =parseFloat(total).toFixed(3);
         var totals =document.getElementsByName("tot_charge_amt[]");
         var sum = 0;
         for (var j = 0, iLen = totals.length; j < iLen; j++) {
@@ -486,7 +485,6 @@
             }
             else
             {
-
                 var gst = 18;
                 var trans =parseFloat(document.getElementById('transport').value);
                 var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
@@ -507,9 +505,9 @@
 
     // Charge Amount
     $("#charge_amt").on('change keyup paste', function() {
-        var amt = parseInt($('#charge_amt').val());
-        var holes = parseInt($('#no_holes').val());
-        var total =  parseInt(holes * amt);
+        var amt = parseFloat($('#charge_amt').val());
+        var holes = parseFloat($('#no_holes').val());
+        var total =  parseFloat(holes * amt);
         document.getElementById('tot_charge_amt').value = total;
 
         var totals =document.getElementsByName("tot_charge_amt[]");
