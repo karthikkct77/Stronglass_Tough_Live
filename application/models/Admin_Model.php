@@ -688,4 +688,10 @@ class Admin_Model extends CI_Model
         $query = $this->db->query("Select * from Factory_Stock_details WHERE Stock_Icode = '$material_id' ");
         return $query->num_rows();
     }
+    //** Get All Factory Stock Details */
+    public function get_all_factory_stock()
+    {
+        $query = $this->db->query("SELECT * FROM Factory_Stock_details A INNER JOIN stock_master B on A.Stock_Icode=B.Stock_Icode ");
+        return $query->result_array();
+    }
 }

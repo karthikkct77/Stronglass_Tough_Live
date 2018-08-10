@@ -62,7 +62,7 @@
                             </tr>
                             </tfoot>
                         </table>
-                        <button class="btn btn-primary" type="submit" ><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>&nbsp;
+                        <button class="btn btn-danger" type="submit" ><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>&nbsp;
                     </form>
                 </div>
             </div>

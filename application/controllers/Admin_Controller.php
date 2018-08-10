@@ -1453,33 +1453,37 @@ class Admin_Controller extends CI_Controller
                         echo 0;
                     }
                 }
-
                 $factory = $this->admin_model->get_factory_stock($Materials[$i]);
                 if ($factory == 0)
                 {
                     $insert = array('Stock_Icode' => $Materials[$i],
-                        'Current_Qty' =>$total_quantity[$i],
+                        'Current_Qty' =>$new_quantity[$i],
                         'Created_By' => $this->session->userdata['userid'],
                         'Created_On' =>date('Y-m-d H:i:s'));
                     $insert_inventary = $this->admin_model->insert_factory_stock($insert);
                 }
                 else
                 {
-                    $data = array('Current_Qty' => $total_quantity[$i],
-                            'Stock_Out_Qty' =>$new_quantity[$i],
+                    $data = array('Current_Qty' => $new_quantity[$i],
                             'Updated_By' => $this->session->userdata['userid'],
                             'Updated_On' =>date('Y-m-d H:i:s'));
                         $this->db->where('Stock_Icode',$Materials[$i]);
                         $this->db->update('Factory_Stock_details', $data);
-
                 }
             }
-
-
         }
         $this->session->set_flashdata('feedback', 'Successfully Updated..');
-        redirect('Admin_Controller/Godown_Entry');
-
+        redirect('Admin_Controller/Godown_To_Factory');
+    }
+    //** Factory Stock */
+    public function Factory_Stock()
+    {
+        $data['factory']= $this->admin_model->get_all_factory_stock();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Factory_Stock',$data, FALSE);
+        $this->load->view('Admin/footer');
     }
 
 
