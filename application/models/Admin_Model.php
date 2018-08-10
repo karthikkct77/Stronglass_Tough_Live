@@ -704,7 +704,7 @@ class Admin_Model extends CI_Model
     //** Get perticular revised material */
     public function get_revised_godown_stock($stock_icode)
     {
-        $query = $this->db->query("Select * from godown_inventory_inward_history A INNER  JOIN stock_master B on A.Stock_Icode=B.Stock_Icode  WHERE A.sssStock_Icode = '$stock_icode' ORDER BY Last_Added_Date DESC ");
+        $query = $this->db->query("Select * from godown_inventory_inward_history A INNER  JOIN stock_master B on A.Stock_Icode=B.Stock_Icode  WHERE A.Stock_Icode = '$stock_icode' ORDER BY Last_Added_Date DESC ");
         return $query->result_array();
     }
 }
