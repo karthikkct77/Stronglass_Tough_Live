@@ -483,7 +483,7 @@
         var holes = parseFloat($(this).val());
         var amt = parseFloat($('#charge_amt').val());
         var total =  parseFloat(holes * amt);
-        document.getElementById('tot_charge_amount').value = total;
+        document.getElementById('tot_charge_amount').value = parseFloat(total).toFixed(3);
 
         var totals =document.getElementsByName("tot_charge_amt[]");
         var sum1 = 0;
@@ -550,7 +550,7 @@
         var amt = parseFloat($('#charge_amt').val());
         var holes = parseFloat($('#no_holes').val());
         var total =  parseFloat(holes * amt);
-        document.getElementById('tot_charge_amount').value = total;
+        document.getElementById('tot_charge_amount').value =parseFloat(total).toFixed(3);
 
         var totals =document.getElementsByName("tot_charge_amt[]");
         var sum = 0;

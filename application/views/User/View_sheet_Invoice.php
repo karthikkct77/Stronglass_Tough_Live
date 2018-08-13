@@ -559,7 +559,7 @@
         var amt = parseFloat($('#charge_amt').val());
         var holes = parseFloat($('#no_holes').val());
         var total =  parseFloat(holes * amt);
-        document.getElementById('tot_charge_amt').value = total;
+        document.getElementById('tot_charge_amt').value = parseFloat(total).toFixed(3);
 
         var totals =document.getElementsByName("tot_charge_amt[]");
         var sum = 0;
