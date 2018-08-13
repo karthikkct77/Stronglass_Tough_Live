@@ -59,7 +59,19 @@
                                 <?php } else {?>
                                     <td style="color: red;">On Progress</td>
                                 <?php } ?>
-                                <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/View_Work_Order/') . $val['WO_Icode']; ?>">View</a></td>
+                                <?php
+                                if ($val['PI_Type'] == '1') { ?>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/View_Sheet_Work_Order/') . $val['WO_Icode']; ?>">View</a></td>
+                                    <?php
+                                }
+                                else
+                                {
+                                    ?>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/View_Work_Order/') . $val['WO_Icode']; ?>">View</a></td>
+                                    <?php
+                                }
+                                ?>
+
                             </tr>
                             <?php
                             $i++;

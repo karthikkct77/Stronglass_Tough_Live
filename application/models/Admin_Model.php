@@ -408,7 +408,7 @@ class Admin_Model extends CI_Model
     /** Get all work order */
     public function get_all_work_order()
     {
-        $query = $this->db->query("SELECT * FROM work_order");
+        $query = $this->db->query("SELECT * FROM work_order A INNER  JOIN  proforma_invoice B on A.Proforma_Icode =B.Proforma_Icode");
         return $query->result_array();
     }
     public  function  Get_Work_Order($id)
@@ -705,6 +705,14 @@ class Admin_Model extends CI_Model
     public function get_revised_godown_stock($stock_icode)
     {
         $query = $this->db->query("Select * from godown_inventory_inward_history A INNER  JOIN stock_master B on A.Stock_Icode=B.Stock_Icode  WHERE A.Stock_Icode = '$stock_icode' ORDER BY Last_Added_Date DESC ");
+        return $query->result_array();
+    }
+
+    //** get sheet work order */  */
+    public function get_sheet_Work_Order_Details($id)
+    {
+        $query = $this->db->query("SELECT * FROM wo_processing A INNER JOIN proforma_invoice_item_sheet B ON A.PI_Sheet_Item_Icode=B.pi_item_sheet_icode 
+                                        INNER JOIN material_master C on B.Proforma_Material_Icode=C.Material_Icode WHERE A.WO_Icode='$id'");
         return $query->result_array();
     }
 }
