@@ -25,7 +25,7 @@
             </script>
         <?php endif; ?>
 
-        <div class="col-md-6" id="add">
+        <div class="col-md-5" id="add">
             <div class="tile">
                 <h3 class="tile-title">Material</h3>
                 <div class="tile-body">
@@ -49,7 +49,7 @@
         </div>
 
         <!-- Update  Details -->
-        <div class="col-md-6" id="update" style="display: none">
+        <div class="col-md-5" id="update" style="display: none">
             <div class="tile">
                 <h3 class="tile-title pull-left">Edit Material</h3>
                 <div class="tile-body">
@@ -75,7 +75,7 @@
             </div>
         </div>
         <!-- view Stock Details -->
-        <div class="col-md-6">
+        <div class="col-md-7">
             <div class="tile">
                 <h3 class="tile-title ">Material List</h3>
                 <a class="btn btn-success pull-right" href="<?php echo site_url('Admin_Controller/Revice_History'); ?>">Revising History</a>
