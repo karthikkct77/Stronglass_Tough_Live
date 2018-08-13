@@ -508,7 +508,7 @@
         var amt = parseFloat($('#charge_amt').val());
         var holes = parseFloat($('#no_holes').val());
         var total =  parseFloat(holes * amt);
-        document.getElementById('tot_charge_amt').value = total;
+        document.getElementById('tot_charge_amt').value = parseFloat(total).toFixed(3);
 
         var totals =document.getElementsByName("tot_charge_amt[]");
         var sum = 0;
@@ -575,7 +575,7 @@
                 var  price = data[0]['charge_current_price'];
                 document.getElementById('charge_amt').value = price;
                 var total =  parseInt(pics * price);
-                document.getElementById('tot_charge_amt').value = total;
+                document.getElementById('tot_charge_amt').value = parseFloat(total).toFixed(3);
                 var totals =document.getElementsByName("tot_charge_amt[]");
                 var sum = 0;
                 for (var j = 0, iLen = totals.length; j < iLen; j++) {
