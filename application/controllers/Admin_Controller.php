@@ -1524,8 +1524,4 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/View_Work_Order',$data, FALSE);
         $this->load->view('Admin/footer');
     }
-
-
-
-
 }
