@@ -1016,14 +1016,17 @@
         var actual_H = document.getElementById('height'+id).value;
         var Charge_W = document.getElementById('ch_weight'+id).value;
         var Charge_H = document.getElementById('ch_height'+id).value;
-        if(parseInt(actual_H) > parseInt(Charge_H))
-        {
-            alert("Chargable Height should be greater then Actual Height ");
-        }
-        else
-        {
-            var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000;
+        var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000;
             document.getElementById('area'+id).value = parseFloat(areas).toFixed(3);;
+            var areas1 =document.getElementsByName("area[]");
+            var sum_area = 0;
+            for (var j = 0, iLen = areas1.length; j < iLen; j++) {
+                if (areas1[j].value!==""){
+                    val=parseFloat(areas1[j].value);
+                    sum_area +=val;
+                }
+            }
+            document.getElementById('total_area1').innerHTML =  parseFloat(sum_area).toFixed(3);
             var pcs = document.getElementById('pics'+id).value;
             var rate = document.getElementById('rate'+id).value;
             var total = (pcs * areas * rate);
@@ -1098,7 +1101,6 @@
 
             }
 
-        }
 
     }
     /** Change Charge Height */
@@ -1109,14 +1111,19 @@
         var Charge_W = parseFloat(document.getElementById('ch_weight'+id).value);
         var Charge_H = document.getElementById('ch_height'+id).value;
 
-        if(parseInt(actual_W) > parseInt(Charge_W))
-        {
-            alert("Chargable Width should be greater then Actual Width");
-        }
-        else
-        {
             var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000;
             document.getElementById('area'+id).value = parseFloat(areas).toFixed(3);
+
+            var areas1 =document.getElementsByName("area[]");
+            var sum_area = 0;
+            for (var j = 0, iLen = areas1.length; j < iLen; j++) {
+                if (areas1[j].value!==""){
+                    val=parseFloat(areas1[j].value);
+                    sum_area +=val;
+                }
+            }
+            document.getElementById('total_area1').innerHTML =  parseFloat(sum_area).toFixed(3);
+
             var pcs = document.getElementById('pics'+id).value;
             var rate = document.getElementById('rate'+id).value;
             var total = (pcs * areas * rate);
@@ -1192,7 +1199,7 @@
             }
 
 
-        }
+
 
     }
     /** Change Charge Width */
