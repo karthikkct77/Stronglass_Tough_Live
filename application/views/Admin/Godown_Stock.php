@@ -78,6 +78,8 @@
         <div class="col-md-6">
             <div class="tile">  <h3 class="tile-title">Godown Inward List</h3>
                 <a class="btn btn-success pull-right" href="<?php echo site_url('Admin_Controller/Godown_Inward_History'); ?>">Inward History</a>
+                <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/Print_Godown_Inward_Stock'); ?>"><i class="fa fa-print"></i>Print</a>
+
                 <div class="tile-body">
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
