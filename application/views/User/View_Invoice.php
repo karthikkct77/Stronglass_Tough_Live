@@ -50,7 +50,6 @@
         float: left;
         width: 100px;
     }
-
 </style>
 <main class="app-content">
     <div class="app-title">
