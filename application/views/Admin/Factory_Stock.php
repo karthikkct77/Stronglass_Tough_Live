@@ -9,6 +9,8 @@
         <!-- view Stock Details -->
         <div class="col-md-12">
             <div class="tile">
+                <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/Print_Factory_Stock'); ?>"><i class="fa fa-print"></i>Print</a>
+
                 <h3 class="tile-title">Factory Current Stocks</h3>
                 <div class="tile-body">
                     <div id="old">
@@ -30,9 +32,13 @@
                                     <td><?php echo $i; ?></td>
                                     <td><?php echo $val['Stock_Name']; ?><br>(<?php echo $val['Stock_Height']; ?> * <?php echo $val['Stock_Width']; ?> ) </td>
                                     <td><?php echo $val['Current_Qty']; ?></td>
-                                    <td><?php echo $val['Created_On']; ?></td>
-                                    <!--                                <td>--><?php //echo Date('Y-m-d',strtotime($val['Material_Qty_Last_Added_Date'])); ?><!--</td>-->
-                                </tr>
+                                    <?php if($val['Updated_By'] == '1') { ?>
+                                        <td><?php echo $val['Updated_On']; ?></td>
+                                    <?php }  else {?>
+                                        <td><?php echo $val['dates']; ?></td>
+                                    <?php } ?>
+
+                                   </tr>
                                 <?php
                                 $i++;
                             }

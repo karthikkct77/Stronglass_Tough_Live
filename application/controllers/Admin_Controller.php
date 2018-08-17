@@ -1536,6 +1536,18 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/left');
         $this->load->view('Admin/Print_Godown_Inward_Stock',$data, FALSE);
         $this->load->view('Admin/footer');
+    }
 
+    //** Print Factory Stock */
+    public function Print_Factory_Stock()
+    {
+        $data['factory']= $this->admin_model->get_all_factory_stock();
+        $data['stock']= $this->admin_model->get_all_stock();
+        $data['st']= $this->admin_model->get_ST();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Print_Factory_Stock',$data, FALSE);
+        $this->load->view('Admin/footer');
     }
 }

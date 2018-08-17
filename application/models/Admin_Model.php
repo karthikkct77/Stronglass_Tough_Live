@@ -698,7 +698,7 @@ class Admin_Model extends CI_Model
     //** Get All Factory Stock Details */
     public function get_all_factory_stock()
     {
-        $query = $this->db->query("SELECT * FROM Factory_Stock_details A INNER JOIN stock_master B on A.Stock_Icode=B.Stock_Icode ");
+        $query = $this->db->query("SELECT A.*,B.*, A.Created_On as dates FROM Factory_Stock_details A INNER JOIN stock_master B on A.Stock_Icode=B.Stock_Icode ");
         return $query->result_array();
     }
     //** Get perticular revised material */
