@@ -427,8 +427,6 @@
         document.getElementById('total_cutout').value = parseInt(sum_cutout);
         document.getElementById('total_cutout1').innerHTML = parseInt(sum_cutout);
     });
-
-
     // Get Company Addresss
     $("#company_name2").change(function () {
         $.ajax({
@@ -446,8 +444,6 @@
             }
         });
     });
-
-
     // No of  Pieces
     $("#no_holes").on('change keyup paste', function() {
         var holes = parseFloat($('#no_holes').val());
@@ -501,8 +497,6 @@
         }
 
     });
-
-
     // Charge Amount
     $("#charge_amt").on('change keyup paste', function() {
         var amt = parseFloat($('#charge_amt').val());
@@ -559,8 +553,6 @@
         }
 
     });
-
-
     // get Charges
     $("#charges").change(function () {
         var pics=document.getElementById('no_holes').value;
@@ -627,7 +619,6 @@
             }
         });
     });
-
     // Add more Charges
     $("#Add").click(function () {
         if($('#charges').val() == "")
@@ -706,7 +697,6 @@
         btnRemove.val("Remove");
         cell.append(btnRemove);
     };
-
     //Remove Charges
     function Remove(button) {
         //Determine the reference of the Row using the Button.
@@ -763,7 +753,6 @@
 
         }
     };
-
     // Check box Customer
     function FillBilling() {
         if($('#check').is(":checked"))
@@ -781,7 +770,6 @@
             $('#company_name2').show();
         }
     }
-
     // get Material Based Charges
     function get_result(id) {
         var pcs = document.getElementById('pics'+id).value;
@@ -823,13 +811,8 @@
                     document.getElementById('total_pic').value = parseInt(sum_pic);
                 }
             });
-
-
-
         });
-
     }
-
     // Change Charge Rate
     function change_rate(id) {
         var pcs = document.getElementById('pics'+id).value;
@@ -899,9 +882,7 @@
             document.getElementById('gross_tot').value = parseInt(grant);
         }
         number_to_words();
-
     }
-
     //Search Customer
     function ajaxSearch()
     {
@@ -935,7 +916,6 @@
 
         }
     }
-
     // Onselect Customer Get Customer Address
     function get_row(id) {
         $.ajax({
@@ -976,7 +956,6 @@
             }
         });
     }
-
     //IGST Function
     function isgt() {
         $('#igst1').show();
@@ -1100,8 +1079,6 @@
             {
 
             }
-
-
     }
     /** Change Charge Height */
 
@@ -1197,10 +1174,6 @@
             {
 
             }
-
-
-
-
     }
     /** Change Charge Width */
 
@@ -1240,7 +1213,6 @@
         {
 
         }
-
     }
 
     // Number into words
