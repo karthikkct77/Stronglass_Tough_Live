@@ -89,9 +89,9 @@
                     <?php  foreach($todays_pi as $r)
                     { ?>
                         <tr>
-                            <td><h2><?php echo $r['pi']; ?></h2></td>
-                            <td><h2><?php echo $r['pi_confirm']; ?></h2></td>
-                            <td><h2><?php echo $r['wo_confirm']; ?></h2></td>
+                            <td><h2><a href="<?php echo site_url('Admin_Controller/profoma_invoice'); ?>"><?php echo $r['pi']; ?></a></h2></td>
+                            <td><h2><a href="<?php echo site_url('Admin_Controller/pi_confirm'); ?>"><?php echo $r['pi_confirm']; ?></a></h2></td>
+                            <td><h2><a href="<?php echo site_url('Admin_Controller/wo_confirm'); ?>"><?php echo $r['wo_confirm']; ?></a></h2></td>
 
                         </tr>
                     <?php }?>

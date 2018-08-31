@@ -89,7 +89,7 @@
                                 <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>
                             </div>
                         </div>
-                        <form>
+                       <form>
                 </div>
             </div>
         </div>

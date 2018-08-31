@@ -15,6 +15,7 @@ class Admin_Controller extends CI_Controller
         //bjj$this->load->model('LoginModel','LoginModel');
         $this->load->helper('url');   /***** LOADING HELPER TO AVOID PHP ERROR ****/
         $this->load->model('Admin_Model','admin_model'); /* LOADING MODEL * Technical_Admin_Model as technical_admin_model */
+        $this->load->model('User_Model', 'user_model'); /* LOADING MODEL * User_Model as user_model */
         $this->load->library('session');
         $this->load->library('excel');
         $this->session->set_flashdata('message');
@@ -842,6 +843,8 @@ class Admin_Controller extends CI_Controller
         $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
         $data['tax']= $this->admin_model->get_Tax();
         $data['st']= $this->admin_model->get_ST();
+        $data['User']=$this->user_model->Get_User_Details($pi_icode);
+        $data['check_user']=$this->user_model->Get_Check_User_Details();
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
         $this->load->view('Admin/left');
@@ -1550,4 +1553,16 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/Print_Factory_Stock',$data, FALSE);
         $this->load->view('Admin/footer');
     }
+
+    //** View Profoma Invoice */
+    public function profoma_invoice()
+    {
+        $data['invoice'] = $this->user_model->get_All_Invoice();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/View_PI',$data, FALSE);
+        $this->load->view('Admin/footer');
+    }
+
 }

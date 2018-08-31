@@ -715,4 +715,12 @@ class Admin_Model extends CI_Model
                                         INNER JOIN material_master C on B.Proforma_Material_Icode=C.Material_Icode WHERE A.WO_Icode='$id'");
         return $query->result_array();
     }
+
+    //** Get All Invoice List */
+    public function get_all_invoice_list()
+    {
+        $query = $this->db->query("Select * from proforma_invoice A INNER JOIN  customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode
+                                   WHERE  A.PI_Confirm='0'  ");
+        return $query->result_array();
+    }
 }

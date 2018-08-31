@@ -1,569 +1,482 @@
 <main class="app-content">
-    <div class="app-title">
-        <div>
-            <h1><i class="fa fa-edit"></i>Invoice</h1>
-
+    <div>
+        <div class="app-title">
+            <div>
+                <h1><i class="fa fa-edit"></i>Profoma Invoice</h1>
+            </div>
         </div>
-        <div class="row invoice">
-            <h4><?php echo $st[0]['ST_Name']; ?></h4>
-            <h5><?php echo $st[0]['ST_Address_1']; ?>,&nbsp;<?php echo $st[0]['ST_Area']; ?>,&nbsp;<?php echo $st[0]['ST_City']; ?></h5>
-            <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
-        </div>
-        <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item">Profoma_invoice</li>
-            <li class="breadcrumb-item"><a href="#">Profoma_invoice</a></li>
-        </ul>
-    </div>
-    <div class="row">
-        <div class="col-md-12" >
-            <div class="tile">
-                <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Save_Work_Order'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <h5>Consignee</h5>
-                            <div id="consign">
-                                <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                <h5 id="address"><?php echo $invoice[0]['Customer_Company_Name']; ?>$nbsn;<?php echo $invoice[0]['Customer_Address_1']; ?>$nbsn;<?php echo $invoice[0]['Customer_Address_2']; ?></h5>
-                                <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
-                                <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
-                            </div>
+        <div class="row">
+            <?php if($this->session->flashdata('feedback')): ?>
+                <script>
+                    var ssd = "<?php echo $this->session->flashdata('feedback'); ?>";
+                    swal({
+                            title: "Success!",
+                            text: ssd,
+                            type: "success"
+                        },
+                        function(){
+                            location.reload();
+                        });
+                </script>
+            <?php endif; ?>
 
-                        </div>
-                        <div class="col-md-1">
-                            <div class="form-group">
-                                <input type="checkbox" name="check" id="check" checked onclick="FillBilling()">
-                                <em>Check this box if Current Address and Mailing permanent are the same.</em>
-                            </div>
+            <?php if($this->session->flashdata('feedback1')): ?>
+                <script>
+                    var ssd = "<?php echo $this->session->flashdata('feedback1'); ?>";
+                    swal({
+                            title: "Error!",
+                            text: ssd,
+                            type: "warning"
+                        },
+                        function(){
+                            location.reload();
+                        });
+                </script>
+            <?php endif; ?>
+            <div class="col-md-12" id="pagewidth" >
 
-                        </div>
-                        <div class="col-md-4">
-                            <h5>Buyer (if other than consignee)</h5>
-                            <div id="Buyer">
-                                <?php
-                                if($invoice[0]['Customer_Address_Icode'] == "")
-                                {
-                                    ?>
-                                    <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                    <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; ?>$nbsn;<?php echo $invoice[0]['Customer_Address_2']; ?></h5>
-                                    <h5 id="phone">City: <?php echo $invoice[0]['Customer_City']; ?></h5>
-                                    <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
-                                    <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
-                                <?php
-                                }
-                                else
-                                {
-                                    ?>
-                                    <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                    <h5 id="address"><?php echo $invoice[0]['Customer_Add_Address_1']; ?>$nbsn;<?php echo $invoice[0]['Customer_Add_Address_2']; ?></h5>
-                                    <h5 id="phone">City: <?php echo $invoice[0]['Customer_Add_City']; ?></h5>
-                                    <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Add_Phone']; ?></h5>
-                                    <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_Add_Email_Id_1']; ?></h5>
-                                <?php
-                                }
-                                ?>
-
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <input class="form-control" type="hidden" name="PI_Icode"  value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
-                            <h4>Proforma Invoice No: <input type="text" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly></h4>
-                            <h4>Proforma Invoice Date: <input type="text" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly></h4>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <table class="table table-hover table-bordered" id="sampleTable">
-                            <thead>
-                            <th>#</th>
-                            <th>Material</th>
-                            <th>Hsn code</th>
-                            <th>Special</th>
-                            <th>No.of Pieces</th>
-                            <th>No.of Holes</th>
-                            <th>Actucal Size(W)(MM)</th>
-                            <th>Actucal Size(H)(MM)</th>
-                            <th>Chargable Size(W)(MM)</th>
-                            <th>Chargable Size(H)(MM)</th>
-                            <th>Area(SQMTR)</th>
-                            <th>Rate(SQMTR)</th>
-                            <th>Total(INR)</th>
-                            </thead>
-                            <tbody>
-                            <?php $i=1; foreach ($invoice_item as $key) { ?>
-                                <tr id="row<?php echo $i; ?>">
-                                    <input class="form-control" type="hidden" name="material[]"  value="<?php echo $key['Proforma_Invoice_Items_Icode']; ?>" >
-                                    <input class="form-control" type="hidden" name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" >
-                                    <td><?php echo $i; ?></td>
-                                    <td><?php echo $key['Material_Name']; ?></td>
-                                    <td><?php echo $key['Proforma_HSNCode']; ?></td>
-                                    <td><?php echo $key['Proforma_Special']; ?></td>
-                                    <td><?php echo $key['Proforma_Qty']; ?></td>
-                                    <td><?php echo $key['Proforma_Holes']; ?></td>
-                                    <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
-                                    <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
-                                    <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
-                                    <td><?php echo $key['Proforma_Chargeable_Size_Height']; ?></td>
-                                    <td><?php echo $key['Proforma_Area_SQMTR']; ?></td>
-                                    <td><?php echo $key['Proforma_Material_Rate']; ?></td>
-                                    <td><?php echo $key['Proforma_Material_Cost']; ?></td>
-                                </tr>
-                                <?php $i++; } ?>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><input type="text" class="form-control pull-right" id="total_pic" value="<?php echo $invoice_total[0]['qty']; ?>"   readonly/></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><input type="text" class="form-control pull-right" id="total_area" value="<?php echo round($invoice_total[0]['area'], 2); ?>"   readonly/></td>
-                                <td></td>
-                                <td> <input type="text" class="form-control pull-right" id="grand_total" value="<?php echo round($invoice_total[0]['rate'],2); ?>"   readonly/>(INR)</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <script>
-                            $("#grand_total").on('click', function() {
-                                var total =document.getElementsByName("total[]");
-                                var sum = 0;
-                                for (var j = 0, iLen = total.length; j < iLen; j++) {
-                                    val=parseFloat(total[j].value);
-                                    sum +=val;
-                                }
-                                document.getElementById('grand_total').value = parseFloat(sum).toFixed(2);
-                            });
-                        </script>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h3>Terms & Conditions</h3>
-                            <p style="font-size: 16px;text-align: justify;">
-                                We Shall not be responsible for any type of Breakage/Loss in Transit.
-                                At the time of transit Breakage/Loss insurance claim will be done by
-                                the customer and not by the company.
-                                Any discrepancies observed in the supply like quantity,specification,
-                                quality, etc.
-                            </p>
-
-                        </div>
-                        <div class="col-md-6">
-                            <table class="table table-hover table-bordered" id="sampleTable1">
-                                <thead>
-                                <th>#</th>
-                                <th>Select Charges</th>
-                                <th>No.of pieces</th>
-                                <th>Price</th>
-                                <th>Total</th>
-                                </thead>
-                                <tbody></tbody>
-                                <tfoot>
-                                <?php
-                                $i=1;
-                                foreach ($invoice_Charges as $key) {
-                                    ?>
-                                    <tr>
-                                        <td><?php echo $i; ?></td>
-                                        <td><?php echo $key['charge_name']; ?></td>
-                                        <td><?php echo $key['Proforma_Charge_Count']; ?></td>
-                                        <td><?php echo $key['Proforma_Charge_Value']; ?></td>
-                                        <td><?php echo $key['Proforma_Charge_Cost']; ?></td>
-                                    </tr>
-                                    <?php
-                                    $i++;
-                                }
-                                ?>
-                                <tr>
-                                    <td colspan="4" align="right">SUB-TOTAL</td>
-
-                                    <td><input class="form-control" type="text" name="sub_tot" id="sub_tot" value="<?php echo $invoice[0]['Sub_Total']; ?>" readonly ></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4" align="right">INSURANCE</td>
-
-                                    <td><input class="form-control" type="text" name="insurance" id="insurance" value="<?php echo $invoice[0]['Insurance_Value']; ?>" required readonly></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
-
-                                    <td><input class="form-control" type="text" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td colspan="4" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
-                                        <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
-                                    </td>
-
-
-                                    <td><input class="form-control" type="text" name="cgst" id="cgst" value="<?php echo $invoice[0]['CGST_Value']; ?>" readonly ></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-
-                                    <td colspan="4" align="right">GROSS TOTAL</td>
-                                    <td><input class="form-control" type="text" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" ></td>
-                                    <td></td>
-                                </tr>
-                                </tfoot>
-                            </table>
-                        </div>
-                        <script>
-                            $("#insurance").on('change keyup paste', function() {
-                                var sub_tot =document.getElementById('sub_tot').value;
-                                var insurance =document.getElementById('insurance').value;
-                                var gst = document.getElementById('gst').value;
-                                var sum = ((parseFloat(sub_tot) + parseFloat(insurance)) * gst / 100 );
-                                document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
-                                document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
-                                var sgst = document.getElementById('sgst').value;
-                                var cgst = document.getElementById('cgst').value;
-                                var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst));
-                                document.getElementById('gross_tot').value = parseInt(grant);
-                            });
-                        </script>
+                <div class="tile">
+                    <div class="row invoice">
+                        <img style="position: absolute;width: 100px;height: auto;top: 1%;left: 1%;" src="<?php echo base_url('img/strong.png'); ?>" alt="User Image">
+                        <h6>Proforma Invoice</h6>
+                        <h4><?php echo $st[0]['ST_Name']; ?></h4>
+                        <h5><?php echo $st[0]['ST_Address_1']; ?>,&nbsp;<?php echo $st[0]['ST_Area']; ?>,&nbsp;<?php echo $st[0]['ST_City']; ?></h5>
+                        <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
                     </div>
                     <hr>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h4>Bank Details</h4>
-                            <h5>Stronglass Tough</h5>
-                            <h5>A/C Type: <span><?php echo $st[0]['ST_Bank_Account_Type']; ?></span></h5>
-                            <h5>A/C Number: <span><?php echo $st[0]['ST_Bank_Account_Number']; ?></span></h5>
-                            <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
-                            <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
-                        </div>
-                        <div class="col-md-6">
-                            <a class="btn btn-success pull-right" href="<?php echo site_url('Admin_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT</a>
-                            <button class="btn btn-danger pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Generate WO</button>
-                        </div>
-                    </div>
+                    <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Save_Work_Order'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
+                        <div class="row">
+                            <div class="col-md-4" style="border-right: 1px solid #000;">
+                                <h5>Consignee</h5>
+                                <div id="consign">
+                                    <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
+                                    <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; echo '&nbsp'; ?>,<?php echo $invoice[0]['Customer_Address_2']; echo '&nbsp';?>,<?php echo $invoice[0]['Customer_Area']; ?></h5>
+                                    <h5> <?php echo $invoice[0]['Customer_City']; echo '&nbsp'; ?><?php echo $invoice[0]['Customer_State']; ?></h5>
+                                    <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
+                                    <h5 id="email">Email: <?php echo $invoice[0]['Customer_Email_Id_1']; ?></h5>
+                                    <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
+                                    <input type="hidden" name="email" value="<?php echo $invoice[0]['Customer_Email_Id_1']; ?>">
+                                </div>
 
-                </form>
+                            </div>
+                            <div class="col-md-4" style="border-right: 1px solid #000;">
+                                <h5>Buyer (if other than consignee)</h5>
+                                <div id="Buyer">
+                                    <?php
+                                    if($invoice[0]['Customer_Address_Icode'] == "")
+                                    {
+                                        ?>
+                                        <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
+                                        <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; echo '&nbsp'; ?>,<?php echo $invoice[0]['Customer_Address_2']; echo '&nbsp';?>,<?php echo $invoice[0]['Customer_Area']; ?></h5>
+                                        <h5> <?php echo $invoice[0]['Customer_City']; echo '&nbsp'; ?><?php echo $invoice[0]['Customer_State']; ?></h5>
+                                        <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
+                                        <h5 id="email">Email: <?php echo $invoice[0]['Customer_Email_Id_1']; ?></h5>
+                                        <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
+                                        <input type="hidden" name="email" value="<?php echo $invoice[0]['Customer_Email_Id_1']; ?>">
+                                        <?php
+                                    }
+                                    else
+                                    {
+                                        ?>
+                                        <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
+                                        <h5 id="address"><?php echo $invoice[0]['Customer_Add_Address_1']; ?>&nbsn;<?php echo $invoice[0]['Customer_Add_Address_2']; ?></h5>
+                                        <h5 id="phone">City: <?php echo $invoice[0]['Customer_Add_City']; ?></h5>
+                                        <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Add_Phone']; ?></h5>
+                                        <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_Add_Email_Id_1']; ?></h5>
+                                        <?php
+                                    }
+                                    ?>
+
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control" type="hidden" name="PI_Icode"  id="PI_Icode" value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
+                                <h5><span>Date</span><input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly><?php echo $invoice[0]['Proforma_Date']; ?></h5>
+                                <h5><span>P.INV.NO</span><input type="hidden" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly><?php echo $invoice[0]['Proforma_Number']; ?></h5>
+                                <h5><span>Total Outstanding</span><?php echo $invoice[0]['Total_Outstanding']; ?></h5>
+                                <h5><span>Credit Limit Amt</span><?php echo $invoice[0]['Credit_Limit']; ?> </h5>
+                            </div>
+                        </div>
+                        <div class="row details_tag">
+                            <div><?php echo $invoice[0]['Material_Area']; ?></div>
+                        </div>
+                        <div class="row">
+                            <table class="table table-hover table-bordered" id="sampleTable">
+                                <thead>
+                                <th style="width: 10px;">#</th>
+                                <th style="width: 20px;">Material</th>
+                                <th style="width: 20px;">Actual<br>sz(h)</th>
+                                <th style="width: 20px;">Actual<br>sz(w)</th>
+                                <th style="width: 20px;">Charge<br>sz(h</th>
+                                <th style="width: 20px;">Charge<br>sz(w)</th>
+                                <th style="width: 10px;">No.of<br>Pcs</th>
+                                <th style="width: 10px;">No.of<br>Holes</th>
+                                <th style="width: 10px;">Cutout</th>
+                                <th style="width: 10px;">Special</th>
+                                <th style="width: 20px;">Area<br>(sqmtr)</th>
+                                <th style="width: 20px;">Rate<br>(sqmtr)</th>
+                                <th style="width: 20px;">Total<br>Rs</th>
+                                </thead>
+                                <tbody>
+                                <?php $i=1; foreach ($invoice_item as $key) { ?>
+                                    <tr id="row<?php echo $i; ?>">
+                                        <input class="form-control" type="hidden" name="material[]"  value="<?php echo $key['Proforma_Invoice_Items_Icode']; ?>" >
+                                        <input class="form-control" type="hidden" name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" >
+                                        <td><?php echo $i; ?></td>
+                                        <td style="text-align: left;"><p style="width: 180px; word-wrap: break-word;"><?php echo $key['Material_Name']; ?></p></td>
+                                        <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
+                                        <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
+                                        <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
+                                        <td><?php echo $key['Proforma_Chargeable_Size_Height']; ?></td>
+                                        <td><?php echo $key['Proforma_Qty']; ?></td>
+                                        <td><?php echo $key['Proforma_Holes']; ?></td>
+                                        <td><?php echo $key['Proforma_Cutout']; ?></td>
+                                        <td><?php echo $key['Proforma_Special']; ?></td>
+                                        <td><?php echo $key['Proforma_Area_SQMTR']; ?></td>
+                                        <td><?php echo $key['Proforma_Material_Rate']; ?></td>
+                                        <td><?php echo $key['Proforma_Material_Cost']; ?></td>
+                                    </tr>
+                                    <?php $i++; } ?>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="6" style="font-weight: bold;text-align: right;" >Total Summary</td>
+                                    <td><input type="hidden" class="form-control pull-right" id="total_pic" value="<?php echo $invoice_total[0]['qty']; ?>"readonly/><?php echo $invoice_total[0]['qty']; ?></td>
+                                    <td><?php echo $invoice_total[0]['holes']; ?></td>
+                                    <td><?php echo $invoice_total[0]['cutout']; ?></td>
+                                    <td></td>
+                                    <td><input type="hidden" class="form-control pull-right" id="total_area" value="<?php echo round($invoice_total[0]['area'], 2); ?>"   readonly/><?php echo round($invoice_total[0]['area'], 3); ?></td>
+                                    <td></td>
+                                    <td> <input type="hidden" class="form-control pull-right" id="grand_total" value="<?php echo round($invoice_total[0]['rate'],2); ?>"   readonly/><?php echo round($invoice_total[0]['rate'],3); ?></td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                        <div class="row" id="page_inside">
+                            <div class="col-md-6">
+                                <h3 style="font-weight: normal;font-size: 15px;">Delivery Period: <span style="font-weight: bold; padding-left: 5px;"><?php echo $invoice[0]['Delivery_Days']; ?> </span>Working Days </h3>
+                                <h3 style="font-size: 13px;">Terms & Conditions</h3>
+                                <p style="font-size: 8px;text-align: justify;">
+                                    Supply shall be against advance payment or Letter of credit or any other agreed
+                                    terms. Interest @2% per month will be charged for the payment delayed beyond
+                                    the terms agreed from the date of invoice. All payments made by third
+                                    party/consumer/contractor interested in the transaction shall be adjusted against
+                                    supplies made to buyer/consignee
+                                </p>
+                                <h3 style="font-size: 13px;">Dear Customer</h3>
+                                <p style="font-size: 8px;text-align: justify;">
+                                <ul style="list-style: none;padding: 0;font-size: 8px;text-align: justify;">
+                                    <li style="margin-bottom: 15px;">
+                                        1.Please make sure to DOUBLE - CHECK the Pro-Forma Invoice in terms Billing & Delivery Address, Contact Name & Number, PAN NO, GST NO, complete Glass
+                                        Specifications, Size, Quantity, Rates & Taxes.
+                                    </li>
+                                    <li style="margin-bottom: 15px;">
+                                        2.If there is any item not as per your requirement, please get the same modified to be reflected in the Pro-Forma Invoice before confirmation. PI terms mentioned are
+                                        final and shall supersede PO terms, no dispute will be entertained after order released for production pertaining to terms agreed in Pro-Forma invoice.
+                                    </li>
+                                    <li>
+                                        3.In the event the order is modified or cancelled once issued to production, all material expenses, processing costs and cancellation penalties up to the date of
+                                        modification or cancellation shall be invoiced. The amount to be invoiced is solely at the discretion of the Seller and shall be final and non-negotiable
+                                    </li>
+                                </ul>
+                                </p>
+                                <div id="account">
+                                    <h3 style="font-size: 13px;">Bank Details</h3>
+                                    <h5><span>Account Name</span> :STRONGLASS TOUGH</h5>
+                                    <h5><span>Bank Name</span>:<?php echo $st[0]['ST_Bank']; ?></span></h5>
+                                    <h5><span>Account Number</span>:<?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
+                                    <h5><span>IFSC</span>:<?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <table class="table table-hover table-bordered" id="sampleTable1">
+                                    <thead>
+                                    <th>#</th>
+                                    <th>Select Charges</th>
+                                    <th>No.of pieces</th>
+                                    <th>Price</th>
+                                    <th>Total(INR)</th>
+                                    </thead>
+                                    <tbody></tbody>
+                                    <tfoot>
+                                    <?php
+                                    $i=1;
+                                    foreach ($invoice_Charges as $key) {
+                                        ?>
+                                        <tr>
+                                            <td><?php echo $i; ?></td>
+                                            <td style="text-align: left;"><?php echo $key['charge_name']; ?></td>
+                                            <td><?php echo $key['Proforma_Charge_Count']; ?></td>
+                                            <td><?php echo $key['Proforma_Charge_Value']; ?></td>
+                                            <td><?php echo $key['Proforma_Charge_Cost']; ?></td>
+                                        </tr>
+                                        <?php
+                                        $i++;
+                                    }
+                                    ?>
+                                    <tr>
+                                        <td colspan="4" style="text-align: right;">SUB-TOTAL</td>
+
+                                        <td><input class="form-control" type="hidden" name="sub_tot" id="sub_tot" value="<?php echo $invoice[0]['Sub_Total']; ?>" readonly ><?php echo $invoice[0]['Sub_Total']; ?></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" style="text-align: right;">HANDLING CHARGE</td>
+
+                                        <td><input class="form-control" type="hidden" name="insurance" id="insurance" value="<?php echo $invoice[0]['Insurance_Value']; ?>" required readonly><?php echo $invoice[0]['Insurance_Value']; ?></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4" style="text-align: right;">TRANSPORT</td>
+
+                                        <td><input class="form-control" type="hidden" name="transport" id="transport"  value="<?php echo $invoice[0]['Transport']; ?>" readonly><?php echo $invoice[0]['Transport']; ?></td>
+
+                                    </tr>
+                                    <?php
+                                    if($invoice[0]['IGST_Value'] == '0')
+                                    { ?>
+                                        <tr>
+                                            <td colspan="4" style="text-align: right;">SGST @<?php echo $tax[0]['SGST%']; ?></td>
+
+                                            <td><input class="form-control" type="hidden" name="sgst" id="sgst" value="<?php echo $invoice[0]['SGST_Value']; ?>"readonly ><?php echo $invoice[0]['SGST_Value']; ?></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4" style="text-align: right;">CGST @<?php echo $tax[0]['CGST%']; ?>
+                                                <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
+                                            </td>
+                                            <td><input class="form-control" type="hidden" name="cgst" id="cgst" value="<?php echo $invoice[0]['CGST_Value']; ?>" readonly ><?php echo $invoice[0]['CGST_Value']; ?></td>
+
+                                        </tr>
+
+                                    <?php }
+                                    else
+                                    {?>
+                                        <tr>
+                                            <td colspan="4" style="text-align: right;">IGST @18%
+                                                <input type="hidden" id="gst" value="18">
+                                            </td>
+                                            <td><input class="form-control" type="hidden" name="igst" id="igst" value="<?php echo $invoice[0]['IGST_Value']; ?>" readonly ><?php echo $invoice[0]['IGST_Value']; ?></td>
+
+                                        </tr>
+                                        <?php
+                                    }
+                                    ?>
+                                    <tr>
+
+                                        <td colspan="4" style="text-align: right;">GROSS TOTAL</td>
+                                        <td><input class="form-control" type="hidden" name="gross_tot" id="gross_tot" readonly value="<?php echo $invoice[0]['GrossTotal_Value']; ?>" ><h4><?php echo $invoice[0]['GrossTotal_Value']; ?> /-</h4></td>
+
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                                <div>Amount in Words: <span id="word" style="font-size: 15px;"></span></div>
+                            </div>
+                        </div>
+                        <div id="Signature">
+                            <p>For Stronglass Tough</p>
+                            <div class="row"  style="margin-top: 150px;">
+                                <div class="col-md-3">
+                                    <h6 class="st_check">Customer's Acceptance<br>Sign & Seal</h6>
+                                </div>
+                                <div class="col-md-3">
+                                    <h6 class="st_check">Prepared By</h6>
+                                    <p class="dynamic_data"><?php echo $User[0]['User_Name']; ?></p>
+                                </div>
+                                <div class="col-md-3">
+                                    <h6 class="st_check">Checked By</h6>
+                                    <p class="dynamic_data"><?php echo $check_user[0]['User_Name']; ?>
+                                </div>
+                                <div class="col-md-3">
+                                    <h6 class="st_check">(Authorised Signatory)</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" id="with_print">
+                            <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6">
+                                <?php if($_SESSION['role'] == 6) { ?>
+
+                                    <button id="with_print" class="btn btn-danger pi_button" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i> Generate WO</button>
+                                    <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="Print"/>
+                                <?php } elseif($_SESSION['role'] == 7){
+                                    ?>
+                                    <input type="button" id="with_print" class="btn btn-info" onclick="Request_Approve()" value="Request Work Order">
+                                    <button class="btn btn-danger pi_button " type="submit" id="with_print"><i class="fa fa-fw fa-lg fa-check-circle"></i>Send PI To Customer</button>
+                                    <input  type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="Print PI">
+
+                                    <a class="btn btn-success pi_button" id="with_print" href="<?php echo site_url('User_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT PI</a>
+
+                                <?php } ?>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
 </main>
+<style type="text/css" media="print">
+    #pagewidth {
+        overflow: hidden ;
+        width: 500px ;
+    }
+    @media print {
+        #with_print {
+            display: none;
+        }
+        table { page-break-after:auto }
+        tr    { page-break-inside:avoid; page-break-after:auto }
+        td    { page-break-inside:avoid; page-break-after:auto }
+        thead { display:table-header-group }
+        tfoot { display:table-footer-group }
+        #page_inside {  page-break-inside: avoid; }
+        #Signature { page-break-inside: avoid;}
+    }
+</style>
 <style>
-    #search_data {
+    .pi_button{
+        margin-right: 15px;
+        float: right;
+    }
+    table td {
+        text-align: center;
+    }
+    #account h5 span {
+        float: left;
+        width: 150px;
+        font-weight: normal;
+    }
+    h5 span{
+        float: left;
         width: 200px;
+        font-weight: normal;
+    }
+    .details_tag{
+        border: 1px solid #ccc;
+        height: 50px;
+        width: 100%;
+        margin: 0px auto;
         padding: 5px;
-        margin: 5px 0;
-        box-sizing: border-box;
+        text-align: justify;
     }
-    #autoSuggestionsList > li {
-        background: none repeat scroll 0 0 #F3F3F3;
-        border-bottom: 1px solid #E3E3E3;
-        list-style: none outside none;
-        padding: 3px 15px 3px 15px;
-        text-align: left;
+    .st_check{
+        padding-top: 15px;
+        border-top: 1px solid #000000;
+        text-align: center;
+    }
+    .dynamic_data{
+        position: relative;
+        top: -90px;
+        text-align: center;
+        font-weight: bold;
+        font-size: 20px;
+        margin: 0px;
+        margin-top: 5px;
     }
 
-    #autoSuggestionsList > li a { color: #800000; }
-
-    .auto_list {
-        border: 1px solid #E3E3E3;
-        border-radius: 5px 5px 5px 5px;
-        position: absolute;
-    }
 </style>
 
 
 <script>
-    $("#company_name2").change(function () {
-        alert("gdsgdsg");
-        $.ajax({
-            url:"<?php echo site_url('Admin_Controller/get_Customer_Address_Details'); ?>",
-            data: {id:
-                $(this).val()},
-            type: "POST",
-            success:function(server_response){
-                var data = $.parseJSON(server_response);
-                $('#Buyer').show();
-                document.getElementById('coustomer1').innerHTML = data[0]['Customer_Company_Name'];
-                document.getElementById('address1').innerHTML = data[0]['Customer_Add_Address_1'] + data[0]['Customer_Add_Area'] + data[0]['Customer_Add_City'] ;
-                document.getElementById('phone1').innerHTML = "Mob :" + data[0]['Customer_Add_Phone'];
-                document.getElementById('gstn1').innerHTML = "GSTIN :" + data[0]['Customer_Add_GSTIN'];
-            }
-        });
+
+    $( document ).ready(function() {
+        number_to_words();
     });
-    $("#no_holes").on('change keyup paste', function() {
-        var holes = parseInt($(this).val());
-        var amt = parseInt($('#charge_amt').val());
-        var total =  parseInt(holes * amt);
-        document.getElementById('tot_charge_amt').value = total;
 
-        var totals =document.getElementsByName("tot_charge_amt[]");
-        var sum = 0;
-        for (var j = 0, iLen = totals.length; j < iLen; j++) {
-            if (totals[j].value!==""){
-                val=parseFloat(totals[j].value);
-                sum +=val;
-            }
-        }
-        var grant_tot = document.getElementById('grand_total').value;
-        var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
-        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
-    });
-    $("#charges").change(function () {
-        $.ajax({
-            url:"<?php echo site_url('Admin_Controller/Edit_Charges'); ?>",
-            data: {id:
-                $(this).val()},
-            type: "POST",
-            success:function(server_response){
-                var data = $.parseJSON(server_response);
-                var  price = data[0]['charge_current_price'];
-                document.getElementById('charge_amt').value = price;
-            }
-        });
-    });
-    $("#Add").click(function () {
-        if($('#charges').val() == "")
-        {
-            alert("Please Select Charges...");
-        }
-        else if($('#no_holes').val() == ""){
-            alert("Please enter No.of pieces...");
-        }
-        else
-        {
-            var chrgs = $("#charges option:selected").text();
-            AddRow($('#charges').val(), $("#no_holes").val(),$("#charge_amt").val(),$("#tot_charge_amt").val(),chrgs);
-            $("#charges").val("");
-            $("#no_holes").val("");
-            $("#charge_amt").val("");
-            $("#tot_charge_amt").val("");
-        }
-    });
-    function AddRow(charges,no_holes,charge_amt,tot_charge_amt,chrgs) {
-        var tBody = $("#sampleTable1 > TBODY")[0];
-        //Add Row.
-        row = tBody.insertRow(-1);
-        //Add Name cell.
-        var cell = $(row.insertCell(-1));
-        var stock = $("<input />");
-        stock.attr("type", "hidden");
-        stock.attr("name", "charges[]");
-        stock.val(charges);
-        cell.append(stock);
-
-        var tech1 = $("<input />");
-        tech1.attr("type", "text");
-        tech1.attr("name", "test");
-        tech1.attr("class", "form-control");
-        tech1.attr('readonly', true);
-        tech1.val(chrgs);
-        cell.append(tech1);
-
-        var cell = $(row.insertCell(-1));
-        var cty = $("<input />");
-        cty.attr("type", "text");
-        cty.attr("class", "form-control");
-        cty.attr("name", "no_holes[]");
-        cty.attr('readonly', true);
-        cty.val(no_holes);
-        cell.append(cty);
-
-        var cell = $(row.insertCell(-1));
-        var cty1 = $("<input />");
-        cty1.attr("type", "text");
-        cty1.attr("class", "form-control");
-        cty1.attr("name", "charge_amt[]");
-        cty1.attr('readonly', true);
-        cty1.val(charge_amt);
-        cell.append(cty1);
-
-        var cell = $(row.insertCell(-1));
-        var cty2 = $("<input />");
-        cty2.attr("type", "text");
-        cty2.attr("class", "form-control");
-        cty2.attr("name", "tot_charge_amt[]");
-        cty2.attr('readonly', true);
-        cty2.val(tot_charge_amt);
-        cell.append(cty2);
-
-        cell = $(row.insertCell(-1));
-        var btnRemove = $("<input />");
-        btnRemove.attr("type", "button");
-        btnRemove.attr("onclick", "Remove(this);");
-        btnRemove.val("Remove");
-        cell.append(btnRemove);
-    };
-    function Remove(button) {
-        //Determine the reference of the Row using the Button.
-        var row = $(button).closest("TR");
-        var name = $("TD", row).eq(0).html();
-        if (confirm("Do you want to delete: ")) {
-            //Get the reference of the Table.
-            var table = $("#sampleTable1")[0];
-            //Delete the Table row using it's Index.
-            table.deleteRow(row[0].rowIndex);
-            var totals =document.getElementsByName("tot_charge_amt[]");
-            var sum = 0;
-            for (var j = 0, iLen = totals.length; j < iLen; j++) {
-                if (totals[j].value!==""){
-                    val=parseFloat(totals[j].value);
-                    sum +=val;
-                }
-            }
-            var grant_tot = document.getElementById('grand_total').value;
-            var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
-            document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
-        }
-    };
-    function FillBilling() {
-        if($('#check').is(":checked"))
-        {
-            $('#Buyer').show();
-            $('#company_name2').hide();
-            document.getElementById('coustomer1').innerHTML =  document.getElementById('coustomer').innerHTML;
-            document.getElementById('address1').innerHTML  = document.getElementById('address').innerHTML;
-            document.getElementById('phone1').innerHTML =  document.getElementById('phone').innerHTML
-            document.getElementById('gstn1').innerHTML =  document.getElementById('gstn').innerHTML;
-        }
-        else
-        {
-            $('#Buyer').hide();
-            $('#company_name2').show();
-        }
-    }
-    function get_result(id) {
-        var pcs = document.getElementById('pics'+id).value;
-        var area = document.getElementById('area'+id).value;
-        $("#material"+id).change(function () {
+    /** Request for Approve **/
+    function Request_Approve() {
+        if (confirm("Do you Want Request to Approve WO...!")) {
+            var pi_code = document.getElementById('PI_Icode').value;
             $.ajax({
-                url:"<?php echo site_url('Admin_Controller/Edit_Material'); ?>",
-                data: {id:
-                    $(this).val()},
+                url:"<?php echo site_url('User_Controller/Request_To_Approve'); ?>",
+                data: {id: pi_code},
                 type: "POST",
-                success:function(server_response){
-                    var data = $.parseJSON(server_response);
-                    var amount = data[0]['Material_Current_Price'];
-                    var total = pcs * area * amount;
-                    document.getElementById('total'+id).value = total.toFixed(2);
-                    document.getElementById('rate'+id).value = amount;
-                    // Grand Total
-                    var totals =document.getElementsByName("total[]");
-                    var sum = 0;
-                    for (var j = 0, iLen = totals.length; j < iLen; j++) {
-                        if (totals[j].value!==""){
-                            val=parseFloat(totals[j].value);
-                            sum +=val;
-                        }
+                success:function(data){
+                    if(data == '1')
+                    {
+                        swal({
+                                title: "Success!",
+                                text: 'PI Request Send Success',
+                                type: "success"
+                            },
+                            function(){
+                                window.location.href = document.referrer;
+                            });
                     }
-                    document.getElementById('grand_total').value = parseFloat(sum).toFixed(2);
 
-                    // total pices
-                    var pices =document.getElementsByName("pics[]");
-                    var sum_pic = 0;
-                    for (var j = 0, iLen = pices.length; j < iLen; j++) {
-                        if (pices[j].value!==""){
-                            val=parseFloat(pices[j].value);
-                            sum_pic +=val;
-                        }
-                    }
-                    document.getElementById('total_pic').value = parseInt(sum_pic);
-
-                    //total area
-                    var areas =document.getElementsByName("area[]");
-                    var sum_area = 0;
-                    for (var j = 0, iLen = areas.length; j < iLen; j++) {
-                        if (areas[j].value!==""){
-                            val=parseFloat(areas[j].value);
-                            sum_area +=val;
-                        }
-                    }
-                    document.getElementById('total_area').value = parseFloat(sum_area).toFixed(2);
-
-                }
-            });
-        });
-    }
-
-    function change_rate(id) {
-        var pcs = document.getElementById('pics'+id).value;
-        var area = document.getElementById('area'+id).value;
-        var rate = document.getElementById('rate'+id).value;
-        var total = (pcs * area * rate);
-        document.getElementById('total'+id).value = total;
-    }
-
-    function ajaxSearch()
-    {
-        var input_data = $('#search_data').val();
-
-        if (input_data.length === 0)
-        {
-            $('#suggestions').hide();
-        }
-        else
-        {
-
-            var post_data = {
-                'search_data': input_data,
-                '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
-            };
-
-            $.ajax({
-                type: "POST",
-
-                url:"<?php echo site_url('Admin_Controller/GetCountryName'); ?>",
-                data: post_data,
-                success: function (data) {
-                    // return success
-                    if (data.length > 0) {
-                        $('#suggestions').show();
-                        $('#autoSuggestionsList').addClass('auto_list');
-                        $('#autoSuggestionsList').html(data);
-                    }
                 }
             });
 
         }
+
     }
 
-    function get_row(id) {
-        $.ajax({
-            url:"<?php echo site_url('Admin_Controller/get_Customer_Address'); ?>",
-            data: {id:
-            id},
-            type: "POST",
-            success:function(server_response){
-                $("#company_name2").html(server_response);
-                $('#suggestions').hide();
-                $('#Buyer').show();
-                document.getElementById('coustomer1').innerHTML =  document.getElementById('coustomer').innerHTML;
-                document.getElementById('address1').innerHTML  = document.getElementById('address').innerHTML;
-                document.getElementById('phone1').innerHTML =  document.getElementById('phone').innerHTML
-                document.getElementById('gstn1').innerHTML =  document.getElementById('gstn').innerHTML;
+    // Number into words
+    function number_to_words() {
+        var th = ['', 'thousand', 'million', 'billion', 'trillion'];
+
+        var dg = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+
+        var tn = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+
+        var tw = ['twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+
+        var s = document.getElementById('gross_tot').value;
+
+        s = s.toString();
+        s = s.replace(/[\, ]/g, '');
+        if (s != parseFloat(s)) return 'not a number';
+        var x = s.indexOf('.');
+        if (x == -1) x = s.length;
+        if (x > 15) return 'too big';
+        var n = s.split('');
+        var str = '';
+        var sk = 0;
+        for (var i = 0; i < x; i++) {
+            if ((x - i) % 3 == 2) {
+                if (n[i] == '1') {
+                    str += tn[Number(n[i + 1])] + ' ';
+                    i++;
+                    sk = 1;
+                } else if (n[i] != 0) {
+                    str += tw[n[i] - 2] + ' ';
+                    sk = 1;
+                }
+            } else if (n[i] != 0) {
+                str += dg[n[i]] + ' ';
+                if ((x - i) % 3 == 0) str += 'hundred ';
+                sk = 1;
             }
-        });
-        $.ajax({
-            url:"<?php echo site_url('Admin_Controller/get_Customer_Details'); ?>",
-            data: {id:
-            id},
-            type: "POST",
-            success:function(server_response){
-                $('#suggestions').hide();
-                var data = $.parseJSON(server_response);
-                document.getElementById('search_data').value = data[0]['Customer_Company_Name'];
-                document.getElementById('company_name').value = data[0]['Customer_Icode'];
-                document.getElementById('coustomer').innerHTML = data[0]['Customer_Company_Name'];
-                document.getElementById('address').innerHTML = data[0]['Customer_Address_1'] + data[0]['Customer_Area']  + data[0]['Customer_City'];
-                document.getElementById('phone').innerHTML = "Mob :" + data[0]['Customer_Phone'];
-                document.getElementById('gstn').innerHTML = "GSTIN :" + data[0]['Customer_GSTIN'];
-                $('#Buyer').show();
-                $('#company_name2').hide();
-                document.getElementById('coustomer1').innerHTML =  document.getElementById('coustomer').innerHTML;
-                document.getElementById('address1').innerHTML  = document.getElementById('address').innerHTML;
-                document.getElementById('phone1').innerHTML =  document.getElementById('phone').innerHTML
-                document.getElementById('gstn1').innerHTML =  document.getElementById('gstn').innerHTML;
+            if ((x - i) % 3 == 1) {
+                if (sk) str += th[(x - i - 1) / 3] + ' ';
+                sk = 0;
             }
-        });
+        }
+        document.getElementById('word').innerHTML = str;
+        document.getElementById('amt_words').value = str;
+        if (x != s.length) {
+            var y = s.length;
+            str += 'point ';
+            for (var i = x + 1; i < y; i++) str += dg[n[i]] + ' ';
+        }
+        return str.replace(/\s+/g, ' ');
     }
+
 </script>
 

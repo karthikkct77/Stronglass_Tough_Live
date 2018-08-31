@@ -50,7 +50,7 @@
                    <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Current_Status'); ?>"><i class="icon fa fa-circle-o"></i>WO Status</a></li>
                    <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Work_Order'); ?>"><i class="icon fa fa-circle-o"></i>View Work Order</a></li>
                    <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Complete_Work_Order'); ?>"><i class="icon fa fa-circle-o"></i>Completed WO</a></li>
-                   <!--                   <li><a class="treeview-item" href="--><!--"><i class="icon fa fa-circle-o"></i>View Customers</a></li>-->
+                   <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/profoma_invoice'); ?>"><i class="icon fa fa-circle-o"></i>View PI</a></li>
 
                </ul>
            </li>
