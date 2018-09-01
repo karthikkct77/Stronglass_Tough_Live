@@ -1578,11 +1578,11 @@ class Admin_Controller extends CI_Controller
         $data['wo'] = $this->user_model->Get_Single_wo($pi_icode);
         $data['User']=$this->user_model->Get_User_Details($pi_icode);
         $data['check_user']=$this->user_model->Get_Check_User_Details();
-        $this->load->view('User/header');
-        $this->load->view('User/top');
-        $this->load->view('User/left');
-        $this->load->view('User/View_Sheet_PI',$data,false);
-        $this->load->view('User/footer');
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/View_Sheet_PI',$data,false);
+        $this->load->view('Admin/footer');
     }
 
 }
