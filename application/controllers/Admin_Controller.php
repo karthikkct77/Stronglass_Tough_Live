@@ -1564,5 +1564,25 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/View_PI',$data, FALSE);
         $this->load->view('Admin/footer');
     }
+    /** Get Single sheet */
+    public function single_sheet_Invoice()
+    {
+        $pi_icode = $this->uri->segment(3);
+        $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
+        $data['invoice_item'] = $this->user_model->Get_Single_Invoice_Item_Sheet($pi_icode);
+        $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
+        $data['invoice_total'] = $this->user_model->Get_Single_Invoice_Item_Sheet_Total($pi_icode);
+        $data['sheet'] = $this->user_model->Get_Single_Sheet($pi_icode);
+        $data['tax']= $this->admin_model->get_Tax();
+        $data['st']= $this->admin_model->get_ST();
+        $data['wo'] = $this->user_model->Get_Single_wo($pi_icode);
+        $data['User']=$this->user_model->Get_User_Details($pi_icode);
+        $data['check_user']=$this->user_model->Get_Check_User_Details();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/View_Sheet_PI',$data,false);
+        $this->load->view('User/footer');
+    }
 
 }

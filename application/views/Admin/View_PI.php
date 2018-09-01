@@ -48,7 +48,7 @@
 
                                 <?php
                                 if ($val['PI_Type'] == '1') { ?>
-                                    <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/single_Invoice/') . $val['Proforma_Icode']; ?>">View</a></td>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('Admin_Controller/single_sheet_Invoice/') . $val['Proforma_Icode']; ?>">View</a></td>
                                     <?php
                                 }
                                 else
