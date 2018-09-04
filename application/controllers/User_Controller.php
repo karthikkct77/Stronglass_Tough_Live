@@ -1707,6 +1707,14 @@ class User_Controller extends CI_Controller
         }
 
     }
+    public function Barcode($id)
+    {
+        $pi_icode = $this->uri->segment(3);
+        $data['wo'] = $this->admin_model->Get_Work_Order($pi_icode);
+        $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
+        $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
+        $this->load->view('User/Print_Barcode',$data, FALSE);
+    }
 
 
 }

@@ -260,6 +260,7 @@
                             <div>Amount in Words: <span id="word" style="font-size: 20px;margin-left: 10px;"></span></div>
                         </div>
                         <hr>
+
                         <div class="row">
                             <div class="col-md-6">
 
@@ -268,7 +269,7 @@
                                 <?php if($_SESSION['role'] == 6) { ?>
 
                                     <button class="btn btn-danger pi_button" id="with_print" type="submit"><i class="fa fa-fw fa-lg fa-print"></i> Barcode Print</button>
-                                    <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()"value="Print"/>
+                                    <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="printDiv('print_bar')"value="Print"/>
                                 <?php } elseif($_SESSION['role'] == 7){
                                     ?>
 
@@ -283,7 +284,46 @@
     </div>
 </main>
 
+<script type="text/javascript">
+    function printDiv(divName) {
+        var printContents = document.getElementById(divName).innerHTML;
+        var originalContents = document.body.innerHTML;
+        document.body.innerHTML = printContents;
+        window.print();
+        document.body.innerHTML = originalContents;
+    }
+    $( document ).ready(function() {
+        number_to_words();
+    });
+</script>
+
 <style>
+
+    @media {
+        #print_bar {
+            width: 101.6mm;
+            height: 50mm;
+            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: bolder;
+            font-family: sans-serif;
+        }
+    }
+    div {
+        padding-bottom: 10px;
+    }
+    .last_fot{
+        display: block;
+        font-size: 12px;
+        font-weight: 100;
+    }
+    .left{
+        float: left;
+        padding-right: 10px;
+    }
+    .medium{
+        font-weight: 600;
+    }
     @media print {
         #with_print {
             display: none;
