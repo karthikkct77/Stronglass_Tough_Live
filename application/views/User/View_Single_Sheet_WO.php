@@ -44,7 +44,7 @@
                         <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
                     </div>
                     <hr>
-                    <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Barcode'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
+                    <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Barcode/').$invoice[0]['Proforma_Icode'] ; ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
                         <div class="row">
                             <div class="col-md-4">
                                 <h5>Consignee</h5>
