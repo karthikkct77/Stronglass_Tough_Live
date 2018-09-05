@@ -139,7 +139,7 @@
 
                                     <?php }
                                     ?>
-                                    <button class="btn btn-success" onclick="Save_Re_Cut('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
+                                    <button class="btn btn-success" onclick="Save_Re_Cut('<?php echo $val['WO_Process_Icode']; ?>')">Print Barcode</button>
                                 </td>
                             </tr>
                             <?php
@@ -197,7 +197,7 @@
                                     type: "success"
                                 },
                                 function () {
-                                    location.reload();
+                                    window.location.href = "<?php echo site_url('User_Controller/Recut_Sheet_Barcode/'); ?>"+id +'/'+pi_icode;
                                 });
                         }
                     }

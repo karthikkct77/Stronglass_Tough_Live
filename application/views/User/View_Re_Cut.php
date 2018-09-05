@@ -139,7 +139,7 @@
 
                                     <?php }
                                     ?>
-                                    <button class="btn btn-success" onclick="Save_Re_Cut('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
+                                    <button class="btn btn-success" onclick="Save_Re_Cut('<?php echo $val['WO_Process_Icode']; ?>')">Print Barcode</button>
                                 </td>
                             </tr>
                             <?php

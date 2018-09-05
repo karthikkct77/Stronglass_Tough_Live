@@ -1738,6 +1738,14 @@ class User_Controller extends CI_Controller
         $data['invoice_item'] = $this->admin_model->get_recut_normal_item($process_icode);
         $this->load->view('User/Print_Recut_Barcode',$data, FALSE);
     }
+    public function Recut_Sheet_Barcode($process_id,$pi_ic)
+    {
+        $process_icode = $this->uri->segment(3);
+        $pi_icode = $this->uri->segment(4);  $data['wo'] = $this->admin_model->Get_Work_Order($pi_icode);
+        $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
+        $data['invoice_item'] = $this->admin_model->get_recut_sheet_item($process_icode);
+        $this->load->view('User/Print_Recut_Barcode',$data, FALSE);
+    }
 
 
 }

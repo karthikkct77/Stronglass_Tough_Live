@@ -39,11 +39,10 @@
 </html>
 
 <script type="text/javascript">
-   /* $(document).ready(function(){
+    $(document).ready(function(){
         window.print();
         history.back();
     });
-*/
 </script>
 <style>
     @media {

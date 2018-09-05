@@ -730,6 +730,11 @@ class Admin_Model extends CI_Model
         $query = $this->db->query("SELECT * FROM wo_processing A INNER JOIN proforma_invoice_items B on A.Proforma_Invoice_Item_Icode=B.Proforma_Invoice_Items_Icode INNER JOIN material_master C on B.Proforma_Material_Icode=C.Material_Icode WHERE A.WO_Process_Icode='$process_id'");
         return $query->result_array();
     }
+    public function  get_recut_sheet_item($process_id)
+    {
+        $query = $this->db->query("SELECT * FROM wo_processing A INNER JOIN proforma_invoice_item_sheet B on A.PI_Sheet_Item_Icode=B.pi_item_sheet_icode INNER JOIN material_master C on B.Proforma_Material_Icode=C.Material_Icode WHERE A.WO_Process_Icode='$process_id'");
+        return $query->result_array();
+    }
 
 
 
