@@ -74,6 +74,6 @@ foreach ($invoice_item as $key)
         padding-right: 10px;
     }
     .medium{
-        font-weight: 600;
+        font-weight: 100;
     }
 </style>
