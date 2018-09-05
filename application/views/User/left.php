@@ -68,7 +68,8 @@
                     <!--<li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Size_Master'); ?><!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>-->
                     <li><a class="treeview-item" href="<?php echo site_url('User_Controller/Proforma_Invoice'); ?>"><i class="icon fa fa-circle-o"></i>Normal PI</a></li>
                     <li><a class="treeview-item" href="<?php echo site_url('User_Controller/Sheet_PI'); ?>"><i class="icon fa fa-circle-o"></i>Sheet PI</a></li>
-                    <!--                   <li><a class="treeview-item" href="--><!--"><i class="icon fa fa-circle-o"></i>View Customers</a></li>-->
+                    <li><a class="treeview-item" href="<?php echo site_url('User_Controller/Double_Glazing_PI'); ?>"><i class="icon fa fa-circle-o"></i>Double Glazing PI</a></li>
+                    <li><a class="treeview-item" href="<?php echo site_url('User_Controller/Lamination_PI'); ?>"><i class="icon fa fa-circle-o"></i>Lamination PI</a></li>
 
                 </ul>
             </li>

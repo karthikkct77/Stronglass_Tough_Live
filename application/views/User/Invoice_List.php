@@ -50,11 +50,23 @@
                                 <td>Sheet PI</td>
                                 <?php
                             }
-                            else
+                            else if($val['PI_Type'] == '2')
                             {
                             ?>
-                                <td>Normal PI</td>
+                                <td>Double Glazing PI</td>
                             <?php
+                            }
+                            else if($val['PI_Type'] == '3')
+                            {
+                                ?>
+                                <td>Lamination PI</td>
+                                <?php
+                            }
+                            else
+                            {
+                                ?>
+                                <td>Normal PI</td>
+                                <?php
                             }
                                 ?>
 <!--                                <td> <a class="btn btn-info" href="--><?php //echo site_url('Admin_Controller/single_Invoice/') . $val['Proforma_Icode']; ?><!--">View</a></td>-->

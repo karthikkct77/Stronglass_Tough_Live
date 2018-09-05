@@ -66,6 +66,18 @@
                                     <td>Sheet PI</td>
                                     <?php
                                 }
+                                else if($val['PI_Type'] == '2')
+                                {
+                                    ?>
+                                    <td>Double Glazing PI</td>
+                                    <?php
+                                }
+                                else if($val['PI_Type'] == '3')
+                                {
+                                    ?>
+                                    <td>Lamination PI</td>
+                                    <?php
+                                }
                                 else
                                 {
                                     ?>
