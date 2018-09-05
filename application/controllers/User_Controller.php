@@ -1707,13 +1707,33 @@ class User_Controller extends CI_Controller
         }
 
     }
-    public function Barcode($id)
+    public function Barcode($id,$type)
     {
         $pi_icode = $this->uri->segment(3);
-        $data['wo'] = $this->admin_model->Get_Work_Order($pi_icode);
-        $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
-        $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
-        $this->load->view('User/Print_Barcode',$data, FALSE);
+        $type = $this->uri->segment(4);
+
+        if($type == '0')
+        {
+            $data['wo'] = $this->admin_model->Get_Work_Order($pi_icode);
+            $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
+            $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
+            $this->load->view('User/Print_Barcode',$data, FALSE);
+        }
+        else
+        {
+            $data['wo'] = $this->admin_model->Get_Work_Order($pi_icode);
+            $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
+            $data['invoice_item'] = $this->admin_model->Get_Single_Sheet_Invoice_Item($pi_icode);
+            $this->load->view('User/Print_Barcode',$data, FALSE);
+        }
+
+    }
+
+    //** Recut Barcode */
+    public function Recut_Barcode($process_id,$pi_ic)
+    {
+        $process_icode = $this->uri->segment(3);
+        $pi_icode = $this->uri->segment(4);
     }
 
 

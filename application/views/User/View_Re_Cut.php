@@ -197,7 +197,7 @@
                                     type: "success"
                                 },
                                 function () {
-                                    location.reload();
+                                    window.location.href = "<?php echo site_url('User_Controller/Recut_Barcode/'); ?>"+id +'/'+pi_icode;
                                 });
                         }
                     }
