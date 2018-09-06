@@ -10,6 +10,8 @@
         </ul>
     </div>
 
+
+
     <div class="row">
         <div class="col-md-6">
             <div class="tile">
@@ -90,6 +92,27 @@
                         <p><b>Fabrication</b></p>
 
                     <?php  }
+
+                    elseif ($_SESSION['role'] == 10)
+                    { ?>
+                        <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
+                            <div class="info">
+                                <h4>Chennai Customers</h4>
+                                <p><b>5</b></p>
+                            </div>
+                        </div>
+
+                    <?php  }
+                    elseif ($_SESSION['role'] == 11)
+                    { ?>
+                        <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
+                            <div class="info">
+                                <h4>Kerala Customers</h4>
+                                <p><b>5</b></p>
+                            </div>
+                        </div>
+
+                    <?php  }
                     ?>
 
             </div>
@@ -160,7 +183,43 @@
                     </div>
 
                 <?php  }
+                elseif ($_SESSION['role'] == 10)
+                { ?>
+
+
+                            <h3 class="tile-title">Chat</h3>
+                            <div class="messanger">
+                                <div class="messages">
+
+                                    <div class="message"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/tonypeterson/48.jpg">
+                                        <p class="info"><span style="display: block;width: 100%;color: black;">2018-2-20</span>Hello there!<br>Good Morning</p>
+                                    </div>
+
+                                    <div class="message me"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/tonypeterson/48.jpg">
+                                        <p class="info"><span style="display: block;width: 100%;color: #fff;">2018-2-20</span>Hi<br>Good Morningaf safbu anuewu hqewrewbruguqeroqwjr qwrwr gwqrhqwrgf wifu wg ugwq</p>
+                                    </div>
+
+                                </div>
+                                <div class="sender">
+                                    <input type="text" placeholder="Send Message" name="message" id="message">
+                                    <button class="btn btn-primary" type="button" onclick="send_message();" ><i class="fa fa-lg fa-fw fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+
+
+                <?php  }
+                elseif ($_SESSION['role'] == 11)
+                { ?>
+                    <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
+                        <div class="info">
+                            <h4>Kerala Customers</h4>
+                            <p><b>5</b></p>
+                        </div>
+                    </div>
+
+                <?php  }
                 ?>
+
             </div>
         </div>
     </div>
@@ -450,6 +509,23 @@
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
         chart.draw(data, options);
+    }
+    
+    function send_message() {
+        var msg = document.getElementById('message').value;
+        $.ajax({
+            url: "<?php echo site_url('User_Controller/save_message'); ?>",
+            data: {
+                message: msg,
+            },
+            type: "POST",
+            context: document.body,
+            success: function (data) {
+                if (data == 1) {
+                   location.reload();
+                }
+            }
+        });
     }
 </script>
 

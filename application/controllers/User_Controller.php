@@ -58,7 +58,6 @@ class User_Controller extends CI_Controller
     /** User Dashboard */
     public function dashboard()
     {
-
         $data['pi_confirm']= $this->user_model->get_pi_confirm_status();
         $data['today_pi_count']= $this->user_model->get_today_pi_count();
         $data['today_pi_check']= $this->user_model->get_today_pi_check();
@@ -2037,6 +2036,27 @@ class User_Controller extends CI_Controller
             $this->session->set_flashdata('feedback', 'Please Cross Check the values in the Excel Sheet.The Columns Height,Width,No.of.pieces,Holes Must have only Numeric values. Type must have only Alphabetic. Make corrections and load Again ..');
             redirect('User_Controller/Lamination_PI');
         }
+
+    }
+
+    //** Get Chennai Work Order */
+    public function Chennai_Work_Order()
+    {
+        $data['chennai_wo']= $this->user_model->get_all_chennai_wo();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/Chennai_Status',$data, FALSE);
+        $this->load->view('User/footer');
+
+    }
+
+    //** save message */
+    public function save_message ()
+    {
+        $data = array('Message' => $this->input->post('Recut_Icode',true),
+                       'User_Icode' => $this->session->userdata['userid'] );
+        $insert = $this->user_model->insert_msg($data);
 
     }
 

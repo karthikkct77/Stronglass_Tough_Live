@@ -463,5 +463,27 @@ class User_Model extends CI_Model
         }
     }
 
+    //** Chennai Workorder  */
+    public function get_all_chennai_wo()
+    {
+
+        $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name, SUM(CASE WHEN D.Dispatch_Status ='3' THEN D.Total_Qty END ) AS total,(sum(D.Dispatch_Remaining_Qty) + sum(D.Cutting_Remaining_Qty)+sum(D.Furnace_Remaining_Qty)) as remaining
+                                   FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                   INNER JOIN wo_processing D on A.WO_Icode=D.WO_Icode WHERE A.WO_Completed ='0' and C.Customer_State LIKE '%Kerala%'  GROUP BY A.WO_Icode  ");
+        return $query->result_array();
+    }
+    public function insert_msg($data)
+    {
+        $this->db->insert('st_message_details', $data);
+        $insert_id = $this->db->insert_id();
+        if($insert_id != '0')
+        {
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+
 
 }
