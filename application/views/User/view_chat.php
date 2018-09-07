@@ -5,6 +5,59 @@
             <h1><i class="fa fa-edit"></i>Chat</h1>
 
         </div>
+        <ul class="app-breadcrumb breadcrumb">
+            <?php
+            if($_SESSION['role'] == 5)
+            {
+                if($msg_count[0]['msg'] == '0')
+                { ?>
+                    <li><a style="color: red;" class="app-nav__item" href="<?php echo site_url('User_Controller/Get_All_Message');?>" ><i class="fa fa-bell-o fa-lg"></i></a></li>
+
+                <?php  }
+                else{ ?>
+                    <li><a style="color: red;" class="app-nav__item" href="<?php echo site_url('User_Controller/Get_All_Message');?>"><span><?php echo $msg_count[0]['msg']; ?> </span><i class="fa fa-bell-o fa-lg"></i></a>
+
+                    </li>
+
+                <?php }
+                ?>
+
+
+
+            <?php   }
+            elseif ($_SESSION['role'] == 10)
+            {
+                if($msg_count[0]['msg'] == '0')
+                { ?>
+                    <li><a style="color: red;" class="app-nav__item" href="<?php echo site_url('User_Controller/Get_All_Message');?>" ><i class="fa fa-bell-o fa-lg"></i></a></li>
+
+                <?php  }
+                else{ ?>
+                    <li><a  style="color: red;" class="app-nav__item" href="<?php echo site_url('User_Controller/Get_All_Message');?>"><span><?php echo $msg_count[0]['msg']; ?> </span><i class="fa fa-bell-o fa-lg"></i></a>
+
+                    </li>
+
+                <?php }
+                ?>
+
+            <?php  }
+            elseif ($_SESSION['role'] == 11)
+            {       if($msg_count[0]['msg'] == '0')
+            { ?>
+                <li><a style="color: red;" class="app-nav__item" href="<?php echo site_url('User_Controller/Get_All_Message');?>" ><i class="fa fa-bell-o fa-lg"></i></a></li>
+
+            <?php  }
+            else{ ?>
+                <li><a style="color: red;" class="app-nav__item" href="<?php echo site_url('User_Controller/Get_All_Message');?>"><span><?php echo $msg_count[0]['msg']; ?> </span><i class="fa fa-bell-o fa-lg"></i></a>
+
+                </li>
+
+            <?php }
+                ?>
+
+            <?php  } ?>
+
+        </ul>
     </div>
 
     <?php
@@ -77,8 +130,9 @@
                   <div class="messanger">
                       <div class="messages">
                           <?php
-                          foreach ($kerala_msg as $key ) {
-                              if($key['Client_Icode'] != "0")
+                          foreach ($kerala_msg as $key ) { ?>
+                              <p>2018-02-20</p>
+                             <?php if($key['Client_Icode'] != "0")
                               { ?>
                                   <div class="message"><img src="<?php echo base_url('img/k.png'); ?>" >
                                       <p class="info"><span style="display: block;width: 100%;color: black;"><?php echo $key['send_date']; ?>
@@ -261,13 +315,15 @@
 //        $('#tblCustomers3').DataTable();
 //        $('#tblCustomers2').DataTable();
 //        $('#tblCustomers1').DataTable();
+        $(".messages").animate({ scrollTop: $(document).height() }, "slow");
+        return false;
     } );
 
     function send_message() {
 
         var msg = document.getElementById('message').value;
         var type = document.getElementById('client_type').value;
-        alert(msg);
+
         $.ajax({
             url: "<?php echo site_url('User_Controller/save_message'); ?>",
             data: {

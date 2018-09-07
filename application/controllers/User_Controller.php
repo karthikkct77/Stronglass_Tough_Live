@@ -58,6 +58,23 @@ class User_Controller extends CI_Controller
     /** User Dashboard */
     public function dashboard()
     {
+        $role = $this->session->userdata['role'];
+        if($role == 5)
+        {
+            $data['msg_count']=$this->user_model->get_unread_count();
+
+        }
+        elseif ($role == 10)
+        {
+            $data['msg_count']=$this->user_model->get_unread_count_chennai();
+
+        }
+        elseif ($role == 11)
+        {
+            $data['msg_count']=$this->user_model->get_unread_count_kerala();
+
+        }
+
         $data['pi_confirm']= $this->user_model->get_pi_confirm_status();
         $data['today_pi_count']= $this->user_model->get_today_pi_count();
         $data['today_pi_check']= $this->user_model->get_today_pi_check();
@@ -2095,26 +2112,29 @@ class User_Controller extends CI_Controller
         {
             $data['chennai_msg']=$this->user_model->get_all_chennai_message();
             $data['kerala_msg']=$this->user_model->get_all_kerala_message();
+            $data['msg_count']=$this->user_model->get_unread_count();
             $this->load->view('User/header');
-            $this->load->view('User/top');
+            $this->load->view('User/top',$data, FALSE);
             $this->load->view('User/left');
             $this->load->view('User/view_chat',$data, FALSE);
             $this->load->view('User/footer');
         }
         elseif ($role == 10)
         {
+            $data['msg_count']=$this->user_model->get_unread_count_chennai();
             $data['chennai_msg']=$this->user_model->get_all_chennai_message();
             $this->load->view('User/header');
-            $this->load->view('User/top');
+            $this->load->view('User/top',$data, FALSE);
             $this->load->view('User/left');
             $this->load->view('User/view_chat',$data, FALSE);
             $this->load->view('User/footer');
         }
         elseif ($role == 11)
         {
+            $data['msg_count']=$this->user_model->get_unread_count_kerala();
             $data['kerala_msg']=$this->user_model->get_all_kerala_message();
             $this->load->view('User/header');
-            $this->load->view('User/top');
+            $this->load->view('User/top',$data, FALSE);
             $this->load->view('User/left');
             $this->load->view('User/view_chat',$data, FALSE);
             $this->load->view('User/footer');

@@ -487,15 +487,31 @@ class User_Model extends CI_Model
     //** get all message */
     public function get_all_chennai_message()
     {
-        $user_id=$this->session->userdata['userid'];
+
         $query=$this->db->query("SELECT A.* FROM st_message_details A LEFT OUTER JOIN st_user_details B on A.User_Icode=B.User_Icode and A.Client_Icode=B.User_Icode WHERE A.client_type LIKE '%chennai%'  ORDER BY A.send_date Asc");
         return $query->result_array();
     }
 
     public function get_all_kerala_message()
     {
-        $user_id=$this->session->userdata['userid'];
+
         $query=$this->db->query("SELECT A.* FROM st_message_details A LEFT OUTER JOIN st_user_details B on A.User_Icode=B.User_Icode and A.Client_Icode=B.User_Icode WHERE A.client_type LIKE '%kerala%' ORDER BY A.send_date Asc");
+        return $query->result_array();
+    }
+    public function get_unread_count_chennai()
+    {
+        $query=$this->db->query("SELECT COUNT(Message_Icode) as msg FROM `st_message_details` WHERE Msg_Read = '0' and Client_Icode !='12' and client_type LIKE '%kerala'");
+        return $query->result_array();
+    }
+    public function get_unread_count_kerala()
+    {
+        $query=$this->db->query("SELECT COUNT(Message_Icode) as msg FROM `st_message_details` WHERE Msg_Read = '0' and Client_Icode !='13' and client_type LIKE '%kerala'");
+        return $query->result_array();
+    }
+
+    public function get_unread_count()
+    {
+        $query=$this->db->query("SELECT COUNT(Message_Icode) as msg FROM `st_message_details` WHERE Msg_Read = '0'  and client_type LIKE '%chennai' or client_type LIKE '%kerala%' and User_Icode = '0'");
         return $query->result_array();
     }
 

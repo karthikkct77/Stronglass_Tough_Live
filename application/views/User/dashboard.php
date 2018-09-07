@@ -5,8 +5,57 @@
             <p>Stronglass Tough</p>
         </div>
         <ul class="app-breadcrumb breadcrumb">
-            <li class="breadcrumb-item"><i class="fa fa-home fa-lg"></i></li>
-            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+            <?php
+            if($_SESSION['role'] == 5)
+            {
+                if($msg_count[0]['msg'] == '0')
+                { ?>
+                    <li><a style="color: red;" class="app-nav__item" href="<?php echo site_url('User_Controller/Get_All_Message');?>" ><i class="fa fa-bell-o fa-lg"></i></a></li>
+
+                <?php  }
+                else{ ?>
+                    <li><a style="color: green;" class="app-nav__item" href="<?php echo site_url('User_Controller/Get_All_Message');?>"><span><?php echo $msg_count[0]['msg']; ?> </span><i class="fa fa-bell-o fa-lg"></i></a>
+
+                    </li>
+
+                <?php }
+                ?>
+
+
+
+            <?php   }
+            elseif ($_SESSION['role'] == 10)
+            {
+                if($msg_count[0]['msg'] == '0')
+                { ?>
+                    <li><a style="color: red;" class="app-nav__item" href="<?php echo site_url('User_Controller/Get_All_Message');?>" ><i class="fa fa-bell-o fa-lg"></i></a></li>
+
+                <?php  }
+                else{ ?>
+                    <li><a  style="color: red;" class="app-nav__item" href="<?php echo site_url('User_Controller/Get_All_Message');?>"><span><?php echo $msg_count[0]['msg']; ?> </span><i class="fa fa-bell-o fa-lg"></i></a>
+
+                    </li>
+
+                <?php }
+                ?>
+
+            <?php  }
+            elseif ($_SESSION['role'] == 11)
+            {       if($msg_count[0]['msg'] == '0')
+            { ?>
+                <li><a style="color: red;" class="app-nav__item" href="<?php echo site_url('User_Controller/Get_All_Message');?>" ><i class="fa fa-bell-o fa-lg"></i></a></li>
+
+            <?php  }
+            else{ ?>
+                <li><a style="color: red;" class="app-nav__item" href="<?php echo site_url('User_Controller/Get_All_Message');?>"><span><?php echo $msg_count[0]['msg']; ?> </span><i class="fa fa-bell-o fa-lg"></i></a>
+
+                </li>
+
+            <?php }
+                ?>
+
+            <?php  } ?>
+
         </ul>
     </div>
 
