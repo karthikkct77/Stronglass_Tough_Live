@@ -14361,7 +14361,7 @@ be a descendant of the grid when it is being dragged.
           flex: 1;
   margin: 10px 0;
   padding: 0 10px;
-  max-height: 260px;
+  max-height: 342px;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -14415,6 +14415,8 @@ be a descendant of the grid when it is being dragged.
 .messanger .messages .message img {
   border-radius: 50%;
   margin-right: 15px;
+  width: 30px;
+  height: 30px;
 }
 
 .messanger .messages .message .info {
@@ -14829,4 +14831,19 @@ be a descendant of the grid when it is being dragged.
 
 .user .user-settings label {
   color: #666;
+}
+.app-nav__item span {
+  background: var(--orange);
+  position: absolute;
+  top: 7px;
+  width: 20px;
+  height: 20px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: bolder;
+  margin-left: 10px;
+  line-height: 16px;
+  color: #ffffff;
+  padding: 2px;
+  font-family: sans-serif;
 }
