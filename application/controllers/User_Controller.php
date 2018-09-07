@@ -63,6 +63,7 @@ class User_Controller extends CI_Controller
         $data['today_pi_check']= $this->user_model->get_today_pi_check();
         $data['wo_generate']= $this->user_model->get_today_WO_Generate();
         $data['status']= $this->admin_model->get_all_WO_Status();
+
         $this->load->view('User/header');
         $this->load->view('User/top');
         $this->load->view('User/left');
@@ -2054,9 +2055,70 @@ class User_Controller extends CI_Controller
     //** save message */
     public function save_message ()
     {
-        $data = array('Message' => $this->input->post('Recut_Icode',true),
-                       'User_Icode' => $this->session->userdata['userid'] );
+        $data = array('Client_Message' => $this->input->post('message',true),
+                       'client_type' =>$this->input->post('ctype',true),
+                        'Client_Icode' => $this->session->userdata['userid'] );
         $insert = $this->user_model->insert_msg($data);
+        if($insert == 1)
+        {
+            echo 1;
+        }
+        else{
+            echo 0;
+        }
+
+    }
+    //** save message */
+    public function save_admin_message ()
+    {
+        $data = array('Message' => $this->input->post('message',true),
+            'client_type' =>$this->input->post('ctype',true),
+            'User_Icode' => $this->session->userdata['userid'] );
+        $insert = $this->user_model->insert_msg($data);
+        if($insert == 1)
+        {
+            echo 1;
+        }
+        else{
+            echo 0;
+        }
+
+    }
+
+    //** Get All Messages */
+    public function Get_All_Message()
+    {
+
+        $role = $this->session->userdata['role'];
+
+        if($role == 5)
+        {
+            $data['chennai_msg']=$this->user_model->get_all_chennai_message();
+            $data['kerala_msg']=$this->user_model->get_all_kerala_message();
+            $this->load->view('User/header');
+            $this->load->view('User/top');
+            $this->load->view('User/left');
+            $this->load->view('User/view_chat',$data, FALSE);
+            $this->load->view('User/footer');
+        }
+        elseif ($role == 10)
+        {
+            $data['chennai_msg']=$this->user_model->get_all_chennai_message();
+            $this->load->view('User/header');
+            $this->load->view('User/top');
+            $this->load->view('User/left');
+            $this->load->view('User/view_chat',$data, FALSE);
+            $this->load->view('User/footer');
+        }
+        elseif ($role == 11)
+        {
+            $data['kerala_msg']=$this->user_model->get_all_kerala_message();
+            $this->load->view('User/header');
+            $this->load->view('User/top');
+            $this->load->view('User/left');
+            $this->load->view('User/view_chat',$data, FALSE);
+            $this->load->view('User/footer');
+        }
 
     }
 

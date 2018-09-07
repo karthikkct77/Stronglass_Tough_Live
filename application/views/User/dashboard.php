@@ -137,16 +137,17 @@
                 <?php  }
                 elseif ($_SESSION['role'] == 5)
                 { ?>
-                    <div class="widget-small info coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>
-                        <div class="info">
-                            <h4><a href="<?php echo site_url('User_Controller/Proforma_Invoice'); ?>">Create PI</a></h4>
-                        </div>
-                    </div>
-                    <div class="widget-small warning coloured-icon"><i class="icon fa fa fa-eye fa-3x"></i>
-                        <div class="info">
-                            <h4><a href="<?php echo site_url('User_Controller/Invoice_List'); ?>">View PI</a></h4>
-                        </div>
-                    </div>
+<!--                    <div class="widget-small info coloured-icon"><i class="icon fa fa-files-o fa-3x"></i>-->
+<!--                        <div class="info">-->
+<!--                            <h4><a href="--><?php //echo site_url('User_Controller/Proforma_Invoice'); ?><!--">Create PI</a></h4>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="widget-small warning coloured-icon"><i class="icon fa fa fa-eye fa-3x"></i>-->
+<!--                        <div class="info">-->
+<!--                            <h4><a href="--><?php //echo site_url('User_Controller/Invoice_List'); ?><!--">View PI</a></h4>-->
+<!--                        </div>-->
+<!--                    </div>-->
+
 
                 <?php  }
                 elseif ($_SESSION['role'] == 6)
@@ -185,26 +186,6 @@
                 <?php  }
                 elseif ($_SESSION['role'] == 10)
                 { ?>
-
-
-                            <h3 class="tile-title">Chat</h3>
-                            <div class="messanger">
-                                <div class="messages">
-
-                                    <div class="message"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/tonypeterson/48.jpg">
-                                        <p class="info"><span style="display: block;width: 100%;color: black;">2018-2-20</span>Hello there!<br>Good Morning</p>
-                                    </div>
-
-                                    <div class="message me"><img src="https://s3.amazonaws.com/uifaces/faces/twitter/tonypeterson/48.jpg">
-                                        <p class="info"><span style="display: block;width: 100%;color: #fff;">2018-2-20</span>Hi<br>Good Morningaf safbu anuewu hqewrewbruguqeroqwjr qwrwr gwqrhqwrgf wifu wg ugwq</p>
-                                    </div>
-
-                                </div>
-                                <div class="sender">
-                                    <input type="text" placeholder="Send Message" name="message" id="message">
-                                    <button class="btn btn-primary" type="button" onclick="send_message();" ><i class="fa fa-lg fa-fw fa-paper-plane"></i></button>
-                                </div>
-                            </div>
 
 
                 <?php  }
@@ -510,23 +491,8 @@
 
         chart.draw(data, options);
     }
-    
-    function send_message() {
-        var msg = document.getElementById('message').value;
-        $.ajax({
-            url: "<?php echo site_url('User_Controller/save_message'); ?>",
-            data: {
-                message: msg,
-            },
-            type: "POST",
-            context: document.body,
-            success: function (data) {
-                if (data == 1) {
-                   location.reload();
-                }
-            }
-        });
-    }
+
+
 </script>
 
 

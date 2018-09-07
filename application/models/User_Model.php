@@ -484,6 +484,20 @@ class User_Model extends CI_Model
             return 0;
         }
     }
+    //** get all message */
+    public function get_all_chennai_message()
+    {
+        $user_id=$this->session->userdata['userid'];
+        $query=$this->db->query("SELECT A.* FROM st_message_details A LEFT OUTER JOIN st_user_details B on A.User_Icode=B.User_Icode and A.Client_Icode=B.User_Icode WHERE A.client_type LIKE '%chennai%'  ORDER BY A.send_date Asc");
+        return $query->result_array();
+    }
+
+    public function get_all_kerala_message()
+    {
+        $user_id=$this->session->userdata['userid'];
+        $query=$this->db->query("SELECT A.* FROM st_message_details A LEFT OUTER JOIN st_user_details B on A.User_Icode=B.User_Icode and A.Client_Icode=B.User_Icode WHERE A.client_type LIKE '%kerala%' ORDER BY A.send_date Asc");
+        return $query->result_array();
+    }
 
 
 }
