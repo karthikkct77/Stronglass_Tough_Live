@@ -1259,6 +1259,10 @@
                 val=parseFloat(totals_amt[j].value);
                 sum_amt +=val;
             }
+            else
+            {
+                sum_amt = 0;
+            }
         }
 
         var sub_tot = parseFloat(sum) + parseFloat(sum_amt);

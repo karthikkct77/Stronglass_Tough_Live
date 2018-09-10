@@ -838,18 +838,22 @@
                 sum_pic +=val;
             }
         }
-        document.getElementById('total_pic').value = parseInt(sum_pic);
+
         var charge =document.getElementsByName("tot_charge_amt[]");
-        var sum_charge = 0;
+        var sum_cherge = 0;
         for (var j = 0, iLen = charge.length; j < iLen; j++) {
             if (charge[j].value!==""){
                 val=parseFloat(charge[j].value);
-                sum_charge +=val;
+                sum_cherge +=val;
+            }
+            else
+            {
+                sum_cherge = 0;
             }
         }
         var grant_tot = document.getElementById('grand_total').value;
-        var sub_tot = parseFloat(sum_charge) + parseFloat(grant_tot);
-        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+        var sub_tots = parseFloat(sum_cherge) + parseFloat(grant_tot);
+        document.getElementById('sub_tot').value = parseFloat(sub_tots).toFixed(2);
         var sub_tot =document.getElementById('sub_tot').value;
 
         var tax = 2.42;
@@ -991,26 +995,15 @@
 
     /** Change Charge Height */
     function change_Charge_Height(id) {
-        var actual_H = document.getElementById('height'+id).value;
         var Charge_W = document.getElementById('ch_weight'+id).value;
         var Charge_H = document.getElementById('ch_height'+id).value;
         var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000;
         document.getElementById('area'+id).value = parseFloat(areas).toFixed(3);;
-        var areas1 =document.getElementsByName("area[]");
-        var sum_area = 0;
-        for (var j = 0, iLen = areas1.length; j < iLen; j++) {
-            if (areas1[j].value!==""){
-                val=parseFloat(areas1[j].value);
-                sum_area +=val;
-            }
-        }
-        document.getElementById('total_area1').innerHTML =  parseFloat(sum_area).toFixed(3);
         var pcs = document.getElementById('pics'+id).value;
         var rate = document.getElementById('rate'+id).value;
-        var total = (pcs * areas * rate);
-        document.getElementById('total'+id).value =  parseFloat(total).toFixed(3);
+        var tot = (pcs * areas * rate);
+        document.getElementById('total'+id).value =  parseFloat(tot).toFixed(3);
 
-//            // Grand Total
         var totals =document.getElementsByName("total[]");
         var sum = 0;
         for (var j = 0, iLen = totals.length; j < iLen; j++) {
@@ -1020,34 +1013,27 @@
             }
         }
         document.getElementById('grand_total').value = parseFloat(sum).toFixed(2);
-        // total pices
-        var pices =document.getElementsByName("pics[]");
-        var sum_pic = 0;
-        for (var j = 0, iLen = pices.length; j < iLen; j++) {
-            if (pices[j].value!==""){
-                val=parseFloat(pices[j].value);
-                sum_pic +=val;
+
+        var charge =document.getElementsByName("tot_charge_amt[]");
+        var sum_cherge = 0;
+        for (var k = 0, iLen = charge.length; k < iLen; k++) {
+            if (charge[k].value!==""){
+                val=parseFloat(charge[k].value);
+                sum_cherge +=val;
             }
-        }
-        document.getElementById('total_pic').value = parseInt(sum_pic);
-        var totals =document.getElementsByName("tot_charge_amt[]");
-        var sum = 0;
-        for (var j = 0, iLen = totals.length; j < iLen; j++) {
-            if (totals[j].value!==""){
-                val=parseFloat(totals[j].value);
-                sum +=val;
+            else
+            {
+                sum_cherge = 0;
             }
         }
         var grant_tot = document.getElementById('grand_total').value;
-        var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
-        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+        var sub_tots = parseFloat(sum_cherge) + parseFloat(grant_tot);
+        document.getElementById('sub_tot').value = parseFloat(sub_tots).toFixed(2);
         var sub_tot =document.getElementById('sub_tot').value;
-
         var tax = 2.42;
         var total = parseFloat (sub_tot * tax / 100);
         document.getElementById('insurance').value = parseFloat(total).toFixed(3);
         var insurance =parseFloat(total).toFixed(3);
-
         if ($('input[name=tax]:checked').length > 0) {
             var res = $('input:radio[name="tax"]:checked').val();
             if(res == 'gst')
@@ -1115,27 +1101,22 @@
             }
         }
         document.getElementById('grand_total').value = parseFloat(sum).toFixed(2);
-        // total pices
-        var pices =document.getElementsByName("pics[]");
-        var sum_pic = 0;
-        for (var j = 0, iLen = pices.length; j < iLen; j++) {
-            if (pices[j].value!==""){
-                val=parseFloat(pices[j].value);
-                sum_pic +=val;
+
+        var charge =document.getElementsByName("tot_charge_amt[]");
+        var sum_cherge = 0;
+        for (var j = 0, iLen = charge.length; j < iLen; j++) {
+            if (charge[j].value!==""){
+                val=parseFloat(charge[j].value);
+                sum_cherge +=val;
             }
-        }
-        document.getElementById('total_pic').value = parseInt(sum_pic);
-        var totals =document.getElementsByName("tot_charge_amt[]");
-        var sum = 0;
-        for (var j = 0, iLen = totals.length; j < iLen; j++) {
-            if (totals[j].value!==""){
-                val=parseFloat(totals[j].value);
-                sum +=val;
+            else
+            {
+                sum_cherge = 0;
             }
         }
         var grant_tot = document.getElementById('grand_total').value;
-        var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
-        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+        var sub_tots = parseFloat(sum_cherge) + parseFloat(grant_tot);
+        document.getElementById('sub_tot').value = parseFloat(sub_tots).toFixed(2);
         var sub_tot =document.getElementById('sub_tot').value;
 
         var tax = 2.42;
