@@ -66,12 +66,16 @@ class User_Controller extends CI_Controller
         }
         elseif ($role == 10)
         {
+            $type = 'chennai';
             $data['msg_count']=$this->user_model->get_unread_count_chennai();
+            $data['customer']=$this->user_model->get_customer_count($type);
 
         }
         elseif ($role == 11)
         {
+            $type = 'kerala';
             $data['msg_count']=$this->user_model->get_unread_count_kerala();
+            $data['customer']=$this->user_model->get_customer_count($type);
 
         }
 

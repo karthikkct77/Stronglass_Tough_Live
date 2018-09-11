@@ -147,7 +147,7 @@
                         <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
                             <div class="info">
                                 <h4>Chennai Customers</h4>
-                                <p><b>5</b></p>
+                                <p><?php echo $customer[0]['counts']; ?></p>
                             </div>
                         </div>
 
@@ -157,7 +157,7 @@
                         <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
                             <div class="info">
                                 <h4>Kerala Customers</h4>
-                                <p><b>5</b></p>
+                                <p><?php echo $customer[0]['counts']; ?></p>
                             </div>
                         </div>
 
@@ -240,12 +240,7 @@
                 <?php  }
                 elseif ($_SESSION['role'] == 11)
                 { ?>
-                    <div class="widget-small primary coloured-icon"><i class="icon fa fa-users fa-3x"></i>
-                        <div class="info">
-                            <h4>Kerala Customers</h4>
-                            <p><b>5</b></p>
-                        </div>
-                    </div>
+
 
                 <?php  }
                 ?>
