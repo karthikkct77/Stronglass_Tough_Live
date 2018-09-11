@@ -4,60 +4,8 @@
     <!-- Sidebar toggle button--><a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
     <!-- Navbar Right Menu-->
     <ul class="app-nav">
-<!--        --><?php
-//        if($_SESSION['role'] == 5)
-//        {
-//            if($msg_count[0]['msg'] == '0')
-//            { ?>
-<!--                <li><a class="app-nav__item" href="--><?php //echo site_url('User_Controller/Get_All_Message');?><!--" ><i class="fa fa-bell-o fa-lg"></i></a></li>-->
-<!---->
-<!--              --><?php // }
-//              else{ ?>
-<!--                  <li><a class="app-nav__item" href="--><?php //echo site_url('User_Controller/Get_All_Message');?><!--"><span>--><?php //echo $msg_count[0]['msg']; ?><!-- </span><i class="fa fa-bell-o fa-lg"></i></a>-->
-<!---->
-<!--                  </li>-->
-<!---->
-<!--             --><?php //}
-//            ?>
-<!---->
-<!---->
-<!---->
-<!--       --><?php //  }
-//        elseif ($_SESSION['role'] == 10)
-//        {
-//            if($msg_count[0]['msg'] == '0')
-//            { ?>
-<!--            <li><a class="app-nav__item" href="--><?php //echo site_url('User_Controller/Get_All_Message');?><!--" ><i class="fa fa-bell-o fa-lg"></i></a></li>-->
-<!---->
-<!--        --><?php // }
-//        else{ ?>
-<!--            <li><a class="app-nav__item" href="--><?php //echo site_url('User_Controller/Get_All_Message');?><!--"><span>--><?php //echo $msg_count[0]['msg']; ?><!-- </span><i class="fa fa-bell-o fa-lg"></i></a>-->
-<!---->
-<!--            </li>-->
-<!---->
-<!--        --><?php //}
-//        ?>
-<!---->
-<!--        --><?php // }
-//        elseif ($_SESSION['role'] == 11)
-//        {       if($msg_count[0]['msg'] == '0')
-//        { ?>
-<!--            <li><a class="app-nav__item" href="--><?php //echo site_url('User_Controller/Get_All_Message');?><!--" ><i class="fa fa-bell-o fa-lg"></i></a></li>-->
-<!---->
-<!--        --><?php // }
-//        else{ ?>
-<!--            <li><a class="app-nav__item" href="--><?php //echo site_url('User_Controller/Get_All_Message');?><!--"><span>--><?php //echo $msg_count[0]['msg']; ?><!-- </span><i class="fa fa-bell-o fa-lg"></i></a>-->
-<!---->
-<!--            </li>-->
-<!---->
-<!--        --><?php //}
-//            ?>
-<!---->
-<!--         --><?php // } ?>
 
-
-        <!--Notification Menu-->
-
+            <a class="app-header__logo" href="#"><?php echo("{$_SESSION['user_name']}"."<br />");?></a>
 
         <!-- User Menu-->
         <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
