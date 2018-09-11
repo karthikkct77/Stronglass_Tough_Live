@@ -2146,6 +2146,16 @@ class User_Controller extends CI_Controller
 
     }
 
+    //** kerala work orders */
+     public function Kerala_Work_Order()
+     {
+         $data['kerala_wo']= $this->user_model->get_all_kerala_wo();
+         $this->load->view('User/header');
+         $this->load->view('User/top');
+         $this->load->view('User/left');
+         $this->load->view('User/Kerala_Status',$data, FALSE);
+         $this->load->view('User/footer');
+     }
 
 
 
