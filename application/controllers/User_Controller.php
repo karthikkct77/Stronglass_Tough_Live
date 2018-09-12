@@ -2136,6 +2136,7 @@ class User_Controller extends CI_Controller
         elseif ($role == 11)
         {
             $data['msg_count']=$this->user_model->get_unread_count_kerala();
+            print_r($data['msg_count']);
             $data['kerala_msg']=$this->user_model->get_all_kerala_message();
             $this->load->view('User/header');
             $this->load->view('User/top',$data, FALSE);
