@@ -2114,6 +2114,10 @@ class User_Controller extends CI_Controller
 
         if($role == 5)
         {
+            $data = array('Msg_Read' => '1' );
+            $array = array('Client_Icode !=' => '0');
+            $this->db->where($array);
+            $this->db->update('st_message_details', $data);
             $data['chennai_msg']=$this->user_model->get_all_chennai_message();
             $data['kerala_msg']=$this->user_model->get_all_kerala_message();
             $data['msg_count']=$this->user_model->get_unread_count();
@@ -2125,6 +2129,10 @@ class User_Controller extends CI_Controller
         }
         elseif ($role == 10)
         {
+            $data = array('Msg_Read' => '1' );
+            $array = array('client_type =' => 'chennai', 'User_Icode !=' => '0');
+            $this->db->where($array);
+            $this->db->update('st_message_details', $data);
             $data['msg_count']=$this->user_model->get_unread_count_chennai();
             $data['chennai_msg']=$this->user_model->get_all_chennai_message();
             $this->load->view('User/header');
@@ -2135,8 +2143,11 @@ class User_Controller extends CI_Controller
         }
         elseif ($role == 11)
         {
+            $data = array('Msg_Read' => '1' );
+            $array = array('client_type =' => 'kerala', 'User_Icode !=' => '0');
+            $this->db->where($array);
+            $this->db->update('st_message_details', $data);
             $data['msg_count']=$this->user_model->get_unread_count_kerala();
-            print_r($data['msg_count']);
             $data['kerala_msg']=$this->user_model->get_all_kerala_message();
             $this->load->view('User/header');
             $this->load->view('User/top',$data, FALSE);

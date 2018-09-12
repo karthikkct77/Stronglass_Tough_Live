@@ -521,7 +521,7 @@ class User_Model extends CI_Model
 
     public function get_unread_count()
     {
-        $query=$this->db->query("SELECT COUNT(Message_Icode) as msg FROM `st_message_details` WHERE Msg_Read = '0'  and client_type LIKE '%chennai' or client_type LIKE '%kerala%' and User_Icode = '0'");
+        $query=$this->db->query("SELECT COUNT(Message_Icode) as msg FROM `st_message_details` WHERE Msg_Read = '0' and Client_Icode !='0' ");
         return $query->result_array();
     }
 
