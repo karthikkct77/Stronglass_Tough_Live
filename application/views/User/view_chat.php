@@ -131,7 +131,6 @@
                       <div class="messages">
                           <?php
                           foreach ($kerala_msg as $key ) { ?>
-                              <p>2018-02-20</p>
                              <?php if($key['Client_Icode'] != "0")
                               { ?>
                                   <div class="message"><img src="<?php echo base_url('img/k.png'); ?>" >
