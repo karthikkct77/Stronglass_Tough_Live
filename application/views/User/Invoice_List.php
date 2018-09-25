@@ -43,7 +43,7 @@
                             <td><?php echo $i; ?></td>
                             <td><?php echo $val['Proforma_Number']; ?></td>
                             <td><?php echo $val['Customer_Company_Name']; ?></td>
-                            <td><?php echo $val['Proforma_Date']; ?></td>
+                            <td><?php echo $val['Proforma_Generated_On']; ?></td>
                             <td><?php echo $val['GrossTotal_Value']; ?></td>
                             <?php
                             if ($val['PI_Type'] == '1') { ?>
