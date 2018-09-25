@@ -1925,23 +1925,81 @@ class User_Controller extends CI_Controller
         {
             $thickness=$objWorksheet->getCellByColumnAndRow(0,$i)->getValue();
             $height=$objWorksheet->getCellByColumnAndRow(1,$i)->getValue();
-            if(is_numeric($height))
-            {
-                $charge_height = $height + 30;
-                $height_check[] ="";
-            }
-            else{
-                $height_check[] ='1';
-            }
             $width=$objWorksheet->getCellByColumnAndRow(2,$i)->getValue();
-            if(is_numeric($width))
+            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
+
+            if($types == 'T')
             {
-                $charge_weigth = $width + 30;
-                $width_check[]="";
+
+                $heigh_val =  explode("/",$height);
+                $length_H =  sizeof($heigh_val);
+                if($length_H == '1')
+                {
+                    $charge_height = $heigh_val[0] + 50;
+                    $height_check[] ="";
+                }
+                else
+                {
+                    if($heigh_val[0] > $heigh_val[1])
+                    {
+
+                        $charge_height = $heigh_val[0] + 50;
+                        $height_check[] ="";
+                    }
+                    else
+                    {
+                        $charge_height = $heigh_val[1] + 50;
+                        $height_check[] ="";
+                    }
+                }
+
+
+
+                $width_val = explode("/",$width);
+                $length_W =  sizeof($width_val);
+
+                if($length_W == '1')
+                {
+                    $charge_weigth = $width_val[0] + 50;
+                    $width_check[]="";
+                }
+                else{
+                    if($width_val[0] > $width_val[1])
+                    {
+
+                        $charge_weigth = $width_val[0] + 50;
+                        $width_check[]="";
+                    }
+                    else
+                    {
+                        $charge_weigth = $width_val[1] + 50;
+                        $width_check[]="";
+                    }
+                }
+
+
             }
-            else{
-                $width_check[] ='1';
+            else
+            {
+                if(is_numeric($height))
+                {
+                    $charge_height = $height + 30;
+                    $height_check[] ="";
+                }
+                else{
+                    $height_check[] ='1';
+                }
+
+                if(is_numeric($width))
+                {
+                    $charge_weigth = $width + 30;
+                    $width_check[]="";
+                }
+                else{
+                    $width_check[] ='1';
+                }
             }
+
             $pics=$objWorksheet->getCellByColumnAndRow(3,$i)->getValue();
             if(is_numeric($pics))
             {
@@ -1959,14 +2017,14 @@ class User_Controller extends CI_Controller
             else{
                 $holes_check[] ='1';
             }
-            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
-            if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B' || $types == 'D' )
-            {
-                $types_check[]="";
-            }
-            else{
-                $types_check[] ='1';
-            }
+//            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
+//            if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B' || $types == 'D' )
+//            {
+//                $types_check[]="";
+//            }
+//            else{
+//                $types_check[] ='1';
+//            }
             $cutout=$objWorksheet->getCellByColumnAndRow(6,$i)->getValue();
 //            if(is_numeric($cutout))
 //            {
@@ -2015,7 +2073,7 @@ class User_Controller extends CI_Controller
         $check_W = count(array_keys($width_check, "1"));
         $check_P = count(array_keys($pics_check, "1"));
         $check_Holes = count(array_keys($holes_check, "1"));
-        $check_Type = count(array_keys($types_check, "1"));
+//        $check_Type = count(array_keys($types_check, "1"));
 //        $check_cutout = count(array_keys($cutout_check, "1"));
 
 
@@ -2071,23 +2129,81 @@ class User_Controller extends CI_Controller
         {
             $thickness=$objWorksheet->getCellByColumnAndRow(0,$i)->getValue();
             $height=$objWorksheet->getCellByColumnAndRow(1,$i)->getValue();
-            if(is_numeric($height))
-            {
-                $charge_height = $height + 30;
-                $height_check[] ="";
-            }
-            else{
-                $height_check[] ='1';
-            }
             $width=$objWorksheet->getCellByColumnAndRow(2,$i)->getValue();
-            if(is_numeric($width))
+            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
+
+            if($types == 'T')
             {
-                $charge_weigth = $width + 30;
-                $width_check[]="";
+
+                $heigh_val =  explode("/",$height);
+                $length_H =  sizeof($heigh_val);
+                if($length_H == '1')
+                {
+                    $charge_height = $heigh_val[0] + 50;
+                    $height_check[] ="";
+                }
+                else
+                {
+                    if($heigh_val[0] > $heigh_val[1])
+                    {
+
+                        $charge_height = $heigh_val[0] + 50;
+                        $height_check[] ="";
+                    }
+                    else
+                    {
+                        $charge_height = $heigh_val[1] + 50;
+                        $height_check[] ="";
+                    }
+                }
+
+
+
+                $width_val = explode("/",$width);
+                $length_W =  sizeof($width_val);
+
+                if($length_W == '1')
+                {
+                    $charge_weigth = $width_val[0] + 50;
+                    $width_check[]="";
+                }
+                else{
+                    if($width_val[0] > $width_val[1])
+                    {
+
+                        $charge_weigth = $width_val[0] + 50;
+                        $width_check[]="";
+                    }
+                    else
+                    {
+                        $charge_weigth = $width_val[1] + 50;
+                        $width_check[]="";
+                    }
+                }
+
+
             }
-            else{
-                $width_check[] ='1';
+            else
+            {
+                if(is_numeric($height))
+                {
+                    $charge_height = $height + 30;
+                    $height_check[] ="";
+                }
+                else{
+                    $height_check[] ='1';
+                }
+
+                if(is_numeric($width))
+                {
+                    $charge_weigth = $width + 30;
+                    $width_check[]="";
+                }
+                else{
+                    $width_check[] ='1';
+                }
             }
+
             $pics=$objWorksheet->getCellByColumnAndRow(3,$i)->getValue();
             if(is_numeric($pics))
             {
@@ -2105,14 +2221,14 @@ class User_Controller extends CI_Controller
             else{
                 $holes_check[] ='1';
             }
-            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
-            if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B' || $types == 'D' )
-            {
-                $types_check[]="";
-            }
-            else{
-                $types_check[] ='1';
-            }
+//            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
+//            if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B' || $types == 'D' )
+//            {
+//                $types_check[]="";
+//            }
+//            else{
+//                $types_check[] ='1';
+//            }
             $cutout=$objWorksheet->getCellByColumnAndRow(6,$i)->getValue();
 //            if(is_numeric($cutout))
 //            {
@@ -2161,7 +2277,7 @@ class User_Controller extends CI_Controller
         $check_W = count(array_keys($width_check, "1"));
         $check_P = count(array_keys($pics_check, "1"));
         $check_Holes = count(array_keys($holes_check, "1"));
-        $check_Type = count(array_keys($types_check, "1"));
+//        $check_Type = count(array_keys($types_check, "1"));
 //        $check_cutout = count(array_keys($cutout_check, "1"));
 
 

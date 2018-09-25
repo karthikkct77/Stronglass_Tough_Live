@@ -302,8 +302,8 @@
                                                 endforeach; ?>
                                             </select>
                                         </div></td>
-                                    <td><input class="form-control" type="number" name="no_holes[]" id="no_holes" ></td>
-                                    <td><input class="form-control" type="number" name="charge_amt[]" id="charge_amt" ></td>
+                                    <td><input class="form-control" type="text" name="no_holes[]" id="no_holes" ></td>
+                                    <td><input class="form-control" type="text" name="charge_amt[]" id="charge_amt" ></td>
                                     <td><input class="form-control" type="text" name="tot_charge_amt[]" id="tot_charge_amt"  readonly></td>
                                     <td><input type="button" onclick="Add_one()" value="Add" id="Add" /></td>
                                 </tr>
