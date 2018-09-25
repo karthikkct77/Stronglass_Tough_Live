@@ -815,6 +815,7 @@ class User_Controller extends CI_Controller
             if($email == "")
             {
                 $this->session->set_flashdata('feedback1', 'Sorry, No Email Address in this Customer...');
+                $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
                 redirect('User_Controller/single_Invoice/'.$picode);
             }
             else{
