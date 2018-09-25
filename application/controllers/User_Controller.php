@@ -1586,6 +1586,8 @@ class User_Controller extends CI_Controller
             $actual_H = $this->input->post('height');
             $special = $this->input->post('type');
             $Area = $this->input->post('area');
+            $Rate = $this->input->post('rate');
+            $cost = $this->input->post('total');
             $count = sizeof($material_id);
             for($i=0; $i<$count; $i++)
             {
@@ -1599,6 +1601,8 @@ class User_Controller extends CI_Controller
                     'Proforma_Chargeable_Size_Width' =>$actual_W[$i],
                     'Proforma_Chargeable_Size_Height' => $actual_H[$i],
                     'Proforma_Area_SQMTR' => $Area[$i],
+                    'Proforma_Material_Rate' => $Rate[$i],
+                    'Proforma_Material_Cost' => $cost[$i],
                     'Modified_By' => $this->session->userdata['userid'],
                     'Modified_On' => date('Y-m-d H:i:s'));
                 $this->db->where('pi_item_sheet_icode',$material_id[$i]);
