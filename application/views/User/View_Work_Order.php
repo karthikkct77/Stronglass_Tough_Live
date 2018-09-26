@@ -96,6 +96,7 @@
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                         <tr>
+                            <th> All<input type="checkbox" id="selectall"/></th>
                             <th>#</th>
                             <th>Thickness</th>
                             <th>Height</th>
@@ -137,8 +138,10 @@
                             ?>
 
                             <tr>
+                                <td> <input type='checkbox' class='case' name='case' value="<?php echo $val['WO_Process_Icode'];?>"></td>
 
                                 <td><?php echo $i; ?>
+
                                     <input type="hidden" id="tot_qty<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Total_Qty']; ?>">
                                     <input type="hidden" id="Fur_income<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Furnace_Incoming']; ?>">
                                     <input type="hidden" id="dis_income<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Dispatch_Incoming']; ?>"></td>
@@ -212,17 +215,15 @@
 
                                     <?php if($_SESSION['role'] == 2)
                                     { ?>
+                                        <input type="button" class="btn btn-success"  onclick="Save_cutting_Status('<?php echo $val['WO_Process_Icode']; ?>')" value="Save"/>
 
-                                        <button class="btn btn-success" onclick="Save_cutting_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
                                         <?php }
                                     elseif($_SESSION['role'] == 3)
                                     { ?>
-                                        <button class="btn btn-success" onclick="Save_furnance_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
-
+                                        <input type="button" class="btn btn-success"  onclick="Save_furnance_Status('<?php echo $val['WO_Process_Icode']; ?>')" value="Save"/>
                                     <?php }
                                     elseif($_SESSION['role'] == 4) {?>
-                                      <button class="btn btn-success" onclick="Save_Dispatch_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
-
+                                        <input type="button" class="btn btn-success"  onclick="Save_Dispatch_Status('<?php echo $val['WO_Process_Icode']; ?>')" value="Save"/>
                                     <?php }?>
 
                                 </td>
@@ -234,6 +235,20 @@
                         ?>
                         </tbody>
                     </table>
+
+                    <?php if($_SESSION['role'] == 2)
+                    { ?>
+                        <input type="submit" class="btn btn-success"  onclick="Save_All_cutting()" value="Save"/>
+                    <?php }
+                    elseif($_SESSION['role'] == 3)
+                    { ?>
+                        <input type="submit" class="btn btn-success"  onclick="Save_All_furnace()" value="Save"/>
+                    <?php }
+                    elseif($_SESSION['role'] == 4) {?>
+                        <input type="submit" class="btn btn-success"  onclick="Save_All_dispatch()" value="Save"/>
+                    <?php }?>
+
+
                 </div>
             </div>
         </div>
@@ -242,6 +257,28 @@
 </main>
 <script>$('#sampleTable').DataTable();</script>
 <script>
+//    $("#selectall").click(function () {
+//        $('input:checkbox').not(this).prop('checked', this.checked);
+//
+//    });
+$(document).ready(function(){
+    $('input[type="submit"]').not(this).prop('disabled', true);
+    $('#selectall').change(function(){
+        $('input:checkbox').not(this).prop('checked', this.checked);
+
+        if(this.checked)
+        {
+            $('input[type="button"]').not(this).prop('disabled', true);
+            $('input[type="submit"]').not(this).prop('disabled', false);
+        }
+        else
+        {
+            $('input[type="button"]').not(this).prop('disabled', false);
+            $('input[type="submit"]').not(this).prop('disabled', true);
+        }
+
+    });
+});
     function Save_cutting_Status(id)
     {
         if (confirm("Do you want to Save ")) {
@@ -468,6 +505,22 @@
             }
         }
     }
+
+    // save all
+    function  Save_All_cutting() {
+        var checkboxes = document.getElementsByName('case');
+        var vals = "";
+        for (var i=0, n=checkboxes.length;i<n;i++)
+        {
+            if (checkboxes[i].checked)
+            {
+                vals += ","+checkboxes[i].value;
+            }
+        }
+        var tbldata=vals;
+
+    }
+
 
     function change_qty(id) {
         var remaining_qty = document.getElementById('remain_qty' + id).value;
