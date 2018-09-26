@@ -152,6 +152,13 @@
                                 {
                                     ?>
                                     <td><input type="hidden" id="Cutting_balance_qty<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Cutting_Remaining_Qty']; ?>"><?php echo $val['Cutting_Remaining_Qty']; ?></td>
+                                    <td><input type="text" class="form-control" name="remain_qty" id="remain_qty<?php echo $val['WO_Process_Icode']; ?>" required min="0" onkeyup="change_qty('<?php echo $val['WO_Process_Icode']; ?>')"  ></td>
+                                    <td><select name="comments" class="form-control" id="comments<?php echo $val['WO_Process_Icode']; ?>">
+                                            <option value="">Select Reason</option>
+                                            <option value="Out_of_Stock">Out of Stock </option>
+                                            <option value="optimize">optimize Issue</option>
+                                            <option value="Handling">Handling Issue</option>
+                                        </select></td>
                                 <?php }
                                 elseif($_SESSION['role'] == 3)
                                 { ?>
@@ -161,6 +168,12 @@
                                     <td>other</td>
                                     <td><?php echo $val['Furnace_Incoming']; ?></td>
                                     <td><input type="hidden" id="Furnance_balance_qty<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Furnace_Remaining_Qty']; ?>"><?php echo $val['Furnace_Remaining_Qty']; ?></td>
+                                    <td><input type="text" class="form-control" name="remain_qty" id="remain_qty<?php echo $val['WO_Process_Icode']; ?>" required min="0" onkeyup="change_qty('<?php echo $val['WO_Process_Icode']; ?>')"  ></td>
+                                    <td><select name="comments" class="form-control" id="comments<?php echo $val['WO_Process_Icode']; ?>">
+                                            <option value="">Select Reason</option>
+                                            <option value="Material_Not_Received">Material_Not_Received</option>
+                                            <option value="Hold">Hold</option>
+                                        </select></td>
                                 <?php }
                                 elseif($_SESSION['role'] == 4) {?>
                                     <td><?php echo $val['Proforma_Holes']; ?></td>
@@ -169,15 +182,16 @@
                                     <td>other</td>
                                     <td><?php echo $val['Dispatch_Incoming']; ?> </td>
                                     <td><input type="hidden" id="Dispatch_balance_qty<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Dispatch_Remaining_Qty']; ?>"><?php echo $val['Dispatch_Remaining_Qty']; ?></td>
+                                    <td><input type="text" class="form-control" name="remain_qty" id="remain_qty<?php echo $val['WO_Process_Icode']; ?>" required min="0" onkeyup="change_qty('<?php echo $val['WO_Process_Icode']; ?>')"  ></td>
+                                    <td><select name="comments" class="form-control" id="comments<?php echo $val['WO_Process_Icode']; ?>">
+                                            <option value="">Select Reason</option>
+                                            <option value="Glass_Issue">Glass Issue </option>
+                                            <option value="Template_miss_match">Template Mismatch</option>
+                                            <option value="Handling">Handling Issue</option>
+                                        </select></td>
                                 <?php }?>
 
-                                <td><input type="text" class="form-control" name="remain_qty" id="remain_qty<?php echo $val['WO_Process_Icode']; ?>" required min="0" onkeyup="change_qty('<?php echo $val['WO_Process_Icode']; ?>')"  ></td>
-                                <td><select name="comments" class="form-control" id="comments<?php echo $val['WO_Process_Icode']; ?>">
-                                        <option value="">Select Reason</option>
-                                        <option value="Out_of_Stock">Out of Stock </option>
-                                        <option value="optimize">optimize Issue</option>
-                                        <option value="Handling">Handling Issue</option>
-                                    </select></td>
+
                                 <td><select name="status" class="form-control" id="status<?php echo $val['WO_Process_Icode']; ?>">
                                         <option value="">Select Status</option>
                                     </select></td>
