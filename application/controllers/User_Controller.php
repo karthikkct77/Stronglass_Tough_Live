@@ -290,6 +290,82 @@ class User_Controller extends CI_Controller
         }
     }
 
+    //** Save All Production Depatment  */
+    public function Save_All_Production()
+    {
+        $role =  $this->session->userdata['role'];
+        if($role == 2) //  Cutting
+        {
+            $data= $this->input->post('Process_Icode', true);
+            $string = trim($data,",");
+            $process = explode(",", $string);
+            foreach ($process as $key )
+            {
+                $process_details = $this->user_model->get_wo_process($key);
+
+                $type = $this->input->post('PI_type',true);
+
+                if($type == '1' )
+                {
+                    $item = $process_details[0]['PI_Sheet_Item_Icode'];
+                }
+                else
+                {
+                    $item = $process_details[0]['Proforma_Invoice_Item_Icode'];
+                }
+
+                $data =array('WO_Icode' => $process_details[0]['WO_Icode'],
+                    'WO_Process_Icode' => $key,
+                    'Proforma_Invoice_Items_Icode' => $item,
+                    'PI_Type' =>$this->input->post('PI_type',true),
+                    'Cutting_Qty'=>$process_details[0]['Cutting_Remaining_Qty'],
+                    'Cutting_Remaining_Qty  ' => '0',
+                    'Remaining_Comments' => '0',
+                    'Cutting_Status' => '3',
+                    'Created_By' => $this->session->userdata['userid']);
+                $insert = $this->user_model->Insert_Cutting($data);
+                if($insert == 1)
+                {
+                    $wo_process = $this->user_model->get_furnance_details($key);
+                    $furnance_icome = $wo_process[0]['Furnace_Remaining_Qty'];
+
+                    if($furnance_icome == '0')
+                    {
+
+                        $update = array('Cutting_Remaining_Qty' => '0',
+                            'Furnace_Incoming' => $wo_process[0]['Cutting_Remaining_Qty'],
+                            'Furnace_Remaining_Qty'=>$wo_process[0]['Cutting_Remaining_Qty'],
+                            'Furnace_Status' => '1',
+                            'Cutting_Status' => '3' );
+                        $this->db->where('WO_Process_Icode',$key);
+                        $this->db->update('wo_processing', $update);
+                        echo 1;
+                    }
+                    else
+                    {
+
+                        $new_income = $wo_process[0]['Cutting_Remaining_Qty'] + $furnance_icome;
+                        $update = array('Cutting_Remaining_Qty' => '0',
+                            'Furnace_Incoming' => $new_income,
+                            'Furnace_Remaining_Qty'=>$new_income,
+                            'Furnace_Status' => '1',
+                            'Cutting_Status' => '3' );
+                        $this->db->where('WO_Process_Icode',$key);
+                        $this->db->update('wo_processing', $update);
+                        echo 1;
+
+                    }
+                }
+                else{
+                    echo 0;
+                }
+
+            }
+
+        }
+
+    }
+
     //** PROFOMA INVOICE */
     /** Proforma_Invoice */
     public function Proforma_Invoice()

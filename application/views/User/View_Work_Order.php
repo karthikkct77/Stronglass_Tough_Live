@@ -508,16 +508,40 @@ $(document).ready(function(){
 
     // save all
     function  Save_All_cutting() {
-        var checkboxes = document.getElementsByName('case');
-        var vals = "";
-        for (var i=0, n=checkboxes.length;i<n;i++)
-        {
-            if (checkboxes[i].checked)
-            {
-                vals += ","+checkboxes[i].value;
+        if (confirm("Do you want to Save ")) {
+            var checkboxes = document.getElementsByName('case');
+            var vals = "";
+            for (var i = 0, n = checkboxes.length; i < n; i++) {
+                if (checkboxes[i].checked) {
+                    vals += "," + checkboxes[i].value;
+                }
             }
+            var process_id = vals;
+            var type = document.getElementById('pi_type').value;
+            $.ajax({
+                url: "<?php echo site_url('User_Controller/Save_All_Production'); ?>",
+                data: {
+                    Process_Icode: process_id,
+                    PI_type:  type
+
+                },
+                type: "POST",
+                context: document.body,
+                success: function (data) {
+                    if (data != 0) {
+                        swal({
+                                title: "Success!",
+                                text: "Data Saved..",
+                                type: "success"
+                            },
+                            function () {
+                                location.reload();
+                            });
+
+                    }
+                }
+            });
         }
-        var tbldata=vals;
 
     }
 

@@ -533,5 +533,11 @@ class User_Model extends CI_Model
         return $query->result_array();
     }
 
+    //** Get Workorder Processing */
+    public function get_wo_process($process_id)
+    {
+        $query=$this->db->query("SELECT * FROM `wo_processing` WHERE WO_Process_Icode='$process_id' ");
+        return $query->result_array();
+    }
 
 }
