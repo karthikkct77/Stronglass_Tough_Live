@@ -320,7 +320,7 @@ class User_Controller extends CI_Controller
                     'PI_Type' =>$this->input->post('PI_type',true),
                     'Cutting_Qty'=>$process_details[0]['Cutting_Remaining_Qty'],
                     'Cutting_Remaining_Qty  ' => '0',
-                    'Remaining_Comments' => '0',
+                    'Remaining_Comments' => '',
                     'Cutting_Status' => '3',
                     'Created_By' => $this->session->userdata['userid']);
                 $insert = $this->user_model->Insert_Cutting($data);
@@ -361,7 +361,144 @@ class User_Controller extends CI_Controller
                 }
 
             }
+        }
+        elseif ($role == 3) // Fornace
+        {
+            $data= $this->input->post('Process_Icode', true);
+            $string = trim($data,",");
+            $process = explode(",", $string);
+            foreach ($process as $key )
+            {
+                $process_details = $this->user_model->get_wo_process($key);
 
+                $type = $this->input->post('PI_type',true);
+
+                if($type == '1' )
+                {
+                    $item = $process_details[0]['PI_Sheet_Item_Icode'];
+                }
+                else
+                {
+                    $item = $process_details[0]['Proforma_Invoice_Item_Icode'];
+                }
+
+                $data =array('WO_Icode' => $process_details[0]['WO_Icode'],
+                    'WO_Process_Icode' => $key,
+                    'Proforma_Invoice_Items_Icode' => $item,
+                    'PI_Type' =>$this->input->post('PI_type',true),
+                    'Cutting_Income' => $process_details[0]['Furnace_Incoming'],
+                    'Furnace_qty'=>$process_details[0]['Furnace_Remaining_Qty'],
+                    'Furnace_Remaining_Qty  ' => '0',
+                    'Remaining_Comments' => '',
+                    'Furnace_Status' => '3',
+                    'Created_By' => $this->session->userdata['userid']);
+                $insert = $this->user_model->Insert_Furnace($data);
+                if($insert == 1)
+                {
+                    $wo_process = $this->user_model->get_furnance_details($key);
+                    $dispatch_icome = $wo_process[0]['Dispatch_Remaining_Qty'];
+                    if($dispatch_icome == '0')
+                    {
+
+                        $update = array('Furnace_Remaining_Qty' => '0',
+                            'Dispatch_Incoming' => $wo_process[0]['Furnace_Remaining_Qty'],
+                            'Dispatch_Remaining_Qty'=>$wo_process[0]['Furnace_Remaining_Qty'],
+                            'Furnace_Incoming' => '0',
+                            'Dispatch_Status' => '1',
+                            'Furnace_Status' => '3' );
+                        $this->db->where('WO_Process_Icode',$key);
+                        $this->db->update('wo_processing', $update);
+                        echo 1;
+                    }
+                    else
+                    {
+                        $new_income = $wo_process[0]['Furnace_Remaining_Qty'] + $dispatch_icome;
+
+                        $update = array('Furnace_Remaining_Qty' => '0',
+                            'Dispatch_Incoming' => $new_income,
+                            'Dispatch_Remaining_Qty'=>$new_income,
+                            'Furnace_Incoming' => '0',
+                            'Dispatch_Status' => '1',
+                            'Furnace_Status' => '3' );
+                        $this->db->where('WO_Process_Icode',$key);
+                        $this->db->update('wo_processing', $update);
+                        echo 1;
+
+                    }
+                }
+                else{
+                    echo 0;
+                }
+
+            }
+
+        }
+        elseif ($role == 4) // Dispatch
+        {
+            $data= $this->input->post('Process_Icode', true);
+            $string = trim($data,",");
+            $process = explode(",", $string);
+            foreach ($process as $key )
+            {
+                $process_details = $this->user_model->get_wo_process($key);
+
+                $type = $this->input->post('PI_type',true);
+
+                if($type == '1' )
+                {
+                    $item = $process_details[0]['PI_Sheet_Item_Icode'];
+                }
+                else
+                {
+                    $item = $process_details[0]['Proforma_Invoice_Item_Icode'];
+                }
+                $data =array('WO_Icode' => $process_details[0]['WO_Icode'],
+                    'WO_Process_Icode' => $key,
+                    'Proforma_Invoice_Items_Icode' => $item,
+                    'Dispatch_Qty' =>$process_details[0]['Dispatch_Remaining_Qty'],
+                    'PI_Type' =>$this->input->post('PI_type',true),
+                    'Dispatch_Remaining_Qty  ' => '0',
+                    'Furnace_Income' => $process_details[0]['Dispatch_Incoming'],
+                    'Remaining_Comments' => '',
+                    'Dispatch_Status' => '3',
+                    'Created_By' => $this->session->userdata['userid']);
+                $insert = $this->user_model->Insert_Dispatch($data);
+                if($insert == 1)
+                {
+                    $update = array('Dispatch_Remaining_Qty' => '0',
+                        'Dispatch_Incoming' => '0',
+                        'Dispatch_Status' => '3' );
+                    $this->db->where('WO_Process_Icode',$key);
+                    $this->db->update('wo_processing', $update);
+
+                    $work_order =$process_details[0]['WO_Icode'];
+                    $data['complete']= $this->admin_model->get_completed_status($work_order);
+                    $data['work_order']= $this->admin_model->get_Single_Work_Order($work_order);
+                    $total_qty = $data['complete'][0]['total'];
+                    $disptach_remain = $data['complete'][0]['remaining1'];
+                    $cutting_remain = $data['complete'][0]['remaining2'];
+                    $funan_remain = $data['complete'][0]['remaining3'];
+                    $remain = $disptach_remain + $cutting_remain + $funan_remain;
+                    $completed = $total_qty - $remain;
+                    if($completed == $data['work_order'][0]['Total_Qty'] )
+                    {
+                        $complete = '1';
+                    }
+                    else{
+                        $complete = '0';
+                    }
+                    $update1 = array('WO_Completed' => $complete,
+                        'WO_Completed_On' => date('Y-m-d'));
+                    $this->db->where('WO_Icode',$work_order);
+                    $this->db->update('work_order', $update1);
+                    echo 1;
+                    //$work_order = $this->input->post('Wo_Icode',true);
+                    //  $success = $this->user_model->find_WO_Finished($work_order);
+                }
+                else{
+                    echo 0;
+                }
+            }
         }
 
     }

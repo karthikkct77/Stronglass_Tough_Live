@@ -236,17 +236,7 @@
                         </tbody>
                     </table>
 
-                    <?php if($_SESSION['role'] == 2)
-                    { ?>
                         <input type="submit" class="btn btn-success"  onclick="Save_All_cutting()" value="Save"/>
-                    <?php }
-                    elseif($_SESSION['role'] == 3)
-                    { ?>
-                        <input type="submit" class="btn btn-success"  onclick="Save_All_furnace()" value="Save"/>
-                    <?php }
-                    elseif($_SESSION['role'] == 4) {?>
-                        <input type="submit" class="btn btn-success"  onclick="Save_All_dispatch()" value="Save"/>
-                    <?php }?>
 
 
                 </div>
