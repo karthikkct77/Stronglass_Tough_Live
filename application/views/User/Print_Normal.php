@@ -37,7 +37,7 @@
                         <div class="col-md-6">
                             <div id="consign">
                                 <h6 class="heading"><span>Work Order No</span>: <?php echo $wo[0]['WO_Number']; ?></h6>
-                                <h6 class="heading"><span>Proforma No</span>  :<?php echo $wo[0]['WO_Number']; ?></h6>
+                                <h6 class="heading"><span>Proforma No</span>  :<?php echo $wo[0]['Proforma_Number']; ?></h6>
                                 <h6 class="heading"><span>Work Order Date</span> :<?php $date = $wo[0]['WO_Created_On']; echo date("H:i",strtotime($date)); ?></h6>
                             </div>
                         </div>
