@@ -309,7 +309,7 @@ class Admin_Model extends CI_Model
     /** Get profoma number */
     public function get_profoma_number($month)
     {
-        $query= $this->db->query("SELECT Proforma_Number FROM `proforma_invoice` WHERE `Proforma_Number` LIKE '%$month%' ORDER by Proforma_Icode DESC LIMIT 1  ");
+        $query= $this->db->query("SELECT Proforma_Number FROM `proforma_invoice` WHERE substring(Proforma_Number, 1,2) LIKE '%$month%' ORDER by Proforma_Icode DESC LIMIT 1  ");
         if($query->num_rows() == 1)
         {
             return $query->result_array();
