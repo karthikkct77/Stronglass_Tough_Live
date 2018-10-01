@@ -124,10 +124,10 @@
                                     <input class="form-control" type="hidden" name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" >
                                     <td><?php echo $i; ?></td>
                                     <td style="text-align: left;"><p style="width: 180px; word-wrap: break-word;"><?php echo $key['Material_Name']; ?></p></td>
-                                    <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
-                                    <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
+                                    <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Chargeable_Size_Height']; ?></td>
+                                    <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Qty']; ?></td>
                                     <td><?php echo $key['Proforma_Holes']; ?></td>
                                     <td><?php echo $key['Proforma_Cutout']; ?></td>
@@ -317,7 +317,7 @@
                              <?php } elseif($_SESSION['role'] == 7){
                                 ?>
                                 <input type="button" id="with_print" class="btn btn-info" onclick="Request_Approve()" value="Request Work Order">
-                                <button class="btn btn-danger pi_button " type="submit" id="with_print"><i class="fa fa-fw fa-lg fa-check-circle"></i>Send PI To Customer</button>
+                                <button class="btn btn-danger pi_button " type="submit" id="with_print"><i class="fa fa-fw fa-lg fa-check-circle"></i>PDF</button>
                                 <input  type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="Print PI">
 
                                     <a class="btn btn-success pi_button" id="with_print" href="<?php echo site_url('User_Controller/Edit_Invoice/').$invoice[0]['Proforma_Icode']; ?>">EDIT PI</a>

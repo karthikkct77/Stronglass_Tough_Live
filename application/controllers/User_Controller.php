@@ -254,8 +254,8 @@ class User_Controller extends CI_Controller
             if($insert == 1)
             {
                 $update = array('Dispatch_Remaining_Qty' => $this->input->post('Qty',true),
-                                'Dispatch_Incoming' => '0',
-                                'Dispatch_Status' => $this->input->post('Status',true) );
+                    'Dispatch_Incoming' => '0',
+                    'Dispatch_Status' => $this->input->post('Status',true) );
                 $this->db->where('WO_Process_Icode',$wo_icode);
                 $this->db->update('wo_processing', $update);
 
@@ -277,12 +277,12 @@ class User_Controller extends CI_Controller
                     $complete = '0';
                 }
                 $update1 = array('WO_Completed' => $complete,
-                           'WO_Completed_On' => date('Y-m-d'));
+                    'WO_Completed_On' => date('Y-m-d'));
                 $this->db->where('WO_Icode',$work_order);
                 $this->db->update('work_order', $update1);
                 echo 1;
                 //$work_order = $this->input->post('Wo_Icode',true);
-              //  $success = $this->user_model->find_WO_Finished($work_order);
+                //  $success = $this->user_model->find_WO_Finished($work_order);
             }
             else{
                 echo 0;
@@ -544,7 +544,7 @@ class User_Controller extends CI_Controller
             if($types == 'T')
             {
 
-               $heigh_val =  explode("/",$height);
+                $heigh_val =  explode("/",$height);
                 $length_H =  sizeof($heigh_val);
                 if($length_H == '1')
                 {
@@ -568,7 +568,7 @@ class User_Controller extends CI_Controller
 
 
 
-               $width_val = explode("/",$width);
+                $width_val = explode("/",$width);
                 $length_W =  sizeof($width_val);
 
                 if($length_W == '1')
@@ -633,7 +633,7 @@ class User_Controller extends CI_Controller
             $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
             if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B' || $types == 'D' )
             {
-                 $types_check[]="";
+                $types_check[]="";
             }
             else{
                 $types_check[] ='1';
@@ -647,7 +647,8 @@ class User_Controller extends CI_Controller
 //                $cutout_check[] ='1';
 //            }
 
-            $area1 = $charge_height/1000 * $charge_weigth/1000;
+            $areass = $charge_height/1000 * $charge_weigth/1000;
+            $area1 = $areass * $pics;
             $area = number_format((float)$area1, 3, '.', '');
             $data_user[]=array(
                 'Thickness'=>$thickness,
@@ -1039,40 +1040,40 @@ class User_Controller extends CI_Controller
             $pdf_name = 'Stronglass_Tough';
             $file_location =FCPATH."uploads/pdf/".$pdf_name.".pdf";
             file_put_contents($file_location,$pdf);
-            if($email == "")
-            {
-                $this->session->set_flashdata('feedback1', 'Sorry, No Email Address in this Customer...');
-                $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
+//            if($email == "")
+//            {
+//                $this->session->set_flashdata('feedback1', 'Sorry, No Email Address in this Customer...');
+                $this->pdf->stream($pdf_name .".pdf", array("Attachment"=>0));
                 redirect('User_Controller/single_Invoice/'.$picode);
-            }
-            else{
-              $id=$this->input->post('PI_Icode');
-            $update = array('Email_Send_Status' => '1',
-                'Email_Send_Date'=>date('Y-m-d H:i:s'));
-            $this->db->where('Proforma_Icode',$id);
-            $this->db->update('proforma_invoice', $update);
-
-//            $userEmail='vignesh@ibtemail.com';
-            $subject='Stronglass Tough Quote PI.NO:'.$data['invoice'][0]['Proforma_Number'];
-            $config = Array(
-                'mailtype' => 'html',
-                'charset' => 'utf-8',
-                'priority' => '1'
-            );
-        $this->load->library('email', $config);
-        $this->email->set_newline("\r\n");
-        $pi_icode= $this->input->post('PI_Icode');
-        $this->email->from('karthik@ibtemail.com', 'Stronglass Tough');
-        $this->email->to('karthikkct77@gmail.com');  // replace it with receiver mail id
-        $this->email->subject($subject); // replace it with relevant subject
-        $file_location =FCPATH."uploads/pdf/".$pdf_name.".pdf";
-        $body = $this->load->view('User/email_body',$data,TRUE);
-        $this->email->message($body);
-        $this->email->attach($file_location);
-        $this->email->send();
-        $this->session->set_flashdata('feedback', 'Email Send Successfully ..');
-        redirect('User_Controller/Check_PI');
-            }
+//            }
+//            else{
+//                $id=$this->input->post('PI_Icode');
+//                $update = array('Email_Send_Status' => '1',
+//                    'Email_Send_Date'=>date('Y-m-d H:i:s'));
+//                $this->db->where('Proforma_Icode',$id);
+//                $this->db->update('proforma_invoice', $update);
+//
+////            $userEmail='vignesh@ibtemail.com';
+//                $subject='Stronglass Tough Quote PI.NO:'.$data['invoice'][0]['Proforma_Number'];
+//                $config = Array(
+//                    'mailtype' => 'html',
+//                    'charset' => 'utf-8',
+//                    'priority' => '1'
+//                );
+//                $this->load->library('email', $config);
+//                $this->email->set_newline("\r\n");
+//                $pi_icode= $this->input->post('PI_Icode');
+//                $this->email->from('karthik@ibtemail.com', 'Stronglass Tough');
+//                $this->email->to('karthikkct77@gmail.com');  // replace it with receiver mail id
+//                $this->email->subject($subject); // replace it with relevant subject
+//                $file_location =FCPATH."uploads/pdf/".$pdf_name.".pdf";
+//                $body = $this->load->view('User/email_body',$data,TRUE);
+//                $this->email->message($body);
+//                $this->email->attach($file_location);
+//                $this->email->send();
+//                $this->session->set_flashdata('feedback', 'Email Send Successfully ..');
+//                redirect('User_Controller/Check_PI');
+//            }
         }
     }
     /** Edit Profroma Invoice */
@@ -1183,25 +1184,25 @@ class User_Controller extends CI_Controller
             $update_charges_id = $this->input->post('Delete_charges');
 
             $count_update = sizeof($update_charges_id);
-                for($i=0; $i<$count_update; $i++)
-                {
-                    if (empty($update_charges_id[$i])) {
-
-                    }
-                    else{
-                        $full_data1 =array( 'Proforma_Icode' => $picode,
-                            'Proforma_Charge_Icode' => $update_charges_id[$i],
-                            'Proforma_Charge_Count' => $charges_count[$i],
-                            'Proforma_Charge_Value' => $charges_value[$i],
-                            'Proforma_Charge_Cost' => $charges_cost[$i],
-                            'Modified_By' => $this->session->userdata['userid'],
-                            'Modified_On' => date('Y-m-d H:i:s'));
-                        $charge_id=$this->admin_model->get_Profoma_Charges($update_charges_id[$i],$picode);
-                        $this->db->where('Proforma_Material_PC_Icode',$charge_id['Proforma_Material_PC_Icode']);
-                        $this->db->update('proforma_material_processing_charges', $full_data1);
-                    }
+            for($i=0; $i<$count_update; $i++)
+            {
+                if (empty($update_charges_id[$i])) {
 
                 }
+                else{
+                    $full_data1 =array( 'Proforma_Icode' => $picode,
+                        'Proforma_Charge_Icode' => $update_charges_id[$i],
+                        'Proforma_Charge_Count' => $charges_count[$i],
+                        'Proforma_Charge_Value' => $charges_value[$i],
+                        'Proforma_Charge_Cost' => $charges_cost[$i],
+                        'Modified_By' => $this->session->userdata['userid'],
+                        'Modified_On' => date('Y-m-d H:i:s'));
+                    $charge_id=$this->admin_model->get_Profoma_Charges($update_charges_id[$i],$picode);
+                    $this->db->where('Proforma_Material_PC_Icode',$charge_id['Proforma_Material_PC_Icode']);
+                    $this->db->update('proforma_material_processing_charges', $full_data1);
+                }
+
+            }
             $charges_id = $this->input->post('charges');
             $check = array_filter($charges_id);
             if (!empty($check)) {
@@ -1223,7 +1224,7 @@ class User_Controller extends CI_Controller
             }
             $this->session->set_flashdata('feedback', 'Updated Invoice..');
             redirect('User_Controller/single_Invoice/'.$picode);
-            }
+        }
     }
 
     /** Get WO LIST */
@@ -1290,8 +1291,8 @@ class User_Controller extends CI_Controller
     {
         $pi_code=$this->input->post('id', true);
         $update = array('PI_Confirm' => '1',
-                        'PI_Confirm_By' => $this->session->userdata['userid'],
-                      'PI_Confirm_Date' => date('Y-m-d H:i:s'));
+            'PI_Confirm_By' => $this->session->userdata['userid'],
+            'PI_Confirm_Date' => date('Y-m-d H:i:s'));
         $this->db->where('Proforma_Icode',$pi_code);
         $this->db->update('proforma_invoice', $update);
         echo 1;
@@ -2056,7 +2057,7 @@ class User_Controller extends CI_Controller
         }
         else
         {
-          echo "0";
+            echo "0";
         }
     }
 
@@ -2277,7 +2278,8 @@ class User_Controller extends CI_Controller
 //                $cutout_check[] ='1';
 //            }
 
-            $area1 = $charge_height/1000 * $charge_weigth/1000;
+            $areass = $charge_height/1000 * $charge_weigth/1000;
+            $area1 = $areass * $pics;
             $area = number_format((float)$area1, 3, '.', '');
             $data_user[]=array(
                 'Thickness'=>$thickness,
@@ -2481,7 +2483,8 @@ class User_Controller extends CI_Controller
 //                $cutout_check[] ='1';
 //            }
 
-            $area1 = $charge_height/1000 * $charge_weigth/1000;
+            $areass = $charge_height/1000 * $charge_weigth/1000;
+            $area1 = $areass * $pics;
             $area = number_format((float)$area1, 3, '.', '');
             $data_user[]=array(
                 'Thickness'=>$thickness,
@@ -2557,8 +2560,8 @@ class User_Controller extends CI_Controller
     public function save_message ()
     {
         $data = array('Client_Message' => $this->input->post('message',true),
-                       'client_type' =>$this->input->post('ctype',true),
-                        'Client_Icode' => $this->session->userdata['userid'] );
+            'client_type' =>$this->input->post('ctype',true),
+            'Client_Icode' => $this->session->userdata['userid'] );
         $insert = $this->user_model->insert_msg($data);
         if($insert == 1)
         {
@@ -2639,16 +2642,17 @@ class User_Controller extends CI_Controller
     }
 
     //** kerala work orders */
-     public function Kerala_Work_Order()
-     {
-         $data['kerala_wo']= $this->user_model->get_all_kerala_wo();
-         $this->load->view('User/header');
-         $this->load->view('User/top');
-         $this->load->view('User/left');
-         $this->load->view('User/Kerala_Status',$data, FALSE);
-         $this->load->view('User/footer');
-     }
+    public function Kerala_Work_Order()
+    {
+        $data['kerala_wo']= $this->user_model->get_all_kerala_wo();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/Kerala_Status',$data, FALSE);
+        $this->load->view('User/footer');
+    }
 
+    //** Send PDF */
 
 
 }

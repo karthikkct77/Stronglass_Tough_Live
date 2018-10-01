@@ -157,8 +157,8 @@
                                     <tr id="row<?php echo $i; ?>">
                                         <td><?php echo $i; ?></td>
                                         <td style="text-align: left;"><?php echo $key['Material_Name']; ?></td>
-                                        <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                         <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
+                                        <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                         <td><?php echo $key['Proforma_Qty']; ?></td>
                                         <td><?php echo $key['Proforma_Holes']; ?></td>
                                         <td><?php echo $key['Proforma_Cutout']; ?></td>
