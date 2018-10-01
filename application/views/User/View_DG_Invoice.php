@@ -118,7 +118,7 @@
                             <h4><span>Date </span>:<input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo date('Y-m-d'); ?>" readonly><?php echo date('Y-m-d'); ?></h4>
                             <h6><span>Total Outstanding</span>:<input type="text" class="form-control" name="outstanding" id="outstanding" required> </h6>
                             <h6><span>Credit Limit Amt</span>:<input type="text" class="form-control" name="credit_limit" id="credit_limit" required> </h6>
-                            <input type="text" class="form-control" name="pi_type" value="2">
+<!--                            <input type="text" class="form-control" name="pi_type" value="2">-->
                         </div>
                     </div>
                     <div class="row">
