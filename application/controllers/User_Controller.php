@@ -719,8 +719,22 @@ class User_Controller extends CI_Controller
         else{
             $profoma_address= $this->input->post('company_address');
         }
+        $month =date('m');
+        $perfoma = $this->admin_model->get_profoma_number($month);
+        if($perfoma == 0)
+        {
+            $Invoice_Number = $month .'-101';
+        }
+        else
+        {
+            $myString = $perfoma[0]['Proforma_Number'];
+            $myArray = explode('-', $myString);
+            $increment = $myArray[1] + 1;
+            $Invoice_Number = $month .'-'. $increment;
+
+        }
         $data = array(
-            'Proforma_Number' => $this->input->post('invoice_no'),
+            'Proforma_Number' => $Invoice_Number,
             'Proforma_Date' => $this->input->post('invoice_date'),
             'Proforma_Customer_Icode' => $this->input->post('company_name'),
             'Proforma_Delivery_Address_Icode' =>$profoma_address ,
@@ -1587,8 +1601,23 @@ class User_Controller extends CI_Controller
         else{
             $profoma_address= $this->input->post('company_address');
         }
+
+        $month =date('m');
+        $perfoma = $this->admin_model->get_profoma_number($month);
+        if($perfoma == 0)
+        {
+            $Invoice_Number = $month .'-101';
+        }
+        else
+        {
+            $myString = $perfoma[0]['Proforma_Number'];
+            $myArray = explode('-', $myString);
+            $increment = $myArray[1] + 1;
+            $Invoice_Number = $month .'-'. $increment;
+
+        }
         $data = array(
-            'Proforma_Number' => $this->input->post('invoice_no'),
+            'Proforma_Number' => $Invoice_Number,
             'Proforma_Date' => $this->input->post('invoice_date'),
             'Proforma_Customer_Icode' => $this->input->post('company_name'),
             'Proforma_Delivery_Address_Icode' =>$profoma_address ,
