@@ -1063,7 +1063,7 @@ class User_Controller extends CI_Controller
         $this->email->set_newline("\r\n");
         $pi_icode= $this->input->post('PI_Icode');
         $this->email->from('karthik@ibtemail.com', 'Stronglass Tough');
-        $this->email->to('karthikkct77@gmail.com',$email);  // replace it with receiver mail id
+        $this->email->to('karthikkct77@gmail.com');  // replace it with receiver mail id
         $this->email->subject($subject); // replace it with relevant subject
         $file_location =FCPATH."uploads/pdf/".$pdf_name.".pdf";
         $body = $this->load->view('User/email_body',$data,TRUE);
