@@ -125,6 +125,7 @@
                                         <option value="Fabrication">Fabrication</option>
                                         <option value="Washing">Washing</option>
                                         <option value="Furnace">Furnace</option>
+                                        <option value="Furnace">Office</option>
                                     </select></td>
                                 <td>
                                     <?php

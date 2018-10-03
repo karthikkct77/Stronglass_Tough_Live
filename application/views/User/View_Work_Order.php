@@ -96,6 +96,7 @@
                     <table class="table table-hover table-bordered" id="sampleTable">
                         <thead>
                         <tr>
+                            <th> All<input type="checkbox" id="selectall"/></th>
                             <th>#</th>
                             <th>Thickness</th>
                             <th>Height</th>
@@ -137,8 +138,10 @@
                             ?>
 
                             <tr>
+                                <td> <input type='checkbox' class='case' name='case' value="<?php echo $val['WO_Process_Icode'];?>"></td>
 
                                 <td><?php echo $i; ?>
+
                                     <input type="hidden" id="tot_qty<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Total_Qty']; ?>">
                                     <input type="hidden" id="Fur_income<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Furnace_Incoming']; ?>">
                                     <input type="hidden" id="dis_income<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Dispatch_Incoming']; ?>"></td>
@@ -152,6 +155,13 @@
                                 {
                                     ?>
                                     <td><input type="hidden" id="Cutting_balance_qty<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Cutting_Remaining_Qty']; ?>"><?php echo $val['Cutting_Remaining_Qty']; ?></td>
+                                    <td><input type="text" class="form-control" name="remain_qty" id="remain_qty<?php echo $val['WO_Process_Icode']; ?>" required min="0" onkeyup="change_qty('<?php echo $val['WO_Process_Icode']; ?>')"  ></td>
+                                    <td><select name="comments" class="form-control" id="comments<?php echo $val['WO_Process_Icode']; ?>">
+                                            <option value="">Select Reason</option>
+                                            <option value="Out_of_Stock">Out of Stock </option>
+                                            <option value="optimize">optimize Issue</option>
+                                            <option value="Handling">Handling Issue</option>
+                                        </select></td>
                                 <?php }
                                 elseif($_SESSION['role'] == 3)
                                 { ?>
@@ -161,6 +171,12 @@
                                     <td>other</td>
                                     <td><?php echo $val['Furnace_Incoming']; ?></td>
                                     <td><input type="hidden" id="Furnance_balance_qty<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Furnace_Remaining_Qty']; ?>"><?php echo $val['Furnace_Remaining_Qty']; ?></td>
+                                    <td><input type="text" class="form-control" name="remain_qty" id="remain_qty<?php echo $val['WO_Process_Icode']; ?>" required min="0" onkeyup="change_qty('<?php echo $val['WO_Process_Icode']; ?>')"  ></td>
+                                    <td><select name="comments" class="form-control" id="comments<?php echo $val['WO_Process_Icode']; ?>">
+                                            <option value="">Select Reason</option>
+                                            <option value="Material_Not_Received">Material_Not_Received</option>
+                                            <option value="Hold">Hold</option>
+                                        </select></td>
                                 <?php }
                                 elseif($_SESSION['role'] == 4) {?>
                                     <td><?php echo $val['Proforma_Holes']; ?></td>
@@ -169,15 +185,16 @@
                                     <td>other</td>
                                     <td><?php echo $val['Dispatch_Incoming']; ?> </td>
                                     <td><input type="hidden" id="Dispatch_balance_qty<?php echo $val['WO_Process_Icode']; ?>" value="<?php echo $val['Dispatch_Remaining_Qty']; ?>"><?php echo $val['Dispatch_Remaining_Qty']; ?></td>
+                                    <td><input type="text" class="form-control" name="remain_qty" id="remain_qty<?php echo $val['WO_Process_Icode']; ?>" required min="0" onkeyup="change_qty('<?php echo $val['WO_Process_Icode']; ?>')"  ></td>
+                                    <td><select name="comments" class="form-control" id="comments<?php echo $val['WO_Process_Icode']; ?>">
+                                            <option value="">Select Reason</option>
+                                            <option value="Glass_Issue">Glass Issue </option>
+                                            <option value="Template_miss_match">Template Mismatch</option>
+                                            <option value="Handling">Handling Issue</option>
+                                        </select></td>
                                 <?php }?>
 
-                                <td><input type="text" class="form-control" name="remain_qty" id="remain_qty<?php echo $val['WO_Process_Icode']; ?>" required min="0" onkeyup="change_qty('<?php echo $val['WO_Process_Icode']; ?>')"  ></td>
-                                <td><select name="comments" class="form-control" id="comments<?php echo $val['WO_Process_Icode']; ?>">
-                                        <option value="">Select Reason</option>
-                                        <option value="Out_of_Stock">Out of Stock </option>
-                                        <option value="optimize">optimize Issue</option>
-                                        <option value="Handling">Handling Issue</option>
-                                    </select></td>
+
                                 <td><select name="status" class="form-control" id="status<?php echo $val['WO_Process_Icode']; ?>">
                                         <option value="">Select Status</option>
                                     </select></td>
@@ -198,17 +215,15 @@
 
                                     <?php if($_SESSION['role'] == 2)
                                     { ?>
+                                        <input type="button" class="btn btn-success"  onclick="Save_cutting_Status('<?php echo $val['WO_Process_Icode']; ?>')" value="Save"/>
 
-                                        <button class="btn btn-success" onclick="Save_cutting_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
                                         <?php }
                                     elseif($_SESSION['role'] == 3)
                                     { ?>
-                                        <button class="btn btn-success" onclick="Save_furnance_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
-
+                                        <input type="button" class="btn btn-success"  onclick="Save_furnance_Status('<?php echo $val['WO_Process_Icode']; ?>')" value="Save"/>
                                     <?php }
                                     elseif($_SESSION['role'] == 4) {?>
-                                      <button class="btn btn-success" onclick="Save_Dispatch_Status('<?php echo $val['WO_Process_Icode']; ?>')">Save</button>
-
+                                        <input type="button" class="btn btn-success"  onclick="Save_Dispatch_Status('<?php echo $val['WO_Process_Icode']; ?>')" value="Save"/>
                                     <?php }?>
 
                                 </td>
@@ -220,6 +235,10 @@
                         ?>
                         </tbody>
                     </table>
+
+                        <input type="submit" class="btn btn-success"  onclick="Save_All_cutting()" value="Save"/>
+
+
                 </div>
             </div>
         </div>
@@ -228,6 +247,28 @@
 </main>
 <script>$('#sampleTable').DataTable();</script>
 <script>
+//    $("#selectall").click(function () {
+//        $('input:checkbox').not(this).prop('checked', this.checked);
+//
+//    });
+$(document).ready(function(){
+    $('input[type="submit"]').not(this).prop('disabled', true);
+    $('#selectall').change(function(){
+        $('input:checkbox').not(this).prop('checked', this.checked);
+
+        if(this.checked)
+        {
+            $('input[type="button"]').not(this).prop('disabled', true);
+            $('input[type="submit"]').not(this).prop('disabled', false);
+        }
+        else
+        {
+            $('input[type="button"]').not(this).prop('disabled', false);
+            $('input[type="submit"]').not(this).prop('disabled', true);
+        }
+
+    });
+});
     function Save_cutting_Status(id)
     {
         if (confirm("Do you want to Save ")) {
@@ -454,6 +495,46 @@
             }
         }
     }
+
+    // save all
+    function  Save_All_cutting() {
+        if (confirm("Do you want to Save ")) {
+            var checkboxes = document.getElementsByName('case');
+            var vals = "";
+            for (var i = 0, n = checkboxes.length; i < n; i++) {
+                if (checkboxes[i].checked) {
+                    vals += "," + checkboxes[i].value;
+                }
+            }
+            var process_id = vals;
+            var type = document.getElementById('pi_type').value;
+            $.ajax({
+                url: "<?php echo site_url('User_Controller/Save_All_Production'); ?>",
+                data: {
+                    Process_Icode: process_id,
+                    PI_type:  type
+
+                },
+                type: "POST",
+                context: document.body,
+                success: function (data) {
+                    if (data != 0) {
+                        swal({
+                                title: "Success!",
+                                text: "Data Saved..",
+                                type: "success"
+                            },
+                            function () {
+                                location.reload();
+                            });
+
+                    }
+                }
+            });
+        }
+
+    }
+
 
     function change_qty(id) {
         var remaining_qty = document.getElementById('remain_qty' + id).value;

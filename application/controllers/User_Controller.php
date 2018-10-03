@@ -254,8 +254,8 @@ class User_Controller extends CI_Controller
             if($insert == 1)
             {
                 $update = array('Dispatch_Remaining_Qty' => $this->input->post('Qty',true),
-                    'Dispatch_Incoming' => '0',
-                    'Dispatch_Status' => $this->input->post('Status',true) );
+                                'Dispatch_Incoming' => '0',
+                                'Dispatch_Status' => $this->input->post('Status',true) );
                 $this->db->where('WO_Process_Icode',$wo_icode);
                 $this->db->update('wo_processing', $update);
 
@@ -277,230 +277,17 @@ class User_Controller extends CI_Controller
                     $complete = '0';
                 }
                 $update1 = array('WO_Completed' => $complete,
-                    'WO_Completed_On' => date('Y-m-d'));
+                           'WO_Completed_On' => date('Y-m-d'));
                 $this->db->where('WO_Icode',$work_order);
                 $this->db->update('work_order', $update1);
                 echo 1;
                 //$work_order = $this->input->post('Wo_Icode',true);
-                //  $success = $this->user_model->find_WO_Finished($work_order);
+              //  $success = $this->user_model->find_WO_Finished($work_order);
             }
             else{
                 echo 0;
             }
         }
-    }
-
-    //** Save All Production Depatment  */
-    public function Save_All_Production()
-    {
-        $role =  $this->session->userdata['role'];
-        if($role == 2) //  Cutting
-        {
-            $data= $this->input->post('Process_Icode', true);
-            $string = trim($data,",");
-            $process = explode(",", $string);
-            foreach ($process as $key )
-            {
-                $process_details = $this->user_model->get_wo_process($key);
-
-                $type = $this->input->post('PI_type',true);
-
-                if($type == '1' )
-                {
-                    $item = $process_details[0]['PI_Sheet_Item_Icode'];
-                }
-                else
-                {
-                    $item = $process_details[0]['Proforma_Invoice_Item_Icode'];
-                }
-
-                $data =array('WO_Icode' => $process_details[0]['WO_Icode'],
-                    'WO_Process_Icode' => $key,
-                    'Proforma_Invoice_Items_Icode' => $item,
-                    'PI_Type' =>$this->input->post('PI_type',true),
-                    'Cutting_Qty'=>$process_details[0]['Cutting_Remaining_Qty'],
-                    'Cutting_Remaining_Qty  ' => '0',
-                    'Remaining_Comments' => '',
-                    'Cutting_Status' => '3',
-                    'Created_By' => $this->session->userdata['userid']);
-                $insert = $this->user_model->Insert_Cutting($data);
-                if($insert == 1)
-                {
-                    $wo_process = $this->user_model->get_furnance_details($key);
-                    $furnance_icome = $wo_process[0]['Furnace_Remaining_Qty'];
-
-                    if($furnance_icome == '0')
-                    {
-
-                        $update = array('Cutting_Remaining_Qty' => '0',
-                            'Furnace_Incoming' => $wo_process[0]['Cutting_Remaining_Qty'],
-                            'Furnace_Remaining_Qty'=>$wo_process[0]['Cutting_Remaining_Qty'],
-                            'Furnace_Status' => '1',
-                            'Cutting_Status' => '3' );
-                        $this->db->where('WO_Process_Icode',$key);
-                        $this->db->update('wo_processing', $update);
-                        echo 1;
-                    }
-                    else
-                    {
-
-                        $new_income = $wo_process[0]['Cutting_Remaining_Qty'] + $furnance_icome;
-                        $update = array('Cutting_Remaining_Qty' => '0',
-                            'Furnace_Incoming' => $new_income,
-                            'Furnace_Remaining_Qty'=>$new_income,
-                            'Furnace_Status' => '1',
-                            'Cutting_Status' => '3' );
-                        $this->db->where('WO_Process_Icode',$key);
-                        $this->db->update('wo_processing', $update);
-                        echo 1;
-
-                    }
-                }
-                else{
-                    echo 0;
-                }
-
-            }
-        }
-        elseif ($role == 3) // Fornace
-        {
-            $data= $this->input->post('Process_Icode', true);
-            $string = trim($data,",");
-            $process = explode(",", $string);
-            foreach ($process as $key )
-            {
-                $process_details = $this->user_model->get_wo_process($key);
-
-                $type = $this->input->post('PI_type',true);
-
-                if($type == '1' )
-                {
-                    $item = $process_details[0]['PI_Sheet_Item_Icode'];
-                }
-                else
-                {
-                    $item = $process_details[0]['Proforma_Invoice_Item_Icode'];
-                }
-
-                $data =array('WO_Icode' => $process_details[0]['WO_Icode'],
-                    'WO_Process_Icode' => $key,
-                    'Proforma_Invoice_Items_Icode' => $item,
-                    'PI_Type' =>$this->input->post('PI_type',true),
-                    'Cutting_Income' => $process_details[0]['Furnace_Incoming'],
-                    'Furnace_qty'=>$process_details[0]['Furnace_Remaining_Qty'],
-                    'Furnace_Remaining_Qty  ' => '0',
-                    'Remaining_Comments' => '',
-                    'Furnace_Status' => '3',
-                    'Created_By' => $this->session->userdata['userid']);
-                $insert = $this->user_model->Insert_Furnace($data);
-                if($insert == 1)
-                {
-                    $wo_process = $this->user_model->get_furnance_details($key);
-                    $dispatch_icome = $wo_process[0]['Dispatch_Remaining_Qty'];
-                    if($dispatch_icome == '0')
-                    {
-
-                        $update = array('Furnace_Remaining_Qty' => '0',
-                            'Dispatch_Incoming' => $wo_process[0]['Furnace_Remaining_Qty'],
-                            'Dispatch_Remaining_Qty'=>$wo_process[0]['Furnace_Remaining_Qty'],
-                            'Furnace_Incoming' => '0',
-                            'Dispatch_Status' => '1',
-                            'Furnace_Status' => '3' );
-                        $this->db->where('WO_Process_Icode',$key);
-                        $this->db->update('wo_processing', $update);
-                        echo 1;
-                    }
-                    else
-                    {
-                        $new_income = $wo_process[0]['Furnace_Remaining_Qty'] + $dispatch_icome;
-
-                        $update = array('Furnace_Remaining_Qty' => '0',
-                            'Dispatch_Incoming' => $new_income,
-                            'Dispatch_Remaining_Qty'=>$new_income,
-                            'Furnace_Incoming' => '0',
-                            'Dispatch_Status' => '1',
-                            'Furnace_Status' => '3' );
-                        $this->db->where('WO_Process_Icode',$key);
-                        $this->db->update('wo_processing', $update);
-                        echo 1;
-
-                    }
-                }
-                else{
-                    echo 0;
-                }
-
-            }
-
-        }
-        elseif ($role == 4) // Dispatch
-        {
-            $data= $this->input->post('Process_Icode', true);
-            $string = trim($data,",");
-            $process = explode(",", $string);
-            foreach ($process as $key )
-            {
-                $process_details = $this->user_model->get_wo_process($key);
-
-                $type = $this->input->post('PI_type',true);
-
-                if($type == '1' )
-                {
-                    $item = $process_details[0]['PI_Sheet_Item_Icode'];
-                }
-                else
-                {
-                    $item = $process_details[0]['Proforma_Invoice_Item_Icode'];
-                }
-                $data =array('WO_Icode' => $process_details[0]['WO_Icode'],
-                    'WO_Process_Icode' => $key,
-                    'Proforma_Invoice_Items_Icode' => $item,
-                    'Dispatch_Qty' =>$process_details[0]['Dispatch_Remaining_Qty'],
-                    'PI_Type' =>$this->input->post('PI_type',true),
-                    'Dispatch_Remaining_Qty  ' => '0',
-                    'Furnace_Income' => $process_details[0]['Dispatch_Incoming'],
-                    'Remaining_Comments' => '',
-                    'Dispatch_Status' => '3',
-                    'Created_By' => $this->session->userdata['userid']);
-                $insert = $this->user_model->Insert_Dispatch($data);
-                if($insert == 1)
-                {
-                    $update = array('Dispatch_Remaining_Qty' => '0',
-                        'Dispatch_Incoming' => '0',
-                        'Dispatch_Status' => '3' );
-                    $this->db->where('WO_Process_Icode',$key);
-                    $this->db->update('wo_processing', $update);
-
-                    $work_order =$process_details[0]['WO_Icode'];
-                    $data['complete']= $this->admin_model->get_completed_status($work_order);
-                    $data['work_order']= $this->admin_model->get_Single_Work_Order($work_order);
-                    $total_qty = $data['complete'][0]['total'];
-                    $disptach_remain = $data['complete'][0]['remaining1'];
-                    $cutting_remain = $data['complete'][0]['remaining2'];
-                    $funan_remain = $data['complete'][0]['remaining3'];
-                    $remain = $disptach_remain + $cutting_remain + $funan_remain;
-                    $completed = $total_qty - $remain;
-                    if($completed == $data['work_order'][0]['Total_Qty'] )
-                    {
-                        $complete = '1';
-                    }
-                    else{
-                        $complete = '0';
-                    }
-                    $update1 = array('WO_Completed' => $complete,
-                        'WO_Completed_On' => date('Y-m-d'));
-                    $this->db->where('WO_Icode',$work_order);
-                    $this->db->update('work_order', $update1);
-                    echo 1;
-                    //$work_order = $this->input->post('Wo_Icode',true);
-                    //  $success = $this->user_model->find_WO_Finished($work_order);
-                }
-                else{
-                    echo 0;
-                }
-            }
-        }
-
     }
 
     //** PROFOMA INVOICE */
@@ -538,81 +325,23 @@ class User_Controller extends CI_Controller
         {
             $thickness=$objWorksheet->getCellByColumnAndRow(0,$i)->getValue();
             $height=$objWorksheet->getCellByColumnAndRow(1,$i)->getValue();
+            if(is_numeric($height))
+            {
+               $charge_height = $height + 30;
+                $height_check[] ="";
+            }
+            else{
+                $height_check[] ='1';
+            }
             $width=$objWorksheet->getCellByColumnAndRow(2,$i)->getValue();
-            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
-
-            if($types == 'T')
+            if(is_numeric($width))
             {
-
-                $heigh_val =  explode("/",$height);
-                $length_H =  sizeof($heigh_val);
-                if($length_H == '1')
-                {
-                    $charge_height = $heigh_val[0] + 50;
-                    $height_check[] ="";
-                }
-                else
-                {
-                    if($heigh_val[0] > $heigh_val[1])
-                    {
-
-                        $charge_height = $heigh_val[0] + 50;
-                        $height_check[] ="";
-                    }
-                    else
-                    {
-                        $charge_height = $heigh_val[1] + 50;
-                        $height_check[] ="";
-                    }
-                }
-
-
-
-                $width_val = explode("/",$width);
-                $length_W =  sizeof($width_val);
-
-                if($length_W == '1')
-                {
-                    $charge_weigth = $width_val[0] + 50;
-                    $width_check[]="";
-                }
-                else{
-                    if($width_val[0] > $width_val[1])
-                    {
-
-                        $charge_weigth = $width_val[0] + 50;
-                        $width_check[]="";
-                    }
-                    else
-                    {
-                        $charge_weigth = $width_val[1] + 50;
-                        $width_check[]="";
-                    }
-                }
-
-
+                $charge_weigth = $width + 30;
+                $width_check[]="";
             }
-            else
-            {
-                if(is_numeric($height))
-                {
-                    $charge_height = $height + 30;
-                    $height_check[] ="";
-                }
-                else{
-                    $height_check[] ='1';
-                }
-
-                if(is_numeric($width))
-                {
-                    $charge_weigth = $width + 30;
-                    $width_check[]="";
-                }
-                else{
-                    $width_check[] ='1';
-                }
+            else{
+                $width_check[] ='1';
             }
-
             $pics=$objWorksheet->getCellByColumnAndRow(3,$i)->getValue();
             if(is_numeric($pics))
             {
@@ -633,7 +362,7 @@ class User_Controller extends CI_Controller
             $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
             if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B' || $types == 'D' )
             {
-                $types_check[]="";
+                 $types_check[]="";
             }
             else{
                 $types_check[] ='1';
@@ -647,8 +376,7 @@ class User_Controller extends CI_Controller
 //                $cutout_check[] ='1';
 //            }
 
-            $areass = $charge_height/1000 * $charge_weigth/1000;
-            $area1 = $areass * $pics;
+            $area1 = $charge_height/1000 * $charge_weigth/1000;
             $area = number_format((float)$area1, 3, '.', '');
             $data_user[]=array(
                 'Thickness'=>$thickness,
@@ -720,22 +448,8 @@ class User_Controller extends CI_Controller
         else{
             $profoma_address= $this->input->post('company_address');
         }
-        $month =date('m');
-        $perfoma = $this->admin_model->get_profoma_number($month);
-        if($perfoma == 0)
-        {
-            $Invoice_Number = $month .'-101';
-        }
-        else
-        {
-            $myString = $perfoma[0]['Proforma_Number'];
-            $myArray = explode('-', $myString);
-            $increment = $myArray[1] + 1;
-            $Invoice_Number = $month .'-'. $increment;
-
-        }
         $data = array(
-            'Proforma_Number' => $Invoice_Number,
+            'Proforma_Number' => $this->input->post('invoice_no'),
             'Proforma_Date' => $this->input->post('invoice_date'),
             'Proforma_Customer_Icode' => $this->input->post('company_name'),
             'Proforma_Delivery_Address_Icode' =>$profoma_address ,
@@ -1040,40 +754,39 @@ class User_Controller extends CI_Controller
             $pdf_name = 'Stronglass_Tough';
             $file_location =FCPATH."uploads/pdf/".$pdf_name.".pdf";
             file_put_contents($file_location,$pdf);
-//            if($email == "")
-//            {
-//                $this->session->set_flashdata('feedback1', 'Sorry, No Email Address in this Customer...');
-                $this->pdf->stream($pdf_name .".pdf", array("Attachment"=>0));
+            if($email == "")
+            {
+                $this->session->set_flashdata('feedback1', 'Sorry, No Email Address in this Customer...');
                 redirect('User_Controller/single_Invoice/'.$picode);
-//            }
-//            else{
-//                $id=$this->input->post('PI_Icode');
-//                $update = array('Email_Send_Status' => '1',
-//                    'Email_Send_Date'=>date('Y-m-d H:i:s'));
-//                $this->db->where('Proforma_Icode',$id);
-//                $this->db->update('proforma_invoice', $update);
-//
-////            $userEmail='vignesh@ibtemail.com';
-//                $subject='Stronglass Tough Quote PI.NO:'.$data['invoice'][0]['Proforma_Number'];
-//                $config = Array(
-//                    'mailtype' => 'html',
-//                    'charset' => 'utf-8',
-//                    'priority' => '1'
-//                );
-//                $this->load->library('email', $config);
-//                $this->email->set_newline("\r\n");
-//                $pi_icode= $this->input->post('PI_Icode');
-//                $this->email->from('karthik@ibtemail.com', 'Stronglass Tough');
-//                $this->email->to('karthikkct77@gmail.com');  // replace it with receiver mail id
-//                $this->email->subject($subject); // replace it with relevant subject
-//                $file_location =FCPATH."uploads/pdf/".$pdf_name.".pdf";
-//                $body = $this->load->view('User/email_body',$data,TRUE);
-//                $this->email->message($body);
-//                $this->email->attach($file_location);
-//                $this->email->send();
-//                $this->session->set_flashdata('feedback', 'Email Send Successfully ..');
-//                redirect('User_Controller/Check_PI');
-//            }
+            }
+            else{
+              $id=$this->input->post('PI_Icode');
+            $update = array('Email_Send_Status' => '1',
+                'Email_Send_Date'=>date('Y-m-d H:i:s'));
+            $this->db->where('Proforma_Icode',$id);
+            $this->db->update('proforma_invoice', $update);
+
+//            $userEmail='vignesh@ibtemail.com';
+            $subject='Stronglass Tough Quote PI.NO:'.$data['invoice'][0]['Proforma_Number'];
+            $config = Array(
+                'mailtype' => 'html',
+                'charset' => 'utf-8',
+                'priority' => '1'
+            );
+        $this->load->library('email', $config);
+        $this->email->set_newline("\r\n");
+        $pi_icode= $this->input->post('PI_Icode');
+        $this->email->from('karthik@ibtemail.com', 'Stronglass Tough');
+        $this->email->to('karthikkct77@gmail.com','damienleo1010@gmail.com');  // replace it with receiver mail id
+        $this->email->subject($subject); // replace it with relevant subject
+        $file_location =FCPATH."uploads/pdf/".$pdf_name.".pdf";
+        $body = $this->load->view('User/email_body',$data,TRUE);
+        $this->email->message($body);
+        $this->email->attach($file_location);
+        $this->email->send();
+        $this->session->set_flashdata('feedback', 'Email Send Successfully ..');
+        redirect('User_Controller/Check_PI');
+            }
         }
     }
     /** Edit Profroma Invoice */
@@ -1184,25 +897,25 @@ class User_Controller extends CI_Controller
             $update_charges_id = $this->input->post('Delete_charges');
 
             $count_update = sizeof($update_charges_id);
-            for($i=0; $i<$count_update; $i++)
-            {
-                if (empty($update_charges_id[$i])) {
+                for($i=0; $i<$count_update; $i++)
+                {
+                    if (empty($update_charges_id[$i])) {
+
+                    }
+                    else{
+                        $full_data1 =array( 'Proforma_Icode' => $picode,
+                            'Proforma_Charge_Icode' => $update_charges_id[$i],
+                            'Proforma_Charge_Count' => $charges_count[$i],
+                            'Proforma_Charge_Value' => $charges_value[$i],
+                            'Proforma_Charge_Cost' => $charges_cost[$i],
+                            'Modified_By' => $this->session->userdata['userid'],
+                            'Modified_On' => date('Y-m-d H:i:s'));
+                        $charge_id=$this->admin_model->get_Profoma_Charges($update_charges_id[$i],$picode);
+                        $this->db->where('Proforma_Material_PC_Icode',$charge_id['Proforma_Material_PC_Icode']);
+                        $this->db->update('proforma_material_processing_charges', $full_data1);
+                    }
 
                 }
-                else{
-                    $full_data1 =array( 'Proforma_Icode' => $picode,
-                        'Proforma_Charge_Icode' => $update_charges_id[$i],
-                        'Proforma_Charge_Count' => $charges_count[$i],
-                        'Proforma_Charge_Value' => $charges_value[$i],
-                        'Proforma_Charge_Cost' => $charges_cost[$i],
-                        'Modified_By' => $this->session->userdata['userid'],
-                        'Modified_On' => date('Y-m-d H:i:s'));
-                    $charge_id=$this->admin_model->get_Profoma_Charges($update_charges_id[$i],$picode);
-                    $this->db->where('Proforma_Material_PC_Icode',$charge_id['Proforma_Material_PC_Icode']);
-                    $this->db->update('proforma_material_processing_charges', $full_data1);
-                }
-
-            }
             $charges_id = $this->input->post('charges');
             $check = array_filter($charges_id);
             if (!empty($check)) {
@@ -1224,7 +937,7 @@ class User_Controller extends CI_Controller
             }
             $this->session->set_flashdata('feedback', 'Updated Invoice..');
             redirect('User_Controller/single_Invoice/'.$picode);
-        }
+            }
     }
 
     /** Get WO LIST */
@@ -1291,8 +1004,8 @@ class User_Controller extends CI_Controller
     {
         $pi_code=$this->input->post('id', true);
         $update = array('PI_Confirm' => '1',
-            'PI_Confirm_By' => $this->session->userdata['userid'],
-            'PI_Confirm_Date' => date('Y-m-d H:i:s'));
+                        'PI_Confirm_By' => $this->session->userdata['userid'],
+                      'PI_Confirm_Date' => date('Y-m-d H:i:s'));
         $this->db->where('Proforma_Icode',$pi_code);
         $this->db->update('proforma_invoice', $update);
         echo 1;
@@ -1422,79 +1135,22 @@ class User_Controller extends CI_Controller
         {
             $thickness=$objWorksheet->getCellByColumnAndRow(0,$i)->getValue();
             $height=$objWorksheet->getCellByColumnAndRow(1,$i)->getValue();
-            $width=$objWorksheet->getCellByColumnAndRow(2,$i)->getValue();
-            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
-
-            if($types == 'T')
+            if(is_numeric($height))
             {
-
-                $heigh_val =  explode("/",$height);
-                $length_H =  sizeof($heigh_val);
-                if($length_H == '1')
-                {
-                    $charge_height = $heigh_val[0] + 50;
-                    $height_check[] ="";
-                }
-                else
-                {
-                    if($heigh_val[0] > $heigh_val[1])
-                    {
-
-                        $charge_height = $heigh_val[0] + 50;
-                        $height_check[] ="";
-                    }
-                    else
-                    {
-                        $charge_height = $heigh_val[1] + 50;
-                        $height_check[] ="";
-                    }
-                }
-
-
-
-                $width_val = explode("/",$width);
-                $length_W =  sizeof($width_val);
-
-                if($length_W == '1')
-                {
-                    $charge_weigth = $width_val[0] + 50;
-                    $width_check[]="";
-                }
-                else{
-                    if($width_val[0] > $width_val[1])
-                    {
-
-                        $charge_weigth = $width_val[0] + 50;
-                        $width_check[]="";
-                    }
-                    else
-                    {
-                        $charge_weigth = $width_val[1] + 50;
-                        $width_check[]="";
-                    }
-                }
-
-
+                $charge_height = $height + 30;
+                $height_check[] ="";
             }
-            else
+            else{
+                $height_check[] ='1';
+            }
+            $width=$objWorksheet->getCellByColumnAndRow(2,$i)->getValue();
+            if(is_numeric($width))
             {
-                if(is_numeric($height))
-                {
-                    $charge_height = $height + 30;
-                    $height_check[] ="";
-                }
-                else{
-                    $height_check[] ='1';
-                }
-
-                if(is_numeric($width))
-                {
-                    $charge_weigth = $width + 30;
-                    $width_check[]="";
-                }
-                else{
-                    $width_check[] ='1';
-                }
+                $charge_weigth = $width + 30;
+                $width_check[]="";
+            }
+            else{
+                $width_check[] ='1';
             }
             $pics=$objWorksheet->getCellByColumnAndRow(3,$i)->getValue();
             if(is_numeric($pics))
@@ -1513,14 +1169,14 @@ class User_Controller extends CI_Controller
             else{
                 $holes_check[] ='1';
             }
-//            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
-//            if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B')
-//            {
-//                $types_check[]="";
-//            }
-//            else{
-//                $types_check[] ='1';
-//            }
+            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
+            if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B')
+            {
+                $types_check[]="";
+            }
+            else{
+                $types_check[] ='1';
+            }
             $cutout=$objWorksheet->getCellByColumnAndRow(6,$i)->getValue();
 //            if(is_numeric($cutout))
 //            {
@@ -1569,11 +1225,11 @@ class User_Controller extends CI_Controller
         $check_W = count(array_keys($width_check, "1"));
         $check_P = count(array_keys($pics_check, "1"));
         $check_Holes = count(array_keys($holes_check, "1"));
-//        $check_Type = count(array_keys($types_check, "1"));
+        $check_Type = count(array_keys($types_check, "1"));
 //        $check_cutout = count(array_keys($cutout_check, "1"));
 
 
-        if($check_H =='0' and $check_W =='0' and $check_P =='0' and $check_Holes =='0'  )
+        if($check_H =='0' and $check_W =='0' and $check_P =='0' and $check_Holes =='0' and $check_Type =='0' )
         {
             unlink('uploads/excel/'.$file_name);
             $this->load->view('User/header');
@@ -1602,23 +1258,8 @@ class User_Controller extends CI_Controller
         else{
             $profoma_address= $this->input->post('company_address');
         }
-
-        $month =date('m');
-        $perfoma = $this->admin_model->get_profoma_number($month);
-        if($perfoma == 0)
-        {
-            $Invoice_Number = $month .'-101';
-        }
-        else
-        {
-            $myString = $perfoma[0]['Proforma_Number'];
-            $myArray = explode('-', $myString);
-            $increment = $myArray[1] + 1;
-            $Invoice_Number = $month .'-'. $increment;
-
-        }
         $data = array(
-            'Proforma_Number' => $Invoice_Number,
+            'Proforma_Number' => $this->input->post('invoice_no'),
             'Proforma_Date' => $this->input->post('invoice_date'),
             'Proforma_Customer_Icode' => $this->input->post('company_name'),
             'Proforma_Delivery_Address_Icode' =>$profoma_address ,
@@ -1692,8 +1333,6 @@ class User_Controller extends CI_Controller
                         'Proforma_Chargeable_Size_Width' =>$actual_W[$i],
                         'Proforma_Chargeable_Size_Height' => $actual_H[$i],
                         'Proforma_Area_SQMTR' => $Area[$i],
-                        'Proforma_Material_Rate' => $Rate[$i],
-                        'Proforma_Material_Cost' => $cost[$i],
                         'created_by' => $this->session->userdata['userid']);
                     $insert_item = $this->user_model->Insert_Profoma_Item_sheet($full_data);
                 }
@@ -1830,8 +1469,6 @@ class User_Controller extends CI_Controller
             $actual_H = $this->input->post('height');
             $special = $this->input->post('type');
             $Area = $this->input->post('area');
-            $Rate = $this->input->post('rate');
-            $cost = $this->input->post('total');
             $count = sizeof($material_id);
             for($i=0; $i<$count; $i++)
             {
@@ -1845,8 +1482,6 @@ class User_Controller extends CI_Controller
                     'Proforma_Chargeable_Size_Width' =>$actual_W[$i],
                     'Proforma_Chargeable_Size_Height' => $actual_H[$i],
                     'Proforma_Area_SQMTR' => $Area[$i],
-                    'Proforma_Material_Rate' => $Rate[$i],
-                    'Proforma_Material_Cost' => $cost[$i],
                     'Modified_By' => $this->session->userdata['userid'],
                     'Modified_On' => date('Y-m-d H:i:s'));
                 $this->db->where('pi_item_sheet_icode',$material_id[$i]);
@@ -2057,7 +1692,7 @@ class User_Controller extends CI_Controller
         }
         else
         {
-            echo "0";
+          echo "0";
         }
     }
 
@@ -2169,81 +1804,23 @@ class User_Controller extends CI_Controller
         {
             $thickness=$objWorksheet->getCellByColumnAndRow(0,$i)->getValue();
             $height=$objWorksheet->getCellByColumnAndRow(1,$i)->getValue();
+            if(is_numeric($height))
+            {
+                $charge_height = $height + 30;
+                $height_check[] ="";
+            }
+            else{
+                $height_check[] ='1';
+            }
             $width=$objWorksheet->getCellByColumnAndRow(2,$i)->getValue();
-            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
-
-            if($types == 'T')
+            if(is_numeric($width))
             {
-
-                $heigh_val =  explode("/",$height);
-                $length_H =  sizeof($heigh_val);
-                if($length_H == '1')
-                {
-                    $charge_height = $heigh_val[0] + 50;
-                    $height_check[] ="";
-                }
-                else
-                {
-                    if($heigh_val[0] > $heigh_val[1])
-                    {
-
-                        $charge_height = $heigh_val[0] + 50;
-                        $height_check[] ="";
-                    }
-                    else
-                    {
-                        $charge_height = $heigh_val[1] + 50;
-                        $height_check[] ="";
-                    }
-                }
-
-
-
-                $width_val = explode("/",$width);
-                $length_W =  sizeof($width_val);
-
-                if($length_W == '1')
-                {
-                    $charge_weigth = $width_val[0] + 50;
-                    $width_check[]="";
-                }
-                else{
-                    if($width_val[0] > $width_val[1])
-                    {
-
-                        $charge_weigth = $width_val[0] + 50;
-                        $width_check[]="";
-                    }
-                    else
-                    {
-                        $charge_weigth = $width_val[1] + 50;
-                        $width_check[]="";
-                    }
-                }
-
-
+                $charge_weigth = $width + 30;
+                $width_check[]="";
             }
-            else
-            {
-                if(is_numeric($height))
-                {
-                    $charge_height = $height + 30;
-                    $height_check[] ="";
-                }
-                else{
-                    $height_check[] ='1';
-                }
-
-                if(is_numeric($width))
-                {
-                    $charge_weigth = $width + 30;
-                    $width_check[]="";
-                }
-                else{
-                    $width_check[] ='1';
-                }
+            else{
+                $width_check[] ='1';
             }
-
             $pics=$objWorksheet->getCellByColumnAndRow(3,$i)->getValue();
             if(is_numeric($pics))
             {
@@ -2261,14 +1838,14 @@ class User_Controller extends CI_Controller
             else{
                 $holes_check[] ='1';
             }
-//            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
-//            if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B' || $types == 'D' )
-//            {
-//                $types_check[]="";
-//            }
-//            else{
-//                $types_check[] ='1';
-//            }
+            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
+            if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B' || $types == 'D' )
+            {
+                $types_check[]="";
+            }
+            else{
+                $types_check[] ='1';
+            }
             $cutout=$objWorksheet->getCellByColumnAndRow(6,$i)->getValue();
 //            if(is_numeric($cutout))
 //            {
@@ -2278,8 +1855,7 @@ class User_Controller extends CI_Controller
 //                $cutout_check[] ='1';
 //            }
 
-            $areass = $charge_height/1000 * $charge_weigth/1000;
-            $area1 = $areass * $pics;
+            $area1 = $charge_height/1000 * $charge_weigth/1000;
             $area = number_format((float)$area1, 3, '.', '');
             $data_user[]=array(
                 'Thickness'=>$thickness,
@@ -2318,7 +1894,7 @@ class User_Controller extends CI_Controller
         $check_W = count(array_keys($width_check, "1"));
         $check_P = count(array_keys($pics_check, "1"));
         $check_Holes = count(array_keys($holes_check, "1"));
-//        $check_Type = count(array_keys($types_check, "1"));
+        $check_Type = count(array_keys($types_check, "1"));
 //        $check_cutout = count(array_keys($cutout_check, "1"));
 
 
@@ -2374,81 +1950,23 @@ class User_Controller extends CI_Controller
         {
             $thickness=$objWorksheet->getCellByColumnAndRow(0,$i)->getValue();
             $height=$objWorksheet->getCellByColumnAndRow(1,$i)->getValue();
+            if(is_numeric($height))
+            {
+                $charge_height = $height + 30;
+                $height_check[] ="";
+            }
+            else{
+                $height_check[] ='1';
+            }
             $width=$objWorksheet->getCellByColumnAndRow(2,$i)->getValue();
-            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
-
-            if($types == 'T')
+            if(is_numeric($width))
             {
-
-                $heigh_val =  explode("/",$height);
-                $length_H =  sizeof($heigh_val);
-                if($length_H == '1')
-                {
-                    $charge_height = $heigh_val[0] + 50;
-                    $height_check[] ="";
-                }
-                else
-                {
-                    if($heigh_val[0] > $heigh_val[1])
-                    {
-
-                        $charge_height = $heigh_val[0] + 50;
-                        $height_check[] ="";
-                    }
-                    else
-                    {
-                        $charge_height = $heigh_val[1] + 50;
-                        $height_check[] ="";
-                    }
-                }
-
-
-
-                $width_val = explode("/",$width);
-                $length_W =  sizeof($width_val);
-
-                if($length_W == '1')
-                {
-                    $charge_weigth = $width_val[0] + 50;
-                    $width_check[]="";
-                }
-                else{
-                    if($width_val[0] > $width_val[1])
-                    {
-
-                        $charge_weigth = $width_val[0] + 50;
-                        $width_check[]="";
-                    }
-                    else
-                    {
-                        $charge_weigth = $width_val[1] + 50;
-                        $width_check[]="";
-                    }
-                }
-
-
+                $charge_weigth = $width + 30;
+                $width_check[]="";
             }
-            else
-            {
-                if(is_numeric($height))
-                {
-                    $charge_height = $height + 30;
-                    $height_check[] ="";
-                }
-                else{
-                    $height_check[] ='1';
-                }
-
-                if(is_numeric($width))
-                {
-                    $charge_weigth = $width + 30;
-                    $width_check[]="";
-                }
-                else{
-                    $width_check[] ='1';
-                }
+            else{
+                $width_check[] ='1';
             }
-
             $pics=$objWorksheet->getCellByColumnAndRow(3,$i)->getValue();
             if(is_numeric($pics))
             {
@@ -2466,14 +1984,14 @@ class User_Controller extends CI_Controller
             else{
                 $holes_check[] ='1';
             }
-//            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
-//            if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B' || $types == 'D' )
-//            {
-//                $types_check[]="";
-//            }
-//            else{
-//                $types_check[] ='1';
-//            }
+            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
+            if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B' || $types == 'D' )
+            {
+                $types_check[]="";
+            }
+            else{
+                $types_check[] ='1';
+            }
             $cutout=$objWorksheet->getCellByColumnAndRow(6,$i)->getValue();
 //            if(is_numeric($cutout))
 //            {
@@ -2483,8 +2001,7 @@ class User_Controller extends CI_Controller
 //                $cutout_check[] ='1';
 //            }
 
-            $areass = $charge_height/1000 * $charge_weigth/1000;
-            $area1 = $areass * $pics;
+            $area1 = $charge_height/1000 * $charge_weigth/1000;
             $area = number_format((float)$area1, 3, '.', '');
             $data_user[]=array(
                 'Thickness'=>$thickness,
@@ -2523,7 +2040,7 @@ class User_Controller extends CI_Controller
         $check_W = count(array_keys($width_check, "1"));
         $check_P = count(array_keys($pics_check, "1"));
         $check_Holes = count(array_keys($holes_check, "1"));
-//        $check_Type = count(array_keys($types_check, "1"));
+        $check_Type = count(array_keys($types_check, "1"));
 //        $check_cutout = count(array_keys($cutout_check, "1"));
 
 
@@ -2560,8 +2077,8 @@ class User_Controller extends CI_Controller
     public function save_message ()
     {
         $data = array('Client_Message' => $this->input->post('message',true),
-            'client_type' =>$this->input->post('ctype',true),
-            'Client_Icode' => $this->session->userdata['userid'] );
+                       'client_type' =>$this->input->post('ctype',true),
+                        'Client_Icode' => $this->session->userdata['userid'] );
         $insert = $this->user_model->insert_msg($data);
         if($insert == 1)
         {
@@ -2642,128 +2159,16 @@ class User_Controller extends CI_Controller
     }
 
     //** kerala work orders */
-    public function Kerala_Work_Order()
-    {
-        $data['kerala_wo']= $this->user_model->get_all_kerala_wo();
-        $this->load->view('User/header');
-        $this->load->view('User/top');
-        $this->load->view('User/left');
-        $this->load->view('User/Kerala_Status',$data, FALSE);
-        $this->load->view('User/footer');
-    }
+     public function Kerala_Work_Order()
+     {
+         $data['kerala_wo']= $this->user_model->get_all_kerala_wo();
+         $this->load->view('User/header');
+         $this->load->view('User/top');
+         $this->load->view('User/left');
+         $this->load->view('User/Kerala_Status',$data, FALSE);
+         $this->load->view('User/footer');
+     }
 
-    //** Billing Work Order **/
-    public function Bill_WO()
-    {
-         $data['bill']= $this->user_model->get_bill_wo();
 
-        $this->load->view('User/header');
-        $this->load->view('User/top');
-        $this->load->view('User/left');
-        $this->load->view('User/Bill_Wo',$data, FALSE);
-        $this->load->view('User/footer');
-    }
-
-    //** view workorder bill
-    public function View_Bill_Wo()
-    {
-        $pi_icode = $this->uri->segment(3);
-        $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
-        $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
-        $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
-        $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
-        $data['tax']= $this->admin_model->get_Tax();
-        $data['st']= $this->admin_model->get_ST();
-        $data['User']=$this->user_model->Get_User_Details($pi_icode);
-        $data['check_user']=$this->user_model->Get_Check_User_Details();
-         $data['work_order']=$this->user_model->get_work_order($pi_icode);
-        $bill_data = $this->user_model->Get_all_bill();
-        if($bill_data == 0)
-        {
-            $data['bill_no'] = '3128';
-        }
-        else
-        {
-            $myString = $bill_data[0]['Bill_Number'];        
-            $increment = $myString + 1;
-             $data['bill_no'] = $increment;
-
-        }
-        $this->load->view('User/header');
-        $this->load->view('User/top');
-        $this->load->view('User/left');
-        $this->load->view('User/View_Bill_Wo',$data,false);
-        $this->load->view('User/footer');
-    }
-
-//** save bill
-    public function save_bill()
-    {
-        $data = array(
-            
-            'Bill_Number' => $this->input->post('bill_no'),
-            'Wo_Icode' => $this->input->post('work_order_no'),
-            'Vehicle_No' =>$this->input->post('vehicle_no'),
-            'Destination' => $this->input->post('destination'), 
-            'Delivery_Address'=> $this->input->post('new_address'),            
-            'Created_By' => $this->session->userdata['userid']);
-        $insert = $this->user_model->Insert_Billing($data);
-        if($insert == '1')
-        {
-            $id=$this->input->post('work_order_no');
-            $update  = array('Bill_Status' => '1' );
-            $this->db->where('WO_Icode',$id);
-            $this->db->update('work_order', $update);
-            $this->session->set_flashdata('feedback', 'Bill Generated Successfully..');
-             redirect('User_Controller/Bill_WO');
-
-        }
-        else
-        {
-     
-        }
-    }
-
-    public function View_Bill_List()
-    {
-        $data['bill']= $this->user_model->get_all_bill_details();
-        $this->load->view('User/header');
-        $this->load->view('User/top');
-        $this->load->view('User/left');
-        $this->load->view('User/Complete_Bill',$data, FALSE);
-        $this->load->view('User/footer');
-    }
-
-    public function View_Single_Bill($pid)
-    {
-        $pi_icode = $pid;
-        $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
-        $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
-        $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
-        $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
-        $data['tax']= $this->admin_model->get_Tax();
-        $data['st']= $this->admin_model->get_ST();
-        $data['User']=$this->user_model->Get_User_Details($pi_icode);
-        $data['check_user']=$this->user_model->Get_Check_User_Details();
-         $data['work_order']=$this->user_model->get_work_order($pi_icode);
-        $bill_data = $this->user_model->Get_all_bill();
-        if($bill_data == 0)
-        {
-            $data['bill_no'] = '3128';
-        }
-        else
-        {
-            $myString = $bill_data[0]['Bill_Number'];        
-            $increment = $myString + 1;
-             $data['bill_no'] = $increment;
-
-        }
-        $this->load->view('User/header');
-        $this->load->view('User/top');
-        $this->load->view('User/left');
-        $this->load->view('User/View_Single_Bill',$data,false);
-        $this->load->view('User/footer');
-    }
-    
 
 }

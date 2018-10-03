@@ -309,7 +309,7 @@ class Admin_Model extends CI_Model
     /** Get profoma number */
     public function get_profoma_number($month)
     {
-        $query= $this->db->query("SELECT Proforma_Number FROM `proforma_invoice` WHERE `Proforma_Number` LIKE '%$month%' ORDER by Proforma_Icode DESC LIMIT 1  ");
+        $query= $this->db->query("SELECT Proforma_Number FROM `proforma_invoice` WHERE substring(Proforma_Number, 1,2) LIKE '%$month%' ORDER by Proforma_Icode DESC LIMIT 1  ");
         if($query->num_rows() == 1)
         {
             return $query->result_array();
@@ -327,9 +327,10 @@ class Admin_Model extends CI_Model
     /** Get All Invoice */
     public function get_All_Invoice()
     {
+        $cdate = date('Y-m-d');
         $user_icode =$this->session->userdata['userid'];
         $query = $this->db->query("Select * from proforma_invoice A INNER JOIN  customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode
-                                   WHERE  A.PI_Confirm='0' and A.Proforma_Generated_By ='$user_icode'  ");
+                                   WHERE  date(A.Proforma_Generated_On) = '$cdate' and A.Proforma_Generated_By ='$user_icode'  ");
         return $query->result_array();
     }
 

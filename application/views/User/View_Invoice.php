@@ -114,7 +114,7 @@
                             </div>
                         </div>
                         <div class="col-md-3">
-                            <h4><span>P.INV.No</span>: <input type="hidden" name="invoice_no" id="invoice_no" value="<?php echo $profoma_number; ?>" readonly><?php echo $profoma_number; ?></h4>
+<!--                            <h4><span>P.INV.No</span>: <input type="hidden" name="invoice_no" id="invoice_no" value="--><?php //echo $profoma_number; ?><!--" readonly>--><?php //echo $profoma_number; ?><!--</h4>-->
                             <h4><span>Date </span>:<input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo date('Y-m-d'); ?>" readonly><?php echo date('Y-m-d'); ?></h4>
                             <h6><span>Total Outstanding</span>:<input type="text" class="form-control" name="outstanding" id="outstanding" required> </h6>
                             <h6><span>Credit Limit Amt</span>:<input type="text" class="form-control" name="credit_limit" id="credit_limit" required> </h6>
@@ -174,7 +174,16 @@
                                     <td style="width: 20px;"><input class="form-control" type="hidden" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['pics']; ?>" readonly><?php echo $key['pics']; ?></td>
                                     <td style="width: 20px;"><input class="form-control" type="hidden" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['holes']; ?>" readonly><?php echo $key['holes']; ?></td>
                                     <td style="width: 20px;"><input class="form-control" type="hidden" name="cutout[]" id="cutout<?php echo $i; ?>" value="<?php echo $key['cutout']; ?>" readonly><?php echo $key['cutout']; ?></td>
-                                    <td style="width: 20px;"><input class="form-control" type="hidden" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly><?php echo $key['type']; ?></td>
+                                    <?php
+                                    if($key['type'] == 'T')
+                                    { ?>
+                                        <td style="width: 20px; color: blue;"><input class="form-control" type="hidden" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly><?php echo $key['type']; ?></td>
+
+                                    <?php } else {?>
+                                        <td style="width: 20px;"><input class="form-control" type="hidden" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['type']; ?>" readonly><?php echo $key['type']; ?></td>
+
+                                    <?php } ?>
+
                                      <?php
                                     if($key['area'] > 5)
                                     {
@@ -293,8 +302,8 @@
                                                 endforeach; ?>
                                             </select>
                                         </div></td>
-                                    <td><input class="form-control" type="number" name="no_holes[]" id="no_holes" ></td>
-                                    <td><input class="form-control" type="number" name="charge_amt[]" id="charge_amt" ></td>
+                                    <td><input class="form-control" type="text" name="no_holes[]" id="no_holes" ></td>
+                                    <td><input class="form-control" type="text" name="charge_amt[]" id="charge_amt" ></td>
                                     <td><input class="form-control" type="text" name="tot_charge_amt[]" id="tot_charge_amt"  readonly></td>
                                     <td><input type="button" onclick="Add_one()" value="Add" id="Add" /></td>
                                 </tr>
@@ -372,7 +381,6 @@
                             <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Confirm PI</button>
                         </div>
                     </div>
-
 
                 </form>
             </div>

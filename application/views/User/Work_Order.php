@@ -50,13 +50,13 @@
 
                                 <?php
                                 if ($val['PI_Type'] == '1') { ?>
-                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/Start_Sheet_Work_Order/') . $val['Proforma_Icode']; ?>">View</a></td>
+                                    <td> <a class="btn btn-info" href="<?php echo site_url('User_Controller/Start_Sheet_Work_Order/') . $val['WO_Icode']; ?>">View</a></td>
                                     <?php
                                 }
                                 else
                                 {
                                     ?>
-                                    <td><a class="btn btn-info" href="<?php echo site_url('User_Controller/Start_Work_Order/') . $val['Proforma_Icode']; ?>">View</a></td>
+                                    <td><a class="btn btn-info" href="<?php echo site_url('User_Controller/Start_Work_Order/') . $val['WO_Icode']; ?>">View</a></td>
                                     <?php
                                 }
                                 ?>

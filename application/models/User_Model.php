@@ -120,7 +120,7 @@ class User_Model extends CI_Model
     /** Get All Invoice */
     public function get_All_Invoice()
     {
-        $query = $this->db->query("Select * from proforma_invoice A INNER JOIN  customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode INNER  JOIN  st_user_details C on A.Proforma_Generated_By =C. User_Icode WHERE  PI_Confirm='0'");
+        $query = $this->db->query("Select * from proforma_invoice A INNER JOIN  customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode INNER  JOIN  st_user_details C on A.Proforma_Generated_By = C. User_Icode WHERE  PI_Confirm='0' ORDER by A.Proforma_Icode DESC");
         return $query->result_array();
     }
     // get pi create user details
@@ -142,14 +142,14 @@ class User_Model extends CI_Model
     {
         $user_icode =$this->session->userdata['userid'];
         $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
-                                  INNER JOIN st_user_details C on A.WO_Created_By = C.User_Icode  WHERE A.WO_Created_By='$user_icode' and B.WO_Confirm= '1'");
+                                  INNER JOIN st_user_details C on A.WO_Created_By = C.User_Icode  WHERE A.WO_Created_By='$user_icode' and B.WO_Confirm= '1' ORDER by A.WO_Icode DESC ");
         return $query->result_array();
     }
     public function get_All_WO_Details()
     {
 
         $query = $this->db->query("Select * from proforma_invoice A INNER JOIN  customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode 
-                                   INNER  JOIN  st_user_details C on A.PI_Confirm_By =C. User_Icode WHERE  PI_Confirm='1' and WO_Confirm='0'");
+                                   INNER  JOIN  st_user_details C on A.PI_Confirm_By =C. User_Icode WHERE  PI_Confirm='1' and WO_Confirm='0' ORDER by A.Proforma_Icode DESC");
         return $query->result_array();
     }
     public function Get_Single_wo($pi_icode)
@@ -316,7 +316,7 @@ class User_Model extends CI_Model
     /** Get Invoice Item Total */
     public function Get_Single_Invoice_Item_Sheet_Total($pi_id)
     {
-        $query = $this->db->query("SELECT SUM(A.Proforma_Qty) as qty, SUM(A.Proforma_Area_SQMTR) as area,SUM(A.Proforma_Cutout) as cutout, SUM(A.Proforma_Holes) as holes FROM proforma_invoice_item_sheet A INNER JOIN material_master B on A.Proforma_Material_Icode=B.Material_Icode
+        $query = $this->db->query("SELECT SUM(A.Proforma_Qty) as qty, SUM(A.Proforma_Area_SQMTR) as area,SUM(A.Proforma_Cutout) as cutout, SUM(A.Proforma_Holes) as holes, SUM(A.Proforma_Material_Cost) as rate FROM proforma_invoice_item_sheet A INNER JOIN material_master B on A.Proforma_Material_Icode=B.Material_Icode
                                   WHERE A.Proforma_Icode='$pi_id'");
         return $query->result_array();
     }
@@ -384,7 +384,7 @@ class User_Model extends CI_Model
     public function Get_Not_Completed_WO()
     {
         $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
-                                      WHERE  A.WO_Completed = '0'");
+                                      WHERE  A.WO_Completed = '0' ");
         return $query->result_array();
     }
     //** Get All Sheet */
@@ -533,5 +533,11 @@ class User_Model extends CI_Model
         return $query->result_array();
     }
 
+    //** Get Workorder Processing */
+    public function get_wo_process($process_id)
+    {
+        $query=$this->db->query("SELECT * FROM `wo_processing` WHERE WO_Process_Icode='$process_id' ");
+        return $query->result_array();
+    }
 
 }
