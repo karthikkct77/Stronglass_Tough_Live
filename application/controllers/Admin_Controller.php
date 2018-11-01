@@ -1983,9 +1983,6 @@ class Admin_Controller extends CI_Controller
             $this->load->view('Admin/Today_Despatch_Report',$data, FALSE);
             $this->load->view('Admin/footer');
         }
-
-
-
     }
 
     //** PDF Despatch */
