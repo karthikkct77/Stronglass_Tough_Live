@@ -1002,6 +1002,19 @@ class Admin_Model extends CI_Model
                                    WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())");
         return $query->result_array();
     }
+    //** Get All Expenses */
+    public function Get_All_Expenses()
+    {
+        $query = $this->db->query("Select * from Expenses_Master  ");
+        return $query->result_array();
+    }
+
+    //** Get All Expense  */
+    public function Get_All_Expenses_details()
+    {
+        $query = $this->db->query("Select * from Expenses_Details WHERE MONTH(Expenses_Date) = MONTH(CURRENT_DATE()) AND YEAR(Expenses_Date) = YEAR(CURRENT_DATE()) ");
+        return $query->result_array();
+    }
 
 
 

@@ -1999,4 +1999,58 @@ class Admin_Controller extends CI_Controller
         $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
     }
 
+    //** Expenses Master */
+    public function Expenses_Master()
+    {
+        $data['expenses']= $this->admin_model->Get_All_Expenses();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Expenses_Master',$data, FALSE);
+        $this->load->view('Admin/footer');
+    }
+    //** Insert Expenses */
+    public function Insert_Expenses()
+    {
+        $insert_data = array(
+            'Expenses_Name' => $this->input->post('expenses_name') );
+        $this->db->insert('Expenses_Master', $insert_data);
+        $this->session->set_flashdata('feedback', 'Expenses Added Successfully..');
+        redirect('Admin_Controller/Expenses_Master');
+    }
+    //** Add Expenses */
+    public function Add_Expenses()
+    {
+        $data['expenses']= $this->admin_model->Get_All_Expenses();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Add_Expenses',$data, FALSE);
+        $this->load->view('Admin/footer');
+    }
+    //** Insert Expenses Details */
+    public function Insert_Expenses_Details()
+    {
+        $insert_data = array( 'Expenses_Icode' => $this->input->post('expenses'),
+            'Expenses_Date' => $this->input->post('expenses_date'),
+            'Amount' => $this->input->post('amount'),
+            'Comments' => $this->input->post('comments'),
+            'Created_By' => $this->session->userdata['userid']);
+        $this->db->insert('Expenses_Details', $insert_data);
+        $this->session->set_flashdata('feedback', 'Expenses Added Successfully..');
+        redirect('Admin_Controller/View_Expenses');
+    }
+
+    //** View Expenses */
+    public function View_Expenses()
+    {
+        $data['st']= $this->admin_model->get_ST();
+        $data['expenses']= $this->admin_model->Get_All_Expenses_details();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/View_Expenses',$data, FALSE);
+        $this->load->view('Admin/footer');
+    }
+
 }
