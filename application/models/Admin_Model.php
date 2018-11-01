@@ -991,6 +991,18 @@ class Admin_Model extends CI_Model
         return $query->result_array();
     }
 
+    //** Location wise total work order amount */
+    public function Get_Monthly_WO_Counts_locations()
+    {
+        $query = $this->db->query("SELECT 
+                                   SUM(CASE WHEN C.Customer_State LIKE '%kerala%' THEN B.GrossTotal_Value END) AS Kerala ,
+                                   SUM(CASE WHEN C.Customer_City LIKE '%chennai%' THEN B.GrossTotal_Value END) AS Chennai, 
+                                   SUM(CASE WHEN C.Customer_State NOT LIKE 'kerala' and  C.Customer_City NOT LIKE '%chennai%' THEN B.GrossTotal_Value END) AS Locals
+                                   FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                   WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())");
+        return $query->result_array();
+    }
+
 
 
 

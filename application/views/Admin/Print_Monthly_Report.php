@@ -30,12 +30,25 @@
                             <td style="font-weight: bold; font-size: 16px;">W/O Amount:</td>
                             <td style="font-weight: bold; font-size: 24px;"><?php echo $wo_count[0]['wo_amount']; ?></td>
                         </tr>
+
+
                         <tr>
                             <td style="font-weight: bold; font-size: 16px;">No.of Replacement Glass</td>
+                            <td style="font-weight: bold; font-size: 24px;">0</td>
+                            <td style="font-weight: bold; font-size: 16px;">Sq.Mt:</td>
                             <td style="font-weight: bold; font-size: 24px;">0</td>
                         </tr>
                         <tr>
                             <td style="font-weight: bold; font-size: 16px;">No.of Recut Glass</td>
+                            <td style="font-weight: bold; font-size: 24px;">0</td>
+                            <td style="font-weight: bold; font-size: 16px;">Sq.Mt:</td>
+                            <td style="font-weight: bold; font-size: 24px;">0</td>
+                        </tr>
+
+                        <tr>
+                            <td style="font-weight: bold; font-size: 16px;">Total Bill Amount</td>
+                            <td style="font-weight: bold; font-size: 24px;"><?php echo $total_bill[0]['total_amt']; ?></td>
+                            <td style="font-weight: bold; font-size: 16px;">Electricity Bill</td>
                             <td style="font-weight: bold; font-size: 24px;">0</td>
                         </tr>
                         <tr>
@@ -43,8 +56,12 @@
                             <td id="area_material_qty1" style="font-weight: bold; font-size: 24px;"></td>
                         </tr>
                         <tr>
-                            <td style="font-weight: bold; font-size: 16px;">Total Bill Amount</td>
-                            <td style="font-weight: bold; font-size: 24px;"><?php echo $total_bill[0]['total_amt']; ?></td>
+                            <td style="font-weight: bold; font-size: 16px;">Chennai</td>
+                            <td style="font-weight: bold; font-size: 24px;"><?php echo $wo_count_locations[0]['Chennai']; ?></td>
+                            <td style="font-weight: bold; font-size: 16px;">Local</td>
+                            <td style="font-weight: bold; font-size: 24px;"><?php echo $wo_count_locations[0]['Locals']; ?></td>
+                            <td style="font-weight: bold; font-size: 16px;">Kerala</td>
+                            <td style="font-weight: bold; font-size: 24px;"><?php echo $wo_count_locations[0]['Kerala']; ?></td>
                         </tr>
                     </table>
 

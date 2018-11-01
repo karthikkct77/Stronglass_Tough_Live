@@ -1944,6 +1944,7 @@ class Admin_Controller extends CI_Controller
     {
         $data['pi_count']= $this->admin_model->Get_Monthly_PI_Counts();
         $data['wo_count']= $this->admin_model->Get_Monthly_WO_Counts();
+        $data['wo_count_locations']= $this->admin_model->Get_Monthly_WO_Counts_locations();
         $data['total_bill']= $this->admin_model->Get_Monthly_Total_Bill();
         $normal_material = $this->admin_model->Get_monthly_normal_WO_material();
         $sheet_material = $this->admin_model->Get_monthly_sheet_WO_material();
