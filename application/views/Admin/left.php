@@ -54,6 +54,23 @@
 
                </ul>
            </li>
+           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Report</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+               <ul class="treeview-menu">
+                   <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Pending_PI'); ?>"><i class="icon fa fa-circle-o"></i> Today Pending PI</a></li>
+                   <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Today_Wo_Report'); ?>"><i class="icon fa fa-circle-o"></i>Today WO Report</a></li>
+                   <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/PI_Summary'); ?>"><i class="icon fa fa-circle-o"></i>PI Summary</a></li>
+                   <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/WO_Summary'); ?>"><i class="icon fa fa-circle-o"></i>WO Summary</a></li>
+
+                   <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Today_Delivery_Report'); ?>"><i class="icon fa fa-circle-o"></i>Delivery</a></li>
+<!--                   <li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Today_Despatch_Report'); ?><!--"><i class="icon fa fa-circle-o"></i>Despatch Report</a></li>-->
+                   <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Despatch_Report'); ?>"><i class="icon fa fa-circle-o"></i>Despatch Report</a></li>
+
+                   <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Monthly_Report'); ?>"><i class="icon fa fa-circle-o"></i>Monthly Report</a></li>
+
+
+
+               </ul>
+           </li>
 <!--           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Work Order</span><i class="treeview-indicator fa fa-angle-right"></i></a>-->
 <!--               <ul class="treeview-menu">-->
 <!--                   <!--<li><a class="treeview-item" href="--><?php ////echo site_url('Admin_Controller/Size_Master'); ?><!--<!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>-->

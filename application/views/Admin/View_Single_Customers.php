@@ -69,6 +69,9 @@
                             <tr>
                                 <td align="right">Email 2</td><td><?php echo $key['Customer_Email_Id_2']; ?></td>
                             </tr>
+                            <tr>
+                                <td align="right">Reference</td><td><?php echo $key['Customer_Reference']; ?></td>
+                            </tr>
                         <?php } ?>
                         </tbody>
                     </table>

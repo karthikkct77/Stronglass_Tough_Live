@@ -48,9 +48,6 @@
                                     <label class="control-label">Our Address1  </label>
                                     <textarea class="form-control" name="address1" value="<?php echo $customers[0]['Customer_Address_2'] ?>" ><?php echo $customers[0]['Customer_Address_2'] ?></textarea>
                                 </div>
-
-                            </div>
-                            <div class="col-md-6">
                                 <div class="form-group">
                                     <label class="control-label">Area</label>
                                     <input class="form-control" name="area" type="text" value="<?php echo $customers[0]['Customer_Area'] ?>" >
@@ -59,6 +56,10 @@
                                     <label class="control-label">City</label>
                                     <input class="form-control" name="city" type="text" required value="<?php echo $customers[0]['Customer_City'] ?>" >
                                 </div>
+
+                            </div>
+                            <div class="col-md-6">
+
                                 <div class="form-group">
                                     <label class="control-label">State </label>
                                     <input class="form-control" name="state" type="text" required value="<?php echo $customers[0]['Customer_State'] ?>" >
@@ -80,6 +81,11 @@
                                     <label class="control-label">Email Id 2</label>
                                     <input class="form-control" name="email_2" type="email" value="<?php echo $customers[0]['Customer_Email_Id_2'] ?>">
                                 </div>
+                                <div class="form-group">
+                                    <label class="control-label">Customer Reference</label>
+                                    <input class="form-control" name="Reference" type="text"  value="<?php echo $customers[0]['Customer_Reference'] ?>" >
+                                </div>
+
                                 <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Update</button>
                             </div>
                         </div>

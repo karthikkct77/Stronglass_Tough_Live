@@ -5,6 +5,14 @@
 
         </div>
     </div>
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" href="<?php echo site_url('Admin_Controller/Factory_Stock'); ?>">Current Stocks </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-profile-tab" href="<?php echo site_url('Admin_Controller/Factory_Outwords'); ?>">Factory Outwards</a>
+        </li>
+    </ul>
     <div class="row">
         <!-- view Stock Details -->
         <div class="col-md-12">
@@ -20,6 +28,7 @@
                                 <th>#</th>
                                 <th>Stock Name</th>
                                 <th>Counts</th>
+                                <th>Company Name</th>
                                 <th>Date</th>
                             </tr>
                             </thead>
@@ -32,6 +41,7 @@
                                     <td><?php echo $i; ?></td>
                                     <td><?php echo $val['Stock_Name']; ?><br>(<?php echo $val['Stock_Height']; ?> * <?php echo $val['Stock_Width']; ?> ) </td>
                                     <td><?php echo $val['Current_Qty']; ?></td>
+                                    <td><?php echo $val['Company_Name']; ?></td>
                                     <?php if($val['Updated_By'] == '1') { ?>
                                         <td><?php echo $val['Updated_On']; ?></td>
                                     <?php }  else {?>

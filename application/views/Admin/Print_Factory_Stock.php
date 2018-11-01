@@ -23,21 +23,24 @@
                                 <tr>
                                     <th>#</th>
                                     <th>Stock Name</th>
-                                    <th>Current Quantity</th>
-                                    <th>Date</th>
+                                    <th>Height</th>
+                                    <th>Width</th>
+                                    <th>Company Name</th>
+                                    <th>Qty</th>
+
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <?php $i=1; foreach ($factory as $key) { ?>
                                     <tr id="row<?php echo $i; ?>">
                                         <td  class="heading"><?php echo $i; ?></td>
-                                        <td><?php echo $key['Stock_Name']; ?><br>(<?php echo $key['Stock_Height']; ?>*<?php echo $key['Stock_Width']; ?>)</td>
+                                        <td><?php echo $key['Stock_Name']; ?></td>
+                                        <td><?php echo $key['Stock_Height']; ?></td>
+                                        <td><?php echo $key['Stock_Width']; ?></td>
+
+                                        <td><?php echo $key['Company_Name']; ?></td>
                                         <td><?php echo $key['Current_Qty']; ?></td>
-                                        <?php if($key['Updated_By'] == '1') { ?>
-                                            <td><?php echo $key['Updated_On']; ?></td>
-                                        <?php }  else {?>
-                                            <td><?php echo $key['dates']; ?></td>
-                                        <?php } ?>
+
                                     </tr>
                                     <?php $i++; } ?>
                                 </tbody>

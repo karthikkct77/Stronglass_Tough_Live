@@ -47,9 +47,6 @@
                             <label class="control-label">Company Address1  </label>
                             <textarea class="form-control" name="address1" placeholder="Enter Address1"></textarea>
                         </div>
-
-                        </div>
-                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label">Area</label>
                                 <input class="form-control" name="area" type="text" placeholder="Enter Area">
@@ -58,6 +55,10 @@
                                 <label class="control-label">City</label>
                                 <input class="form-control" name="city" type="text" placeholder="Enter City" required>
                             </div>
+
+                        </div>
+                        <div class="col-md-6">
+
                             <div class="form-group">
                                 <label class="control-label">State </label>
                                 <input class="form-control" name="state" type="text" placeholder="Enter State" required>
@@ -78,6 +79,10 @@
                             <label class="control-label">Email Id 2</label>
                             <input class="form-control" name="email_2" type="email" placeholder="Enter Email ID 2" >
                         </div>
+                            <div class="form-group">
+                                <label class="control-label">Customer Reference</label>
+                                <input class="form-control" name="Reference" type="text" placeholder="Enter Reference Name" >
+                            </div>
 
                             <button class="btn btn-primary pull-right" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>
                         </div>

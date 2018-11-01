@@ -22,19 +22,24 @@
                                         <tr>
                                             <th>#</th>
                                             <th>Stock Name</th>
-                                            <th>Current Quantity</th>
+                                            <th>Height</th>
+                                            <th>Width</th>
                                             <th>Company Name</th>
-                                            <th>Date</th>
+                                            <th>Qty</th>
+
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <?php $i=1; foreach ($godown as $key) { ?>
                                             <tr id="row<?php echo $i; ?>">
                                                 <td  class="heading"><?php echo $i; ?></td>
-                                                <td><?php echo $key['Stock_Name']; ?><br>(<?php echo $key['Stock_Height']; ?>*<?php echo $key['Stock_Width']; ?>)</td>
-                                                <td><?php echo $key['Current_Qty']; ?></td>
+                                                <td><?php echo $key['Stock_Name']; ?></td>
+                                                <td><?php echo $key['Stock_Height']; ?></td>
+                                                <td><?php echo $key['Stock_Width']; ?></td>
+
                                                 <td><?php echo $key['Company_Name']; ?></td>
-                                                <td><?php echo $key['added_Date']; ?></td>
+                                                <td><?php echo $key['Current_Qty']; ?></td>
+
                                             </tr>
                                             <?php $i++; } ?>
                                         </tbody>
