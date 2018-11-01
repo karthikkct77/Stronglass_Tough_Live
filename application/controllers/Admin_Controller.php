@@ -243,6 +243,7 @@ class Admin_Controller extends CI_Controller
             'Customer_Alternate_Phone' =>$this->input->post('alternate_phone'),
             'Customer_Email_Id_1' =>$this->input->post('email_1'),
             'Customer_Email_Id_2' =>$this->input->post('email_2'),
+            'Customer_Reference' =>$this->input->post('Reference'),
             'Customer_Created_By' => $this->session->userdata['userid']);
         $insert = $this->admin_model->save_customer($data);
         if($insert == 1)
@@ -665,6 +666,7 @@ class Admin_Controller extends CI_Controller
             'Customer_City' =>$this->input->post('city'),
             'Customer_State' =>$this->input->post('state'),
             'Customer_Phone' =>$this->input->post('phone'),
+            'Customer_Reference' =>$this->input->post('Reference'),
             'Customer_Alternate_Phone' =>$this->input->post('alternate_phone'),
             'Customer_Email_Id_1' =>$this->input->post('email_1'),
             'Customer_Email_Id_2' =>$this->input->post('email_2'),
@@ -1323,6 +1325,12 @@ class Admin_Controller extends CI_Controller
         $data = $this->admin_model->get_stock_quantity($material_id);
         echo  json_encode($data);
     }
+    public function get_factory_stock_quantity()
+    {
+        $material_id = $this->input->post('id',true);
+        $data = $this->admin_model->get_factory_stock_quantity($material_id);
+        echo  json_encode($data);
+    }
     //** Save Godown Inventry */
     public function Save_Godown_Inward()
     {
@@ -1412,7 +1420,7 @@ class Admin_Controller extends CI_Controller
     public function Godown_To_Factory()
     {
         $data['godown']= $this->admin_model->get_all_godown_stock();
-        $data['stock']= $this->admin_model->get_all_stock();
+        $data['stock']= $this->admin_model->get_all_godown_Current_stock();
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
         $this->load->view('Admin/left');
@@ -1426,8 +1434,10 @@ class Admin_Controller extends CI_Controller
         $new_quantity = $this->input->post('new_qty',true);
         $total_quantity = $this->input->post('total_qty',true);
         $count = sizeof($Materials);
+
         for($i=0; $i<$count; $i++)
         {
+
             if ($Materials[$i] == "") {
 
             }
@@ -1463,21 +1473,25 @@ class Admin_Controller extends CI_Controller
                     }
                 }
                 $factory = $this->admin_model->get_factory_stock($Materials[$i]);
-                if ($factory == 0)
+                $material = $Materials[$i];
+                if (!empty($factory))
+                {
+
+                    $qty = $factory[0]['Current_Qty'] + $new_quantity[$i];
+                    $data = array('Current_Qty' => $qty,
+                        'Updated_By' => $this->session->userdata['userid'],
+                        'Updated_On' =>date('Y-m-d H:i:s'));
+                    $this->db->where('Stock_Icode',$material);
+                    $this->db->update('Factory_Stock_details', $data);
+                }
+                else
                 {
                     $insert = array('Stock_Icode' => $Materials[$i],
                         'Current_Qty' =>$new_quantity[$i],
                         'Created_By' => $this->session->userdata['userid'],
                         'Created_On' =>date('Y-m-d H:i:s'));
                     $insert_inventary = $this->admin_model->insert_factory_stock($insert);
-                }
-                else
-                {
-                    $data = array('Current_Qty' => $new_quantity[$i],
-                            'Updated_By' => $this->session->userdata['userid'],
-                            'Updated_On' =>date('Y-m-d H:i:s'));
-                        $this->db->where('Stock_Icode',$Materials[$i]);
-                        $this->db->update('Factory_Stock_details', $data);
+
                 }
             }
         }
@@ -1583,6 +1597,408 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/left');
         $this->load->view('Admin/View_Sheet_PI',$data,false);
         $this->load->view('Admin/footer');
+    }
+    //** Factory Outwords */
+    public function Factory_Outwords()
+    {
+        $data['factory_outword']= $this->admin_model->get_all_Factory_current_stock();
+        $data['factory_outword_details']= $this->admin_model->get_all_Factory_Outword();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Factory_Outwords',$data, FALSE);
+        $this->load->view('Admin/footer');
+    }
+    //** Save Factory utwords */
+    public function Save_Factory_Outward()
+    {
+        $Materials =  $this->input->post('material',true);
+        $new_quantity = $this->input->post('new_qty',true);
+        $total_quantity = $this->input->post('total_qty',true);
+        $count = sizeof($Materials);
+
+        for($i=0; $i<$count; $i++)
+        {
+
+            if ($Materials[$i] == "") {
+
+            }
+            else{
+
+                    $insert = array('Stock_Icode' => $Materials[$i],
+                        'Stock_Out_Qty' =>$new_quantity[$i],
+                        'Stock_Getting_By' => $this->session->userdata['userid']);
+                    $insert_history = $this->admin_model->insert_factory_outward_history($insert);
+                    if($insert_history == 1)
+                    {
+                        $data = array('Current_Qty' => $total_quantity[$i],
+                            'Updated_By' => $this->session->userdata['userid'],
+                            'Updated_On' =>date('Y-m-d H:i:s'));
+                        $this->db->where('Stock_Icode',$Materials[$i]);
+                        $this->db->update('Factory_Stock_details', $data);
+                    }
+                    else{
+                        echo 0;
+                    }
+
+            }
+        }
+        $this->session->set_flashdata('feedback', 'Successfully Updated..');
+        redirect('Admin_Controller/Factory_Stock');
+    }
+
+    //** Today Work Order */
+    public function Today_Wo_Report()
+    {
+        $data['pi_count']= $this->admin_model->Get_Today_PI_Counts();
+        $data['wo_count']= $this->admin_model->Get_Today_WO_Counts();
+
+        $normal_wo = $this->admin_model->Get_Today_normal_WO_details();
+        $sheet_wo = $this->admin_model->Get_Today_sheet_WO_details();
+
+        $data['wo_details'] = array_merge($normal_wo, $sheet_wo);
+
+        $data['wo_count']= $this->admin_model->Get_Today_WO_Counts();
+
+
+
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Wo_Report',$data, FALSE);
+        $this->load->view('Admin/footer');
+    }
+
+    public function Report_pdf()
+    {
+        $this->load->library('pdf');
+        $data['st']= $this->admin_model->get_ST();
+        $data['pi_count']= $this->admin_model->Get_Today_PI_Counts();
+        $data['wo_count']= $this->admin_model->Get_Today_WO_Counts();
+
+        $normal_wo = $this->admin_model->Get_Today_normal_WO_details();
+        $sheet_wo = $this->admin_model->Get_Today_sheet_WO_details();
+
+        $data['wo_details'] = array_merge($normal_wo, $sheet_wo);
+
+        $data['wo_count']= $this->admin_model->Get_Today_WO_Counts();
+
+        $body = $this->load->view('Admin/Pdf_Report',$data,TRUE);
+        $this->pdf->loadHtml($body);
+        $this->pdf->render();
+        $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
+    }
+
+    //** Today Delivery Report */
+    public function Today_Delivery_Report()
+    {
+        $data['work_order']= $this->admin_model->Get_Not_Completed_WO();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/WO_Details',$data, FALSE);
+        $this->load->view('Admin/footer');
+    }
+
+    public function Delivery_All_WO()
+    {
+        $data= $this->input->post('Wo_Icode', true);
+        $string = trim($data,",");
+        $process = explode(",", $string);
+        foreach ($process as $key )
+        {
+
+            $update = array('WO_Completed' => '1',
+                'WO_Completed_On' =>date('Y-m-d H:i:s'));
+            $this->db->where('WO_Icode',$key);
+            $this->db->update('work_order', $update);
+
+            $insert_data = array('WO_Icode' => $key,
+                'Delivery_Location' => $this->input->post('Delivery_Location', true),
+                'Delivery_Date' => $this->input->post('Delivery_Date', true),
+                'Vehicle_Number' => $this->input->post('Vehicle_No', true),
+                'Driver_Name' => $this->input->post('Driver_Name', true) );
+            $insert_delivery = $this->admin_model->insert_delivery_data($insert_data);
+
+        }
+        echo 1;
+    }
+    public function Today_Despatch_Report()
+    {
+        $normal_wo = $this->admin_model->Get_Today_normal_WO_details_kerala();
+        $sheet_wo = $this->admin_model->Get_Today_sheet_WO_details_kerala();
+        $data['wo_details'] = array_merge($normal_wo, $sheet_wo);
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Despatch_kerala_Report',$data, FALSE);
+        $this->load->view('Admin/footer');
+    }
+
+    //** Chennai Despatch Report **/
+   public function Chennai_Despatch_Report()
+   {
+        $normal_wo = $this->admin_model->Get_Today_normal_WO_details_chennai();
+        $sheet_wo = $this->admin_model->Get_Today_sheet_WO_details_chennai();
+        $data['wo_details'] = array_merge($normal_wo, $sheet_wo);
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Despatch_Chennai_Report',$data, FALSE);
+        $this->load->view('Admin/footer');
+   }
+
+   //** Local Dispatch
+   public function Local_Despatch_Report()
+   {
+        $normal_wo = $this->admin_model->Get_Today_normal_WO_details_local();
+        $sheet_wo = $this->admin_model->Get_Today_sheet_WO_details_local();
+        $data['wo_details'] = array_merge($normal_wo, $sheet_wo);
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Despatch_Local_Report',$data, FALSE);
+        $this->load->view('Admin/footer');
+   }
+   //** Kerala PDF
+   public function Kerala_pdf()
+   {
+        $this->load->library('pdf');
+        $data['st']= $this->admin_model->get_ST();
+        $normal_wo = $this->admin_model->Get_Today_normal_WO_details_kerala();
+        $sheet_wo = $this->admin_model->Get_Today_sheet_WO_details_kerala();
+        $data['wo_details'] = array_merge($normal_wo, $sheet_wo);
+        $data['name'] = 'Kerala Despatch Report';
+        $body = $this->load->view('Admin/Despatch_pdf',$data,TRUE);
+        $this->pdf->loadHtml($body);
+        $this->pdf->render();
+        $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
+   }
+
+      public function Chennai_pdf()
+   {
+      $this->load->library('pdf');
+        $data['st']= $this->admin_model->get_ST();
+       $normal_wo = $this->admin_model->Get_Today_normal_WO_details_chennai();
+        $sheet_wo = $this->admin_model->Get_Today_sheet_WO_details_chennai();
+        $data['wo_details'] = array_merge($normal_wo, $sheet_wo);
+        $data['name'] = 'Chennai Despatch Report';
+        $body = $this->load->view('Admin/Despatch_pdf',$data,TRUE);
+        $this->pdf->loadHtml($body);
+        $this->pdf->render();
+        $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
+   }
+
+    public function Local_pdf()
+   {
+       $this->load->library('pdf');
+        $data['st']= $this->admin_model->get_ST();
+       $normal_wo = $this->admin_model->Get_Today_normal_WO_details_local();
+        $sheet_wo = $this->admin_model->Get_Today_sheet_WO_details_local();
+        $data['wo_details'] = array_merge($normal_wo, $sheet_wo);
+        $data['name'] = 'Local Despatch Report';
+        $body = $this->load->view('Admin/Despatch_pdf',$data,TRUE);
+        $this->pdf->loadHtml($body);
+        $this->pdf->render();
+        $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
+   }
+
+   public function Pending_PI()
+   {
+        $data['pi_count']= $this->admin_model->Get_Today_PI_Counts();
+        $data['pi_pending']= $this->admin_model->Get_Today_Pending_PI_counts();
+
+        $normal_wo = $this->admin_model->Get_Today_normal_pending_details();
+        $sheet_wo = $this->admin_model->Get_Today_sheet_pending_details();
+
+        $data['pi_details'] = array_merge($normal_wo, $sheet_wo);
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Pending_PI',$data, FALSE);
+        $this->load->view('Admin/footer');
+   }
+   public function Pending_pi_pdf()
+   {
+       $this->load->library('pdf');
+        $data['st']= $this->admin_model->get_ST();
+        $data['pi_count']= $this->admin_model->Get_Today_PI_Counts();
+        $data['pi_pending']= $this->admin_model->Get_Today_Pending_PI_counts();
+
+         $normal_wo = $this->admin_model->Get_Today_normal_pending_details();
+        $sheet_wo = $this->admin_model->Get_Today_sheet_pending_details();
+
+        $data['pi_details'] = array_merge($normal_wo, $sheet_wo);
+
+        $body = $this->load->view('Admin/Pending_PI_Pdf',$data,TRUE);
+        $this->pdf->loadHtml($body);
+        $this->pdf->render();
+        $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
+   }
+
+   public function PI_Summary()
+   {
+       $this->load->view('Admin/header');
+       $this->load->view('Admin/top');
+       $this->load->view('Admin/left');
+       $this->load->view('Admin/PI_Summary');
+       $this->load->view('Admin/footer');
+   }
+
+   public function Print_PI_Summary()
+   {
+       $from_date = $this->input->post('from_date');
+       $to_date = $this->input->post('to_date');
+       $data['pi_count']= $this->user_model->Get_Today_PI_Counts($from_date,$to_date);
+       $normal_wo = $this->user_model->Get_Today_normal_PI_details($from_date,$to_date);
+       $sheet_wo = $this->user_model->Get_Today_sheet_PI_details($from_date,$to_date);
+       $data['wo_details'] = array_merge($normal_wo, $sheet_wo);
+
+       $data['st']= $this->admin_model->get_ST();
+       $data['from_date']  =$from_date;
+       $data['to_date']  =$to_date;
+       $this->load->view('Admin/header');
+       $this->load->view('Admin/top');
+       $this->load->view('Admin/left');
+       $this->load->view('Admin/Print_PI_Report',$data,false);
+       $this->load->view('Admin/footer');
+   }
+
+    public function Print_PDF_PI($from,$to)
+    {
+        $this->load->library('pdf');
+        $from_date = $from;
+        $to_date = $to;
+        $data['pi_count']= $this->user_model->Get_Today_PI_Counts($from_date,$to_date);
+        $normal_wo = $this->user_model->Get_Today_normal_PI_details($from_date,$to_date);
+        $sheet_wo = $this->user_model->Get_Today_sheet_PI_details($from_date,$to_date);
+        $data['wo_details'] = array_merge($normal_wo, $sheet_wo);
+
+        $data['st']= $this->admin_model->get_ST();
+        $data['from_date']  =$from_date;
+        $data['to_date']  =$to_date;
+
+        $body = $this->load->view('User/Print_PI_Pdf',$data,TRUE);
+        $this->pdf->loadHtml($body);
+        $this->pdf->render();
+        $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
+    }
+
+    public function WO_Summary()
+    {
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/WO_Summary');
+        $this->load->view('Admin/footer');
+    }
+
+    //** Print work order report */
+    public function  Print_WO_Report()
+    {
+        $from_date = $this->input->post('from_date');
+        $to_date = $this->input->post('to_date');
+        $data['wo_count']= $this->user_model->Get_WO_Counts($from_date,$to_date);
+        $normal_wo = $this->user_model->Get_Today_normal_WO_details($from_date,$to_date);
+        $sheet_wo = $this->user_model->Get_Today_sheet_WO_details($from_date,$to_date);
+        $data['wo_details'] = array_merge($normal_wo, $sheet_wo);
+
+        $normal_material = $this->user_model->Get_Today_normal_WO_material($from_date,$to_date);
+        $sheet_material = $this->user_model->Get_Today_sheet_WO_material($from_date,$to_date);
+        $data['material_details'] = array_merge($normal_material, $sheet_material);
+
+        $data['st']= $this->admin_model->get_ST();
+        $data['from_date']  =$from_date;
+        $data['to_date']  =$to_date;
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Print_WO_Report',$data,false);
+        $this->load->view('Admin/footer');
+    }
+    public function Print_PDF_WO($from,$to)
+    {
+        $this->load->library('pdf');
+        $from_date = $from;
+        $to_date = $to;
+        $data['wo_count']= $this->user_model->Get_WO_Counts($from_date,$to_date);
+        $normal_wo = $this->user_model->Get_Today_normal_WO_details($from_date,$to_date);
+        $sheet_wo = $this->user_model->Get_Today_sheet_WO_details($from_date,$to_date);
+        $data['wo_details'] = array_merge($normal_wo, $sheet_wo);
+
+        $normal_material = $this->user_model->Get_Today_normal_WO_material($from_date,$to_date);
+        $sheet_material = $this->user_model->Get_Today_sheet_WO_material($from_date,$to_date);
+        $data['material_details'] = array_merge($normal_material, $sheet_material);
+
+        $data['st']= $this->admin_model->get_ST();
+        $data['from_date']  =$from_date;
+        $data['to_date']  =$to_date;
+        $body = $this->load->view('User/Print_WO_Pdf',$data,TRUE);
+        $this->pdf->loadHtml($body);
+        $this->pdf->render();
+        $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
+
+    }
+
+    public function Monthly_Report()
+    {
+        $data['pi_count']= $this->admin_model->Get_Monthly_PI_Counts();
+        $data['wo_count']= $this->admin_model->Get_Monthly_WO_Counts();
+        $data['total_bill']= $this->admin_model->Get_Monthly_Total_Bill();
+        $normal_material = $this->admin_model->Get_monthly_normal_WO_material();
+        $sheet_material = $this->admin_model->Get_monthly_sheet_WO_material();
+        $data['material_details'] = array_merge($normal_material, $sheet_material);
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Print_Monthly_Report',$data,false);
+        $this->load->view('Admin/footer');
+    }
+
+    //** Despatch Report */
+    public function Despatch_Report()
+    {
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Despatch_Report',false);
+        $this->load->view('Admin/footer');
+    }
+    //** Today Despatch Print */
+    public  function  Today_Despatch_Print()
+    {
+        $delivery = $this->input->post('Delivery');
+        $normal_wo = $this->admin_model->Get_Today_normal_Delivery_WO_details($delivery);
+        $sheet_wo = $this->admin_model->Get_Today_sheet_Delivery_WO_details($delivery);
+        $data['wo_details'] = array_merge($normal_wo, $sheet_wo);
+
+        if (empty($data['wo_details'])) {
+            $this->session->set_flashdata('feedback', 'No Record Found..');
+            redirect('Admin_Controller/Despatch_Report');
+        }
+        else{
+            $this->load->view('Admin/header');
+            $this->load->view('Admin/top');
+            $this->load->view('Admin/left');
+            $this->load->view('Admin/Today_Despatch_Report',$data, FALSE);
+            $this->load->view('Admin/footer');
+        }
+
+
+
+    }
+
+    //** PDF Despatch */
+    public function despatch_pdf($location)
+    {
+        $this->load->library('pdf');
+        $normal_wo = $this->admin_model->Get_Today_normal_Delivery_WO_details($location);
+        $sheet_wo = $this->admin_model->Get_Today_sheet_Delivery_WO_details($location);
+        $data['wo_details'] = array_merge($normal_wo, $sheet_wo);
+        $body = $this->load->view('Admin/Despatch_pdf',$data,TRUE);
+        $this->pdf->loadHtml($body);
+        $this->pdf->render();
+        $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
     }
 
 }
