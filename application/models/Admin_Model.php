@@ -309,7 +309,7 @@ class Admin_Model extends CI_Model
     /** Get profoma number */
     public function get_profoma_number($month)
     {
-        $query= $this->db->query("SELECT Proforma_Number FROM `proforma_invoice` WHERE substring(Proforma_Number, 1,2) LIKE '%$month%' ORDER by Proforma_Icode DESC LIMIT 1  ");
+        $query= $this->db->query("SELECT Proforma_Number FROM `proforma_invoice` WHERE substring(Proforma_Number, 1,2) LIKE '%$month%' and  YEAR(Proforma_Generated_On) = YEAR(CURRENT_DATE()) ORDER by Proforma_Icode DESC LIMIT 1  ");
         if($query->num_rows() == 1)
         {
             return $query->result_array();
@@ -386,7 +386,7 @@ class Admin_Model extends CI_Model
     /** Get Work Order number */
     public function get_WO_number($month)
     {
-        $query= $this->db->query("SELECT WO_Number FROM work_order WHERE `WO_Number` LIKE '%$month%' ORDER by WO_Icode DESC LIMIT 1  ");
+        $query= $this->db->query("SELECT WO_Number FROM work_order WHERE   SUBSTR(WO_Number, 1, 2) LIKE '%$month%' and  YEAR(WO_Created_On) = YEAR(CURRENT_DATE())  ORDER by WO_Icode DESC LIMIT 1  ");
         if($query->num_rows() == 1)
         {
             return $query->result_array();
@@ -547,9 +547,9 @@ class Admin_Model extends CI_Model
         $query = $this->db->query("SELECT Proforma_Charge_Icode FROM proforma_material_processing_charges WHERE Proforma_Icode='$picode'");
         return $query->result();
     }
-    public function delete_charges($charge_id,$picode)
+    public function delete_charges($charge_id)
     {
-        $delete = $this->db->query("DELETE FROM proforma_material_processing_charges WHERE Proforma_Icode='$picode' and Proforma_Charge_Icode='$charge_id' ");
+        $delete = $this->db->query("DELETE FROM proforma_material_processing_charges WHERE Proforma_Material_PC_Icode='$charge_id' ");
 
     }
 
@@ -636,6 +636,11 @@ class Admin_Model extends CI_Model
         $query = $this->db->query("SELECT * FROM godown_stock_inventry WHERE Stock_Icode='$stock_id'");
         return $query->result_array();
     }
+    public function get_factory_stock_quantity($stock_id)
+    {
+        $query = $this->db->query("SELECT * FROM factory_stock_details WHERE Stock_Icode='$stock_id'");
+        return $query->result_array();
+    }
     //** Get Godown Inventry */
     public function get_godown_inventry($material_id)
     {
@@ -694,12 +699,13 @@ class Admin_Model extends CI_Model
     public function get_factory_stock($material_id)
     {
         $query = $this->db->query("Select * from Factory_Stock_details WHERE Stock_Icode = '$material_id' ");
-        return $query->num_rows();
+        return $query->result_array();
     }
     //** Get All Factory Stock Details */
     public function get_all_factory_stock()
     {
-        $query = $this->db->query("SELECT A.*,B.*, A.Created_On as dates FROM Factory_Stock_details A INNER JOIN stock_master B on A.Stock_Icode=B.Stock_Icode ");
+        $query = $this->db->query("SELECT A.*,B.*, A.Created_On as dates, C.Company_Name FROM Factory_Stock_details A INNER JOIN stock_master B on A.Stock_Icode=B.Stock_Icode 
+                                   INNER JOIN godown_stock_inventry C ON A.Stock_Icode=C.Stock_Icode WHERE  A.Current_Qty !='0' ORDER BY B.Stock_Name DESC");
         return $query->result_array();
     }
     //** Get perticular revised material */
@@ -736,6 +742,258 @@ class Admin_Model extends CI_Model
         $query = $this->db->query("SELECT * FROM wo_processing A INNER JOIN proforma_invoice_item_sheet B on A.PI_Sheet_Item_Icode=B.pi_item_sheet_icode INNER JOIN material_master C on B.Proforma_Material_Icode=C.Material_Icode WHERE A.WO_Process_Icode='$process_id'");
         return $query->result_array();
     }
+
+    public function get_all_Factory_stock_details()
+    {
+        $query = $this->db->query("SELECT * FROM wo_processing A INNER JOIN proforma_invoice_item_sheet B on A.PI_Sheet_Item_Icode=B.pi_item_sheet_icode INNER JOIN material_master C on B.Proforma_Material_Icode=C.Material_Icode WHERE A.WO_Process_Icode='$process_id'");
+        return $query->result_array();
+    }
+    public function get_all_godown_Current_stock()
+    {
+        $query = $this->db->query("SELECT * FROM godown_stock_inventry A INNER JOIN stock_master B on A.Stock_Icode=B.Stock_Icode WHERE A.Current_Qty !='0'");
+        return $query->result_array();
+    }
+    public function get_all_Factory_current_stock()
+    {
+        $query = $this->db->query("SELECT * FROM factory_stock_details A INNER JOIN stock_master B on A.Stock_Icode=B.Stock_Icode WHERE A.Current_Qty !='0'");
+        return $query->result_array();
+    }
+
+    //**Insert Godown outward History
+    public function insert_factory_outward_history($data)
+    {
+        $this->db->insert('factory_stock_outword_history', $data);
+        $insert_id = $this->db->insert_id();
+        if($insert_id != '0')
+        {
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+    //** get all factory word history */
+    public function get_all_Factory_Outword()
+    {
+        $query = $this->db->query("SELECT * FROM factory_stock_outword_history A INNER JOIN stock_master B on A.Stock_Icode=B.Stock_Icode  ORDER BY A.Stock_Getting_On DESC"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+    //** Get Today Workorder PI counts */
+    public function Get_Today_PI_Counts()
+    {
+        $today = date('Y-m-d');
+//        $today ='2018-10-01';
+        $query = $this->db->query("SELECT count(Proforma_Icode) as pi_count, SUM(GrossTotal_Value) as pi_amount FROM proforma_invoice WHERE date(Proforma_Generated_On)='$today'"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+
+    }
+    public function Get_Today_WO_Counts()
+    {
+        $today = date('Y-m-d');
+
+        $query = $this->db->query("SELECT COUNT(A.WO_Icode) as wo_count, SUM(B.GrossTotal_Value) as wo_amount FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode WHERE date(A.WO_Created_On) = '$today'"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+
+    }
+    public function Get_Today_normal_WO_details()
+    {
+        $today = date('Y-m-d');
+
+        $query = $this->db->query("SELECT A.WO_Number,A.Proforma_Number,A.Total_Qty,C.Customer_Company_Name,SUM(D.Proforma_Area_SQMTR) as area, B.Total_Outstanding,C.Customer_Reference, B.Transport,
+                                    B.GrossTotal_Value, GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, GROUP_CONCAT(DISTINCT LEFT(E.Material_Name, 4)) as thickness 
+                                    FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    INNER JOIN proforma_invoice_items D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode WHERE date(A.WO_Created_On)='$today' GROUP by D.Proforma_Icode ORDER  by A.WO_Number Asc"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+
+    }
+    public function Get_Today_sheet_WO_details()
+    {
+        //date('Y-m-d')
+        $today = date('Y-m-d');
+        $query = $this->db->query("SELECT A.WO_Number,A.Proforma_Number,A.Total_Qty,C.Customer_Company_Name,SUM(D.Proforma_Area_SQMTR) as area, B.GrossTotal_Value,B.Total_Outstanding, GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, GROUP_CONCAT(DISTINCT LEFT(E.Material_Name, 4)) as thickness,C.Customer_Reference, B.Transport FROM work_order A 
+                                   INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    INNER JOIN proforma_invoice_item_sheet D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode WHERE date(A.WO_Created_On)='$today' GROUP by D.Proforma_Icode ORDER  by A.WO_Number Asc "); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+    //get delivery work order//
+    public function Get_Not_Completed_WO()
+    {
+
+        $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN  customer_master C ON B.Proforma_Customer_Icode=C.Customer_Icode 
+                                      WHERE  A.WO_Completed = '0' ");
+        return $query->result_array();
+    }
+
+    //** kerala normal workordfer details
+    public function Get_Today_normal_WO_details_kerala()
+    {
+        $today = date('Y-m-d');
+        $query = $this->db->query("SELECT A.WO_Number,A.Proforma_Number,A.Total_Qty,C.Customer_Company_Name,SUM(D.Proforma_Area_SQMTR) as area, B.Total_Outstanding,C.Customer_Reference, B.Transport,
+                                    B.GrossTotal_Value, GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, GROUP_CONCAT(DISTINCT LEFT(E.Material_Name, 4)) as thickness 
+                                    FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    INNER JOIN proforma_invoice_items D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode WHERE A.WO_Completed = '1' and  
+                                    date(A.WO_Completed_On)='$today'  and  C.Customer_State LIKE '%kerala%' GROUP by D.Proforma_Icode ORDER  by A.WO_Number Asc"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+
+    }
+
+    public function Get_Today_sheet_WO_details_kerala()
+    {
+        //date('Y-m-d')
+        $today = date('Y-m-d');
+        $query = $this->db->query("SELECT A.WO_Number,A.Proforma_Number,A.Total_Qty,C.Customer_Company_Name,SUM(D.Proforma_Area_SQMTR) as area, B.GrossTotal_Value,B.Total_Outstanding, GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, GROUP_CONCAT(DISTINCT LEFT(E.Material_Name, 4)) as thickness,C.Customer_Reference, B.Transport FROM work_order A 
+                                   INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    INNER JOIN proforma_invoice_item_sheet D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode WHERE A.WO_Completed = '1' and  
+                                    date(A.WO_Completed_On)='$today'  and  C.Customer_State LIKE '%kerala%' GROUP by D.Proforma_Icode ORDER  by A.WO_Number Asc "); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+    //** Chennai Report
+    public function Get_Today_normal_WO_details_chennai()
+    {
+        $today = date('Y-m-d');
+        $query = $this->db->query("SELECT A.WO_Number,A.Proforma_Number,A.Total_Qty,C.Customer_Company_Name,SUM(D.Proforma_Area_SQMTR) as area, B.Total_Outstanding,C.Customer_Reference, B.Transport,
+                                    B.GrossTotal_Value, GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, GROUP_CONCAT(DISTINCT LEFT(E.Material_Name, 4)) as thickness 
+                                    FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    INNER JOIN proforma_invoice_items D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode WHERE A.WO_Completed = '1' and  
+                                    date(A.WO_Completed_On)='$today'  and  C.Customer_City LIKE '%chennai%' GROUP by D.Proforma_Icode ORDER  by A.WO_Number Asc"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+
+    }
+
+    public function Get_Today_sheet_WO_details_chennai()
+    {
+        //date('Y-m-d')
+        $today = date('Y-m-d');
+        $query = $this->db->query("SELECT A.WO_Number,A.Proforma_Number,A.Total_Qty,C.Customer_Company_Name,SUM(D.Proforma_Area_SQMTR) as area, B.GrossTotal_Value,B.Total_Outstanding, GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, GROUP_CONCAT(DISTINCT LEFT(E.Material_Name, 4)) as thickness,C.Customer_Reference, B.Transport FROM work_order A 
+                                   INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    INNER JOIN proforma_invoice_item_sheet D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode WHERE A.WO_Completed = '1' and  
+                                    date(A.WO_Completed_On)='$today'  and  C.Customer_City LIKE '%chennai%' GROUP by D.Proforma_Icode ORDER  by A.WO_Number Asc "); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+    //** Local Despatch Report
+    public function Get_Today_normal_WO_details_local()
+    {
+        $today = date('Y-m-d');
+        $query = $this->db->query("SELECT A.WO_Number,A.Proforma_Number,A.Total_Qty,C.Customer_Company_Name,SUM(D.Proforma_Area_SQMTR) as area, B.Total_Outstanding,C.Customer_Reference, B.Transport,
+                                    B.GrossTotal_Value, GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, GROUP_CONCAT(DISTINCT LEFT(E.Material_Name, 4)) as thickness 
+                                    FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    INNER JOIN proforma_invoice_items D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode WHERE A.WO_Completed = '1' and  
+                                    date(A.WO_Completed_On)='$today'  and  C.Customer_State NOT LIKE 'kerala' and  C.Customer_City NOT LIKE '%chennai%' GROUP by D.Proforma_Icode ORDER  by A.WO_Number Asc"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+
+    }
+    public function Get_Today_sheet_WO_details_local()
+    {
+        //date('Y-m-d')
+        $today = date('Y-m-d');
+        $query = $this->db->query("SELECT A.WO_Number,A.Proforma_Number,A.Total_Qty,C.Customer_Company_Name,SUM(D.Proforma_Area_SQMTR) as area, B.GrossTotal_Value,B.Total_Outstanding, GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, GROUP_CONCAT(DISTINCT LEFT(E.Material_Name, 4)) as thickness,C.Customer_Reference, B.Transport FROM work_order A 
+                                   INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    INNER JOIN proforma_invoice_item_sheet D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode WHERE A.WO_Completed = '1' and  
+                                    date(A.WO_Completed_On)='$today'  and  C.Customer_State NOT LIKE 'kerala' and  C.Customer_City NOT LIKE '%chennai%' GROUP by D.Proforma_Icode ORDER  by A.WO_Number Asc "); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+    public function Get_Today_Pending_PI_counts()
+    {
+        $today = date('Y-m-d');
+//        $today ='2018-10-01';
+        $query = $this->db->query("SELECT count(Proforma_Icode) as pi_count, SUM(GrossTotal_Value) as pi_amount FROM proforma_invoice 
+            WHERE PI_Confirm !='1' and
+         date(Proforma_Generated_On)='$today'"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+
+    }
+    public function Get_Today_normal_pending_details()
+    {
+        $today = date('Y-m-d');
+
+        $query = $this->db->query("SELECT B.Proforma_Number, sum(D.Proforma_Qty) as Total_Qty, C.Customer_Company_Name,SUM(D.Proforma_Area_SQMTR) as area, B.Total_Outstanding,C.Customer_Reference, B.Transport,
+                                    B.GrossTotal_Value, GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, GROUP_CONCAT(DISTINCT LEFT(E.Material_Name, 4)) as thickness 
+                                    FROM  proforma_invoice B  INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    INNER JOIN proforma_invoice_items D on B.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode WHERE date(B.Proforma_Generated_On)='$today' and B.PI_Confirm !='1' GROUP by D.Proforma_Icode ORDER  by B.Proforma_Number Asc"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+
+    }
+    public function Get_Today_sheet_pending_details()
+    {
+        //date('Y-m-d')
+        $today = date('Y-m-d');
+        $query = $this->db->query("SELECT B.Proforma_Number, sum(D.Proforma_Qty) as Total_Qty,  C.Customer_Company_Name,SUM(D.Proforma_Area_SQMTR) as area, B.GrossTotal_Value,B.Total_Outstanding, GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, GROUP_CONCAT(DISTINCT LEFT(E.Material_Name, 4)) as thickness,C.Customer_Reference, B.Transport FROM proforma_invoice B INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    INNER JOIN proforma_invoice_item_sheet D on B.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode WHERE date(B.Proforma_Generated_On)='$today' and B.PI_Confirm !='1' GROUP by D.Proforma_Icode ORDER  by B.Proforma_Number Asc" ); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+    public function Get_Monthly_PI_Counts()
+    {
+        $query = $this->db->query("SELECT count(Proforma_Icode) as pi_count, SUM(GrossTotal_Value) as pi_amount FROM proforma_invoice WHERE  
+                                  MONTH(Proforma_Generated_On) = MONTH(CURRENT_DATE()) AND YEAR(Proforma_Generated_On) = YEAR(CURRENT_DATE()) ");
+        return $query->result_array();
+    }
+    public function Get_Monthly_WO_Counts()
+    {
+        $query = $this->db->query("SELECT COUNT(A.WO_Icode) as wo_count, SUM(B.GrossTotal_Value) as wo_amount FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode
+                                    WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())");
+        return $query->result_array();
+    }
+
+    public function Get_Monthly_Total_Bill()
+    {
+        $query = $this->db->query("SELECT SUM(GrossTotal_Value) as total_amt FROM `billing_details` WHERE MONTH(Created_On) = MONTH(CURRENT_DATE()) AND YEAR(Created_On) = YEAR(CURRENT_DATE())");
+        return $query->result_array();
+    }
+
+    //** Normal Material Details
+    public function Get_monthly_normal_WO_material()
+    {
+        $query = $this->db->query("SELECT   DISTINCT(E.Material_Name), SUM(D.Proforma_Qty) as Total_Qty, SUM(D.Proforma_Area_SQMTR) as area FROM work_order A  INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                    INNER JOIN proforma_invoice_items D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode  WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())  GROUP BY E.Material_Icode"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+    public function Get_monthly_sheet_WO_material()
+    {
+        $query = $this->db->query("SELECT   DISTINCT(E.Material_Name),SUM(D.Proforma_Qty) as Total_Qty, SUM(D.Proforma_Area_SQMTR) as area FROM work_order A  INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                    INNER JOIN proforma_invoice_item_sheet D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode  WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())  GROUP BY E.Material_Icode"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+    /** Inseret Delivery Data */
+    public function insert_delivery_data($data)
+    {
+        $this->db->insert('delivery_details', $data);
+        return 1;
+    }
+
+    public function Get_Today_normal_Delivery_WO_details($location)
+    {
+        $today = date('Y-m-d');
+        $query = $this->db->query("SELECT A.WO_Number,A.Proforma_Number,A.Total_Qty,C.Customer_Company_Name,SUM(D.Proforma_Area_SQMTR) as area, B.Total_Outstanding,C.Customer_Reference, B.Transport,
+                                    B.GrossTotal_Value, GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, GROUP_CONCAT(DISTINCT LEFT(E.Material_Name, 4)) as thickness , F.*
+                                    FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    INNER JOIN proforma_invoice_items D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode INNER JOIN delivery_details F on A.WO_Icode=F.WO_Icode WHERE A.WO_Completed = '1' and  
+                                    date(A.WO_Completed_On)='$today'  and  F.Delivery_Location LIKE '%$location%' GROUP by D.Proforma_Icode ORDER  by A.WO_Number Asc"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+
+    }
+
+    public function Get_Today_sheet_Delivery_WO_details($location)
+    {
+        //date('Y-m-d')
+        $today = date('Y-m-d');
+        $query = $this->db->query("SELECT A.WO_Number,A.Proforma_Number,A.Total_Qty,C.Customer_Company_Name,SUM(D.Proforma_Area_SQMTR) as area, B.GrossTotal_Value,B.Total_Outstanding, GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, GROUP_CONCAT(DISTINCT LEFT(E.Material_Name, 4)) as thickness,C.Customer_Reference, B.Transport, F.* FROM work_order A 
+                                   INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    INNER JOIN proforma_invoice_item_sheet D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode INNER JOIN delivery_details F on A.WO_Icode=F.WO_Icode WHERE A.WO_Completed = '1' and  
+                                    date(A.WO_Completed_On)='$today'  and F.Delivery_Location LIKE '%$location%' GROUP by D.Proforma_Icode ORDER  by A.WO_Number Asc "); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+
+
+
 
 
 

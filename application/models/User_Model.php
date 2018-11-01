@@ -123,6 +123,11 @@ class User_Model extends CI_Model
         $query = $this->db->query("Select * from proforma_invoice A INNER JOIN  customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode INNER  JOIN  st_user_details C on A.Proforma_Generated_By = C. User_Icode WHERE  PI_Confirm='0' ORDER by A.Proforma_Icode DESC");
         return $query->result_array();
     }
+    public function get_All_Confirm_Invoice()
+    {
+        $query = $this->db->query("Select * from proforma_invoice A INNER JOIN  customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode INNER  JOIN  st_user_details C on A.Proforma_Generated_By = C. User_Icode WHERE  PI_Confirm='1' ORDER by A.Proforma_Icode DESC");
+        return $query->result_array();
+    }
     // get pi create user details
     public function Get_User_Details($pi_icode)
     {
@@ -142,7 +147,7 @@ class User_Model extends CI_Model
     {
         $user_icode =$this->session->userdata['userid'];
         $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
-                                  INNER JOIN st_user_details C on A.WO_Created_By = C.User_Icode  WHERE A.WO_Created_By='$user_icode' and B.WO_Confirm= '1' ORDER by A.WO_Icode DESC ");
+                                  INNER JOIN st_user_details C on A.WO_Created_By = C.User_Icode  WHERE A.WO_Created_By='$user_icode' and B.WO_Confirm= '1' and A.Bill_Status='0' ORDER by A.WO_Icode DESC ");
         return $query->result_array();
     }
     public function get_All_WO_Details()
@@ -469,7 +474,7 @@ class User_Model extends CI_Model
 
         $query = $this->db->query("SELECT  A.*,C.Customer_Company_Name, SUM(CASE WHEN D.Dispatch_Status ='3' THEN D.Total_Qty END ) AS total,(sum(D.Dispatch_Remaining_Qty) + sum(D.Cutting_Remaining_Qty)+sum(D.Furnace_Remaining_Qty)) as remaining
                                    FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
-                                   INNER JOIN wo_processing D on A.WO_Icode=D.WO_Icode WHERE A.WO_Completed ='0' and C.Customer_State LIKE '%chennai%'  GROUP BY A.WO_Icode  ");
+                                   INNER JOIN wo_processing D on A.WO_Icode=D.WO_Icode WHERE A.WO_Completed ='0' and C.Customer_City  LIKE '%chennai%'  GROUP BY A.WO_Icode  ");
         return $query->result_array();
     }
 
@@ -539,5 +544,171 @@ class User_Model extends CI_Model
         $query=$this->db->query("SELECT * FROM `wo_processing` WHERE WO_Process_Icode='$process_id' ");
         return $query->result_array();
     }
+
+public function get_bill_wo()
+    {
+       
+        $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode WHERE B.WO_Confirm= '1' and A.Bill_Status='0' ORDER by A.WO_Icode DESC ");
+        return $query->result_array();
+    }
+    public function Get_all_bill()
+    {
+       $query=$this->db->query("SELECT * FROM `Billing_Details` ORDER by Bill_Icode DESC LIMIT 1 ");
+        if($query->num_rows() == 1)
+        {
+            return $query->result_array();
+        }
+        else{
+            return 0;
+        } 
+    }
+    public function get_work_order($pid)
+    {
+        $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B ON A.Proforma_Icode=B.Proforma_Icode WHERE B.Proforma_Icode='$pid'");
+        return $query->result_array();
+    }
+
+     public function Insert_Billing($data)
+    {
+        $this->db->insert('billing_details', $data);
+        return $this->db->insert_id();
+
+    }
+
+    public function get_all_bill_details()
+    {
+        $query = $this->db->query("SELECT A.*,B.*,D.Customer_Company_Name,C.Amt_Words,C.PI_Type FROM billing_details A INNER JOIN work_order B  on A.Wo_Icode=B.Wo_Icode INNER JOIN proforma_invoice C on B.Proforma_Icode=C.Proforma_Icode INNER JOIN customer_master D on C.Proforma_Customer_Icode=D.Customer_Icode order by Created_On DESC");
+
+        return $query->result_array();
+    }
+    public function Insert_Billing_charges($data)
+    {
+        $this->db->insert('billing_charges_entry', $data);
+        $insert_id = $this->db->insert_id();
+        return $insert_id;
+    }
+    public function Get_Bill_details($wo_id)
+    {
+        $query = $this->db->query("SELECT * FROM billing_details WHERE Wo_Icode='$wo_id'");
+        return $query->result_array();
+    }
+
+    public function Get_Single_Bill_Charges($pi_id)
+    {
+        $query = $this->db->query("SELECT * FROM billing_charges_entry A INNER JOIN processing_charges_master B on A.Proforma_Charge_Icode=B.charge_icode WHERE A.bill_icode='$pi_id'");
+        return $query->result_array();
+    }
+
+    public function Get_search_material($keyword) {
+        $this->db->order_by('Material_Icode', 'ASC');
+        $this->db->like("Material_Name", $keyword);
+        return $this->db->get('material_master')->result_array();
+    }
+    public function get_single_material($id)
+    {
+        $query = $this->db->query("Select * from material_master WHERE Material_Icode ='$id'");
+        return $query->result_array();
+    }
+    public function Get_Bill_Customer($bill_icode)
+    {
+        $query = $this->db->query("Select * from billing_details A INNER JOIN customer_master B on A.Customer_Address=B.Customer_Icode  WHERE bill_icode ='$bill_icode'");
+        return $query->result_array();
+    }
+
+    public function Get_Bill_Reports($from,$to)
+    {
+        $query = $this->db->query(" SELECT A.*,B.*,D.Customer_Company_Name,C.Amt_Words,C.PI_Type FROM billing_details A INNER JOIN work_order B  on A.Wo_Icode=B.Wo_Icode
+                                    INNER JOIN proforma_invoice C on B.Proforma_Icode=C.Proforma_Icode INNER JOIN customer_master D on C.Proforma_Customer_Icode=D.Customer_Icode 
+                                    WHERE date(A.Created_On) >= '$from' and date(A.Created_On) <= '$to' ORDER  BY  A.Created_On ASC");
+
+        return $query->result_array();
+    }
+
+    public function delete_bill_charges($charge_id)
+    {
+        $delete = $this->db->query("DELETE FROM billing_charges_entry WHERE bill_charge_icode='$charge_id' ");
+
+    }
+
+    //** get word order counts */
+    public function Get_WO_Counts($from,$to)
+    {
+        $query = $this->db->query("SELECT COUNT(A.WO_Icode) as wo_count, SUM(B.GrossTotal_Value) as wo_amount FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode
+                                    WHERE date(A.WO_Created_On) >= '$from' and date(A.WO_Created_On) <= '$to'"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+    public function Get_Today_normal_WO_details($from,$to)
+    {
+
+        $query = $this->db->query("SELECT A.WO_Number,A.Proforma_Number,A.Total_Qty,C.Customer_Company_Name,SUM(D.Proforma_Area_SQMTR) as area, B.GrossTotal_Value, GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, GROUP_CONCAT(DISTINCT LEFT(E.Material_Name, 4)) as thickness FROM work_order A 
+                                   INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    INNER JOIN proforma_invoice_items D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode  WHERE date(A.WO_Created_On) >= '$from' and date(A.WO_Created_On) <= '$to' GROUP by D.Proforma_Icode ORDER  by A.WO_Number Asc"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+
+    }
+    public function Get_Today_sheet_WO_details($from,$to)
+    {
+
+        $query = $this->db->query("SELECT A.WO_Number,A.Proforma_Number,A.Total_Qty,C.Customer_Company_Name,SUM(D.Proforma_Area_SQMTR) as area, B.GrossTotal_Value,GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, GROUP_CONCAT(DISTINCT LEFT(E.Material_Name, 4)) as thickness FROM work_order A 
+                                   INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    INNER JOIN proforma_invoice_item_sheet D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode  WHERE date(A.WO_Created_On) >= '$from' and date(A.WO_Created_On) <= '$to' GROUP by D.Proforma_Icode ORDER  by A.WO_Number Asc "); //GROUP by A.Stock_Icode
+        return $query->result_array();
+
+    }
+
+    public function Get_Today_PI_Counts($from,$to)
+    {
+        $query = $this->db->query("SELECT count(Proforma_Icode) as pi_count, SUM(GrossTotal_Value) as pi_amount FROM proforma_invoice WHERE date(Proforma_Generated_On)>='$from' and date(Proforma_Generated_On) <= '$to' "); //GROUP by A.Stock_Icode
+        return $query->result_array();
+
+    }
+
+    public function Get_Today_normal_PI_details($from,$to)
+    {
+
+        $query = $this->db->query("SELECT A.Proforma_Number,C.Customer_Company_Name,SUM(D.Proforma_Area_SQMTR) as area, A.GrossTotal_Value, sum(D.Proforma_Qty) as Total_Qty, GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, GROUP_CONCAT(DISTINCT LEFT(E.Material_Name, 4)) as thickness FROM  proforma_invoice A 
+                                    INNER JOIN customer_master C on A.Proforma_Customer_Icode=C.Customer_Icode 
+                                    INNER JOIN proforma_invoice_items D on A.Proforma_Icode=D.Proforma_Icode 
+                                    INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode 
+                                     WHERE date(A.Proforma_Generated_On) >= '$from' and date(A.Proforma_Generated_On) <= '$to' 
+                                     GROUP by D.Proforma_Icode ORDER  by A.Proforma_Number Asc"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+
+    }
+    public function Get_Today_sheet_PI_details($from,$to)
+    {
+
+        $query = $this->db->query("SELECT A.Proforma_Number,C.Customer_Company_Name,SUM(D.Proforma_Area_SQMTR) as area, A.GrossTotal_Value, sum(D.Proforma_Qty) as Total_Qty, GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, GROUP_CONCAT(DISTINCT LEFT(E.Material_Name, 4)) as thickness FROM  proforma_invoice A 
+                                    INNER JOIN customer_master C on A.Proforma_Customer_Icode=C.Customer_Icode 
+                                    INNER JOIN proforma_invoice_item_sheet D on A.Proforma_Icode=D.Proforma_Icode 
+                                    INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode 
+                                     WHERE date(A.Proforma_Generated_On) >= '$from' and date(A.Proforma_Generated_On) <= '$to' 
+                                     GROUP by D.Proforma_Icode ORDER  by A.Proforma_Number Asc "); //GROUP by A.Stock_Icode
+        return $query->result_array();
+
+    }
+
+    //** Normal Material Details
+    public function Get_Today_normal_WO_material($from,$to)
+    {
+         $query = $this->db->query("SELECT   DISTINCT(E.Material_Name),GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, SUM(D.Proforma_Qty) as Total_Qty, SUM(D.Proforma_Area_SQMTR) as area FROM work_order A  INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                    INNER JOIN proforma_invoice_items D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode  WHERE date(A.WO_Created_On) >= '$from' and date(A.WO_Created_On) <= '$to'  GROUP BY E.Material_Icode"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+    public function Get_Today_sheet_WO_material($from,$to)
+    {
+         $query = $this->db->query("SELECT   DISTINCT(E.Material_Name),GROUP_CONCAT(DISTINCT(D.Proforma_Special)) as special, SUM(D.Proforma_Qty) as Total_Qty, SUM(D.Proforma_Area_SQMTR) as area FROM work_order A  INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                    INNER JOIN proforma_invoice_item_sheet D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode  WHERE date(A.WO_Created_On) >= '$from' and date(A.WO_Created_On) <= '$to'  GROUP BY E.Material_Icode"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+
+
+
+
+
+
 
 }
