@@ -12,22 +12,58 @@
     {
         $total = $key['Proforma_Qty'];
         for ($i=1;$i<=$total;$i++)
-        { ?>
-    <div class="left" id="sample">
+        {
 
-                <div>WO.No :<span><?php echo $wo[0]['WO_Number']; ?> </span></div>
-                <div>PI. NO : <span><?php echo $invoice[0]['Proforma_Number']; ?></span><span style="float:right;"><?php echo $key['Proforma_Special']; ?></span></div>
-                <div class="medium"><span><?php echo $invoice[0]['Customer_Company_Name']; ?></span></div>
-                <div class="medium"><span><?php echo $key['Material_Name']; ?></span></div>
-                <div><span class="size">Size :</span> <span class="size"> <?php echo $key['Proforma_Actual_Size_Height']; ?> X <?php echo $key['Proforma_Actual_Size_Width']; ?> </span><span style="float:right;">Qty : <?php echo $key['Proforma_Qty']; ?></span></div>
-                <div class="last_fot">
-                    <div class="left">HOLES :<span><?php echo $key['Proforma_Holes']; ?></span></div>
-                    <div class="left">CUTOUTS :<span><?php echo $key['Proforma_Cutout']; ?></span></div>
-                    <div class="left">OTHER :<span>C & W</span></div>
+            if($key['Proforma_Special'] == 'T')
+            {
+                $height = $key['Proforma_Actual_Size_Height'] - 25;
+                $width =  $key['Proforma_Actual_Size_Width'] - 25;
+                ?>
+
+                <div class="left" id="sample">
+
+                    <div>WO.No :<span><?php echo $wo[0]['WO_Number']; ?> </span></div>
+                    <div>PI. NO : <span><?php echo $invoice[0]['Proforma_Number']; ?></span><span style="float:right;"><?php echo $key['Proforma_Special']; ?></span></div>
+                    <div class="medium"><span><?php echo $invoice[0]['Customer_Company_Name']; ?></span></div>
+                    <div class="medium"><span><?php echo $key['Material_Name']; ?></span></div>
+                    <div><span class="size">Size :</span> <span class="size"> <?php echo $height; ?> X <?php echo $width; ?> </span><span style="float:right;">Qty : <?php echo $key['Proforma_Qty']; ?></span></div>
+                    <div class="last_fot">
+                        <div class="left">HOLES :<span><?php echo $key['Proforma_Holes']; ?></span></div>
+                        <div class="left">CUTOUTS :<span><?php echo $key['Proforma_Cutout']; ?></span></div>
+                        <div class="left">OTHER :<span> </span></div>
+                    </div>
+
+
+                </div>
+          <?php
+            }
+            else
+            {
+                ?>
+
+                <div class="left" id="sample">
+
+                    <div>WO.No :<span><?php echo $wo[0]['WO_Number']; ?> </span></div>
+                    <div>PI. NO : <span><?php echo $invoice[0]['Proforma_Number']; ?></span><span style="float:right;"><?php echo $key['Proforma_Special']; ?></span></div>
+                    <div class="medium"><span><?php echo $invoice[0]['Customer_Company_Name']; ?></span></div>
+                    <div class="medium"><span><?php echo $key['Material_Name']; ?></span></div>
+                    <div><span class="size">Size :</span> <span class="size"> <?php echo $key['Proforma_Actual_Size_Height']; ?> X <?php echo $key['Proforma_Actual_Size_Width']; ?> </span><span style="float:right;">Qty : <?php echo $key['Proforma_Qty']; ?></span></div>
+                    <div class="last_fot">
+                        <div class="left">HOLES :<span><?php echo $key['Proforma_Holes']; ?></span></div>
+                        <div class="left">CUTOUTS :<span><?php echo $key['Proforma_Cutout']; ?></span></div>
+                        <div class="left">OTHER :<span> </span></div>
+                    </div>
+
+
                 </div>
 
 
-    </div>
+
+          <?php  }
+
+
+            ?>
+
             <?php
         }
         ?>

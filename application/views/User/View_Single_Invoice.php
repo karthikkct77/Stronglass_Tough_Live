@@ -41,7 +41,8 @@
                     <h6>Proforma Invoice</h6>
                     <h4><?php echo $st[0]['ST_Name']; ?></h4>
                     <h5><?php echo $st[0]['ST_Address_1']; ?>,&nbsp;<?php echo $st[0]['ST_Area']; ?>,&nbsp;<?php echo $st[0]['ST_City']; ?></h5>
-                    <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
+                    <h6><span>Phone: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
+                    <h6 style="margin: 0;"> Mob: <?php echo $st[0]['ST_Alternate_Phone']; ?> </h6>
                 </div>
                 <hr>
                 <form method="post" class="login-form" action="<?php echo site_url('User_Controller/Save_Work_Order'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save ?');">
@@ -49,12 +50,12 @@
                         <div class="col-md-4" style="border-right: 1px solid #000;">
                             <h5>Consignee</h5>
                             <div id="consign">
-                                <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; echo '&nbsp'; ?>,<?php echo $invoice[0]['Customer_Address_2']; echo '&nbsp';?>,<?php echo $invoice[0]['Customer_Area']; ?></h5>
-                                <h5> <?php echo $invoice[0]['Customer_City']; echo '&nbsp'; ?><?php echo $invoice[0]['Customer_State']; ?></h5>
-                                <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
-                                <h5 id="email">Email: <?php echo $invoice[0]['Customer_Email_Id_1']; ?></h5>
-                                <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
+                                <h5 id="coustomer" style="font-size: 16px; font-weight: bold;"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
+                                <h5 id="address" style="font-size: 14px; "><?php echo $invoice[0]['Customer_Address_1']; echo '&nbsp'; ?>,<?php echo $invoice[0]['Customer_Address_2']; echo '&nbsp';?>,<?php echo $invoice[0]['Customer_Area']; ?></h5>
+                                <h5 style="font-size: 14px;"> <?php echo $invoice[0]['Customer_City']; echo '&nbsp'; ?><?php echo $invoice[0]['Customer_State']; ?></h5>
+                                <h5 id="phone" style="font-size: 14px; ">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
+                                <h5 id="email" style="font-size: 14px; ">Email: <?php echo $invoice[0]['Customer_Email_Id_1']; ?></h5>
+                                <h5 id="gstn" style="font-size: 14px; ">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
                                 <input type="hidden" name="email" value="<?php echo $invoice[0]['Customer_Email_Id_1']; ?>">
                             </div>
 
@@ -66,23 +67,23 @@
                                 if($invoice[0]['Customer_Address_Icode'] == "")
                                 {
                                     ?>
-                                    <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                    <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; echo '&nbsp'; ?>,<?php echo $invoice[0]['Customer_Address_2']; echo '&nbsp';?>,<?php echo $invoice[0]['Customer_Area']; ?></h5>
-                                    <h5> <?php echo $invoice[0]['Customer_City']; echo '&nbsp'; ?><?php echo $invoice[0]['Customer_State']; ?></h5>
-                                    <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
-                                    <h5 id="email">Email: <?php echo $invoice[0]['Customer_Email_Id_1']; ?></h5>
-                                    <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
+                                    <h5 id="coustomer" style="font-size: 16px; font-weight: bold;"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
+                                    <h5 id="address" style="font-size: 14px; "><?php echo $invoice[0]['Customer_Address_1']; echo '&nbsp'; ?>,<?php echo $invoice[0]['Customer_Address_2']; echo '&nbsp';?>,<?php echo $invoice[0]['Customer_Area']; ?></h5>
+                                    <h5 style="font-size: 14px; "> <?php echo $invoice[0]['Customer_City']; echo '&nbsp'; ?><?php echo $invoice[0]['Customer_State']; ?></h5>
+                                    <h5 id="phone" style="font-size: 14px; ">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
+                                    <h5 id="email" style="font-size: 14px; ">Email: <?php echo $invoice[0]['Customer_Email_Id_1']; ?></h5>
+                                    <h5 id="gstn" style="font-size: 14px; ">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
                                     <input type="hidden" name="email" value="<?php echo $invoice[0]['Customer_Email_Id_1']; ?>">
                                 <?php
                                 }
                                 else
                                 {
                                     ?>
-                                    <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                    <h5 id="address"><?php echo $invoice[0]['Customer_Add_Address_1']; ?>&nbsn;<?php echo $invoice[0]['Customer_Add_Address_2']; ?></h5>
-                                    <h5 id="phone">City: <?php echo $invoice[0]['Customer_Add_City']; ?></h5>
-                                    <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Add_Phone']; ?></h5>
-                                    <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_Add_Email_Id_1']; ?></h5>
+                                    <h5 id="coustomer" style="font-size: 16px; font-weight: bold;"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
+                                    <h5 id="address" style="font-size: 14px; "><?php echo $invoice[0]['Customer_Add_Address_1']; ?>&nbsn;<?php echo $invoice[0]['Customer_Add_Address_2']; ?></h5>
+                                    <h5 id="phone" style="font-size: 14px;">City: <?php echo $invoice[0]['Customer_Add_City']; ?></h5>
+                                    <h5 id="phone" style="font-size: 14px; ">Phone: <?php echo $invoice[0]['Customer_Add_Phone']; ?></h5>
+                                    <h5 id="gstn" style="font-size: 14px; ">GSTN: <?php echo $invoice[0]['Customer_Add_Email_Id_1']; ?></h5>
                                 <?php
                                 }
                                 ?>
@@ -109,7 +110,7 @@
                             <th style="width: 20px;">Actual<br>sz(w)</th>
                             <th style="width: 20px;">Charge<br>sz(h</th>
                             <th style="width: 20px;">Charge<br>sz(w)</th>
-                            <th style="width: 10px;">No.of<br>Pcs</th>
+                            <th style="width: 10px;">Qty</th>
                             <th style="width: 10px;">No.of<br>Holes</th>
                             <th style="width: 10px;">Cutout</th>
                             <th style="width: 10px;">Special</th>
@@ -194,13 +195,32 @@
                                 </li>
                             </ul>
                             </p>
-                            <div id="account">
-                                <h3 style="font-size: 13px;">Bank Details</h3>
-                                <h5><span>Account Name</span> :STRONGLASS TOUGH</h5>
-                                <h5><span>Bank Name</span>:<?php echo $st[0]['ST_Bank']; ?></span></h5>
-                                <h5><span>Account Number</span>:<?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
-                                <h5><span>IFSC</span>:<?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
-                            </div>
+
+                            <?php
+                            if($invoice[0]['Customer_State'] == 'Kerala')
+                            { ?>
+                                <div id="account">
+                                    <h3 style="font-size: 13px;">Bank Details</h3>
+                                    <h5><span>Account Name</span> :STRONGLASS TOUGH</h5>
+                                    <h5><span>Bank Name</span>:FEDERAL BANK Coimbatore Branch </span></h5>
+                                    <h5><span>Account Number</span>:10920200043393</h5>
+                                    <h5><span>IFSC</span>:FDRL0001092</h5>
+                                </div>
+                                <?php
+                            }
+                            else
+                            {
+                                ?>
+                                <div id="account">
+                                    <h3 style="font-size: 13px;">Bank Details</h3>
+                                    <h5><span>Account Name</span> :STRONGLASS TOUGH</h5>
+                                    <h5><span>Bank Name</span>:<?php echo $st[0]['ST_Bank']; ?></span></h5>
+                                    <h5><span>Account Number</span>:<?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
+                                    <h5><span>IFSC</span>:<?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
+                                </div>
+
+                            <?php } ?>
+
                         </div>
                         <div class="col-md-6">
                             <table class="table table-hover table-bordered" id="sampleTable1">
@@ -284,7 +304,7 @@
                                 </tr>
                                 </tfoot>
                             </table>
-                            <div>Amount in Words: <span id="word" style="font-size: 15px;"></span></div>
+                            <div>Amount in Words: <span id="word" style="font-size: 15px; font-weight: bold;"></span></div>
                             </div>
                     </div>
                     <div id="Signature">
@@ -315,8 +335,12 @@
                                 <button id="with_print" class="btn btn-danger pi_button" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i> Generate WO</button>
                                 <input type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="Print"/>
                              <?php } elseif($_SESSION['role'] == 7){
+                                if($invoice[0]['PI_Confirm'] == '0')
+                                { ?>
+                                    <input type="button" id="with_print" class="btn btn-info" onclick="Request_Approve()" value="Request Work Order">
+                                <?php }
                                 ?>
-                                <input type="button" id="with_print" class="btn btn-info" onclick="Request_Approve()" value="Request Work Order">
+
                                 <button class="btn btn-danger pi_button " type="submit" id="with_print"><i class="fa fa-fw fa-lg fa-check-circle"></i>PDF</button>
                                 <input  type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="Print PI">
 
@@ -429,13 +453,13 @@
 
     // Number into words
     function number_to_words() {
-        var th = ['', 'thousand', 'million', 'billion', 'trillion'];
+        var th = ['', 'Thousand', 'Million', 'Billion', 'Trillion'];
 
-        var dg = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'];
+        var dg = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
 
-        var tn = ['ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+        var tn = ['Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
 
-        var tw = ['twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+        var tw = ['Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
 
         var s = document.getElementById('gross_tot').value;
 
@@ -460,7 +484,7 @@
                 }
             } else if (n[i] != 0) {
                 str += dg[n[i]] + ' ';
-                if ((x - i) % 3 == 0) str += 'hundred ';
+                if ((x - i) % 3 == 0) str += 'Hundred ';
                 sk = 1;
             }
             if ((x - i) % 3 == 1) {

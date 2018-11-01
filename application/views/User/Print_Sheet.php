@@ -28,7 +28,8 @@
                             <img style="position: absolute;width: 100px;height: auto;" src="<?php echo base_url('img/strong.png'); ?>" alt="User Image">
                             <h5><?php echo $st[0]['ST_Name']; ?></h5>
                             <h6><?php echo $st[0]['ST_Address_1']; ?>,&nbsp;<?php echo $st[0]['ST_Area']; ?>,&nbsp;<?php echo $st[0]['ST_City']; ?></h6>
-                            <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
+                            <h6><span>Phone: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
+                            <h6 style="margin: 0;"> Mob: <?php echo $st[0]['ST_Alternate_Phone']; ?> </h6>
                             <h6 style="text-align: right; padding-right: 1%;">Department: <?php echo $val['print_type']; ?></h6>
                         </div>
                         <hr>
@@ -72,16 +73,36 @@
                                         <?php $i=1; foreach ($fab as $key) {
                                             $qty = $key['Proforma_Qty'] + $key['Proforma_Qty'];
                                             $tot_qty = $invoice_total[0]['qty'] + $invoice_total[0]['qty'];
+                                            $tot_cutout = $invoice_total[0]['cutout'] + $invoice_total[0]['cutout'];
+                                            $tot_holes = $invoice_total[0]['holes'] + $invoice_total[0]['holes'];
+                                            $holes = $key['Proforma_Holes'] + $key['Proforma_Holes'];
+                                            $cutout = $key['Proforma_Cutout'] + $key['Proforma_Cutout'];
 
                                             ?>
                                             <tr id="row<?php echo $i; ?>">
                                                 <td  class="heading"><?php echo $i; ?></td>
                                                 <td class="heading"><?php echo $key['Material_Name']; ?></td>
-                                                <td class="heading"><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
-                                                <td class="heading"><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
+                                                <?php
+                                                if($key['Proforma_Special'] == 'T')
+                                                {
+                                                    $height = $key['Proforma_Actual_Size_Height'] - 25;
+                                                    $width = $key['Proforma_Actual_Size_Width'] - 25;
+
+                                                    ?>
+                                                    <td class="heading"><?php echo $height; ?></td>
+                                                    <td class="heading"><?php echo $width; ?></td>
+
+                                                <?php }
+                                                else
+                                                { ?>
+                                                    <td class="heading"><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
+                                                    <td class="heading"><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
+
+                                                <?php }
+                                                ?>
                                                 <td class="heading"><?php echo $qty; ?></td>
-                                                <td class="heading"><input type="hidden" name="holes_print[]" value="<?php echo $key['Proforma_Holes']; ?>" ><?php echo $key['Proforma_Holes']; ?></td>
-                                                <td class="heading"><input type="hidden" name="cutout_print[]" value="<?php echo $key['Proforma_Cutout']; ?>" ><?php echo $key['Proforma_Cutout']; ?></td>
+                                                <td class="heading"><?php echo $holes; ?></td>
+                                                <td class="heading"><?php echo $cutout; ?></td>
                                                 <td class="heading"><?php echo $key['Proforma_Special']; ?></td>
                                                 <td class="heading"><?php echo $key['Proforma_Area_SQMTR']; ?></td>
                                             </tr>
@@ -92,8 +113,8 @@
                                             <td></td>
                                             <td></td>
                                             <td class="heading"><?php echo $tot_qty; ?></td>
-                                            <td id="holes_print" class="heading"></td>
-                                            <td id="cutout_print" class="heading"></td>
+                                            <td id="holes_print" class="heading"><?php echo $tot_holes; ?></td>
+                                            <td id="cutout_print" class="heading"><?php echo $tot_cutout; ?></td>
                                             <td></td>
                                             <td class="heading"><?php echo round($invoice_total[0]['area'], 2); ?></td>
                                         </tr>
@@ -152,8 +173,24 @@
                                             <tr id="row<?php echo $i; ?>">
                                                 <td  class="heading"><?php echo $i; ?></td>
                                                 <td class="heading"><?php echo $key['Material_Name']; ?></td>
-                                                <td class="heading"><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
-                                                <td class="heading"><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
+                                                <?php
+                                                if($key['Proforma_Special'] == 'T')
+                                                {
+                                                    $height = $key['Proforma_Actual_Size_Height'] - 25;
+                                                    $width = $key['Proforma_Actual_Size_Width'] - 25;
+
+                                                    ?>
+                                                    <td class="heading"><?php echo $height; ?></td>
+                                                    <td class="heading"><?php echo $width; ?></td>
+
+                                                <?php }
+                                                else
+                                                { ?>
+                                                    <td class="heading"><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
+                                                    <td class="heading"><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
+
+                                                <?php }
+                                                ?>
                                                 <td class="heading"><?php echo$key['Proforma_Qty']; ?></td>
                                                 <td class="heading"><input type="hidden" name="holes_print[]" value="<?php echo $key['Proforma_Holes']; ?>" ><?php echo $key['Proforma_Holes']; ?></td>
                                                 <td class="heading"><input type="hidden" name="cutout_print[]" value="<?php echo $key['Proforma_Cutout']; ?>" ><?php echo $key['Proforma_Cutout']; ?></td>
@@ -166,9 +203,10 @@
                                             <td></td>
                                             <td></td>
                                             <td></td>
+
                                             <td class="heading"><?php echo $invoice_total[0]['qty']; ?></td>
-                                            <td id="holes_print" class="heading"></td>
-                                            <td id="cutout_print" class="heading"></td>
+                                            <td id="holes_print" class="heading"><?php echo $invoice_total[0]['holes']; ?></td>
+                                            <td id="cutout_print" class="heading"><?php echo $invoice_total[0]['cutout']; ?></td>
                                             <td></td>
                                             <td class="heading"><?php echo round($invoice_total[0]['area'], 2); ?></td>
                                         </tr>
@@ -232,15 +270,35 @@
                                        <?php $i=1; foreach ($invoice_item as $key) {
                                            $tot =$key['Proforma_Qty'] + $key['Proforma_Qty'];
                                            $tot_qty = $invoice_total[0]['qty'] + $invoice_total[0]['qty'];
+                                           $tot_cutout = $invoice_total[0]['cutout'] + $invoice_total[0]['cutout'];
+                                           $tot_holes = $invoice_total[0]['holes'] + $invoice_total[0]['holes'];
+                                           $holes = $key['Proforma_Holes'] + $key['Proforma_Holes'];
+                                           $cutout = $key['Proforma_Cutout'] + $key['Proforma_Cutout'];
                                            ?>
                                            <tr id="row<?php echo $i; ?>">
                                                <td  class="heading"><?php echo $i; ?></td>
                                                <td class="heading"><?php echo $key['Material_Name']; ?></td>
-                                               <td class="heading"><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
-                                               <td class="heading"><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
+                                               <?php
+                                               if($key['Proforma_Special'] == 'T')
+                                               {
+                                                   $height = $key['Proforma_Actual_Size_Height'] - 25;
+                                                   $width = $key['Proforma_Actual_Size_Width'] - 25;
+
+                                                   ?>
+                                                   <td class="heading"><?php echo $height; ?></td>
+                                                   <td class="heading"><?php echo $width; ?></td>
+
+                                               <?php }
+                                               else
+                                               { ?>
+                                                   <td class="heading"><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
+                                                   <td class="heading"><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
+
+                                               <?php }
+                                               ?>
                                                <td class="heading"><?php echo $tot;  ?></td>
-                                               <td class="heading"><input type="hidden" name="holes_print[]" value="<?php echo $key['Proforma_Holes']; ?>" ><?php echo $key['Proforma_Holes']; ?></td>
-                                               <td class="heading"><input type="hidden" name="cutout_print[]" value="<?php echo $key['Proforma_Cutout']; ?>" ><?php echo $key['Proforma_Cutout']; ?></td>
+                                               <td class="heading"><?php echo $holes;  ?></td>
+                                               <td class="heading"><?php echo $cutout;  ?></td>
                                                <td class="heading"><?php echo $key['Proforma_Special']; ?></td>
                                                <td class="heading"><?php echo $key['Proforma_Area_SQMTR']; ?></td>
                                            </tr>
@@ -251,8 +309,8 @@
                                            <td></td>
                                            <td></td>
                                            <td class="heading"><?php echo $tot_qty; ?></td>
-                                           <td id="holes_print" class="heading"></td>
-                                           <td id="cutout_print" class="heading"></td>
+                                           <td id="holes_print" class="heading"><?php echo $tot_holes; ?></td>
+                                           <td id="cutout_print" class="heading"><?php echo $tot_cutout; ?></td>
                                            <td></td>
                                            <td class="heading"><?php echo round($invoice_total[0]['area'], 2); ?></td>
                                        </tr>
@@ -311,8 +369,24 @@
                                            <tr id="row<?php echo $i; ?>">
                                                <td  class="heading"><?php echo $i; ?></td>
                                                <td class="heading"><?php echo $key['Material_Name']; ?></td>
-                                               <td class="heading"><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
-                                               <td class="heading"><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
+                                               <?php
+                                               if($key['Proforma_Special'] == 'T')
+                                               {
+                                                   $height = $key['Proforma_Actual_Size_Height'] - 25;
+                                                   $width = $key['Proforma_Actual_Size_Width'] - 25;
+
+                                                   ?>
+                                                   <td class="heading"><?php echo $height; ?></td>
+                                                   <td class="heading"><?php echo $width; ?></td>
+
+                                               <?php }
+                                               else
+                                               { ?>
+                                                   <td class="heading"><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
+                                                   <td class="heading"><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
+
+                                               <?php }
+                                               ?>
                                                <td class="heading"><?php echo $key['Proforma_Qty']; ?></td>
                                                <td class="heading"><input type="hidden" name="holes_print[]" value="<?php echo $key['Proforma_Holes']; ?>" ><?php echo $key['Proforma_Holes']; ?></td>
                                                <td class="heading"><input type="hidden" name="cutout_print[]" value="<?php echo $key['Proforma_Cutout']; ?>" ><?php echo $key['Proforma_Cutout']; ?></td>
@@ -325,9 +399,10 @@
                                            <td></td>
                                            <td></td>
                                            <td></td>
+
                                            <td class="heading"><?php echo $invoice_total[0]['qty']; ?></td>
-                                           <td id="holes_print" class="heading"></td>
-                                           <td id="cutout_print" class="heading"></td>
+                                           <td id="holes_print" class="heading"><?php echo $invoice_total[0]['holes']; ?></td>
+                                           <td id="cutout_print" class="heading"><?php echo $invoice_total[0]['cutout']; ?></td>
                                            <td></td>
                                            <td class="heading"><?php echo round($invoice_total[0]['area'], 2); ?></td>
                                        </tr>

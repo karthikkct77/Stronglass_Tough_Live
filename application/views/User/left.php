@@ -83,12 +83,23 @@
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/View_WO'); ?>"><i class="app-menu__icon fa fa-barcode"></i><span class="app-menu__label">View WO List</span></a></li>
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Print_WO'); ?>"><i class="app-menu__icon fa fa-print"></i><span class="app-menu__label">Print WO</span></a></li>
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Re_Cut'); ?>"><i class="app-menu__icon fa fa-scissors"></i><span class="app-menu__label">Recut</span></a></li>
+            <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/wo_Report'); ?>"><i class="app-menu__icon fa fa-check-square"></i><span class="app-menu__label">Report</span></a></li>
+
 
         <?php  }
         elseif ($_SESSION['role'] == 7)
         { ?>
             <li><a class="app-menu__item " href="<?php echo site_url('User_Controller/dashboard'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Check_PI'); ?>"><i class="app-menu__icon fa fa-check-square"></i><span class="app-menu__label">CHECK PI</span></a></li>
+            <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/View_Invoice_List'); ?>"><i class="app-menu__icon fa fa-eye"></i><span class="app-menu__label">View PI</span></a></li>
+            <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-check-square"></i><span class="app-menu__label">Report</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+                <ul class="treeview-menu">
+                    <!--<li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Size_Master'); ?><!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>-->
+                    <li><a class="treeview-item" href="<?php echo site_url('User_Controller/PI_Report'); ?>"><i class="icon fa fa-circle-o"></i>PI Report</a></li>
+                    <li><a class="treeview-item" href="<?php echo site_url('User_Controller/Today_Wo_Report'); ?>"><i class="icon fa fa-circle-o"></i>WO Report</a></li>
+
+                </ul>
+            </li>
 
         <?php  }
         elseif ($_SESSION['role'] == 8)
@@ -113,6 +124,15 @@
         { ?>
             <li><a class="app-menu__item " href="<?php echo site_url('User_Controller/dashboard'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Kerala_Work_Order'); ?>"><i class="app-menu__icon fa fa-sitemap"></i><span class="app-menu__label">Our Customer</span></a></li>
+
+        <?php  }
+         elseif ($_SESSION['role'] == 12)
+        { ?>
+            <li><a class="app-menu__item " href="<?php echo site_url('User_Controller/dashboard'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Dashboard</span></a></li>
+            <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Bill_WO'); ?>"><i class="app-menu__icon fa fa-sitemap"></i><span class="app-menu__label">View WO</span></a></li>
+             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/View_Bill_List'); ?>"><i class="app-menu__icon fa fa-eye"></i><span class="app-menu__label">View Bill List</span></a></li>
+            <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Bill_Report'); ?>"><i class="app-menu__icon fa fa-check-square"></i><span class="app-menu__label">Report</span></a></li>
+
 
         <?php  }
         ?>

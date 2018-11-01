@@ -83,10 +83,10 @@
                             <th>Special</th>
                             <th>No.of Pieces</th>
                             <th>No.of Holes</th>
-                            <th>Actucal Size(W)(MM)</th>
                             <th>Actucal Size(H)(MM)</th>
-                            <th>Chargable Size(W)(MM)</th>
+                            <th>Actucal Size(W)(MM)</th>
                             <th>Chargable Size(H)(MM)</th>
+                            <th>Chargable Size(W)(MM)</th>
                             <th>Area(SQMTR)</th>
                             <th>Rate(SQMTR)</th>
                             <th>Total(INR)</th>
@@ -102,10 +102,10 @@
                                     <td><?php echo $key['Proforma_Special']; ?></td>
                                     <td><?php echo $key['Proforma_Qty']; ?></td>
                                     <td><?php echo $key['Proforma_Holes']; ?></td>
-                                    <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
-                                    <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
+                                    <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Chargeable_Size_Height']; ?></td>
+                                    <td><?php echo $key['Proforma_Chargeable_Size_Width']; ?></td>
                                     <td><?php echo $key['Proforma_Area_SQMTR']; ?></td>
                                     <td><?php echo $key['Proforma_Material_Rate']; ?></td>
                                     <td><?php echo $key['Proforma_Material_Cost']; ?></td>

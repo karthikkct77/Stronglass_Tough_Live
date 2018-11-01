@@ -16,12 +16,16 @@
         overflow-y: auto;
         min-height: auto;
     }
-    #autoSuggestionsList > li {
+    #autoSuggestionsList > li{
         background: none repeat scroll 0 0 #F3F3F3;
         border-bottom: 1px solid #E3E3E3;
         list-style: none outside none;
         padding: 3px 15px 3px 15px;
         text-align: left;
+    }
+    .modal-content {
+        height: 500px;
+        overflow-y: scroll;
     }
 
     #autoSuggestionsList > li a { color: #800000; }
@@ -151,9 +155,12 @@
                             <tbody>
                             <?php $i=1; foreach ($invoice as $key) { ?>
                                 <tr id="row<?php echo $i; ?>">
-                                    <td><?php echo $i; ?></td>
-                                    <td>     <div class="form-group">
-                                            <select name="material[]" class="form-control" id="material<?php echo $i; ?>" onclick="get_result('<?php echo $i; ?>')" required >
+                                    <td><?php echo $i; ?>
+
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <select name="material[]" class="form-control" id="material<?php echo $i; ?>" onchange="get_result('<?php echo $i; ?>')" required >
                                                 <option value="" >Select material</option>
                                                 <?php foreach ($stock as $row):
                                                 {
@@ -163,10 +170,10 @@
                                             </select>
                                         </div>
                                     </td>
-                                    <!--                                    <div id="suggestions_material">-->
-                                    <!--                                        <div id="autoSuggestionsList_material"></div>-->
-                                    <!--                                    </div>-->
-                                    <td style="width: 20px;"><input class="form-control" type="hidden" name="hsn[]" id="hsn<?php echo $i; ?>" readonly ><input class="form-control" type="hidden" name="thickness[]" id="thckness<?php echo $i; ?>" value="<?php echo $key['Thickness']; ?>" readonly><?php echo $key['Thickness']; ?></td>
+
+
+                                    <td style="width: 20px;">
+                                        <input class="form-control" type="hidden" name="hsn[]" id="hsn<?php echo $i; ?>" readonly ><input class="form-control" type="hidden" name="thickness[]" id="thckness<?php echo $i; ?>" value="<?php echo $key['Thickness']; ?>" readonly><?php echo $key['Thickness']; ?></td>
                                     <td><input class="form-control" type="hidden" name="height[]" id="height<?php echo $i; ?>" value="<?php echo $key['height']; ?>" readonly><?php echo $key['height']; ?></td>
                                     <td><input class="form-control" type="hidden" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['width']; ?>" readonly><?php echo $key['width']; ?></td>
                                     <td style="width: 90px;"><input class="form-control" type="number" name="ch_height[]" id="ch_height<?php echo $i; ?>" value="<?php echo $key['ch_height']; ?>" onkeyup="change_Charge_Height('<?php echo $i; ?>')" ></td>
@@ -202,6 +209,7 @@
                                     <td><input class="form-control" type="text" name="total[]" id="total<?php echo $i; ?>" readonly ></td>
 
                                 </tr>
+
                                 <?php $i++; } ?>
                             </tbody>
                             <tfoot>
@@ -239,6 +247,29 @@
                                 document.getElementById('grand_total').value = parseFloat(sum).toFixed(2);
                             });
                         </script>
+                    </div>
+
+                    <div class="modal fade" id="myModal" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Select Material</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div id="autoSuggestionsList_material" >
+
+                                    </div>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal" onclick="dismiss()">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
@@ -314,7 +345,7 @@
                                     <td></td>
                                 </tr>
                                 <tr>
-                                    <td colspan="3" align="right">HANDLING CHARGES</td>
+                                    <td colspan="3" align="right">HANDLING CHARGES@2.42%</td>
 
                                     <td><input class="form-control" type="number" name="insurance" id="insurance" required readonly></td>
                                     <td></td>
@@ -334,13 +365,13 @@
                                     </td>
                                 </tr>
                                 <tr id="sgst1" style="display: none">
-                                    <td colspan="3" align="right">SGST @<?php echo $tax[0]['SGST%']; ?></td>
+                                    <td colspan="3" align="right">SGST @<?php echo $tax[0]['SGST%']; ?>%</td>
 
                                     <td><input class="form-control" type="text" name="sgst" id="sgst"  readonly ></td>
                                     <td></td>
                                 </tr>
                                 <tr id="cgst1" style="display: none">
-                                    <td colspan="3" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>
+                                    <td colspan="3" align="right">CGST @<?php echo $tax[0]['CGST%']; ?>%
                                         <input type="hidden" id="gst" value="<?php echo $tax[0]['CGST%']; ?>">
                                     </td>
                                     <td><input class="form-control" type="text" name="cgst" id="cgst"  readonly ></td>
@@ -780,46 +811,24 @@
     }
     // get Material Based Charges
     function get_result(id) {
-        var pcs = document.getElementById('pics'+id).value;
-        var area = document.getElementById('area'+id).value;
-        $("#material"+id).change(function () {
-            $.ajax({
-                url:"<?php echo site_url('User_Controller/Edit_Material'); ?>",
-                data: {id:
-                    $(this).val()},
-                type: "POST",
-                success:function(server_response){
-                    var data = $.parseJSON(server_response);
-                    var amount = data[0]['Material_Current_Price'];
-                    var total = pcs * area * amount;
-                    document.getElementById('total'+id).value = total.toFixed(2);
-                    document.getElementById('rate'+id).value = amount;
+      var code = id;
+        var a = code-1;
+        var pices =document.getElementsByName("pics[]");
+        var material =document.getElementById('material'+code).value;
+        if(code == '1')
+        {
+            for (var j = 1, iLen = pices.length; j <= iLen; j++) {
+                document.getElementById('material'+j).value = material;
+            }
+        }
+        else if(code > a)
+        {
 
-                    var hsn = data[0]['HSN_Code'];
-                    document.getElementById('hsn'+id).value = hsn;
-                    // Grand Total
-                    var totals =document.getElementsByName("total[]");
-                    var sum = 0;
-                    for (var j = 0, iLen = totals.length; j < iLen; j++) {
-                        if (totals[j].value!==""){
-                            val=parseFloat(totals[j].value);
-                            sum +=val;
-                        }
-                    }
-                    document.getElementById('grand_total').value = parseFloat(sum).toFixed(2);
+            for (var j = code, iLen = pices.length; j <= iLen; j++) {
+                document.getElementById('material'+j).value = material;
+            }
 
-                    var pices =document.getElementsByName("pics[]");
-                    var sum_pic = 0;
-                    for (var j = 0, iLen = pices.length; j < iLen; j++) {
-                        if (pices[j].value!==""){
-                            val=parseFloat(pices[j].value);
-                            sum_pic +=val;
-                        }
-                    }
-                    document.getElementById('total_pic').value = parseInt(sum_pic);
-                }
-            });
-        });
+        }
     }
     // Change Charge Rate
     function change_rate(id) {
@@ -827,7 +836,7 @@
         var pcs = document.getElementById('pics'+id).value;
         var area = document.getElementById('area'+id).value;
         var rate = document.getElementById('rate'+id).value;
-        var total = (pcs * area * rate);
+        var total = (area * rate);
         document.getElementById('total'+id).value =  parseFloat(total).toFixed(2);
         // Grand Total
         var totals =document.getElementsByName("total[]");
@@ -932,6 +941,42 @@
 
         }
     }
+
+    function ajaxmaterial(id)
+    {
+        var input_data = $('#material'+id).val();
+
+        if (input_data.length === 0)
+        {
+
+            $('#myModal').modal('hide');
+        }
+        else
+        {
+
+            var post_data = {
+                'search_data': input_data,
+                'item_icode' : id,
+                '<?php echo $this->security->get_csrf_token_name(); ?>': '<?php echo $this->security->get_csrf_hash(); ?>'
+            };
+
+            $.ajax({
+                type: "POST",
+                url:"<?php echo site_url('User_Controller/get_material_name'); ?>",
+                data: post_data,
+                success: function (data) {
+                    // return success
+                    if (data.length > 0) {
+
+                        $('#myModal').modal('show');
+                        $('#autoSuggestionsList_material').addClass('auto_list');
+                        $('#autoSuggestionsList_material').html(data);
+                    }
+                }
+            });
+
+        }
+    }
     // Onselect Customer Get Customer Address
     function get_row(id) {
         $.ajax({
@@ -972,6 +1017,30 @@
             }
         });
     }
+    
+    //get material
+    function Get_search_material(id,item_id) {
+        $.ajax({
+            url:"<?php echo site_url('User_Controller/get_material_details'); ?>",
+            data: {id:
+            id},
+            type: "POST",
+            success:function(server_response){
+
+
+                $('#myModal').modal('hide');
+                var data = $.parseJSON(server_response);
+                document.getElementById('material_icode'+item_id).value = data[0]['Material_Icode'];
+                document.getElementById('material'+item_id).value = data[0]['Material_Name'];
+
+            }
+        });
+        
+    }
+
+    function dismiss() {
+        $('#myModal').modal('hide');
+    }
     //IGST Function
     function isgt() {
         $('#igst1').show();
@@ -1010,11 +1079,12 @@
     function change_Charge_Height(id) {
         var Charge_W = document.getElementById('ch_weight'+id).value;
         var Charge_H = document.getElementById('ch_height'+id).value;
-        var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000;
-        document.getElementById('area'+id).value = parseFloat(areas).toFixed(3);;
+       
         var pcs = document.getElementById('pics'+id).value;
         var rate = document.getElementById('rate'+id).value;
-        var tot = (pcs * areas * rate);
+        var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000 * parseInt(pcs);
+        document.getElementById('area'+id).value = parseFloat(areas).toFixed(3);
+        var tot = (areas * rate);
         document.getElementById('total'+id).value =  parseFloat(tot).toFixed(3);
 
         var totals =document.getElementsByName("total[]");
@@ -1089,8 +1159,9 @@
         var actual_W = parseFloat(document.getElementById('width'+id).value);
         var Charge_W = parseFloat(document.getElementById('ch_weight'+id).value);
         var Charge_H = document.getElementById('ch_height'+id).value;
+         var pcs = document.getElementById('pics'+id).value;
 
-            var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000;
+            var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000 * parseInt(pcs);
             document.getElementById('area'+id).value = parseFloat(areas).toFixed(3);
 
             var areas1 =document.getElementsByName("area[]");
@@ -1105,7 +1176,7 @@
 
             var pcs = document.getElementById('pics'+id).value;
             var rate = document.getElementById('rate'+id).value;
-            var total = (pcs * areas * rate);
+            var total = (areas * rate);
             document.getElementById('total'+id).value =  parseFloat(total).toFixed(3);
 
 //            // Grand Total

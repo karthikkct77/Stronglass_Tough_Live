@@ -151,6 +151,8 @@
                                 <th>Cutouts</th>
                                 <th>Special</th>
                                 <th>Area<br>(SQMTR)</th>
+                                <th>Rate</th>
+                                <th>Total</th>
                                 </thead>
                                 <tbody>
                                 <?php $i=1; foreach ($invoice_item as $key) { ?>
@@ -159,13 +161,16 @@
                                     <tr id="row<?php echo $i; ?>">
                                         <td><?php echo $i; ?></td>
                                         <td><?php echo $key['Material_Name']; ?></td>
-                                        <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                         <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
+
+                                        <td><?php echo $key['Proforma_Actual_Size_Width']; ?></td>
                                         <td><?php echo $key['Proforma_Qty']; ?></td>
                                         <td><?php echo $key['Proforma_Holes']; ?></td>
                                         <td><?php echo $key['Proforma_Cutout']; ?></td>
                                         <td><?php echo $key['Proforma_Special']; ?></td>
                                         <td><?php echo $key['Proforma_Area_SQMTR']; ?></td>
+                                        <td><?php echo $key['Proforma_Material_Rate']; ?></td>
+                                        <td><?php echo $key['Proforma_Material_Cost']; ?></td>
                                     </tr>
                                     <?php $i++; } ?>
                                 <tr>
@@ -178,6 +183,8 @@
                                     <td><?php echo $invoice_total[0]['cutout']; ?></td>
                                     <td></td>
                                     <td><input type="hidden" class="form-control pull-right" id="total_area" value="<?php echo round($invoice_total[0]['area'], 2); ?>"   readonly/><?php echo round($invoice_total[0]['area'], 3); ?></td>
+                                    <td></td>
+                                    <td><input type="hidden" class="form-control pull-right" id="total_amts" value="<?php echo round($invoice_total[0]['rate'], 2); ?>"   readonly/><?php echo round($invoice_total[0]['rate'], 3); ?></td>
 
                                 </tr>
                                 </tbody>

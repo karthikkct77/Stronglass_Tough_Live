@@ -1547,7 +1547,7 @@
         var pcs = document.getElementById('pics'+id).value;
         var area = document.getElementById('area'+id).value;
         var rate = document.getElementById('rate'+id).value;
-        var total = (pcs * area * rate);
+        var total = (area * rate);
         document.getElementById('total'+id).value =  parseFloat(total).toFixed(2);
         // Grand Total
         var totals =document.getElementsByName("total[]");

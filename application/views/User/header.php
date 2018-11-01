@@ -31,4 +31,12 @@
     <script src="<?php echo base_url('js/plugins/jquery.dataTables.min.js'); ?>"></script>
     <script src="<?php echo base_url('js/plugins/dataTables.bootstrap.min.js'); ?>"></script>
     <script src="<?php echo base_url('js/plugins/bootstrap-datepicker.min.js'); ?>"></script>
+
+    <script src="<?php echo base_url('js/jsPDF-master/jspdf.js'); ?>"></script>
+
+    <script src="<?php echo base_url('js/jsPDF-master/plugins/split_text_to_size.js'); ?>"></script>
+
+    <script src="<?php echo base_url('js/jsPDF-master/plugins/standard_fonts_metrics.js'); ?>"></script>
+
+
 </head>

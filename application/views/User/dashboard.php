@@ -163,6 +163,16 @@
                         </div>
 
                     <?php  }
+                    elseif ($_SESSION['role'] == 12)
+                    { ?>
+
+                                <h3 class="tile-title">Bar Chart</h3>
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <canvas class="embed-responsive-item" id="barChartDemo"></canvas>
+                                </div>
+
+
+                    <?php  }
                     ?>
 
             </div>
@@ -260,6 +270,7 @@
     }
 </style>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript" src="<?php echo base_url('js/plugins/chart.js'); ?>"></script>
 
 <script type="text/javascript">
     // Load the Visualization API and the line package.
@@ -309,7 +320,7 @@
                     colors: ['#f39c12', '#f9325c']
 
                 };
-                var chart = new google.charts.Line(document.getElementById('line_chart_Pi'));
+                var chart = new google.charts.Bar(document.getElementById('line_chart_Pi'));
                 chart.draw(data, options);
             }
         });
@@ -537,8 +548,33 @@
         chart.draw(data, options);
     }
 
-
 </script>
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+      barchart();
+    });
+
+    function  barchart() {
+        $.ajax({
+            type: "POST",
+            url:"<?php echo site_url('User_Controller/GetCountryName'); ?>",
+            data: post_data,
+            success: function (data) {
+                // return success
+                if (data.length > 0) {
+                    $('#suggestions').show();
+                    $('#autoSuggestionsList').addClass('auto_list');
+                    $('#autoSuggestionsList').html(data);
+                }
+            }
+        });
+
+    }
+</script>
+
+
 
 
 
