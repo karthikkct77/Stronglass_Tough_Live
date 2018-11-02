@@ -111,14 +111,11 @@
         <div style="width:20%;float: left;text-align: left;">
             <p style="margin: 0;margin-bottom:5px;font-size: 14px;">Date<br><span style="font-size: 18px !important;font-weight: bold;"><?php echo $invoice[0]['Export_Date']; ?></span></p>
             <p style="margin: 0 0 15px 0;margin-bottom:5px;font-size: 14px;">P.INV. NO<br><span style="font-size: 18px !important;font-weight: bold;"><?php echo $invoice[0]['Export_Invoice_Number']; ?></span></p>
-            <p style="margin: 0 0 15px 0;margin-bottom:5px;font-size: 14px;">Container Type<br><span style="font-size: 18px !important;font-weight: bold;"><?php echo $invoice[0]['Container_Type']; ?></span></p>
-            <p style="margin: 0 0 15px 0;margin-bottom:5px;font-size: 14px;">Payment Terms<br><span style="font-size: 18px !important;font-weight: bold;"><?php echo $invoice[0]['Payment_Terms']; ?></span></p>
-            <p style="margin: 0 0 15px 0;margin-bottom:5px;font-size: 14px;">Price Term<br><span style="font-size: 18px !important;font-weight: bold;"><?php echo $invoice[0]['Price_Term']; ?></span></p>
-            <p style="margin: 0 0 15px 0;margin-bottom:5px;font-size: 14px;">Delivery Route<br><span style="font-size: 18px !important;font-weight: bold;"><?php echo $invoice[0]['Delivery_Route']; ?></span></p>
-        </div>
+                 </div>
     </div>
     <br style="width:100%;clear:both;">
     <hr>
+
     <br style="width:100%;clear:both;">
 
         <table>
@@ -171,60 +168,29 @@
     <!--    <br style="width:100%;">-->
     <hr>
     <div id="page1" style="width: 100%;display: block; vertical-align: top;">
-        <div style="width: 49.5%; text-align: left; display: inline-block; vertical-align: top;">
-            <h3 style="font-weight: normal;font-size: 12px;">Delivery Period: <span style="font-weight: bold; padding-left: 5px;"><?php echo $invoice[0]['Delivery_Period']; ?> </span>Working Days </h3>
-            <h3 style="font-size: 12px;">Terms & Conditions</h3>
-            <p style="font-size: 8px;text-align: justify;">
-                Supply shall be against advance payment or Letter of credit or any other agreed
-                terms. Interest @2% per month will be charged for the payment delayed beyond
-                the terms agreed from the date of invoice. All payments made by third
-                party/consumer/contractor interested in the transaction shall be adjusted against
-                supplies made to buyer/consignee
-            </p>
-            <h3 style="font-size: 12px;">Dear Customer</h3>
-            <p style="font-size: 8px;text-align: justify;">
-            <ul style="list-style: none;padding: 0;font-size: 8px;text-align: justify;">
-                <li style="margin-bottom: 15px;">
-                    1.Please make sure to DOUBLE - CHECK the Pro-Forma Invoice in terms Billing & Delivery Address, Contact Name & Number, PAN NO, GST NO, complete Glass
-                    Specifications, Size, Quantity, Rates & Taxes.
-                </li>
-                <li style="margin-bottom: 15px;">
-                    2.If there is any item not as per your requirement, please get the same modified to be reflected in the Pro-Forma Invoice before confirmation. PI terms mentioned are
-                    final and shall supersede PO terms, no dispute will be entertained after order released for production pertaining to terms agreed in Pro-Forma invoice.
-                </li>
-                <li>
-                    3.In the event the order is modified or cancelled once issued to production, all material expenses, processing costs and cancellation penalties up to the date of
-                    modification or cancellation shall be invoiced. The amount to be invoiced is solely at the discretion of the Seller and shall be final and non-negotiable
-                </li>
-            </ul>
-            </p>
+        <div style="width: 100%; text-align: left; display: inline-block; vertical-align: top;">
+
+                      <div id="account">
+                <h5><span>Delivery Period</span> : <?php echo $invoice[0]['Delivery_Period']; ?> Days</h5>
+                <h5><span>Container Type</span> : <?php echo $invoice[0]['Container_Type']; ?></h5>
+                <h5><span>Payment Terms</span>: <?php echo $invoice[0]['Payment_Terms']; ?></span></h5>
+                <h5><span>Price Term</span>: <?php echo $invoice[0]['Price_Term']; ?></h5>
+                <h5><span>Delivery Route</span>: <?php echo $invoice[0]['Delivery_Route']; ?></h5>
+            </div>
         </div>
-        <div style="width: 49.5%; display: inline-block; vertical-align: top;">
-            <?php
-            if($invoice[0]['Customer_State'] == 'Kerala')
-            { ?>
-                <div id="account">
-                    <h3 style="font-size: 13px;">Bank Details</h3>
-                    <h5><span>Account Name</span> :STRONGLASS TOUGH</h5>
-                    <h5><span>Bank Name</span>:FEDERAL BANK Coimbatore Branch </span></h5>
-                    <h5><span>Account Number</span>:10920200043393</h5>
-                    <h5><span>IFSC</span>:FDRL0001092</h5>
-                </div>
-                <?php
-            }
-            else
-            {
-                ?>
-                <div id="account">
-                    <h3 style="font-size: 13px;">Bank Details</h3>
-                    <h5><span>Account Name</span> :STRONGLASS TOUGH</h5>
-                    <h5><span>Bank Name</span>:<?php echo $st[0]['ST_Bank']; ?></span></h5>
-                    <h5><span>Account Number</span>:<?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
-                    <h5><span>IFSC</span>:<?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
-                </div>
 
-            <?php } ?>
+    </div>
+    <hr>
 
+    <div id="page1" style="width: 100%;display: block; vertical-align: top;">
+        <div style="width: 100%; text-align: left; display: inline-block; vertical-align: top;">
+            <div id="account">
+                <h3 style="font-size: 13px;">Bank Details</h3>
+                <h5><span>Account Name</span> : STRONGLASS TOUGH</h5>
+                <h5><span>Bank Name</span>: <?php echo $st[0]['ST_Bank']; ?></span></h5>
+                <h5><span>Account Number</span>: <?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
+                <h5><span>IFSC</span>: <?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
+            </div>
         </div>
     </div>
 
