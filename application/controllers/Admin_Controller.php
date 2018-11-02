@@ -2054,4 +2054,328 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/footer');
     }
 
+    //** Export PI */
+    public function Export_PI()
+    {
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Export_PI');
+        $this->load->view('Admin/footer');
+    }
+    //** Export PI upload */
+    /** Upload excel data to list */
+    public function Upload_Export_Invoice()
+    {
+        $configUpload['upload_path'] = FCPATH.'uploads/excel/';
+        $configUpload['allowed_types'] = 'xls|xlsx|csv';
+        $configUpload['max_size'] = '5000';
+        $this->load->library('upload', $configUpload);
+        $this->upload->do_upload('userfile');
+        $upload_data = $this->upload->data(); //Returns array of containing all of the data related to the file you uploaded.
+        $file_name = $upload_data['file_name']; //uploded file name
+        $extension=$upload_data['file_ext'];    // uploded file extension
+
+        //$objReader =PHPExcel_IOFactory::createReader('Excel5');     //For excel 2003
+        $objReader= PHPExcel_IOFactory::createReader('Excel2007'); // For excel 2007
+        //Set to read only
+        $objReader->setReadDataOnly(true);
+        //Load excel file
+        $objPHPExcel=$objReader->load(FCPATH.'uploads/excel/'.$file_name);
+        $totalrows=$objPHPExcel->setActiveSheetIndex(0)->getHighestRow();   //Count Numbe of rows avalable in excel
+        $objWorksheet=$objPHPExcel->setActiveSheetIndex(0);
+        //loop from first data untill last data
+        for($i=2;$i<=$totalrows;$i++)
+        {
+            $thickness=$objWorksheet->getCellByColumnAndRow(0,$i)->getValue();
+            $height=$objWorksheet->getCellByColumnAndRow(1,$i)->getValue();
+            $width=$objWorksheet->getCellByColumnAndRow(2,$i)->getValue();
+            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
+
+            if($types == 'T')
+            {
+
+                $heigh_val =  explode("/",$height);
+                $length_H =  sizeof($heigh_val);
+                if($length_H == '1')
+                {
+                    $charge_height = $heigh_val[0] + 50;
+                    $height_check[] ="";
+                }
+                else
+                {
+                    if($heigh_val[0] > $heigh_val[1])
+                    {
+
+                        $charge_height = $heigh_val[0] + 50;
+                        $height_check[] ="";
+                    }
+                    else
+                    {
+                        $charge_height = $heigh_val[1] + 50;
+                        $height_check[] ="";
+                    }
+                }
+
+
+
+                $width_val = explode("/",$width);
+                $length_W =  sizeof($width_val);
+
+                if($length_W == '1')
+                {
+                    $charge_weigth = $width_val[0] + 50;
+                    $width_check[]="";
+                }
+                else{
+                    if($width_val[0] > $width_val[1])
+                    {
+
+                        $charge_weigth = $width_val[0] + 50;
+                        $width_check[]="";
+                    }
+                    else
+                    {
+                        $charge_weigth = $width_val[1] + 50;
+                        $width_check[]="";
+                    }
+                }
+
+
+            }
+            else
+            {
+                if(is_numeric($height))
+                {
+                    $charge_height = $height + 30;
+                    $height_check[] ="";
+                }
+                else{
+                    $height_check[] ='1';
+                }
+
+                if(is_numeric($width))
+                {
+                    $charge_weigth = $width + 30;
+                    $width_check[]="";
+                }
+                else{
+                    $width_check[] ='1';
+                }
+            }
+
+            $pics=$objWorksheet->getCellByColumnAndRow(3,$i)->getValue();
+            if(is_numeric($pics))
+            {
+                $pics_check[]="";
+            }
+            else{
+
+                $pics_check[] ='1';
+            }
+            $holes=$objWorksheet->getCellByColumnAndRow(4,$i)->getValue();
+            if(is_numeric($holes))
+            {
+                $holes_check[]="";
+            }
+            else{
+                $holes_check[] ='1';
+            }
+            $types=$objWorksheet->getCellByColumnAndRow(5,$i)->getValue();
+            if($types == 'D' || $types == 'S' || $types == 'DS' || $types == 'B' || $types == 'D' )
+            {
+                $types_check[]="";
+            }
+            else{
+                $types_check[] ='1';
+            }
+            $cutout=$objWorksheet->getCellByColumnAndRow(6,$i)->getValue();
+//            if(is_numeric($cutout))
+//            {
+//                $cutout_check[]="";
+//            }
+//            else{
+//                $cutout_check[] ='1';
+//            }
+
+            $areass = $charge_height/1000 * $charge_weigth/1000;
+            $area1 = $areass * $pics;
+            $area = number_format((float)$area1, 3, '.', '');
+            $data_user[]=array(
+                'Thickness'=>$thickness,
+                'height'=>$height,
+                'width'=>$width,
+                'pics'=>$pics,
+                'holes'=>$holes,
+                'type'=>$types,
+                'cutout'=>$cutout,
+                'ch_height'=>$charge_height,
+                'ch_weight'=>$charge_weigth,
+                'area'=>$area );
+        }
+        $month =date('m');
+        $data['invoice'] =  $data_user;
+        $data['st']= $this->admin_model->get_ST();
+        $data['customer']= $this->admin_model->get_all_customers();
+        $data['stock']= $this->admin_model->get_all_item();
+        $data['charges']= $this->admin_model->get_all_charges();
+        $data['tax']= $this->admin_model->get_Tax();
+        $perfoma = $this->admin_model->get_Export_profoma_number($month);
+        if($perfoma == 0)
+        {
+            $data['profoma_number'] = $month .'-101';
+        }
+        else
+        {
+            $myString = $perfoma[0]['Export_Invoice_Number'];
+            $myArray = explode('-', $myString);
+            $increment = $myArray[1] + 1;
+            $data['profoma_number'] = $month .'-'. $increment;
+
+        }
+
+        $check_H = count(array_keys($height_check, "1"));
+        $check_W = count(array_keys($width_check, "1"));
+        $check_P = count(array_keys($pics_check, "1"));
+        $check_Holes = count(array_keys($holes_check, "1"));
+        $check_Type = count(array_keys($types_check, "1"));
+//        $check_cutout = count(array_keys($cutout_check, "1"));
+
+
+        if($check_H =='0' and $check_W =='0' and $check_P =='0' and $check_Holes =='0'  )
+        {
+            unlink('uploads/excel/'.$file_name);
+            $this->load->view('Admin/header');
+            $this->load->view('Admin/top');
+            $this->load->view('Admin/left');
+            $this->load->view('Admin/View_Export_Invoice',$data,false);
+            $this->load->view('Admin/footer');
+        }
+        else
+        {
+            $this->session->set_flashdata('feedback', 'Please Cross Check the values in the Excel Sheet.The Columns Height,Width,No.of.pieces,Holes Must have only Numeric values. Type must have only Alphabetic. Make corrections and load Again ..');
+            redirect('Admin_Controller/Export_PI');
+        }
+
+    }
+
+    //** Save Export Invoice */
+    public function Save_Export_Invoice()
+    {
+        $address =$this->input->post('company_address');
+        if($address == 0)
+        {
+            $profoma_address= '0';
+        }
+        else{
+            $profoma_address= $this->input->post('company_address');
+        }
+        $month =date('m');
+        $perfoma = $this->admin_model->get_profoma_number($month);
+        if($perfoma == 0)
+        {
+            $Invoice_Number = $month .'-101';
+        }
+        else
+        {
+            $myString = $perfoma[0]['Proforma_Number'];
+            $myArray = explode('-', $myString);
+            $increment = $myArray[1] + 1;
+            $Invoice_Number = $month .'-'. $increment;
+
+        }
+        $data = array(
+            'Export_Invoice_Number' => $Invoice_Number,
+            'Export_Date' => $this->input->post('invoice_date'),
+            'Proforma_Customer_Icode' => $this->input->post('company_name'),
+            'Proforma_Delivery_Address_Icode' =>$profoma_address ,
+            'Container_Type' => $this->input->post('container_type'),
+            'Delivery_Period' => $this->input->post('delivery'),
+            'Payment_Terms' => $this->input->post('payment_Terms'),
+            'Price_Term' => $this->input->post('price_Terms'),
+            'Delivery_Route' => $this->input->post('Delivery_Route'),
+            'Gross_Total'=>$this->input->post('grand_total'),
+            'Created_By' => $this->session->userdata['userid']);
+        $insert = $this->admin_model->Insert_Export_Profoma_Invoice($data);
+        if($insert != 0)
+        {
+            $material_id = $this->input->post('material');
+            $hsn = $this->input->post('hsn');
+            $qty = $this->input->post('pics');
+            $special = $this->input->post('type');
+            $holes = $this->input->post('holes');
+            $cutout = $this->input->post('cutout');
+            $actual_W = $this->input->post('width');
+            $actual_H = $this->input->post('height');
+            $Charge_W = $this->input->post('ch_weight');
+            $Charge_H = $this->input->post('ch_height');
+            $Area = $this->input->post('area');
+            $Rate = $this->input->post('rate');
+            $cost = $this->input->post('total');
+            $count = sizeof($material_id);
+            for($i=0; $i<$count; $i++)
+            {
+                $full_data =array( 'Export_PI_Icode' => $insert,
+                    'Export_Date' => $this->input->post('invoice_date'),
+                    'Proforma_Material_Icode' => $material_id[$i],
+                    'Proforma_HSNCode' => $hsn[$i],
+                    'Proforma_Special' => $special[$i],
+                    'Proforma_Holes' => $holes[$i],
+                    'Proforma_Qty' => $qty[$i],
+                    'Proforma_Cutout'=>$cutout[$i],
+                    'Proforma_Actual_Size_Width' => $actual_W[$i],
+                    'Proforma_Actual_Size_Height' => $actual_H[$i],
+                    'Proforma_Chargeable_Size_Width' =>$Charge_W[$i],
+                    'Proforma_Chargeable_Size_Height' => $Charge_H[$i],
+                    'Proforma_Area_SQMTR' => $Area[$i],
+                    'Proforma_Material_Rate' => $Rate[$i],
+                    'Proforma_Material_Cost' => $cost[$i],
+                    'created_by' => $this->session->userdata['userid']);
+                $this->db->insert('export_items', $full_data);
+            }
+
+            $this->session->set_flashdata('feedback', 'PI Created Successfully ..');
+            redirect('Admin_Controller/Export_Invoice_List');
+        }
+    }
+    /** Export Invoice List */
+    public function Export_Invoice_List()
+    {
+        $data['invoice'] = $this->admin_model->get_All_Export_Invoice();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Export_Invoice_List',$data,false);
+        $this->load->view('Admin/footer');
+    }
+    //** Get Single Incoice */
+    public function Get_Single_Export($export_id)
+    {
+        $data['invoice'] = $this->admin_model->Get_Single_Export_Invoice($export_id);
+        $data['invoice_item'] = $this->admin_model->Get_Single_Export_Invoice_Item($export_id);
+        $data['invoice_total'] = $this->admin_model->Get_Single_Export_Invoice_Item_Total($export_id);
+        $data['st']= $this->admin_model->get_ST();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/View_Single_Export_Invoice',$data,false);
+        $this->load->view('Admin/footer');
+    }
+
+    //** Export PDF */
+    public function Export_Invoice_PDF()
+    {
+        $this->load->library('pdf');
+        $export_id = $this->input->post('invoice_no');
+        $data['invoice'] = $this->admin_model->Get_Single_Export_Invoice($export_id);
+        $data['invoice_item'] = $this->admin_model->Get_Single_Export_Invoice_Item($export_id);
+        $data['invoice_total'] = $this->admin_model->Get_Single_Export_Invoice_Item_Total($export_id);
+        $data['st']= $this->admin_model->get_ST();
+        $body = $this->load->view('Admin/Print_Export_PI_Pdf',$data,TRUE);
+        $this->pdf->loadHtml($body);
+        $this->pdf->render();
+        $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
+
+    }
+
 }

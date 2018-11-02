@@ -306,10 +306,26 @@ class Admin_Model extends CI_Model
         $this->db->insert('proforma_material_processing_charges', $data);
         return 1;
     }
+    public function Insert_Export_Profoma_Invoice($data)
+    {
+        $this->db->insert('export_invoice', $data);
+        return $this->db->insert_id();
+    }
     /** Get profoma number */
     public function get_profoma_number($month)
     {
         $query= $this->db->query("SELECT Proforma_Number FROM `proforma_invoice` WHERE substring(Proforma_Number, 1,2) LIKE '%$month%' and  YEAR(Proforma_Generated_On) = YEAR(CURRENT_DATE()) ORDER by Proforma_Icode DESC LIMIT 1  ");
+        if($query->num_rows() == 1)
+        {
+            return $query->result_array();
+        }
+        else{
+            return 0;
+        }
+    }
+    public function get_Export_profoma_number($month)
+    {
+        $query= $this->db->query("SELECT Export_Invoice_Number FROM `export_invoice` WHERE substring(Export_Invoice_Number, 1,2) LIKE '%$month%' and  YEAR(Created_On) = YEAR(CURRENT_DATE()) ORDER by Export_PI_Icode DESC LIMIT 1  ");
         if($query->num_rows() == 1)
         {
             return $query->result_array();
@@ -1022,7 +1038,31 @@ class Admin_Model extends CI_Model
                                    WHERE MONTH(A.Expenses_Date) = MONTH(CURRENT_DATE()) AND YEAR(A.Expenses_Date) = YEAR(CURRENT_DATE()) GROUP BY A.Expenses_Icode ");
         return $query->result_array();
     }
+    //** Export Invoice  */
+    public function get_All_Export_Invoice()
+    {
+        $query = $this->db->query("Select * from export_invoice A INNER JOIN  customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode ");
+        return $query->result_array();
+    }
+    //** Get Single Export Invoice */
+    public function Get_Single_Export_Invoice($export_icode)
+    {
 
+        $query = $this->db->query("SELECT C.*,A.*,B.*,B.Customer_Icode as consignee FROM export_invoice A INNER JOIN customer_master B on A.Proforma_Customer_Icode=B.Customer_Icode 
+                                   LEFT JOIN customer_add_address C ON A.Proforma_Delivery_Address_Icode=C.Customer_Icode WHERE A.Export_PI_Icode='$export_icode'");
+        return $query->result_array();
+    }
+    public function Get_Single_Export_Invoice_Item($export_icode)
+    {
+        $query = $this->db->query("SELECT * FROM Export_Items A INNER JOIN material_master B on A.Proforma_Material_Icode=B.Material_Icode WHERE A.Export_PI_Icode='$export_icode'");
+        return $query->result_array();
+    }
+    public function Get_Single_Export_Invoice_Item_Total($export_icode)
+    {
+        $query = $this->db->query("SELECT SUM(A.Proforma_Qty) as qty, SUM(A.Proforma_Area_SQMTR) as area, SUM(A.Proforma_Material_Cost) as rate,SUM(A.Proforma_Holes) as holes,SUM(A.Proforma_Cutout) as cutout FROM Export_Items A INNER JOIN material_master B on A.Proforma_Material_Icode=B.Material_Icode
+                                  WHERE A.Export_PI_Icode='$export_icode'");
+        return $query->result_array();
+    }
 
 
 

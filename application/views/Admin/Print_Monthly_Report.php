@@ -48,13 +48,10 @@
                         <tr>
                             <td style="font-weight: bold; font-size: 16px;">Total Bill Amount</td>
                             <td style="font-weight: bold; font-size: 24px;"><?php echo $total_bill[0]['total_amt']; ?></td>
-                            <td style="font-weight: bold; font-size: 16px;">Electricity Bill</td>
-                            <td style="font-weight: bold; font-size: 24px;">0</td>
-                        </tr>
-                        <tr>
                             <td style="font-weight: bold; font-size: 16px;">Total Sq.Mt</td>
                             <td id="area_material_qty1" style="font-weight: bold; font-size: 24px;"></td>
                         </tr>
+
                         <tr>
                             <td style="font-weight: bold; font-size: 16px;">Chennai</td>
                             <td style="font-weight: bold; font-size: 24px;"><?php echo $wo_count_locations[0]['Chennai']; ?></td>
