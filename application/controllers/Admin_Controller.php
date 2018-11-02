@@ -2271,14 +2271,14 @@ class Admin_Controller extends CI_Controller
             $profoma_address= $this->input->post('company_address');
         }
         $month =date('m');
-        $perfoma = $this->admin_model->get_profoma_number($month);
+        $perfoma = $this->admin_model->get_Export_profoma_number($month);
         if($perfoma == 0)
         {
             $Invoice_Number = $month .'-101';
         }
         else
         {
-            $myString = $perfoma[0]['Proforma_Number'];
+            $myString = $perfoma[0]['Export_Invoice_Number'];
             $myArray = explode('-', $myString);
             $increment = $myArray[1] + 1;
             $Invoice_Number = $month .'-'. $increment;
