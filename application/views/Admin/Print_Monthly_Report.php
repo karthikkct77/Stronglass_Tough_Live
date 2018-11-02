@@ -114,6 +114,27 @@
                         </tbody>
 
                     </table>
+
+                    <h4>Expenses</h4>
+                    <table class="table table-hover table-bordered" id="sampleTable">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Expenses Name</th>
+                            <th>Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php $i=1; foreach ($expenses as $key) { ?>
+                            <tr id="row<?php echo $i; ?>">
+                                <td  class="heading"><?php echo $i; ?></td>
+                                <td><?php echo $key['Expenses_Name']; ?></td>
+                                <td><?php echo $key['amounts']; ?></td>
+
+                            </tr>
+                            <?php $i++; } ?>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

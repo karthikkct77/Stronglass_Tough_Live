@@ -1012,7 +1012,14 @@ class Admin_Model extends CI_Model
     //** Get All Expense  */
     public function Get_All_Expenses_details()
     {
-        $query = $this->db->query("Select * from Expenses_Details WHERE MONTH(Expenses_Date) = MONTH(CURRENT_DATE()) AND YEAR(Expenses_Date) = YEAR(CURRENT_DATE()) ");
+        $query = $this->db->query("Select A.*,B.* from Expenses_Details A INNER JOIN Expenses_Master B on A.Expenses_Icode=B.Expenses_Icode  WHERE MONTH(A.Expenses_Date) = MONTH(CURRENT_DATE()) AND YEAR(A.Expenses_Date) = YEAR(CURRENT_DATE()) ORDER  by A.Expenses_Date DESC ");
+        return $query->result_array();
+    }
+    //** Get Monthly Expenses */
+    public function Get_Monthly_Expenses()
+    {
+        $query = $this->db->query("Select B.Expenses_Name,SUM(A.Amount) as amounts from Expenses_Details A INNER JOIN Expenses_Master B on A.Expenses_Icode=B.Expenses_Icode  
+                                   WHERE MONTH(A.Expenses_Date) = MONTH(CURRENT_DATE()) AND YEAR(A.Expenses_Date) = YEAR(CURRENT_DATE()) GROUP BY A.Expenses_Icode ");
         return $query->result_array();
     }
 

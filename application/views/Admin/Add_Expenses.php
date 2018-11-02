@@ -59,8 +59,8 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">Comments</label>
-                           <textarea name="comments" class="form-control" required>
-                           </textarea>
+
+                            <textarea class="form-control" name="comments" placeholder="Enter Comments" required></textarea>
                         </div>
                         <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i>Save</button>&nbsp;
                     </form>

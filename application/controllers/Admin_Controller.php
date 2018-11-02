@@ -1949,6 +1949,7 @@ class Admin_Controller extends CI_Controller
         $normal_material = $this->admin_model->Get_monthly_normal_WO_material();
         $sheet_material = $this->admin_model->Get_monthly_sheet_WO_material();
         $data['material_details'] = array_merge($normal_material, $sheet_material);
+        $data['expenses']= $this->admin_model->Get_Monthly_Expenses();
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
         $this->load->view('Admin/left');

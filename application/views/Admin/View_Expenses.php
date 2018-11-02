@@ -15,31 +15,29 @@
                         <h6><span>Mob: <?php echo $st[0]['ST_Phone']; ?></span> &nbsp;&nbsp; <span>Email :<?php echo $st[0]['ST_Email_ID1']; ?></span></h6>
                     </div>
                     <hr>
+                    <h3 align="center">Monthly Expenses Details</h3>
+                    <h3 align="center"><?php echo date('F'); ?></h3>
                     <div class="row">
-                        <h3 align="center">Expenses Details</h3>
+
                         <div class="col-md-12">
                             <table class="table table-hover table-bordered" id="sampleTable">
                                 <thead>
                                 <tr>
                                     <th>#</th>
+                                    <th>Date</th>
                                     <th>Expenses Name</th>
                                     <th>Amount</th>
-                                    <th>Date</th>
-                                    <th>Company Name</th>
-                                    <th>Qty</th>
-
+                                    <th>Comments</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <?php $i=1; foreach ($factory as $key) { ?>
+                                <?php $i=1; foreach ($expenses as $key) { ?>
                                     <tr id="row<?php echo $i; ?>">
                                         <td  class="heading"><?php echo $i; ?></td>
-                                        <td><?php echo $key['Stock_Name']; ?></td>
-                                        <td><?php echo $key['Stock_Height']; ?></td>
-                                        <td><?php echo $key['Stock_Width']; ?></td>
-
-                                        <td><?php echo $key['Company_Name']; ?></td>
-                                        <td><?php echo $key['Current_Qty']; ?></td>
+                                        <td><?php echo $key['Expenses_Date']; ?></td>
+                                        <td><?php echo $key['Expenses_Name']; ?></td>
+                                        <td><?php echo $key['Amount']; ?></td>
+                                        <td><?php echo $key['Comments']; ?></td>
 
                                     </tr>
                                     <?php $i++; } ?>
@@ -53,33 +51,9 @@
         </div>
     </div>
 </main>
+<!--<script>$('#sampleTable').DataTable();</script>-->
 
-<style>
-    @media print {
-        #with_print {
-            display: none;
-        }
-        #page_setup {   page-break-before: always;
-        }
 
-    }
-    @page
-    {
-        margin: 0mm;  /* this affects the margin in the printer settings */
-    }
-    h4 span{
-        width: 185px;
-        float: left;
-    }
-    /* In CSS, not JavaScript */
-
-</style>
-<script type="text/javascript">
-    $(document).ready(function(){
-        window.print();
-        history.back();
-    });
-</script>
 
 
 
