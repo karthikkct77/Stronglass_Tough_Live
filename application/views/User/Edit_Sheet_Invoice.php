@@ -912,7 +912,7 @@
         var Charge_H = document.getElementById('sheet_Cha_Size_H').value;
         var Charge_W = document.getElementById('sheet_Cha_Size_W').value;
         var pcs = document.getElementById('sheet_pieces').value;
-        var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000 * parseInt(pcs) ;
+        var areas =parseFloat(Charge_W)/1000 * parseFloat(Charge_H)/1000 * parseInt(pcs) ;
 
         var tot_area = parseFloat(areas);
         document.getElementById('sheet_Area').value = parseFloat(tot_area).toFixed(3);;
