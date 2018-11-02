@@ -158,9 +158,16 @@
                                     <td><?php echo $i; ?>
 
                                     </td>
-                                    <td>     <div class="form-group">
-                                            <input  class="form-control" name="materials" id="material<?php echo $i; ?>" type="text"   onkeyup="ajaxmaterial('<?php echo $i; ?>');" required>
-                                            <input  class="form-control" name="material[]" id="material_icode<?php echo $i; ?>" type="hidden"   ">
+                                    <td>
+                                        <div class="form-group">
+                                            <select name="material[]" class="form-control" id="material<?php echo $i; ?>" onchange="get_result('<?php echo $i; ?>')" required >
+                                                <option value="" >Select material</option>
+                                                <?php foreach ($stock as $row):
+                                                {
+                                                    echo '<option value= "'.$row['Material_Icode'].'">' . $row['Material_Name'] . '</option>';
+                                                }
+                                                endforeach; ?>
+                                            </select>
                                         </div>
 
                                     </td>
@@ -805,13 +812,24 @@
     }
     // get Material Based Charges
     function get_result(id) {
-
+        var code = id;
+        var a = code-1;
         var pices =document.getElementsByName("pics[]");
-        var material =document.getElementById('material'+id).value;
-        for (var j = 1, iLen = pices.length; j <= iLen; j++) {
-            document.getElementById('material'+j).value = material;
+        var material =document.getElementById('material'+code).value;
+        if(code == '1')
+        {
+            for (var j = 1, iLen = pices.length; j <= iLen; j++) {
+                document.getElementById('material'+j).value = material;
+            }
         }
+        else if(code > a)
+        {
 
+            for (var j = code, iLen = pices.length; j <= iLen; j++) {
+                document.getElementById('material'+j).value = material;
+            }
+
+        }
     }
     // Change Charge Rate
     function change_rate(id) {

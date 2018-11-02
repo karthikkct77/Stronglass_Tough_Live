@@ -267,7 +267,7 @@
 
                                 </tr>
                                 <?php
-                                if($invoice[0]['IGST_Value'] == '0')
+                                if($invoice[0]['IGST_Value'] == '0' || $invoice[0]['IGST_Value'] == '')
                                 { ?>
                                     <tr>
                                         <td colspan="4" style="text-align: right;">SGST @<?php echo $tax[0]['SGST%']; ?></td>

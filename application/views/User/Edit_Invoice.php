@@ -329,7 +329,7 @@
                                 </tr>
 
                                 <?php
-                                if($invoice[0]['IGST_Value'] == '0'  )
+                                if($invoice[0]['IGST_Value'] == '0' || $invoice[0]['IGST_Value'] == ''  )
                                 { ?>
                                     <tr>
 
