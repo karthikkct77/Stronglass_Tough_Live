@@ -1830,6 +1830,7 @@ class User_Controller extends CI_Controller
                 'SGST_Value' => $this->input->post('sgst'),
                 'CGST_Value' => $this->input->post('cgst'),
                 'IGST_Value' => $this->input->post('igst'),
+                'Transport'=>$this->input->post('transport'),
                 'GrossTotal_Value' => $this->input->post('gross_tot'),
                 'Total_Outstanding'=>$this->input->post('outstanding'),
                 'Credit_Limit'=>$this->input->post('credit_limit'),

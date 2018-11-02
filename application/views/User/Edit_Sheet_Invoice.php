@@ -179,7 +179,7 @@
                                 <tr>
                                     <td><?php echo $i; ?><input type="hidden" name="sheet_icode[]" value="<?php echo $key['pi_sheet_icode']; ?>"></td>
                                     <td>     <div class="form-group">
-                                            <select name="sheet_material[]" class="form-control" id="sheet_material"  required >
+                                            <select name="sheet_material[]" class="form-control" id="sheet_material<?php echo $i; ?>"  required >
                                                 <option value="<?php echo $key['Proforma_Material_Icode']; ?>" ><?php echo $key['Material_Name']; ?></option>
                                                 <?php foreach ($stock as $row):
                                                 {
@@ -191,20 +191,21 @@
 
                                     </td>
 
-                                    <td><input class="form-control" type="number" name="sheet_pieces[]" id="sheet_pieces"  value="<?php echo $key['No_Of_Sheet']; ?>"  onkeyup="change_sheet_qty()" required></td>
-                                    <td><input class="form-control" type="number" name="sheet_Act_Size_H[]" id="sheet_Act_Size_H"  value="<?php echo $key['Actual_Height']; ?>"  onkeyup="change_sheet_height()" required ></td>
-                                    <td><input class="form-control" type="number" name="sheet_Act_Size_W[]" id="sheet_Act_Size_W"  value="<?php echo $key['Actual_Width']; ?>" onkeyup="change_sheet_width()" required ></td>
-                                    <td><input class="form-control" type="number" name="sheet_Cha_Size_H[]" id="sheet_Cha_Size_H"  value="<?php echo $key['Chargable_Height']; ?>" readonly required ></td>
-                                    <td><input class="form-control" type="number" name="sheet_Cha_Size_W[]" id="sheet_Cha_Size_W"  value="<?php echo $key['Chargable_Width']; ?>" readonly  required></td>
-                                    <td><input class="form-control" type="text" name="sheet_Area[]" id="sheet_Area"  value="<?php echo $key['Area']; ?>" required readonly ></td>
-                                    <td><input class="form-control" type="number" name="sheet_Rate[]" id="sheet_Rate"  value="<?php echo $key['Rate']; ?>"  onkeyup="change_sheet_rate()" required ></td>
-                                    <td><input class="form-control" type="text" name="sheet_Rate_Amt[]" id="sheet_Rate_Amt"  value="<?php echo $key['Total_Amount']; ?>"  readonly></td>
+                                    <td><input class="form-control" type="number" name="sheet_pieces[]" id="sheet_pieces<?php echo $i; ?>"  value="<?php echo $key['No_Of_Sheet']; ?>"  onkeyup="change_sheet_qty('<?php echo $i; ?>')" required></td>
+                                    <td><input class="form-control" type="number" name="sheet_Act_Size_H[]" id="sheet_Act_Size_H<?php echo $i; ?>"  value="<?php echo $key['Actual_Height']; ?>"  onkeyup="change_sheet_height('<?php echo $i; ?>')" required ></td>
+                                    <td><input class="form-control" type="number" name="sheet_Act_Size_W[]" id="sheet_Act_Size_W<?php echo $i; ?>"  value="<?php echo $key['Actual_Width']; ?>" onkeyup="change_sheet_width('<?php echo $i; ?>')" required ></td>
+                                    <td><input class="form-control" type="number" name="sheet_Cha_Size_H[]" id="sheet_Cha_Size_H<?php echo $i; ?>"  value="<?php echo $key['Chargable_Height']; ?>" readonly required ></td>
+                                    <td><input class="form-control" type="number" name="sheet_Cha_Size_W[]" id="sheet_Cha_Size_W<?php echo $i; ?>"  value="<?php echo $key['Chargable_Width']; ?>" readonly  required></td>
+                                    <td><input class="form-control" type="text" name="sheet_Area[]" id="sheet_Area<?php echo $i; ?>"  value="<?php echo $key['Area']; ?>" required readonly ></td>
+                                    <td><input class="form-control" type="number" name="sheet_Rate[]" id="sheet_Rate<?php echo $i; ?>"  value="<?php echo $key['Rate']; ?>"  onkeyup="change_sheet_rate('<?php echo $i; ?>')" required ></td>
+                                    <td><input class="form-control" type="text" name="sheet_Rate_Amt[]" id="sheet_Rate_Amt<?php echo $i; ?>"  value="<?php echo $key['Total_Amount']; ?>"  readonly></td>
                                 </tr>
                                 </tbody>
                                 <tfoot>
 
                                 </tfoot>
                                 <?php
+                                $i++;
                                 }
                                 ?>
                             </table>
@@ -392,7 +393,7 @@
 
                                     </tr>
                                     <?php
-                                    if($invoice[0]['IGST_Value'] == '0')
+                                    if($invoice[0]['IGST_Value'] == '0' || $invoice[0]['IGST_Value'] == '')
                                     { ?>
                                         <tr>
                                             <td colspan="4" align="right">SGST @<?php echo $tax[0]['SGST%']; ?>
@@ -904,21 +905,21 @@
     }
 
     /** Sheet Charge Height */
-    function change_sheet_height() {
-        var actual_H = document.getElementById('sheet_Act_Size_H').value;
-        document.getElementById('sheet_Cha_Size_H').value = actual_H;
-        var actual_w = document.getElementById('sheet_Act_Size_W').value;
-        document.getElementById('sheet_Cha_Size_W').value = actual_w;
-        var Charge_H = document.getElementById('sheet_Cha_Size_H').value;
-        var Charge_W = document.getElementById('sheet_Cha_Size_W').value;
-        var pcs = document.getElementById('sheet_pieces').value;
+    function change_sheet_height(id) {
+        var actual_H = document.getElementById('sheet_Act_Size_H'+id).value;
+        document.getElementById('sheet_Cha_Size_H'+id).value = actual_H;
+        var actual_w = document.getElementById('sheet_Act_Size_W'+id).value;
+        document.getElementById('sheet_Cha_Size_W'+id).value = actual_w;
+        var Charge_H = document.getElementById('sheet_Cha_Size_H'+id).value;
+        var Charge_W = document.getElementById('sheet_Cha_Size_W'+id).value;
+        var pcs = document.getElementById('sheet_pieces'+id).value;
         var areas =parseFloat(Charge_W)/1000 * parseFloat(Charge_H)/1000 * parseInt(pcs) ;
 
         var tot_area = parseFloat(areas);
-        document.getElementById('sheet_Area').value = parseFloat(tot_area).toFixed(3);;
-        var rate = document.getElementById('sheet_Rate').value;
+        document.getElementById('sheet_Area'+id).value = parseFloat(tot_area).toFixed(3);;
+        var rate = document.getElementById('sheet_Rate'+id).value;
         var total = (tot_area * rate);
-        document.getElementById('sheet_Rate_Amt').value =  parseFloat(total).toFixed(3);
+        document.getElementById('sheet_Rate_Amt'+id).value =  parseFloat(total).toFixed(3);
         var totals =document.getElementsByName("sheet_Rate_Amt[]");
         var sum = 0;
         for (var j = 0, iLen = totals.length; j < iLen; j++) {
@@ -975,22 +976,22 @@
 
     }
     /** Sheet Charge Height */
-    function change_sheet_width() {
-        var actual_H = document.getElementById('sheet_Act_Size_H').value;
-        document.getElementById('sheet_Cha_Size_H').value = actual_H;
-        var actual_w = document.getElementById('sheet_Act_Size_W').value;
-        document.getElementById('sheet_Cha_Size_W').value = actual_w;
-        var Charge_H = document.getElementById('sheet_Cha_Size_H').value;
-        var Charge_W = document.getElementById('sheet_Cha_Size_W').value;
+    function change_sheet_width(id) {
+        var actual_H = document.getElementById('sheet_Act_Size_H'+id).value;
+        document.getElementById('sheet_Cha_Size_H'+id).value = actual_H;
+        var actual_w = document.getElementById('sheet_Act_Size_W'+id).value;
+        document.getElementById('sheet_Cha_Size_W'+id).value = actual_w;
+        var Charge_H = document.getElementById('sheet_Cha_Size_H'+id).value;
+        var Charge_W = document.getElementById('sheet_Cha_Size_W'+id).value;
 
 
-        var pcs = document.getElementById('sheet_pieces').value;
+        var pcs = document.getElementById('sheet_pieces'+id).value;
         var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000 *  parseInt(pcs);
         var tot_area = parseFloat(areas);
-        document.getElementById('sheet_Area').value = parseFloat(tot_area).toFixed(3);;
-        var rate = document.getElementById('sheet_Rate').value;
+        document.getElementById('sheet_Area'+id).value = parseFloat(tot_area).toFixed(3);;
+        var rate = document.getElementById('sheet_Rate'+id).value;
         var total = (tot_area * rate);
-        document.getElementById('sheet_Rate_Amt').value =  parseFloat(total).toFixed(3);
+        document.getElementById('sheet_Rate_Amt'+id).value =  parseFloat(total).toFixed(3);
         var totals =document.getElementsByName("sheet_Rate_Amt[]");
         var sum = 0;
         for (var j = 0, iLen = totals.length; j < iLen; j++) {
@@ -1046,12 +1047,12 @@
 
     }
     //** Sheet rate Chage**/
-    function change_sheet_rate() {
+    function change_sheet_rate(id) {
 
-        var tot_area = document.getElementById('sheet_Area').value;
-        var rate = document.getElementById('sheet_Rate').value;
+        var tot_area = document.getElementById('sheet_Area'+id).value;
+        var rate = document.getElementById('sheet_Rate'+id).value;
         var total = parseFloat(parseFloat(tot_area) * parseFloat(rate));
-        document.getElementById('sheet_Rate_Amt').value =  parseFloat(total).toFixed(3);
+        document.getElementById('sheet_Rate_Amt'+id).value =  parseFloat(total).toFixed(3);
 
         var totals =document.getElementsByName("sheet_Rate_Amt[]");
         var sum = 0;
@@ -1111,17 +1112,18 @@
     }
 
     //**  Change Sheet QTTY**/
-    function change_sheet_qty() {
-        var Charge_H = document.getElementById('sheet_Cha_Size_H').value;
-        var Charge_W = document.getElementById('sheet_Cha_Size_W').value;
+    function change_sheet_qty(id) {
+
+        var Charge_H = document.getElementById('sheet_Cha_Size_H'+id).value;
+        var Charge_W = document.getElementById('sheet_Cha_Size_W'+id).value;
 
         var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000;
-        var pcs = document.getElementById('sheet_pieces').value;
+        var pcs = document.getElementById('sheet_pieces'+id).value;
         var tot_area = parseFloat(areas) * parseInt(pcs);
-        document.getElementById('sheet_Area').value = parseFloat(tot_area).toFixed(3);;
-        var rate = document.getElementById('sheet_Rate').value;
+        document.getElementById('sheet_Area'+id).value = parseFloat(tot_area).toFixed(3);;
+        var rate = document.getElementById('sheet_Rate'+id).value;
         var total = (tot_area * rate);
-        document.getElementById('sheet_Rate_Amt').value =  parseFloat(total).toFixed(3);
+        document.getElementById('sheet_Rate_Amt'+id).value =  parseFloat(total).toFixed(3);
         var totals =document.getElementsByName("sheet_Rate_Amt[]");
         var sum = 0;
         for (var j = 0, iLen = totals.length; j < iLen; j++) {
