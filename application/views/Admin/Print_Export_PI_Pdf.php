@@ -55,6 +55,7 @@
             float: left;
             width: 150px;
             font-weight: normal;
+
         }
         .section3{
             font-size: 18px !important;
@@ -79,6 +80,11 @@
             border-top: 1px solid #000000;
             text-align: center;
         }
+        .part h5{
+            margin: 0px !important;
+            line-height: 20px;
+
+          }
     </style>
 </head>
 <body>
@@ -93,25 +99,24 @@
     <hr>
     <br>
     <div style="width:100%;clear:both;">
-        <div style="width:40%;float: left;text-align: left;">
+        <div style="width:30%;float: left;text-align: left;">
             <h4 style="margin: 0;margin-bottom:5px;">Consignee</h4>
-            <p style="margin: 0;margin-bottom:5px;font-size: 16px; font-weight: bold;"><?php echo $invoice[0]['Customer_Company_Name']; ?></p>
-            <p style="margin: 0;margin-bottom:5px;font-size: 14px; "><?php echo $invoice[0]['Customer_Address_1'];?><?php echo $invoice[0]['Customer_Address_2']; ?></p>
-            <p style="margin: 0;margin-bottom:5px;font-size: 14px;">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></p>
-            <p style="margin: 0;font-size: 14px; ">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></p>
-        </div>
-        <div style="width:40%;float: left;text-align: left;">
-            <h4 style="margin: 0;margin-bottom:5px;">Buyer (if other than consignee)</h4>
             <p style="margin: 0;margin-bottom:5px;font-size: 14px; font-weight: bold;"><?php echo $invoice[0]['Customer_Company_Name']; ?></p>
-            <p style="margin: 0;margin-bottom:5px;font-size: 14px; "><?php echo $invoice[0]['Customer_Address_1']; ?><?php echo $invoice[0]['Customer_Address_2']; ?></p>
-            <p style="margin: 0;margin-bottom:5px;font-size: 14px; ">City: <?php echo $invoice[0]['Customer_City']; ?></p>
-            <p style="margin: 0;margin-bottom:5px;font-size: 14px; ">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></p>
-            <p style="margin: 0;font-size: 14px; ">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></p>
+            <p style="margin: 0;margin-bottom:5px;font-size: 12px; "><?php echo $invoice[0]['Customer_Address_1'];?><?php echo $invoice[0]['Customer_Address_2']; ?></p>
+            <p style="margin: 0;margin-bottom:5px;font-size: 12px; "><?php echo $invoice[0]['Customer_Area'];?><?php echo $invoice[0]['Customer_City']; ?></p>
+            <p style="margin: 0;margin-bottom:5px;font-size: 12px;">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></p>
+            <p style="margin: 0;font-size: 12px; ">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></p>
         </div>
-        <div style="width:20%;float: left;text-align: left;">
-            <p style="margin: 0;margin-bottom:5px;font-size: 14px;">Date<br><span style="font-size: 18px !important;font-weight: bold;"><?php echo $invoice[0]['Export_Date']; ?></span></p>
-            <p style="margin: 0 0 15px 0;margin-bottom:5px;font-size: 14px;">P.INV. NO<br><span style="font-size: 18px !important;font-weight: bold;"><?php echo $invoice[0]['Export_Invoice_Number']; ?></span></p>
-                 </div>
+
+        <div style="width:70%;float: left;text-align: left;" class="part">
+            <h5><span style="font-weight: normal;">Date</span> <span style="margin-left: 80px;">: <?php echo $invoice[0]['Export_Date']; ?> </span></h5>
+            <h5><span style="font-weight: normal;">P.INV. NO</span>  <span style="margin-left: 48px;">: <?php echo $invoice[0]['Export_Invoice_Number']; ?> </span></h5>
+            <h5><span style="font-weight: normal;">Delivery Period</span> <span style="margin-left: 17px;"> : <?php echo $invoice[0]['Delivery_Period']; ?> Days</span></h5>
+            <h5><span style="font-weight: normal;">Container Type</span> <span style="margin-left: 15px;"> : <?php echo $invoice[0]['Container_Type']; ?></span></h5>
+            <h5><span style="font-weight: normal;">Payment Terms</span> <span style="margin-left: 15px;">: <?php echo $invoice[0]['Payment_Terms']; ?></span></h5>
+            <h5><span style="font-weight: normal;">Price Term</span> <span style="margin-left: 42px;">: <?php echo $invoice[0]['Price_Term']; ?></span></h5>
+            <h5><span style="font-weight: normal;">Delivery Route</span> <span style="margin-left: 20px;">: <?php echo $invoice[0]['Delivery_Route']; ?></span></h5>
+        </div>
     </div>
     <br style="width:100%;clear:both;">
     <hr>
@@ -168,31 +173,50 @@
     <!--    <br style="width:100%;">-->
     <hr>
     <div id="page1" style="width: 100%;display: block; vertical-align: top;">
-        <div style="width: 100%; text-align: left; display: inline-block; vertical-align: top;">
+        <div style="width: 40%; text-align: left; display: inline-block; vertical-align: top;">
 
-                      <div id="account">
-                <h5><span>Delivery Period</span> : <?php echo $invoice[0]['Delivery_Period']; ?> Days</h5>
-                <h5><span>Container Type</span> : <?php echo $invoice[0]['Container_Type']; ?></h5>
-                <h5><span>Payment Terms</span>: <?php echo $invoice[0]['Payment_Terms']; ?></span></h5>
-                <h5><span>Price Term</span>: <?php echo $invoice[0]['Price_Term']; ?></h5>
-                <h5><span>Delivery Route</span>: <?php echo $invoice[0]['Delivery_Route']; ?></h5>
-            </div>
+            <h3 style="font-size: 12px;">Terms & Conditions</h3>
+            <p style="font-size: 8px;text-align: justify;">
+                Supply shall be against advance payment or Letter of credit or any other agreed
+                terms. Interest @2% per month will be charged for the payment delayed beyond
+                the terms agreed from the date of invoice. All payments made by third
+                party/consumer/contractor interested in the transaction shall be adjusted against
+                supplies made to buyer/consignee
+            </p>
+            <h3 style="font-size: 12px;">Dear Customer</h3>
+            <p style="font-size: 8px;text-align: justify;">
+            <ul style="list-style: none;padding: 0;font-size: 8px;">
+                <li style="margin-bottom: 15px;">
+                    1.Please make sure to DOUBLE - CHECK the Pro-Forma Invoice in terms Billing & Delivery Address, Contact Name & Number, PAN NO, GST NO, complete Glass
+                    Specifications, Size, Quantity, Rates & Taxes.
+                </li>
+                <li style="margin-bottom: 15px;">
+                    2.If there is any item not as per your requirement, please get the same modified to be reflected in the Pro-Forma Invoice before confirmation. PI terms mentioned are
+                    final and shall supersede PO terms, no dispute will be entertained after order released for production pertaining to terms agreed in Pro-Forma invoice.
+                </li>
+                <li>
+                    3.In the event the order is modified or cancelled once issued to production, all material expenses, processing costs and cancellation penalties up to the date of
+                    modification or cancellation shall be invoiced. The amount to be invoiced is solely at the discretion of the Seller and shall be final and non-negotiable
+                </li>
+            </ul>
+            </p>
         </div>
-
-    </div>
-    <hr>
-
-    <div id="page1" style="width: 100%;display: block; vertical-align: top;">
-        <div style="width: 100%; text-align: left; display: inline-block; vertical-align: top;">
-            <div id="account">
-                <h3 style="font-size: 13px;">Bank Details</h3>
-                <h5><span>Account Name</span> : STRONGLASS TOUGH</h5>
-                <h5><span>Bank Name</span>: <?php echo $st[0]['ST_Bank']; ?></span></h5>
-                <h5><span>Account Number</span>: <?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
-                <h5><span>IFSC</span>: <?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
-            </div>
+        <div style="width: 55%; text-align: left; display: inline-block;padding-left: 10px; vertical-align: top;">
+                <div>
+                    <h3 style="font-size: 13px;">Bank Details</h3>
+                    <h5  style="margin: 0;margin-bottom:10px;"><span>Account Name</span> : STRONGLASS TOUGH </h5>
+                    <h5  style="margin: 0;margin-bottom:10px;"><span>Bank Name</span>: <?php echo $st[0]['ST_Bank']; ?></h5>
+                    <h5  style="margin: 0;margin-bottom:10px;"><span>Account Number</span>: <?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
+                    <h5  style="margin: 0;margin-bottom:5px;"><span>IFSC</span>: <?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
+                </div>
+        </div>
+        <hr>
+        <div style="display: flex;">
+            <div style="float: left;">SELLER: STRONGLASS TOUGH</div>
+            <div style="float: right;">BUYER: <?php echo $invoice[0]['Customer_Company_Name']; ?></div>
         </div>
     </div>
+
 
 </div>
 </body>
