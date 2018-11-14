@@ -3117,6 +3117,145 @@ class User_Controller extends CI_Controller
 
     }
 
+    //** Update Sheet Bill */
+    public function Update_Sheet_Bill()
+    {
+        $pi_icode = $this->input->post('PI_Icode');
+        $bill_icode = $this->input->post('bill_icode');
+        $data = array(
+            'Vehicle_No' =>$this->input->post('vehicle_no'),
+            'Destination' => $this->input->post('destination'),
+            'Customer_Address'=> $this->input->post('new_cus_address'),
+            'Delivery_Address'=> $this->input->post('new_delivery_address'),
+            'Transport' => $this->input->post('transport'),
+            'Sub_Total' => $this->input->post('sub_tot'),
+            'SGST_Value' => $this->input->post('sgst'),
+            'CGST_Value' => $this->input->post('cgst'),
+            'IGST_Value' => $this->input->post('igst'),
+            'GrossTotal_Value' => $this->input->post('gross_tot'),
+            'Amt_Words' =>$this->input->post('amt_words'),
+            'Created_By' => $this->session->userdata['userid']);
+        $this->db->where('Bill_Icode',$bill_icode);
+        $this->db->update('billing_details', $data);
+
+        $delete_charges_id = $this->input->post('Delete_Charge_Icode');
+        $count1 = sizeof($delete_charges_id);
+        for($i=0; $i<$count1; $i++)
+        {
+
+            $delete_chrg_list=$this->user_model->delete_bill_charges($delete_charges_id[$i]);
+
+        }
+
+
+
+        $charges_count = $this->input->post('Delete_charges_count');
+        $charges_value = $this->input->post('Delete_charges_value');
+        $charges_cost = $this->input->post('tot_charge_amt');
+
+        $update_charges_id = $this->input->post('Delete_charges');
+
+        $bill_charges_id = $this->input->post('bill_charge_icode');
+
+
+
+        $count_update = sizeof($bill_charges_id);
+        for($i=0; $i<$count_update; $i++)
+        {
+            $bill_charge = $bill_charges_id[$i];
+
+            $full_data1 =array( 'bill_icode' => $bill_icode,
+                'Proforma_Charge_Icode' => $update_charges_id[$i],
+                'Proforma_Charge_Count' => $charges_count[$i],
+                'Proforma_Charge_Value' => $charges_value[$i],
+                'Proforma_Charge_Cost' => $charges_cost[$i],
+                'created_by' => $this->session->userdata['userid']
+            );
+            $this->db->where('bill_charge_icode',$bill_charge);
+            $this->db->update('billing_charges_entry', $full_data1);
+        }
+
+        $sheet_icode = $this->input->post('sheet_icode');
+        $sheet_material = $this->input->post('sheet_material');
+        $sheet_piece = $this->input->post('sheet_pieces');
+        $sheet_act_h = $this->input->post('sheet_Act_Size_H');
+        $sheet_act_w = $this->input->post('sheet_Act_Size_W');
+        $sheet_cha_h = $this->input->post('sheet_Cha_Size_H');
+        $sheet_cha_w = $this->input->post('sheet_Cha_Size_W');
+        $sheet_area = $this->input->post('sheet_Area');
+        $sheet_rate = $this->input->post('sheet_Rate');
+        $sheet_amt = $this->input->post('sheet_Rate_Amt');
+        $count_sheet = sizeof($sheet_icode);
+        for($i=0; $i<$count_sheet; $i++)
+        {
+            $full_data =array( 'Proforma_Icode' => $pi_icode,
+                'Proforma_Material_Icode' =>$sheet_material[$i],
+                'No_Of_Sheet' => $sheet_piece[$i],
+                'Actual_Height' => $sheet_act_h[$i],
+                'Actual_Width' => $sheet_act_w[$i],
+                'Chargable_Height' => $sheet_cha_h[$i],
+                'Chargable_Width' => $sheet_cha_w[$i],
+                'Area' => $sheet_area[$i],
+                'Rate' => $sheet_rate[$i],
+                'Total_Amount' =>$sheet_amt[$i],
+                'Modified_By' => $this->session->userdata['userid'],
+                'Modified_On' => date('Y-m-d H:i:s'));
+            $this->db->where('pi_sheet_icode',$sheet_icode[$i]);
+            $this->db->update('proforma_invoice_sheet', $full_data);
+        }
+
+        $item_sheet_id = $this->input->post('item_icode');
+        $material_id = $this->input->post('material');
+        $qty = $this->input->post('pics');
+        $holes = $this->input->post('holes');
+        $cutout = $this->input->post('cutout');
+        $actual_W = $this->input->post('width');
+        $actual_H = $this->input->post('height');
+        $special = $this->input->post('type');
+        $Area = $this->input->post('area');
+        $Rate = $this->input->post('rate');
+        $cost = $this->input->post('total');
+        $count = sizeof($material_id);
+        for($i=0; $i<$count; $i++)
+        {
+            $full_data =array( 'Proforma_Icode' => $pi_icode,
+                'Proforma_Holes' => $holes[$i],
+                'Proforma_Qty' => $qty[$i],
+                'Proforma_Cutout' => $cutout[$i],
+                'Proforma_Material_Icode' => $material_id[$i],
+                'Proforma_Special'=>$special[$i],
+                'Proforma_Actual_Size_Width' => $actual_W[$i],
+                'Proforma_Actual_Size_Height' => $actual_H[$i],
+                'Proforma_Chargeable_Size_Width' =>$actual_W[$i],
+                'Proforma_Chargeable_Size_Height' => $actual_H[$i],
+                'Proforma_Area_SQMTR' => $Area[$i],
+                'Proforma_Material_Rate' => $Rate[$i],
+                'Proforma_Material_Cost' => $cost[$i],
+                'Modified_By' => $this->session->userdata['userid'],
+                'Modified_On' => date('Y-m-d H:i:s'));
+            $this->db->where('pi_item_sheet_icode',$item_sheet_id[$i]);
+            $this->db->update('proforma_invoice_item_sheet', $full_data);
+        }
+
+
+
+
+
+        $this->session->set_flashdata('feedback', 'Bill Updated Successfully..');
+
+        $pi_type = $this->input->post('bill_type');
+
+        if($pi_type == '0')
+        {
+            redirect('User_Controller/View_Single_Bill/'.$pi_icode);
+        }
+        else
+        {
+            redirect('User_Controller/View_Single_Sheet_Bill/'.$pi_icode);
+        }
+
+    }
+
     public function PDF_Bill()
     {
         $picode=$this->input->post('PI_Icode');
