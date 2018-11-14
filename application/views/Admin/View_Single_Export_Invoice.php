@@ -60,37 +60,8 @@
                                 </div>
 
                             </div>
-                            <div class="col-md-4" style="border-right: 1px solid #000;">
-                                <h5>Buyer (if other than consignee)</h5>
-                                <div id="Buyer">
-                                    <?php
-                                    if($invoice[0]['Customer_Address_Icode'] == "")
-                                    {
-                                        ?>
-                                        <h5 id="coustomer" style="font-size: 16px; font-weight: bold;"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                        <h5 id="address" style="font-size: 14px; "><?php echo $invoice[0]['Customer_Address_1']; echo '&nbsp'; ?>,<?php echo $invoice[0]['Customer_Address_2']; echo '&nbsp';?>,<?php echo $invoice[0]['Customer_Area']; ?></h5>
-                                        <h5 style="font-size: 14px; "> <?php echo $invoice[0]['Customer_City']; echo '&nbsp'; ?><?php echo $invoice[0]['Customer_State']; ?></h5>
-                                        <h5 id="phone" style="font-size: 14px; ">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
-                                        <h5 id="email" style="font-size: 14px; ">Email: <?php echo $invoice[0]['Customer_Email_Id_1']; ?></h5>
-                                        <h5 id="gstn" style="font-size: 14px; ">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
-                                        <input type="hidden" name="email" value="<?php echo $invoice[0]['Customer_Email_Id_1']; ?>">
-                                        <?php
-                                    }
-                                    else
-                                    {
-                                        ?>
-                                        <h5 id="coustomer" style="font-size: 16px; font-weight: bold;"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                        <h5 id="address" style="font-size: 14px; "><?php echo $invoice[0]['Customer_Add_Address_1']; ?>&nbsn;<?php echo $invoice[0]['Customer_Add_Address_2']; ?></h5>
-                                        <h5 id="phone" style="font-size: 14px;">City: <?php echo $invoice[0]['Customer_Add_City']; ?></h5>
-                                        <h5 id="phone" style="font-size: 14px; ">Phone: <?php echo $invoice[0]['Customer_Add_Phone']; ?></h5>
-                                        <h5 id="gstn" style="font-size: 14px; ">GSTN: <?php echo $invoice[0]['Customer_Add_Email_Id_1']; ?></h5>
-                                        <?php
-                                    }
-                                    ?>
 
-                                </div>
-                            </div>
-                            <div class="col-md-4">
+                            <div class="col-md-8">
                                 <h5><span>Date</span><input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Export_Date']; ?>" readonly><?php echo $invoice[0]['Export_Date']; ?></h5>
                                 <h5><span>P.INV.NO</span><input type="hidden" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Export_PI_Icode']; ?>" readonly><?php echo $invoice[0]['Export_Invoice_Number']; ?></h5>
                                 <h5><span>Container Type</span><?php echo $invoice[0]['Container_Type']; ?></h5>
@@ -104,19 +75,19 @@
                                 <thead>
                                 <th style="width: 10px;">#</th>
                                 <th style="width: 20px;">Material</th>
-                                <th style="width: 20px;">Actual<br>sz(h)</th>
-                                <th style="width: 20px;">Actual<br>sz(w)</th>
-                                <th style="width: 20px;">Charge<br>sz(h</th>
-                                <th style="width: 20px;">Charge<br>sz(w)</th>
+                                <th style="width: 20px;">Act<br>sz(h)</th>
+                                <th style="width: 20px;">Act<br>sz(w)</th>
+                                <th style="width: 20px;">Ch<br>sz(h</th>
+                                <th style="width: 20px;">Ch<br>sz(w)</th>
 
                                 <th style="width: 10px;">No.of<br>Holes</th>
-                                <th style="width: 10px;">Cutout</th>
+                                <th style="width: 10px;">Cut<br>out</th>
                                 <th style="width: 10px;">Special</th>
                                 <th style="width: 10px;">Qty</th>
 
                                 <th style="width: 20px;">Area<br>(sqmtr)</th>
-                                <th style="width: 20px;">UNIT Price<br>(USD M2)</th>
-                                <th style="width: 20px;">Amount<br>(USD)</th>
+                                <th style="width: 20px;">UNIT<br>Amt<br>(USD M2)</th>
+                                <th style="width: 20px;">Amt<br>(USD)</th>
                                 </thead>
                                 <tbody>
                                 <?php $i=1; foreach ($invoice_item as $key) { ?>
