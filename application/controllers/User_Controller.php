@@ -1121,6 +1121,7 @@ class User_Controller extends CI_Controller
     }
     public function Update_Invoice()
     {
+
         $picode = $this->input->post('PI_Icode');
         $history = $this->user_model->Invoice_Update($picode);
         if($history == '1') {
@@ -3018,6 +3019,7 @@ class User_Controller extends CI_Controller
             'Delivery_Address'=> $this->input->post('new_delivery_address'),
             'Transport' => $this->input->post('transport'),
             'Sub_Total' => $this->input->post('sub_tot'),
+            'Insurance_Value'=> $this->input->post('insurance'),
             'SGST_Value' => $this->input->post('sgst'),
             'CGST_Value' => $this->input->post('cgst'),
             'IGST_Value' => $this->input->post('igst'),
@@ -3099,9 +3101,6 @@ class User_Controller extends CI_Controller
             $this->db->update('proforma_invoice_items', $full_data);
         }
 
-
-
-
         $this->session->set_flashdata('feedback', 'Bill Updated Successfully..');
 
         $pi_type = $this->input->post('bill_type');
@@ -3129,6 +3128,7 @@ class User_Controller extends CI_Controller
             'Delivery_Address'=> $this->input->post('new_delivery_address'),
             'Transport' => $this->input->post('transport'),
             'Sub_Total' => $this->input->post('sub_tot'),
+            'Insurance_Value'=> $this->input->post('insurance'),
             'SGST_Value' => $this->input->post('sgst'),
             'CGST_Value' => $this->input->post('cgst'),
             'IGST_Value' => $this->input->post('igst'),
