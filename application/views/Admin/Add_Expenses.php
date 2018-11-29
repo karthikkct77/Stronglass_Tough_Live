@@ -40,7 +40,8 @@
                     <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Insert_Expenses_Details'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save?');">
                         <div class="form-group">
                             <label class="control-label">Date</label>
-                            <input class="form-control" type="text" name="expenses_date" value="<?php echo date('Y-m-d'); ?>" required readonly>
+<!--                            <input class="form-control" type="text" name="expenses_date" value="--><?php //echo date('Y-m-d'); ?><!--" required readonly>-->
+                            <input class="form-control" id="demoDate" name="expenses_date" type="text" placeholder="Select Expenses Date" required >
                         </div>
                         <div class="form-group">
                             <label class="control-label">Select Expenses Name</label>
@@ -67,7 +68,20 @@
                 </div>
             </div>
         </div>
-
-
     </div>
 </main>
+<script type="text/javascript">
+
+    $('#demoDate').datepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayHighlight: true
+    });
+
+    $('#demoDate1').datepicker({
+        format: "yyyy-mm-dd",
+        autoclose: true,
+        todayHighlight: true
+    });
+
+</script>
