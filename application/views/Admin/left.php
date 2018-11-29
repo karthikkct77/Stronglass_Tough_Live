@@ -88,7 +88,13 @@
                    <!--<li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Size_Master'); ?><!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>-->
                    <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Export_Invoice_List'); ?>"><i class="icon fa fa-circle-o"></i>View Export Invoice</a></li>
 
-
+               </ul>
+           </li>
+           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-eye"></i><span class="app-menu__label">Sales Summary</span><i class="treeview-indicator fa fa-angle-right"></i></a>
+               <ul class="treeview-menu">
+                   <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Local_Summary'); ?>"><i class="icon fa fa-circle-o"></i>Local</a></li>
+                   <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Chennai_Summary'); ?>"><i class="icon fa fa-circle-o"></i> Chennai</a></li>
+                   <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Kerala_Summary'); ?>"><i class="icon fa fa-circle-o"></i>Kerala</a></li>
 
                </ul>
            </li>

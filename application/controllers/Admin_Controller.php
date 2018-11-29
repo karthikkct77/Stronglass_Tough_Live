@@ -2378,4 +2378,49 @@ class Admin_Controller extends CI_Controller
 
     }
 
+    // Local Sales Summary
+    public function Local_Summary()
+    {
+        $data['wo_count_locations']= $this->admin_model->Get_Monthly_WO_Counts_locations();
+        $data['charges_location']=$this->admin_model->Get_Monthly_Charges_Local();
+        $data['transport']=$this->admin_model->Get_Monthly_Transport_Local();
+        $normal_material = $this->admin_model->Get_monthly_normal_WO_material_local();
+        $sheet_material = $this->admin_model->Get_monthly_sheet_WO_material_local();
+        $data['material_details'] = array_merge($normal_material, $sheet_material);
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Sales_Summary_Local',$data,false);
+        $this->load->view('Admin/footer');
+    }
+
+    public function Chennai_Summary()
+    {
+        $data['wo_count_locations']= $this->admin_model->Get_Monthly_WO_Counts_locations();
+        $data['charges_location']=$this->admin_model->Get_Monthly_Charges_chennai();
+        $data['transport']=$this->admin_model->Get_Monthly_Transport_chennai();
+        $normal_material = $this->admin_model->Get_monthly_normal_WO_material_chennai();
+        $sheet_material = $this->admin_model->Get_monthly_sheet_WO_material_chennai();
+        $data['material_details'] = array_merge($normal_material, $sheet_material);
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Sales_Summary_Chennai',$data,false);
+        $this->load->view('Admin/footer');
+    }
+    public function Kerala_Summary()
+    {
+        $data['wo_count_locations']= $this->admin_model->Get_Monthly_WO_Counts_locations();
+        $data['charges_location']=$this->admin_model->Get_Monthly_Charges_kerala();
+        $data['transport']=$this->admin_model->Get_Monthly_Transport_kerala();
+        $normal_material = $this->admin_model->Get_monthly_normal_WO_material_kerala();
+        $sheet_material = $this->admin_model->Get_monthly_sheet_WO_material_kerala();
+        $data['material_details'] = array_merge($normal_material, $sheet_material);
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Sales_Summary_Kerala',$data,false);
+        $this->load->view('Admin/footer');
+    }
+
 }

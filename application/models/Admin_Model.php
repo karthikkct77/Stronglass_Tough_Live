@@ -1011,7 +1011,7 @@ class Admin_Model extends CI_Model
     public function Get_Monthly_WO_Counts_locations()
     {
         $query = $this->db->query("SELECT 
-                                   SUM(CASE WHEN C.Customer_State LIKE '%kerala%' THEN B.GrossTotal_Value END) AS Kerala ,
+                                   SUM(CASE WHEN C.Customer_State LIKE '%kerala%' THEN B.GrossTotal_Value END) AS Kerala,
                                    SUM(CASE WHEN C.Customer_City LIKE '%chennai%' THEN B.GrossTotal_Value END) AS Chennai, 
                                    SUM(CASE WHEN C.Customer_State NOT LIKE 'kerala' and  C.Customer_City NOT LIKE '%chennai%' THEN B.GrossTotal_Value END) AS Locals
                                    FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
@@ -1061,6 +1061,115 @@ class Admin_Model extends CI_Model
     {
         $query = $this->db->query("SELECT SUM(A.Proforma_Qty) as qty, SUM(A.Proforma_Area_SQMTR) as area, SUM(A.Proforma_Material_Cost) as rate,SUM(A.Proforma_Holes) as holes,SUM(A.Proforma_Cutout) as cutout FROM Export_Items A INNER JOIN material_master B on A.Proforma_Material_Icode=B.Material_Icode
                                   WHERE A.Export_PI_Icode='$export_icode'");
+        return $query->result_array();
+    }
+    public function Get_Monthly_Charges_Local()
+    {
+        $query = $this->db->query(" SELECT C.charge_name, SUM(B.Proforma_Charge_Cost) as amount FROM work_order A 
+                                    INNER JOIN proforma_material_processing_charges B on A.Proforma_Icode=B.Proforma_Icode
+                                    INNER JOIN processing_charges_master C on B.Proforma_Charge_Icode=C.charge_icode
+                                    INNER JOIN proforma_invoice D ON D.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master E on E.Customer_Icode=D.Proforma_Customer_Icode
+                                    WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE()) and  E.Customer_State NOT LIKE 'kerala' and  E.Customer_City NOT LIKE '%chennai%' 
+                                    GROUP by B.Proforma_Charge_Icode");
+        return $query->result_array();
+    }
+
+    public function Get_Monthly_Transport_Local()
+    {
+        $query = $this->db->query("SELECT SUM(B.Transport) as Transport FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                   INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                   WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE()) and 
+                                    C.Customer_State NOT LIKE 'kerala' and  C.Customer_City NOT LIKE '%chennai%' ");
+        return $query->result_array();
+    }
+
+    public function Get_monthly_normal_WO_material_local()
+    {
+        $query = $this->db->query("SELECT   SUM(D.Proforma_Area_SQMTR) as area FROM work_order A  INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                    INNER JOIN proforma_invoice_items D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())   and  C.Customer_State NOT LIKE 'kerala' and  C.Customer_City NOT LIKE '%chennai%'"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+    public function Get_monthly_sheet_WO_material_local()
+    {
+        $query = $this->db->query("SELECT   SUM(D.Proforma_Area_SQMTR) as area FROM work_order A  INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                    INNER JOIN proforma_invoice_item_sheet D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())   and  C.Customer_State NOT LIKE 'kerala' and  C.Customer_City NOT LIKE '%chennai%'"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+    public function Get_Monthly_Charges_chennai()
+    {
+        $query = $this->db->query(" SELECT C.charge_name, SUM(B.Proforma_Charge_Cost) as amount FROM work_order A 
+                                    INNER JOIN proforma_material_processing_charges B on A.Proforma_Icode=B.Proforma_Icode
+                                    INNER JOIN processing_charges_master C on B.Proforma_Charge_Icode=C.charge_icode
+                                    INNER JOIN proforma_invoice D ON D.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master E on E.Customer_Icode=D.Proforma_Customer_Icode
+                                    WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE()) and  E.Customer_City LIKE '%chennai%'
+                                    GROUP by B.Proforma_Charge_Icode");
+        return $query->result_array();
+    }
+    public function Get_Monthly_Transport_chennai()
+    {
+        $query = $this->db->query("SELECT SUM(B.Transport) as Transport FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                   INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                   WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE()) and 
+                                     C.Customer_City LIKE '%chennai%' ");
+        return $query->result_array();
+    }
+
+    public function Get_monthly_normal_WO_material_chennai()
+    {
+        $query = $this->db->query("SELECT   SUM(D.Proforma_Area_SQMTR) as area FROM work_order A  INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                    INNER JOIN proforma_invoice_items D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())  
+                                     and  C.Customer_City  LIKE '%chennai%'"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+    public function Get_monthly_sheet_WO_material_chennai()
+    {
+        $query = $this->db->query("SELECT   SUM(D.Proforma_Area_SQMTR) as area FROM work_order A  INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                    INNER JOIN proforma_invoice_item_sheet D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())  
+                                     and  C.Customer_City LIKE '%chennai%'"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+    public function Get_Monthly_Charges_kerala()
+    {
+        $query = $this->db->query(" SELECT C.charge_name, SUM(B.Proforma_Charge_Cost) as amount FROM work_order A 
+                                    INNER JOIN proforma_material_processing_charges B on A.Proforma_Icode=B.Proforma_Icode
+                                    INNER JOIN processing_charges_master C on B.Proforma_Charge_Icode=C.charge_icode
+                                    INNER JOIN proforma_invoice D ON D.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master E on E.Customer_Icode=D.Proforma_Customer_Icode
+                                    WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE()) and  E.Customer_State LIKE '%kerala%'
+                                    GROUP by B.Proforma_Charge_Icode");
+        return $query->result_array();
+    }
+    public function Get_Monthly_Transport_kerala()
+    {
+        $query = $this->db->query("SELECT SUM(B.Transport) as Transport FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                   INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                   WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE()) and 
+                                     C.Customer_State  LIKE 'kerala' ");
+        return $query->result_array();
+    }
+
+    public function Get_monthly_normal_WO_material_kerala()
+    {
+        $query = $this->db->query("SELECT   SUM(D.Proforma_Area_SQMTR) as area FROM work_order A  INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                    INNER JOIN proforma_invoice_items D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())  
+                                     and C.Customer_State  LIKE 'kerala'"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+    public function Get_monthly_sheet_WO_material_kerala()
+    {
+        $query = $this->db->query("SELECT   SUM(D.Proforma_Area_SQMTR) as area FROM work_order A  INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                    INNER JOIN proforma_invoice_item_sheet D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode 
+                                    WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())  
+                                     and  C.Customer_State  LIKE 'kerala'"); //GROUP by A.Stock_Icode
         return $query->result_array();
     }
 

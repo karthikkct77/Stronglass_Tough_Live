@@ -1121,7 +1121,7 @@ class User_Controller extends CI_Controller
     }
     public function Update_Invoice()
     {
-
+    
         $picode = $this->input->post('PI_Icode');
         $history = $this->user_model->Invoice_Update($picode);
         if($history == '1') {
@@ -3437,8 +3437,4 @@ class User_Controller extends CI_Controller
         $this->pdf->render();
         $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
     }
-
-
-
-
 }
