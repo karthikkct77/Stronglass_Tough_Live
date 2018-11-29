@@ -98,6 +98,8 @@
 
                </ul>
            </li>
+           <li><a class="app-menu__item " href="<?php echo site_url('Admin_Controller/Accounts'); ?>"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Account Report</span></a></li>
+
 
            <!--           <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-laptop"></i><span class="app-menu__label">Work Order</span><i class="treeview-indicator fa fa-angle-right"></i></a>-->
 <!--               <ul class="treeview-menu">-->

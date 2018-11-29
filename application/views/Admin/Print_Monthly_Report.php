@@ -49,7 +49,7 @@
                             <td style="font-weight: bold; font-size: 16px;">Total Bill Amount</td>
                             <td style="font-weight: bold; font-size: 24px;"><?php echo $total_bill[0]['total_amt']; ?></td>
                             <td style="font-weight: bold; font-size: 16px;">Total Sq.Mt</td>
-                            <td id="area_material_qty1" style="font-weight: bold; font-size: 24px;"></td>
+                            <td id="total_area_material_qty" style="font-weight: bold; font-size: 24px;"></td>
                         </tr>
 
                         <tr>
@@ -62,7 +62,7 @@
                         </tr>
                     </table>
 
-                    <h4>Thickness Wise Report</h4>
+                    <h4>Normal Thickness Report</h4>
                     <table class="table table-hover table-bordered" id="sampleTable1">
                         <thead>
                         <tr>
@@ -74,16 +74,11 @@
                         </thead>
                         <tbody>
                         <?php $i=1;
-                        foreach ($material_details as $val)
+                        foreach ($normal_material as $val)
                         {
                             $area =  number_format((float)$val['area'], 2, '.', '');
-
-
-
                             ?>
-
                             <tr>
-
                                 <td><?php echo $i; ?></td>
                                 <td><?php echo $val['Material_Name']; ?></td>
                                 <td><?php echo $val['Total_Qty']; ?>
@@ -111,6 +106,157 @@
                         </tbody>
 
                     </table>
+
+                    <h4>Sheet Thickness Report</h4>
+                    <table class="table table-hover table-bordered" id="sampleTable1">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Material Name</th>
+                            <th>Qty</th>
+                            <th>Area(Sq.mt)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php $i=1;
+                        foreach ($sheet_material as $val)
+                        {
+                            $area =  number_format((float)$val['area'], 2, '.', '');
+
+
+
+                            ?>
+
+                            <tr>
+
+                                <td><?php echo $i; ?></td>
+                                <td><?php echo $val['Material_Name']; ?></td>
+                                <td><?php echo $val['Total_Qty']; ?>
+                                    <input type="hidden" name="material_qty1[]" value="<?php echo $val['Total_Qty']; ?>">
+                                </td>
+                                <td><?php echo $area ; ?>
+                                    <input type="hidden" name="material_area1[]" value="<?php echo $val['area']; ?>">
+
+                                </td>
+
+
+                            </tr>
+
+                            <?php
+                            $i++;
+                        }
+                        ?>
+
+                        <tr>
+                            <td colspan="2" style="text-align: right; font-weight: bold;">Total Summary</td>
+                            <td id="tot_material_qty1" style="font-weight: bold; font-size: 24px;"></td>
+                            <td id="area_material_qty1" style="font-weight: bold; font-size: 24px;"></td>
+
+                        </tr>
+                        </tbody>
+
+                    </table>
+
+                    <h4>DG Thickness Report</h4>
+                    <table class="table table-hover table-bordered" id="sampleTable1">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Material Name</th>
+                            <th>Qty</th>
+                            <th>Area(Sq.mt)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php $i=1;
+                        foreach ($dg_material as $val)
+                        {
+                            $area =  number_format((float)$val['area'], 2, '.', '');
+
+
+
+                            ?>
+
+                            <tr>
+
+                                <td><?php echo $i; ?></td>
+                                <td><?php echo $val['Material_Name']; ?></td>
+                                <td><?php echo $val['Total_Qty']; ?>
+                                    <input type="hidden" name="material_qty2[]" value="<?php echo $val['Total_Qty']; ?>">
+                                </td>
+                                <td><?php echo $area ; ?>
+                                    <input type="hidden" name="material_area2[]" value="<?php echo $val['area']; ?>">
+
+                                </td>
+
+
+                            </tr>
+
+                            <?php
+                            $i++;
+                        }
+                        ?>
+
+                        <tr>
+                            <td colspan="2" style="text-align: right; font-weight: bold;">Total Summary</td>
+                            <td id="tot_material_qty2" style="font-weight: bold; font-size: 24px;"></td>
+                            <td id="area_material_qty2" style="font-weight: bold; font-size: 24px;"></td>
+
+                        </tr>
+                        </tbody>
+
+                    </table>
+
+                    <h4>Lamination Thickness Report</h4>
+                    <table class="table table-hover table-bordered" id="sampleTable1">
+                        <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Material Name</th>
+                            <th>Qty</th>
+                            <th>Area(Sq.mt)</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php $i=1;
+                        foreach ($lamination_material as $val)
+                        {
+                            $area =  number_format((float)$val['area'], 2, '.', '');
+
+
+
+                            ?>
+
+                            <tr>
+
+                                <td><?php echo $i; ?></td>
+                                <td><?php echo $val['Material_Name']; ?></td>
+                                <td><?php echo $val['Total_Qty']; ?>
+                                    <input type="hidden" name="material_qty3[]" value="<?php echo $val['Total_Qty']; ?>">
+                                </td>
+                                <td><?php echo $area ; ?>
+                                    <input type="hidden" name="material_area3[]" value="<?php echo $val['area']; ?>">
+
+                                </td>
+
+
+                            </tr>
+
+                            <?php
+                            $i++;
+                        }
+                        ?>
+
+                        <tr>
+                            <td colspan="2" style="text-align: right; font-weight: bold;">Total Summary</td>
+                            <td id="tot_material_qty3" style="font-weight: bold; font-size: 24px;"></td>
+                            <td id="area_material_qty3" style="font-weight: bold; font-size: 24px;"></td>
+
+                        </tr>
+                        </tbody>
+
+                    </table>
+
 
                     <h4>Expenses</h4>
                     <table class="table table-hover table-bordered" id="sampleTable">
@@ -179,7 +325,112 @@
             }
         }
         document.getElementById('area_material_qty').innerHTML = parseFloat(sum_mat_area).toFixed(2);
-        document.getElementById('area_material_qty1').innerHTML = parseFloat(sum_mat_area).toFixed(2);
+        document.getElementById('area_material_qty').innerHTML = parseFloat(sum_mat_area).toFixed(2);
+
+
+        var mqty1 =document.getElementsByName("material_qty1[]");
+        var sum_qty1 = 0;
+        for (var j = 0, iLen = mqty1.length; j < iLen; j++) {
+            if (mqty1[j].value!==""){
+                val=parseFloat(mqty1[j].value);
+                sum_qty1 +=val;
+            }
+        }
+        document.getElementById('tot_material_qty1').innerHTML = parseFloat(sum_qty1);
+
+        var material_area1 = document.getElementsByName("material_area1[]");
+        var sum_mat_area1=0;
+        for (var j = 0, iLen = material_area1.length; j < iLen; j++) {
+            if (material_area1[j].value!==""){
+                val=parseFloat(material_area1[j].value);
+                sum_mat_area1 +=val;
+            }
+        }
+        document.getElementById('area_material_qty1').innerHTML = parseFloat(sum_mat_area1).toFixed(2);
+        document.getElementById('area_material_qty1').innerHTML = parseFloat(sum_mat_area1).toFixed(2);
+
+
+
+        var mqty2 =document.getElementsByName("material_qty2[]");
+        var sum_qty2 = 0;
+        for (var j = 0, iLen = mqty2.length; j < iLen; j++) {
+            if (mqty2[j].value!==""){
+                val=parseFloat(mqty2[j].value);
+                sum_qty2 +=val;
+            }
+        }
+        document.getElementById('tot_material_qty2').innerHTML = parseFloat(sum_qty2);
+
+        var material_area2 = document.getElementsByName("material_area2[]");
+        var sum_mat_area2=0;
+        for (var j = 0, iLen = material_area2.length; j < iLen; j++) {
+            if (material_area2[j].value!==""){
+                val=parseFloat(material_area2[j].value);
+                sum_mat_area2 +=val;
+            }
+        }
+        document.getElementById('area_material_qty2').innerHTML = parseFloat(sum_mat_area2).toFixed(2);
+        document.getElementById('area_material_qty2').innerHTML = parseFloat(sum_mat_area2).toFixed(2);
+
+
+        var mqty3 =document.getElementsByName("material_qty3[]");
+        var sum_qty3 = 0;
+        for (var j = 0, iLen = mqty3.length; j < iLen; j++) {
+            if (mqty3[j].value!==""){
+                val=parseFloat(mqty3[j].value);
+                sum_qty3 +=val;
+            }
+        }
+        document.getElementById('tot_material_qty3').innerHTML = parseFloat(sum_qty3);
+
+        var material_area3 = document.getElementsByName("material_area3[]");
+        var sum_mat_area3=0;
+        for (var j = 0, iLen = material_area3.length; j < iLen; j++) {
+            if (material_area3[j].value!==""){
+                val=parseFloat(material_area3[j].value);
+                sum_mat_area3 +=val;
+            }
+        }
+        document.getElementById('area_material_qty3').innerHTML = parseFloat(sum_mat_area3).toFixed(2);
+        document.getElementById('area_material_qty3').innerHTML = parseFloat(sum_mat_area3).toFixed(2);
+
+        var total_area = sum_mat_area + sum_mat_area1 + sum_mat_area2 + sum_mat_area3;
+
+        document.getElementById('total_area_material_qty').innerHTML = parseFloat(total_area).toFixed(2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         var totals =document.getElementsByName("total[]");

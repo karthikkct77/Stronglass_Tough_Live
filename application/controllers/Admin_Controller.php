@@ -1946,9 +1946,12 @@ class Admin_Controller extends CI_Controller
         $data['wo_count']= $this->admin_model->Get_Monthly_WO_Counts();
         $data['wo_count_locations']= $this->admin_model->Get_Monthly_WO_Counts_locations();
         $data['total_bill']= $this->admin_model->Get_Monthly_Total_Bill();
-        $normal_material = $this->admin_model->Get_monthly_normal_WO_material();
-        $sheet_material = $this->admin_model->Get_monthly_sheet_WO_material();
-        $data['material_details'] = array_merge($normal_material, $sheet_material);
+//        $normal_material = $this->admin_model->Get_monthly_normal_WO_material();
+        $data['sheet_material'] = $this->admin_model->Get_monthly_sheet_WO_material();
+        $data['normal_material'] = $this->admin_model->Get_monthly_normal_pi_WO_material();
+        $data['dg_material'] = $this->admin_model->Get_monthly_dg_pi_WO_material();
+        $data['lamination_material'] = $this->admin_model->Get_monthly_lamination_pi_WO_material();
+
         $data['expenses']= $this->admin_model->Get_Monthly_Expenses();
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
@@ -2421,6 +2424,19 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/left');
         $this->load->view('Admin/Sales_Summary_Kerala',$data,false);
         $this->load->view('Admin/footer');
+    }
+
+    public function Accounts()
+    {
+        $data['wo_count']= $this->admin_model->Get_Monthly_WO_Counts();
+        $data['bill_count']= $this->admin_model->Get_Monthly_Bill_Counts();
+        $data['bill_account']= $this->admin_model->Get_Monthly_Bill_Accounts();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Account_Report',$data,false);
+        $this->load->view('Admin/footer');
+
     }
 
 }

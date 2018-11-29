@@ -963,17 +963,39 @@ class Admin_Model extends CI_Model
     }
 
     //** Normal Material Details
-    public function Get_monthly_normal_WO_material()
-    {
-        $query = $this->db->query("SELECT   DISTINCT(E.Material_Name), SUM(D.Proforma_Qty) as Total_Qty, SUM(D.Proforma_Area_SQMTR) as area FROM work_order A  INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
-                                    INNER JOIN proforma_invoice_items D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode  WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())  GROUP BY E.Material_Icode"); //GROUP by A.Stock_Icode
-        return $query->result_array();
-    }
+//    public function Get_monthly_normal_WO_material()
+//    {
+//        $query = $this->db->query("SELECT   DISTINCT(E.Material_Name), SUM(D.Proforma_Qty) as Total_Qty, SUM(D.Proforma_Area_SQMTR) as area FROM work_order A  INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode
+//                                    INNER JOIN proforma_invoice_items D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode  WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())  GROUP BY E.Material_Icode"); //GROUP by A.Stock_Icode
+//        return $query->result_array();
+//    }
 
     public function Get_monthly_sheet_WO_material()
     {
         $query = $this->db->query("SELECT   DISTINCT(E.Material_Name),SUM(D.Proforma_Qty) as Total_Qty, SUM(D.Proforma_Area_SQMTR) as area FROM work_order A  INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
                                     INNER JOIN proforma_invoice_item_sheet D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode  WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())  GROUP BY E.Material_Icode"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+
+    public function Get_monthly_normal_pi_WO_material()
+    {
+        $query = $this->db->query("SELECT   DISTINCT(E.Material_Name), SUM(D.Proforma_Qty) as Total_Qty, SUM(D.Proforma_Area_SQMTR) as area FROM work_order A  INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                    INNER JOIN proforma_invoice_items D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode
+                                      WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())  and B.PI_Type='0'  GROUP BY E.Material_Icode"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+    public function Get_monthly_dg_pi_WO_material()
+    {
+        $query = $this->db->query("SELECT   DISTINCT(E.Material_Name), SUM(D.Proforma_Qty) as Total_Qty, SUM(D.Proforma_Area_SQMTR) as area FROM work_order A  INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                    INNER JOIN proforma_invoice_items D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode
+                                      WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())  and B.PI_Type='2'  GROUP BY E.Material_Icode"); //GROUP by A.Stock_Icode
+        return $query->result_array();
+    }
+    public function Get_monthly_lamination_pi_WO_material()
+    {
+        $query = $this->db->query("SELECT   DISTINCT(E.Material_Name), SUM(D.Proforma_Qty) as Total_Qty, SUM(D.Proforma_Area_SQMTR) as area FROM work_order A  INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
+                                    INNER JOIN proforma_invoice_items D on A.Proforma_Icode=D.Proforma_Icode INNER JOIN material_master E on D.Proforma_Material_Icode=E.Material_Icode
+                                      WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())  and B.PI_Type='3'  GROUP BY E.Material_Icode"); //GROUP by A.Stock_Icode
         return $query->result_array();
     }
 
@@ -1173,6 +1195,20 @@ class Admin_Model extends CI_Model
         return $query->result_array();
     }
 
+    public function Get_Monthly_Bill_Counts()
+    {
+        $query = $this->db->query("SELECT COUNT(Bill_Icode) as Bill_Count FROM billing_details WHERE MONTH(Created_On) = MONTH(CURRENT_DATE()) AND YEAR(Created_On) = YEAR(CURRENT_DATE()) ");
+        return $query->result_array();
+
+    }
+    public function Get_Monthly_Bill_Accounts()
+    {
+        $query = $this->db->query("SELECT A.WO_Number,B.GrossTotal_Value as wo_total,C.Bill_Number,C.GrossTotal_Value FROM work_order A 
+                                   INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode LEFT JOIN billing_details C on A.WO_Icode=C.Wo_Icode 
+                                   WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())    ");
+        return $query->result_array();
+
+    }
 
 
 
