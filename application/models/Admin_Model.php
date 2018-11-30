@@ -1209,6 +1209,16 @@ class Admin_Model extends CI_Model
         return $query->result_array();
 
     }
+    public function Get_Petty_Cash()
+    {
+        $query = $this->db->query("SELECT * FROM petty_cash ");
+        return $query->result_array();
+    }
+    public function Get_Inward_Cash()
+    {
+        $query = $this->db->query("SELECT * FROM Inward_Cash WHERE MONTH(Created_On) = MONTH(CURRENT_DATE()) AND YEAR(Created_On) = YEAR(CURRENT_DATE()) ");
+        return $query->result_array();
+    }
 
 
 

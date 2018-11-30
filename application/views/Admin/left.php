@@ -73,7 +73,7 @@
            </li>
            <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-eye"></i><span class="app-menu__label">Expenses</span><i class="treeview-indicator fa fa-angle-right"></i></a>
                <ul class="treeview-menu">
-                   <!--<li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Size_Master'); ?><!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>-->
+                   <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Inward_Cash'); ?>"><i class="icon fa fa-circle-o"></i>Inward Cash </a></li>
                    <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Expenses_Master'); ?>"><i class="icon fa fa-circle-o"></i>Expenses Master</a></li>
                    <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/Add_Expenses'); ?>"><i class="icon fa fa-circle-o"></i>Add Expenses</a></li>
                    <li><a class="treeview-item" href="<?php echo site_url('Admin_Controller/View_Expenses'); ?>"><i class="icon fa fa-circle-o"></i>View Expenses</a></li>

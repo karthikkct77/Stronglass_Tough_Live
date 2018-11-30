@@ -2436,7 +2436,34 @@ class Admin_Controller extends CI_Controller
         $this->load->view('Admin/left');
         $this->load->view('Admin/Account_Report',$data,false);
         $this->load->view('Admin/footer');
+    }
 
+    public function Inward_Cash()
+    {
+        $data['petty_cash']= $this->admin_model->Get_Petty_Cash();
+        $data['inward']= $this->admin_model->Get_Inward_Cash();
+        $this->load->view('Admin/header');
+        $this->load->view('Admin/top');
+        $this->load->view('Admin/left');
+        $this->load->view('Admin/Inward_Cash',$data,false);
+        $this->load->view('Admin/footer');
+    }
+    public function Insert_Inward_Details()
+    {
+       $inward_Amount =  $this->input->post('amount');
+       $petty =  $this->input->post('petty_amt');
+       $new_petty = $petty + $inward_Amount;
+        $inward = array('Petty_Cash' => $new_petty);
+        $this->db->where('Petty_Cash_Icode', $this->input->post('petty_icode'));
+        $this->db->update('petty_cash', $inward);
+
+        $insert_data = array( 'Petty_Cash_Icode' => $this->input->post('petty_icode'),
+            'Inward_Amount' => $this->input->post('amount'),
+            'Inward_Details' => $this->input->post('comments'),
+            'Created_By' => $this->session->userdata['userid']);
+        $this->db->insert('Inward_Cash', $insert_data);
+        $this->session->set_flashdata('feedback', 'Inward Cash Added Successfully..');
+        redirect('Admin_Controller/Inward_Cash');
     }
 
 }
