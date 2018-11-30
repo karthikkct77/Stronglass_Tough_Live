@@ -548,7 +548,7 @@ class User_Model extends CI_Model
 public function get_bill_wo()
     {
        
-        $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode WHERE B.WO_Confirm= '1' and A.Bill_Status='0' ORDER by A.WO_Icode DESC ");
+        $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master C on B.Proforma_Customer_Icode=C.Customer_Icode WHERE B.WO_Confirm= '1' and A.Bill_Status='0' ORDER by A.WO_Icode DESC ");
         return $query->result_array();
     }
     public function Get_all_bill()

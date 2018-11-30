@@ -2055,6 +2055,7 @@ class Admin_Controller extends CI_Controller
     //** View Expenses */
     public function View_Expenses()
     {
+        $data['petty_cash']= $this->admin_model->Get_Petty_Cash();
         $data['st']= $this->admin_model->get_ST();
         $data['expenses']= $this->admin_model->Get_All_Expenses_details();
         $this->load->view('Admin/header');

@@ -8,6 +8,7 @@
         <div class="row">
             <div class="col-md-12" >
                 <div class="tile" id="page_setup">
+                    <input  type="button" id="with_print" class="btn btn-primary pi_button" onclick="window.print()" value="Print">
                     <div class="row invoice">
                         <img style="position: absolute;width: 100px;height: auto;" src="<?php echo base_url('img/strong.png'); ?>" alt="User Image">
                         <h5><?php echo $st[0]['ST_Name']; ?></h5>
@@ -17,6 +18,7 @@
                     <hr>
                     <h3 align="center">Monthly Expenses Details</h3>
                     <h3 align="center"><?php echo date('F'); ?></h3>
+
                     <div class="row">
 
                         <div class="col-md-12">
@@ -36,13 +38,21 @@
                                         <td  class="heading"><?php echo $i; ?></td>
                                         <td><?php echo $key['Expenses_Date']; ?></td>
                                         <td><?php echo $key['Expenses_Name']; ?></td>
-                                        <td><?php echo $key['Amount']; ?></td>
+                                        <td><?php echo $key['Amount']; ?>
+                                            <input type="hidden" name="material_qty[]" value="<?php echo $key['Amount']; ?>">
+                                        </td>
                                         <td><?php echo $key['Comments']; ?></td>
 
                                     </tr>
                                     <?php $i++; } ?>
+                                <tr>
+                                    <td colspan="3" style="text-align: right; font-weight: bold;">Total Expenses</td>
+                                    <td id="total_exp" style="font-weight: bold; font-size: 20px;"></td>
+                                    <td></td>
+                                </tr>
                                 </tbody>
                             </table>
+                            <h4  align="center">Cash in Hand: <span><?php echo $petty_cash[0]['Petty_Cash']; ?></span></h4>
 
                         </div>
                     </div>
@@ -51,7 +61,42 @@
         </div>
     </div>
 </main>
+<style type="text/css" media="print">
+    #pagewidth {
+        overflow: hidden ;
+    }
+    @media print {
+        #with_print {
+            display: none;
+        }
+        table { page-break-after:auto }
+        tr    { page-break-inside:avoid; page-break-after:auto }
+        td    { page-break-inside:avoid; page-break-after:auto }
+        thead { display:table-header-group }
+        /*tfoot { display:table-footer-group }*/
+        #page_inside {  page-break-inside: avoid; }
+        #Signature { page-break-inside: avoid;}
+
+
+    }
+</style>
 <!--<script>$('#sampleTable').DataTable();</script>-->
+<script>
+    $( document ).ready(function() {
+
+        var mqty =document.getElementsByName("material_qty[]");
+        var sum_qty = 0;
+        for (var j = 0, iLen = mqty.length; j < iLen; j++) {
+            if (mqty[j].value!==""){
+                val=parseFloat(mqty[j].value);
+                sum_qty +=val;
+            }
+        }
+        document.getElementById('total_exp').innerHTML = parseFloat(sum_qty);
+
+
+    });
+</script>
 
 
 
