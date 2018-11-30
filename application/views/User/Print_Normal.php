@@ -157,7 +157,7 @@
                                             ?>
                                             <tr id="row<?php echo $i; ?>">
                                                 <td  class="heading"><?php echo $i; ?></td>
-                                                <td class="heading"><?php echo $key['Material_Name']; ?></td>
+                                                <td class="heading" style="font-size: 16px;"><?php echo $key['Material_Name']; ?></td>
 
                                                 <?php
                                                 if($key['Proforma_Special'] == 'T')
@@ -182,8 +182,7 @@
                                                 <td class="heading"><?php echo $holes; ?></td>
                                                 <td class="heading"><?php echo $cutout; ?></td>
                                                 <td class="heading"><?php echo $key['Proforma_Special']; ?></td>
-                                                <td class="heading"><?php echo $totarea; ?></td>
-                                            </tr>
+                                                <td class="heading"><?php echo round($totarea, 2); ?>      </tr>
                                             <?php $i++; } ?>
                                         <tr>
                                             <td></td>
@@ -255,7 +254,7 @@
                                            ?>
                                            <tr id="row<?php echo $i; ?>">
                                                <td  class="heading"><?php echo $i; ?></td>
-                                               <td class="heading"><?php echo $key['Material_Name']; ?></td>
+                                               <td class="heading" style="font-size: 16px;"><?php echo $key['Material_Name']; ?></td>
                                                <?php
                                                if($key['Proforma_Special'] == 'T')
                                                {
@@ -278,7 +277,7 @@
                                                <td class="heading"><input type="hidden" name="holes_print[]" value="<?php echo $key['Proforma_Holes']; ?>" ><?php echo $key['Proforma_Holes']; ?></td>
                                                <td class="heading"><input type="hidden" name="cutout_print[]" value="<?php echo $key['Proforma_Cutout']; ?>" ><?php echo $key['Proforma_Cutout']; ?></td>
                                                <td class="heading"><?php echo $key['Proforma_Special']; ?></td>
-                                               <td class="heading"><?php echo $totarea; ?></td>
+                                               <td class="heading"><?php echo round($totarea, 2); ?></td>
                                            </tr>
                                            <?php $i++; } ?>
                                        <tr>
@@ -355,7 +354,7 @@
                                             ?>
                                             <tr id="row<?php echo $i; ?>">
                                                 <td  class="heading"><?php echo $i; ?></td>
-                                                <td class="heading"><?php echo $key['Material_Name']; ?></td>
+                                                <td class="heading" style="font-size: 16px;"><?php echo $key['Material_Name']; ?></td>
                                                 <?php
                                                 if($key['Proforma_Special'] == 'T')
                                                 {
@@ -378,7 +377,7 @@
                                                 <td class="heading"><input type="hidden" name="holes_print[]" value="<?php echo $key['Proforma_Holes']; ?>" ><?php echo $key['Proforma_Holes']; ?></td>
                                                 <td class="heading"><input type="hidden" name="cutout_print[]" value="<?php echo $key['Proforma_Cutout']; ?>" ><?php echo $key['Proforma_Cutout']; ?></td>
                                                 <td class="heading"><?php echo $key['Proforma_Special']; ?></td>
-                                                <td class="heading"><?php echo $totarea; ?></td>
+                                                <td class="heading"><?php echo round($totarea, 2); ?></td>
                                             </tr>
                                             <?php $i++; } ?>
                                         <tr>
@@ -452,7 +451,7 @@
                                             ?>
                                             <tr id="row<?php echo $i; ?>">
                                                 <td  class="heading"><?php echo $i; ?></td>
-                                                <td class="heading"><?php echo $key['Material_Name']; ?></td>
+                                                <td class="heading" style="font-size: 16px;"><?php echo $key['Material_Name']; ?></td>
                                                 <?php
                                                 if($key['Proforma_Special'] == 'T')
                                                 {
@@ -475,7 +474,7 @@
                                                 <td class="heading"><input type="hidden" name="holes_print[]" value="<?php echo $key['Proforma_Holes']; ?>" ><?php echo $key['Proforma_Holes']; ?></td>
                                                 <td class="heading"><input type="hidden" name="cutout_print[]" value="<?php echo $key['Proforma_Cutout']; ?>" ><?php echo $key['Proforma_Cutout']; ?></td>
                                                 <td class="heading"><?php echo $key['Proforma_Special']; ?></td>
-                                                <td class="heading"><?php echo $totarea; ?></td>
+                                                <td class="heading"><?php echo round($totarea, 2); ?></td>
                                             </tr>
                                             <?php $i++; } ?>
                                         <tr>
@@ -544,7 +543,7 @@
                                             ?>
                                             <tr id="row<?php echo $i; ?>">
                                                 <td  class="heading"><?php echo $i; ?></td>
-                                                <td class="heading"><?php echo $key['Material_Name']; ?></td>
+                                                <td class="heading" style="font-size: 16px;"><?php echo $key['Material_Name']; ?></td>
                                                 <?php
                                                 if($key['Proforma_Special'] == 'T')
                                                 {
@@ -567,7 +566,7 @@
                                                 <td class="heading"><input type="hidden" name="holes_print[]" value="<?php echo $key['Proforma_Holes']; ?>" ><?php echo $key['Proforma_Holes']; ?></td>
                                                 <td class="heading"><input type="hidden" name="cutout_print[]" value="<?php echo $key['Proforma_Cutout']; ?>" ><?php echo $key['Proforma_Cutout']; ?></td>
                                                 <td class="heading"><?php echo $key['Proforma_Special']; ?></td>
-                                                <td class="heading"><?php echo $totarea; ?></td>
+                                                <td class="heading"><?php echo round($totarea, 2);?></td>
                                             </tr>
                                             <?php $i++; } ?>
                                         <tr>
@@ -660,7 +659,7 @@
                                             ?>
                                             <tr id="row<?php echo $i; ?>">
                                                 <td  class="heading"><?php echo $i; ?></td>
-                                                <td class="heading"><?php echo $key['Material_Name']; ?></td>
+                                                <td class="heading" style="font-size: 16px;"><?php echo $key['Material_Name']; ?></td>
                                                 <?php
                                                 if($key['Proforma_Special'] == 'T')
                                                 {
@@ -683,7 +682,7 @@
                                                 <td class="heading"><?php echo $holes;  ?></td>
                                                 <td class="heading"><?php echo $cutout;  ?></td>
                                                 <td class="heading"><?php echo $key['Proforma_Special']; ?></td>
-                                                <td class="heading"><?php echo $totarea; ?></td>
+                                                <td class="heading"><?php echo round($totarea, 2); ?></td>
                                             </tr>
                                             <?php $i++; } ?>
                                         <tr>
@@ -757,7 +756,7 @@
                                             ?>
                                             <tr id="row<?php echo $i; ?>">
                                                 <td  class="heading"><?php echo $i; ?></td>
-                                                <td class="heading"><?php echo $key['Material_Name']; ?></td>
+                                                <td class="heading" style="font-size: 16px;"><?php echo $key['Material_Name']; ?></td>
                                                 <?php
                                                 if($key['Proforma_Special'] == 'T')
                                                 {
@@ -780,7 +779,7 @@
                                                 <td class="heading"><input type="hidden" name="holes_print[]" value="<?php echo $key['Proforma_Holes']; ?>" ><?php echo $key['Proforma_Holes']; ?></td>
                                                 <td class="heading"><input type="hidden" name="cutout_print[]" value="<?php echo $key['Proforma_Cutout']; ?>" ><?php echo $key['Proforma_Cutout']; ?></td>
                                                 <td class="heading"><?php echo $key['Proforma_Special']; ?></td>
-                                                <td class="heading"><?php echo $totarea; ?></td>
+                                                <td class="heading"><?php echo round($totarea, 2); ?></td>
                                             </tr>
                                             <?php $i++; } ?>
                                         <tr>
