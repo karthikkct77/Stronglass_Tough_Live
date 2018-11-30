@@ -35,6 +35,8 @@
                             <th>#</th>
                             <th>WO.NO</th>
                             <th>Amount</th>
+                            <th>Customer</th>
+                            <th>Date</th>
                             <th>Bill NO</th>
                             <th>Amount</th>
                         </tr>
@@ -50,6 +52,8 @@
                                 <td><?php echo $i; ?></td>
                                 <td><?php echo $val['WO_Number']; ?></td>
                                 <td><?php echo $val['wo_total']; ?></td>
+                                <td><?php echo $val['Customer_Company_Name']; ?></td>
+                                <td><?php echo $val['WO_Date']; ?></td>
                                 <td><?php echo $val['Bill_Number']; ?></td>
                                 <td><?php echo $val['GrossTotal_Value']; ?></td>
                             </tr>

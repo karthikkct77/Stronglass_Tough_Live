@@ -1203,9 +1203,9 @@ class Admin_Model extends CI_Model
     }
     public function Get_Monthly_Bill_Accounts()
     {
-        $query = $this->db->query("SELECT A.WO_Number,B.GrossTotal_Value as wo_total,C.Bill_Number,C.GrossTotal_Value FROM work_order A 
-                                   INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode LEFT JOIN billing_details C on A.WO_Icode=C.Wo_Icode 
-                                   WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE())    ");
+        $query = $this->db->query("SELECT A.WO_Number,B.GrossTotal_Value as wo_total,A.WO_Date,D.Customer_Company_Name, C.Bill_Number,C.GrossTotal_Value FROM work_order A 
+                                   INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode INNER JOIN customer_master D on B.Proforma_Customer_Icode=D.Customer_Icode LEFT JOIN billing_details C on A.WO_Icode=C.Wo_Icode 
+                                   WHERE MONTH(A.WO_Created_On) = MONTH(CURRENT_DATE()) AND YEAR(A.WO_Created_On) = YEAR(CURRENT_DATE()) ORDER by A.WO_Icode ASC    ");
         return $query->result_array();
 
     }
