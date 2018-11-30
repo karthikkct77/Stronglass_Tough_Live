@@ -2025,6 +2025,7 @@ class Admin_Controller extends CI_Controller
     //** Add Expenses */
     public function Add_Expenses()
     {
+        $data['petty_cash']= $this->admin_model->Get_Petty_Cash();
         $data['expenses']= $this->admin_model->Get_All_Expenses();
         $this->load->view('Admin/header');
         $this->load->view('Admin/top');
@@ -2035,6 +2036,12 @@ class Admin_Controller extends CI_Controller
     //** Insert Expenses Details */
     public function Insert_Expenses_Details()
     {
+        $expense_Amount =  $this->input->post('amount');
+        $petty =  $this->input->post('petty_amt');
+        $new_petty = $petty - $expense_Amount;
+        $inward = array('Petty_Cash' => $new_petty);
+        $this->db->where('Petty_Cash_Icode', $this->input->post('petty_icode'));
+        $this->db->update('petty_cash', $inward);
         $insert_data = array( 'Expenses_Icode' => $this->input->post('expenses'),
             'Expenses_Date' => $this->input->post('expenses_date'),
             'Amount' => $this->input->post('amount'),

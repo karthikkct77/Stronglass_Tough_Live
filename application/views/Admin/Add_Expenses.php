@@ -4,6 +4,17 @@
             <h1><i class="fa fa-edit"></i>Add Expenses</h1>
         </div>
     </div>
+    <style>
+        .blink_me {
+            animation: blinker 1s linear infinite;
+            font-size: 25px;
+            color: #e80d0d;
+        }
+
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+    </style>
     <div class="row">
         <?php if($this->session->flashdata('feedback')): ?>
             <script>
@@ -35,11 +46,13 @@
 
         <div class="col-md-6" id="add">
             <div class="tile">
-                <h3 class="tile-title">Add Expenses</h3>
+                <h3 class="tile-title">Add Expenses</h3> <span class="blink_me">Petty Cash : <?php echo $petty_cash[0]['Petty_Cash']; ?> /-</span>
                 <div class="tile-body">
                     <form method="post" class="login-form" action="<?php echo site_url('Admin_Controller/Insert_Expenses_Details'); ?>" name="data_register" onsubmit="return confirm('Do you really want to Save?');">
                         <div class="form-group">
                             <label class="control-label">Date</label>
+                            <input type="hidden" name="petty_icode" value="<?php echo $petty_cash[0]['Petty_Cash_Icode']; ?>">
+                            <input class="form-control" type="hidden" name="petty_amt" value="<?php echo $petty_cash[0]['Petty_Cash']; ?>" >
 <!--                            <input class="form-control" type="text" name="expenses_date" value="--><?php //echo date('Y-m-d'); ?><!--" required readonly>-->
                             <input class="form-control" id="demoDate" name="expenses_date" type="text" placeholder="Select Expenses Date" required >
                         </div>
