@@ -232,7 +232,9 @@
                                 </tr>
                                 </tfoot>
                                 <?php
+                                $i++;
                                 }
+
                                 ?>
                             </table>
                         </div>
@@ -1165,6 +1167,7 @@
         var tot_area = document.getElementById('sheet_Area'+id).value;
         var rate = document.getElementById('sheet_Rate'+id).value;
         var total = parseFloat(parseFloat(tot_area) * parseFloat(rate));
+
         document.getElementById('sheet_Rate_Amt'+id).value =  parseFloat(total).toFixed(3);
 
         var totals =document.getElementsByName("sheet_Rate_Amt[]");
