@@ -83,7 +83,9 @@
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/View_WO'); ?>"><i class="app-menu__icon fa fa-barcode"></i><span class="app-menu__label">View WO List</span></a></li>
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Print_WO'); ?>"><i class="app-menu__icon fa fa-print"></i><span class="app-menu__label">Print WO</span></a></li>
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Re_Cut'); ?>"><i class="app-menu__icon fa fa-scissors"></i><span class="app-menu__label">Recut</span></a></li>
-            <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/wo_Report'); ?>"><i class="app-menu__icon fa fa-check-square"></i><span class="app-menu__label">Report</span></a></li>
+            <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Work_Order_Report'); ?>"><i class="app-menu__icon fa fa-circle-o"></i><span class="app-menu__label">WO Report</span></a></li>
+
+            <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/wo_Report'); ?>"><i class="app-menu__icon fa fa-check-square"></i><span class="app-menu__label">WO Summary</span></a></li>
 
 
         <?php  }

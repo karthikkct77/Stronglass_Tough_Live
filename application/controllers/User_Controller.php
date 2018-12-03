@@ -3437,4 +3437,31 @@ class User_Controller extends CI_Controller
         $this->pdf->render();
         $this->pdf->stream("welcome.pdf", array("Attachment"=>0));
     }
+    //** Work Order Report with invoice number */
+    public function Work_Order_Report()
+    {
+        $data['wo'] = $this->user_model->get_All_WO();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/All_Work_Orders',$data,false);
+        $this->load->view('User/footer');
+    }
+    public function Normal_WO($id)
+    {
+        $pi_icode = $this->uri->segment(3);
+        $data['wo'] = $this->admin_model->Get_Work_Order($pi_icode);
+        $data['invoice'] = $this->admin_model->Get_Single_Invoice($pi_icode);
+        $data['invoice_item'] = $this->admin_model->Get_Single_Invoice_Item($pi_icode);
+        $data['invoice_Charges'] = $this->admin_model->Get_Single_Invoice_Charges($pi_icode);
+        $data['invoice_total'] = $this->admin_model->Get_Single_Invoice_Item_Total($pi_icode);
+        $data['tax']= $this->admin_model->get_Tax();
+        $data['st']= $this->admin_model->get_ST();
+        $this->load->view('User/header');
+        $this->load->view('User/top');
+        $this->load->view('User/left');
+        $this->load->view('User/Print_Normal_WO',$data,false);
+        $this->load->view('User/footer');
+    }
+
 }
