@@ -81,11 +81,11 @@
 
                                 </div>
                             </div>
-<!--                            <div class="col-md-3">-->
-<!--                                <input class="form-control" type="hidden" name="PI_Icode"  id="PI_Icode" value="--><?php //echo $invoice[0]['Proforma_Icode']; ?><!--" >-->
-<!--                                <h5>Work Order No <input type="hidden" name="invoice_no" id="invoice_no" value="--><?php //echo $wo[0]['WO_Number']; ?><!--" readonly><h4>--><?php //echo $wo[0]['WO_Number']; ?><!--</h4></h5>-->
-<!--                                <h5>Work Order Date<input type="hidden" name="invoice_date" id="invoice_date" value="--><?php //echo $wo[0]['WO_Date']; ?><!--" readonly><h4>--><?php //echo $wo[0]['WO_Date']; ?><!--</h4></h5>-->
-<!--                            </div>-->
+                            <!--                            <div class="col-md-3">-->
+                            <!--                                <input class="form-control" type="hidden" name="PI_Icode"  id="PI_Icode" value="--><?php //echo $invoice[0]['Proforma_Icode']; ?><!--" >-->
+                            <!--                                <h5>Work Order No <input type="hidden" name="invoice_no" id="invoice_no" value="--><?php //echo $wo[0]['WO_Number']; ?><!--" readonly><h4>--><?php //echo $wo[0]['WO_Number']; ?><!--</h4></h5>-->
+                            <!--                                <h5>Work Order Date<input type="hidden" name="invoice_date" id="invoice_date" value="--><?php //echo $wo[0]['WO_Date']; ?><!--" readonly><h4>--><?php //echo $wo[0]['WO_Date']; ?><!--</h4></h5>-->
+                            <!--                            </div>-->
                             <div class="col-md-3">
                                 <input class="form-control" type="hidden" name="PI_Icode"  id="PI_Icode" value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
                                 <h5><span>PI.Date</span><input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly><?php echo $invoice[0]['Proforma_Date']; ?></h5>
@@ -93,6 +93,43 @@
                                 <h5><span>Total Outstanding</span><?php echo $invoice[0]['Total_Outstanding']; ?></h5>
                                 <h5><span>Credit Limit Amt</span><?php echo $invoice[0]['Credit_Limit']; ?> </h5>
                             </div>
+                        </div>
+                        <h6 style="text-align: center">Total Number of Sheets used to Cut the following glasses</h6>
+                        <div class="row">
+                            <table class="table table-hover table-bordered" id="sampleTable2">
+                                <thead>
+                                <th>#</th>
+                                <th>Select Material</th>
+                                <th>No.of sheet</th>
+                                <th>Act<br>Size(h)</th>
+                                <th>Act<br>Size(w)</th>
+                                <th>cha<br>Size(h)</th>
+                                <th>cha<br>Size(w)</th>
+                                <th>Area</th>
+                                <th>Rate</th>
+                                <th>Amount</th>
+
+                                </thead>
+                                <tbody></tbody>
+                                <tfoot>
+                                <?php $i=1; foreach ($sheet as $key) { ?>
+                                <tr>
+                                    <td><?php echo $i; ?></td>
+                                    <td><?php echo $key['Material_Name']; ?></td>
+                                    <td><?php echo $key['No_Of_Sheet']; ?></td>
+                                    <td><?php echo $key['Actual_Height']; ?></td>
+                                    <td><?php echo $key['Actual_Width']; ?></td>
+                                    <td><?php echo $key['Chargable_Height']; ?></td>
+                                    <td><?php echo $key['Chargable_Width']; ?></td>
+                                    <td><?php echo $key['Area']; ?></td>
+                                    <td><?php echo $key['Rate']; ?></td>
+                                    <td><?php echo $key['Total_Amount']; ?></td>
+                                </tr>
+                                </tfoot>
+                                <?php
+                                }
+                                ?>
+                            </table>
                         </div>
                         <div class="row">
                             <table class="table table-hover table-bordered" id="sampleTable">
@@ -114,9 +151,7 @@
                                 <tbody>
                                 <?php $i=1; foreach ($invoice_item as $key) { ?>
                                     <tr id="row<?php echo $i; ?>">
-                                        <input class="form-control" type="hidden" name="material[]"  value="<?php echo $key['Proforma_Invoice_Items_Icode']; ?>" >
-                                        <input class="form-control" type="hidden" name="pics[]"  value="<?php echo $key['Proforma_Qty']; ?>" >
-                                        <td><?php echo $i; ?></td>
+                                                 <td><?php echo $i; ?></td>
                                         <td><?php echo $key['Material_Name']; ?></td>
                                         <td><?php echo $key['Proforma_Actual_Size_Height']; ?></td>
 
