@@ -102,11 +102,35 @@
         </div>
         <div style="width:40%;float: left;text-align: left;">
             <h4 style="margin: 0;margin-bottom:5px;">Buyer (if other than consignee)</h4>
-            <p style="margin: 0;margin-bottom:5px;font-size: 14px; font-weight: bold;"><?php echo $invoice[0]['Customer_Company_Name']; ?></p>
-            <p style="margin: 0;margin-bottom:5px;font-size: 14px; "><?php echo $invoice[0]['Customer_Address_1']; ?><?php echo $invoice[0]['Customer_Address_2']; ?></p>
-            <p style="margin: 0;margin-bottom:5px;font-size: 14px; ">City: <?php echo $invoice[0]['Customer_City']; ?></p>
-            <p style="margin: 0;margin-bottom:5px;font-size: 14px; ">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></p>
-            <p style="margin: 0;font-size: 14px; ">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></p>
+            <?php
+            if($invoice[0]['Proforma_Delivery_Address_Icode'] == "0") {
+                ?>
+
+
+                <p style="margin: 0;margin-bottom:5px;font-size: 14px; font-weight: bold;"><?php echo $invoice[0]['Customer_Company_Name']; ?></p>
+                <p style="margin: 0;margin-bottom:5px;font-size: 14px; "><?php echo $invoice[0]['Customer_Address_1']; ?><?php echo $invoice[0]['Customer_Address_2']; ?></p>
+                <p style="margin: 0;margin-bottom:5px;font-size: 14px; ">
+                    City: <?php echo $invoice[0]['Customer_City']; ?></p>
+                <p style="margin: 0;margin-bottom:5px;font-size: 14px; ">
+                    Phone: <?php echo $invoice[0]['Customer_Phone']; ?></p>
+                <p style="margin: 0;font-size: 14px; ">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></p>
+                <?php
+            }
+            else
+            {
+
+                $myString = $invoice[0]['Proforma_Delivery_Address_Icode'];
+                $myArray = explode(',', $myString);
+                foreach ($myArray as $key)
+                { ?>
+                <<p style="margin: 0;margin-bottom:5px;font-size: 14px; font-weight: bold;"><?php echo $key; ?> </p><br>
+
+
+            <?php }
+            ?>
+
+            <?php }
+            ?>
         </div>
         <div style="width:20%;float: left;text-align: left;">
             <p style="margin: 0;margin-bottom:5px;font-size: 14px;">Date<br><span style="font-size: 18px !important;font-weight: bold;"><?php echo $invoice[0]['Proforma_Date']; ?></span></p>

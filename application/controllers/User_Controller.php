@@ -713,7 +713,8 @@ class User_Controller extends CI_Controller
     public function Save_Invoice()
     {
         $address =$this->input->post('company_address');
-        if($address == 0)
+
+        if($address == '')
         {
             $profoma_address= '0';
         }
@@ -1128,7 +1129,7 @@ class User_Controller extends CI_Controller
 
 
             $address =$this->input->post('company_address');
-            if($address == 0)
+            if($address == '')
             {
                 $profoma_address= '0';
             }

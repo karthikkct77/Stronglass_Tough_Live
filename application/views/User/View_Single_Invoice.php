@@ -64,7 +64,7 @@
                             <h5>Buyer (if other than consignee)</h5>
                             <div id="Buyer">
                                 <?php
-                                if($invoice[0]['Customer_Address_Icode'] == "")
+                                if($invoice[0]['Proforma_Delivery_Address_Icode'] == "0")
                                 {
                                     ?>
                                     <h5 id="coustomer" style="font-size: 16px; font-weight: bold;"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
@@ -78,12 +78,17 @@
                                 }
                                 else
                                 {
-                                    ?>
-                                    <h5 id="coustomer" style="font-size: 16px; font-weight: bold;"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                    <h5 id="address" style="font-size: 14px; "><?php echo $invoice[0]['Customer_Add_Address_1']; ?>&nbsn;<?php echo $invoice[0]['Customer_Add_Address_2']; ?></h5>
-                                    <h5 id="phone" style="font-size: 14px;">City: <?php echo $invoice[0]['Customer_Add_City']; ?></h5>
-                                    <h5 id="phone" style="font-size: 14px; ">Phone: <?php echo $invoice[0]['Customer_Add_Phone']; ?></h5>
-                                    <h5 id="gstn" style="font-size: 14px; ">GSTN: <?php echo $invoice[0]['Customer_Add_Email_Id_1']; ?></h5>
+
+                                    $myString = $invoice[0]['Proforma_Delivery_Address_Icode'];
+                                    $myArray = explode(',', $myString);
+                                    foreach ($myArray as $key)
+                                    { ?>
+                                    <h5><?php echo $key; ?> </h5>
+
+
+                                <?php }
+                                ?>
+                                <input type="hidden" name="new_delivery_address" value="<?php echo $invoice[0]['Proforma_Delivery_Address_Icode']; ?>">
                                 <?php
                                 }
                                 ?>

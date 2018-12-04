@@ -76,41 +76,50 @@
                                 <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
                             </div>
                         </div>
+
                         <div class="col-md-4">
-                            <h5>Buyer (if other than consignee)</h5>
-                            <div class="form-group" >
-                                <select name="company_address" class="form-control" id="company_name2" style="display: none" >
-                                    <option>Select Another Address</option>
-                                </select>
-                            </div>
+                            <input type="checkbox" name="check" id="check" checked onclick="FillBilling()">
+                            <em>Edit.</em>
+                            <h5>Delivery Address</h5>
                             <div id="Buyer">
                                 <?php
-                                if($invoice[0]['Customer_Address_Icode'] == "")
+                                if($invoice[0]['Proforma_Delivery_Address_Icode'] == "0")
                                 {
                                     ?>
                                     <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                    <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; echo '&nbsp'; ?><?php echo $invoice[0]['Customer_Address_2']; ?></h5>
-                                    <h5 id="phone">City: <?php echo $invoice[0]['Customer_City']; ?></h5>
+                                    <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; echo '&nbsp'; ?>,<?php echo $invoice[0]['Customer_Address_2']; echo '&nbsp';?>,<?php echo $invoice[0]['Customer_Area']; ?></h5>
+                                    <h5> <?php echo $invoice[0]['Customer_City']; echo '&nbsp'; ?><?php echo $invoice[0]['Customer_State']; ?></h5>
                                     <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
                                     <h5 id="email">Email: <?php echo $invoice[0]['Customer_Email_Id_1']; ?></h5>
                                     <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
+                                    <input type="hidden" name="email" value="<?php echo $invoice[0]['Customer_Email_Id_1']; ?>">
                                     <?php
                                 }
                                 else
                                 {
+                                    $myString = $invoice[0]['Proforma_Delivery_Address_Icode'];
+                                    $myArray = explode(',', $myString);
+                                    foreach ($myArray as $key)
+                                    { ?>
+                                        <h5><?php echo $key; ?> </h5>
+
+
+                                    <?php }
                                     ?>
-                                    <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                    <h5 id="address"><?php echo $invoice[0]['Customer_Add_Address_1']; echo '&nbsp'; ?><?php echo $invoice[0]['Customer_Add_Address_2']; ?></h5>
-                                    <h5 id="phone">City: <?php echo $invoice[0]['Customer_Add_City']; ?></h5>
-                                    <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Add_Phone']; ?></h5>
-                                    <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_Add_Email_Id_1']; ?></h5>
+                                    <input type="hidden" name="company_address" value="<?php echo $invoice[0]['Proforma_Delivery_Address_Icode']; ?>">
+
+
                                     <?php
                                 }
                                 ?>
 
                             </div>
+
+                            <div id="edit" style="display: none;">
+                                <textarea class="form-control"  name="company_address" value="<?php echo $invoice[0]['Proforma_Delivery_Address_Icode']; ?>"><?php echo $invoice[0]['Proforma_Delivery_Address_Icode']; ?></textarea>
+                            </div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <input class="form-control" type="hidden" name="PI_Icode"  value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
                             <h4><span>P.INV.No</span>: <input type="hidden" name="invoice_no" id="invoice_no" value="<?php echo $invoice[0]['Proforma_Number']; ?>" readonly><?php echo $invoice[0]['Proforma_Number']; ?></h4>
                             <h4><span>Date </span>:<input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly><?php echo $invoice[0]['Proforma_Date']; ?></h4>
@@ -182,10 +191,9 @@
                                     </td>
                                 </tr>
                                 <?php $i++; } ?>
-
-
                             </tbody>
                             <tfoot>
+
 
                             <tr>
                                 <td colspan="6" align="right" style="font-weight: bold;" >Total Summary</td>
@@ -722,16 +730,13 @@
         if($('#check').is(":checked"))
         {
             $('#Buyer').show();
-            $('#company_name2').hide();
-            document.getElementById('coustomer1').innerHTML =  document.getElementById('coustomer').innerHTML;
-            document.getElementById('address1').innerHTML  = document.getElementById('address').innerHTML;
-            document.getElementById('phone1').innerHTML =  document.getElementById('phone').innerHTML
-            document.getElementById('gstn1').innerHTML =  document.getElementById('gstn').innerHTML;
+            $('#edit').hide();
+
         }
         else
         {
             $('#Buyer').hide();
-            $('#company_name2').show();
+            $('#edit').show();
         }
     }
 
