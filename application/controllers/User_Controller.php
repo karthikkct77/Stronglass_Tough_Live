@@ -1645,7 +1645,7 @@ class User_Controller extends CI_Controller
     public function Save_Sheet_Invoice()
     {
         $address =$this->input->post('company_address');
-        if($address == 0)
+        if($address == '')
         {
             $profoma_address= '0';
         }
