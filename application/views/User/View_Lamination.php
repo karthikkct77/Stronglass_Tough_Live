@@ -104,12 +104,11 @@
                         </div>
                         <div class="col-md-4">
                             <h5>Buyer (if other than consignee)</h5>
-                            <div class="form-group ">
+                            <div class="form-group" id="delivery" style="display: none;">
                                 <label class="control-label">Customer Name </label>
-                                <select name="company_address" class="form-control" id="company_name2" >
-                                    <option>Select Another Address</option>
-                                </select>
+                                <textarea class="form-control"  name="company_address" ></textarea>
                             </div>
+
                             <div id="Buyer">
                                 <h5 id="coustomer1"></h5>
                                 <h5 id="address1"></h5>
@@ -798,16 +797,13 @@
         if($('#check').is(":checked"))
         {
             $('#Buyer').show();
-            $('#company_name2').hide();
-            document.getElementById('coustomer1').innerHTML =  document.getElementById('coustomer').innerHTML;
-            document.getElementById('address1').innerHTML  = document.getElementById('address').innerHTML;
-            document.getElementById('phone1').innerHTML =  document.getElementById('phone').innerHTML
-            document.getElementById('gstn1').innerHTML =  document.getElementById('gstn').innerHTML;
+            $('#delivery').hide();
+
         }
         else
         {
             $('#Buyer').hide();
-            $('#company_name2').show();
+            $('#delivery').show();
         }
     }
     // get Material Based Charges
