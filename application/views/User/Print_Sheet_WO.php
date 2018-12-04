@@ -53,39 +53,41 @@
                                 </div>
 
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-4" style="border-right: 1px solid #000;">
                                 <h5>Buyer (if other than consignee)</h5>
                                 <div id="Buyer">
                                     <?php
-                                    if($invoice[0]['Customer_Address_Icode'] == "")
+                                    if($invoice[0]['Proforma_Delivery_Address_Icode'] == "0")
                                     {
                                         ?>
-                                        <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                        <h5 id="address"><?php echo $invoice[0]['Customer_Address_1']; ?>$nbsn;<?php echo $invoice[0]['Customer_Address_2']; ?></h5>
-                                        <h5 id="phone">City: <?php echo $invoice[0]['Customer_City']; ?></h5>
-                                        <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
-                                        <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
+                                        <h5 id="coustomer" style="font-size: 16px; font-weight: bold;"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
+                                        <h5 id="address" style="font-size: 14px; "><?php echo $invoice[0]['Customer_Address_1']; echo '&nbsp'; ?>,<?php echo $invoice[0]['Customer_Address_2']; echo '&nbsp';?>,<?php echo $invoice[0]['Customer_Area']; ?></h5>
+                                        <h5 style="font-size: 14px; "> <?php echo $invoice[0]['Customer_City']; echo '&nbsp'; ?><?php echo $invoice[0]['Customer_State']; ?></h5>
+                                        <h5 id="phone" style="font-size: 14px; ">Phone: <?php echo $invoice[0]['Customer_Phone']; ?></h5>
+                                        <h5 id="email" style="font-size: 14px; ">Email: <?php echo $invoice[0]['Customer_Email_Id_1']; ?></h5>
+                                        <h5 id="gstn" style="font-size: 14px; ">GSTN: <?php echo $invoice[0]['Customer_GSTIN']; ?></h5>
+                                        <input type="hidden" name="email" value="<?php echo $invoice[0]['Customer_Email_Id_1']; ?>">
                                         <?php
                                     }
                                     else
                                     {
+
+                                        $myString = $invoice[0]['Proforma_Delivery_Address_Icode'];
+                                        $myArray = explode(',', $myString);
+                                        foreach ($myArray as $key)
+                                        { ?>
+                                            <h5><?php echo $key; ?> </h5>
+
+
+                                        <?php }
                                         ?>
-                                        <h5 id="coustomer"><?php echo $invoice[0]['Customer_Company_Name']; ?></h5>
-                                        <h5 id="address"><?php echo $invoice[0]['Customer_Add_Address_1']; ?>$nbsn;<?php echo $invoice[0]['Customer_Add_Address_2']; ?></h5>
-                                        <h5 id="phone">City: <?php echo $invoice[0]['Customer_Add_City']; ?></h5>
-                                        <h5 id="phone">Phone: <?php echo $invoice[0]['Customer_Add_Phone']; ?></h5>
-                                        <h5 id="gstn">GSTN: <?php echo $invoice[0]['Customer_Add_Email_Id_1']; ?></h5>
+                                        <input type="hidden" name="new_delivery_address" value="<?php echo $invoice[0]['Proforma_Delivery_Address_Icode']; ?>">
                                         <?php
                                     }
                                     ?>
 
                                 </div>
                             </div>
-                            <!--                            <div class="col-md-3">-->
-                            <!--                                <input class="form-control" type="hidden" name="PI_Icode"  id="PI_Icode" value="--><?php //echo $invoice[0]['Proforma_Icode']; ?><!--" >-->
-                            <!--                                <h5>Work Order No <input type="hidden" name="invoice_no" id="invoice_no" value="--><?php //echo $wo[0]['WO_Number']; ?><!--" readonly><h4>--><?php //echo $wo[0]['WO_Number']; ?><!--</h4></h5>-->
-                            <!--                                <h5>Work Order Date<input type="hidden" name="invoice_date" id="invoice_date" value="--><?php //echo $wo[0]['WO_Date']; ?><!--" readonly><h4>--><?php //echo $wo[0]['WO_Date']; ?><!--</h4></h5>-->
-                            <!--                            </div>-->
                             <div class="col-md-3">
                                 <input class="form-control" type="hidden" name="PI_Icode"  id="PI_Icode" value="<?php echo $invoice[0]['Proforma_Icode']; ?>" >
                                 <h5><span>PI.Date</span><input type="hidden" name="invoice_date" id="invoice_date" value="<?php echo $invoice[0]['Proforma_Date']; ?>" readonly><?php echo $invoice[0]['Proforma_Date']; ?></h5>
