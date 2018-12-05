@@ -1815,7 +1815,7 @@ class User_Controller extends CI_Controller
         if($history == '1')
         {
             $address =$this->input->post('company_address');
-            if($address == 0)
+            if($address == '')
             {
                 $profoma_address= '0';
             }
