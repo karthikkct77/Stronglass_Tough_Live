@@ -304,13 +304,30 @@
                                 </li>
                             </ul>
                             </p>
-                            <div id="account">
-                                <h3 style="font-size: 13px;">Bank Details</h3>
-                                <h5><span>Account Name</span> :STRONGLASS TOUGH</h5>
-                                <h5><span>Bank Name</span>:<?php echo $st[0]['ST_Bank']; ?></span></h5>
-                                <h5><span>Account Number</span>:<?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
-                                <h5><span>IFSC</span>:<?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
-                            </div>
+                            <?php
+                            if($_SESSION['userid'] == '2')
+                            { ?>
+                                <div id="account">
+                                    <h3 style="font-size: 13px;">Bank Details</h3>
+                                    <h5><span>Account Name</span> :STRONGLASS TOUGH</h5>
+                                    <h5><span>Bank Name</span>:FEDERAL BANK Coimbatore Branch(Tamilnadu) </span></h5>
+                                    <h5><span>Account Number</span>:10920200043393</h5>
+                                    <h5><span>IFSC</span>:FDRL0001092</h5>
+                                </div>
+                                <?php
+                            }
+                            else
+                            {
+                                ?>
+                                <div id="account">
+                                    <h3 style="font-size: 13px;">Bank Details</h3>
+                                    <h5><span>Account Name</span> :STRONGLASS TOUGH</h5>
+                                    <h5><span>Bank Name</span>:<?php echo $st[0]['ST_Bank']; ?></span></h5>
+                                    <h5><span>Account Number</span>:<?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
+                                    <h5><span>IFSC</span>:<?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
+                                </div>
+
+                            <?php } ?>
                         </div>
                         <div class="col-md-6">
                             <table class="table table-hover table-bordered" id="sampleTable1">
