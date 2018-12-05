@@ -218,12 +218,30 @@
                                     </li>
                                 </ul>
                                 </p>
-                                <h4>Bank Details</h4>
-                                <h5>Stronglass Tough</h5>
-                                <h5>A/C Type: <span><?php echo $st[0]['ST_Bank_Account_Type']; ?></span></h5>
-                                <h5>A/C Number: <span><?php echo $st[0]['ST_Bank_Account_Number']; ?></span></h5>
-                                <h5>Name: <span><?php echo $st[0]['ST_Bank']; ?></span></h5>
-                                <h5>IFSC:<span><?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></span> </h5>
+                                <?php
+                                if($invoice[0]['Proforma_Generated_By'] == '2')
+                                { ?>
+                                    <div id="account">
+                                        <h3 style="font-size: 13px;">Bank Details</h3>
+                                        <h5><span>Account Name</span> :STRONGLASS TOUGH</h5>
+                                        <h5><span>Bank Name</span>:FEDERAL BANK Coimbatore Branch </span></h5>
+                                        <h5><span>Account Number</span>:10920200043393</h5>
+                                        <h5><span>IFSC</span>:FDRL0001092</h5>
+                                    </div>
+                                    <?php
+                                }
+                                else
+                                {
+                                    ?>
+                                    <div id="account">
+                                        <h3 style="font-size: 13px;">Bank Details</h3>
+                                        <h5><span>Account Name</span> :STRONGLASS TOUGH</h5>
+                                        <h5><span>Bank Name</span>:<?php echo $st[0]['ST_Bank']; ?></span></h5>
+                                        <h5><span>Account Number</span>:<?php echo $st[0]['ST_Bank_Account_Number']; ?></h5>
+                                        <h5><span>IFSC</span>:<?php echo $st[0]['ST_Bank_Account_IFSC_Code']; ?></h5>
+                                    </div>
+
+                                <?php } ?>
 
                             </div>
                             <div class="col-md-6">

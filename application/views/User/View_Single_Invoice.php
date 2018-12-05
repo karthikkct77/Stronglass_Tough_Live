@@ -202,7 +202,7 @@
                             </p>
 
                             <?php
-                            if($invoice[0]['Customer_State'] == 'Kerala')
+                            if($invoice[0]['Proforma_Generated_By'] == '2')
                             { ?>
                                 <div id="account">
                                     <h3 style="font-size: 13px;">Bank Details</h3>
