@@ -95,7 +95,9 @@
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Check_PI'); ?>"><i class="app-menu__icon fa fa-check-square"></i><span class="app-menu__label">CHECK PI</span></a></li>
             <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/View_Invoice_List'); ?>"><i class="app-menu__icon fa fa-eye"></i><span class="app-menu__label">View PI</span></a></li>
             <li class="treeview"><a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-check-square"></i><span class="app-menu__label">Report</span><i class="treeview-indicator fa fa-angle-right"></i></a>
-                <ul class="treeview-menu">
+            <li><a class="app-menu__item" href="<?php echo site_url('User_Controller/Work_Order_Report'); ?>"><i class="app-menu__icon fa fa-circle-o"></i><span class="app-menu__label">WO Report</span></a></li>
+
+            <ul class="treeview-menu">
                     <!--<li><a class="treeview-item" href="--><?php //echo site_url('Admin_Controller/Size_Master'); ?><!--"><i class="icon fa fa-circle-o"></i> Size Entry</a></li>-->
                     <li><a class="treeview-item" href="<?php echo site_url('User_Controller/PI_Report'); ?>"><i class="icon fa fa-circle-o"></i>PI Report</a></li>
                     <li><a class="treeview-item" href="<?php echo site_url('User_Controller/Today_Wo_Report'); ?>"><i class="icon fa fa-circle-o"></i>WO Report</a></li>

@@ -145,9 +145,9 @@ class User_Model extends CI_Model
     /** GEt WORK ORDER LIST */
     public function get_All_WO()
     {
-        $user_icode =$this->session->userdata['userid'];
+//        $user_icode =$this->session->userdata['userid'];
         $query = $this->db->query("SELECT * FROM work_order A INNER JOIN proforma_invoice B on A.Proforma_Icode=B.Proforma_Icode 
-                                  INNER JOIN st_user_details C on A.WO_Created_By = C.User_Icode INNER JOIN  customer_master D on B.Proforma_Customer_Icode=D.Customer_Icode  WHERE A.WO_Created_By='$user_icode' and B.WO_Confirm= '1' and A.Bill_Status='0' ORDER by A.WO_Icode DESC ");
+                                  INNER JOIN st_user_details C on A.WO_Created_By = C.User_Icode INNER JOIN  customer_master D on B.Proforma_Customer_Icode=D.Customer_Icode  WHERE  B.WO_Confirm= '1' and A.Bill_Status='0' ORDER by A.WO_Icode DESC ");
         return $query->result_array();
     }
     public function get_All_WO_Details()
