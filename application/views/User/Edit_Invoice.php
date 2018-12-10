@@ -193,6 +193,34 @@
                                 <?php $i++; } ?>
                             </tbody>
                             <tfoot>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <div class="form-group">
+                                        <select name="new_material[]" class="form-control" id="new_material"  required >
+                                            <option value="" ></option>
+                                            <?php foreach ($stock as $row):
+                                            {
+                                                echo '<option value= "'.$row['Material_Icode'].'">' . $row['Material_Name'] . '</option>';
+                                            }
+                                            endforeach; ?>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td><input class="form-control" type="number" id="new_Actual_height" name="new_Actual_height[]"  onkeyup="change_new_Actual_height()" ></td>
+
+                                <td><input class="form-control" type="number" id="new_Actual_width" name="new_Actual_width[]" onkeyup="change_new_Actual_Width()" ></td>
+                                <td><input class="form-control" type="number" id="new_Charge_height" name="new_Charge_height[]"  onkeyup="change_new_Charge_Height()" ></td>
+                                <td><input class="form-control" type="number" id="new_Charge_width" name="new_Charge_width[]"  onkeyup="change_new_Charge_Width()" ></td>
+                                <td><input class="form-control" type="number" id="new_pics"  name="new_pics[]"  onkeyup="change_new_pices()" ></td>
+                                <td><input class="form-control" type="number" name="new_holes[]" id="new_holes" onkeyup="change_new_holes()" ></td>
+                                <td><input class="form-control" type="number" name="new_cutout[]" id="new_cutout" onkeyup="change_new_cutout()" ></td>
+                                <td><input class="form-control" type="text" name="new_special[]" id="new_special"  ></td>
+                                <td><input class="form-control" type="number" name="new_area[]" id="new_area"  readonly></td>
+                                <td><input class="form-control" type="number" name="new_rate[]" id="new_rate" onkeyup="change_new_rate()" ></td>
+                                <td><input class="form-control" type="number" name="new_total[]" id="new_total" readonly  ></td>
+                                <td> <input type="button" onclick="Add_new_one()" value="NewAdd" id="NewAdd" /> </td>
+                            </tr>
 
 
                             <tr>
@@ -1629,6 +1657,765 @@
 
     }
     /** Change Charge value */
+
+    $("#NewAdd").click(function () {
+        if($('#new_material').val() == "")
+        {
+            alert("Please Select Material...");
+        }
+        else if($('#new_pics').val() == ""){
+            alert("Please enter No.of pieces...");
+        }
+        else if($('#new_Actual_height').val() == '')
+        {
+            alert("Please Enter All Size..")
+        }
+        else if($('#new_rate').val() == "")
+        {
+            alert("Please Enter Rate..")
+        }
+        else
+        {
+            var material = $("#new_material option:selected").text();
+            AddNewRow($('#new_material').val(), $("#new_pics").val(),$("#new_Actual_height").val(),$("#new_Actual_width").val(),$("#new_Charge_height").val(),
+                $("#new_Charge_width").val(),$("#new_holes").val(),$("#new_cutout").val(),$("#new_special").val(),$("#new_area").val(),$("#new_rate").val(),$("#new_total").val(),
+                material);
+            $("#new_material").val("");
+            $("#new_pics").val("");
+            $("#new_Actual_height").val("");
+            $("#new_Actual_width").val("");
+            $("#new_Charge_height").val("");
+            $("#new_Charge_width").val("");
+            $("#new_holes").val("");
+            $("#new_cutout").val("");
+            $("#new_special").val("");
+            $("#new_area").val("");
+            $("#new_rate").val("");
+            $("#new_total").val("");
+
+        }
+    });
+
+    //Add AddRow_sheet Row
+    function AddNewRow(materials,pice,act_h,act_w,cha_h,cha_w,holes,cutout,special,area,rate,amt,material) {
+        var tBody = $("#sampleTabless > TBODY")[0];
+        //Add Row.
+        row = tBody.insertRow(-1);
+        //Add Name cell.
+
+        var cell = $(row.insertCell(-1));
+        var news = $("<input />");
+        news.attr("type", "hidden");
+        news.attr("name", "");
+        news.val();
+        cell.append(news);
+
+
+        var cell = $(row.insertCell(-1));
+        var stock = $("<input />");
+        stock.attr("type", "hidden");
+        stock.attr("name", "new_material[]");
+        stock.val(materials);
+        cell.append(stock);
+
+        var tech1 = $("<input />");
+        tech1.attr("type", "text");
+        tech1.attr("name", "test");
+        tech1.attr("class", "form-control");
+        tech1.attr('readonly', true);
+        tech1.val(material);
+        cell.append(tech1);
+
+
+        var cell = $(row.insertCell(-1));
+        var cty1 = $("<input />");
+        cty1.attr("type", "text");
+        cty1.attr("class", "form-control");
+        cty1.attr("name", "new_Actual_height[]");
+        cty1.attr('readonly', true);
+        cty1.val(act_h);
+        cell.append(cty1);
+
+        var cell = $(row.insertCell(-1));
+        var cty2 = $("<input />");
+        cty2.attr("type", "text");
+        cty2.attr("class", "form-control");
+        cty2.attr("name", "new_Actual_width[]");
+        cty2.attr('readonly', true);
+        cty2.val(act_w);
+        cell.append(cty2);
+
+        var cell = $(row.insertCell(-1));
+        var cha_h1 = $("<input />");
+        cha_h1.attr("type", "text");
+        cha_h1.attr("class", "form-control");
+        cha_h1.attr("name", "new_Charge_height[]");
+        cha_h1.attr('readonly', true);
+        cha_h1.val(cha_h);
+        cell.append(cha_h1);
+
+        var cell = $(row.insertCell(-1));
+        var cha_w1 = $("<input />");
+        cha_w1.attr("type", "text");
+        cha_w1.attr("class", "form-control");
+        cha_w1.attr("name", "new_Charge_width[]");
+        cha_w1.attr('readonly', true);
+        cha_w1.val(cha_w);
+        cell.append(cha_w1);
+
+        var cell = $(row.insertCell(-1));
+        var cty = $("<input />");
+        cty.attr("type", "text");
+        cty.attr("class", "form-control");
+        cty.attr("name", "new_pics[]");
+        cty.attr('readonly', true);
+        cty.val(pice);
+        cell.append(cty);
+
+        var cell = $(row.insertCell(-1));
+        var hols = $("<input />");
+        hols.attr("type", "text");
+        hols.attr("class", "form-control");
+        hols.attr("name", "new_holes[]");
+        hols.attr('readonly', true);
+        hols.val(holes);
+        cell.append(hols);
+
+        var cell = $(row.insertCell(-1));
+        var cut = $("<input />");
+        cut.attr("type", "text");
+        cut.attr("class", "form-control");
+        cut.attr("name", "new_cutout[]");
+        cut.attr('readonly', true);
+        cut.val(cutout);
+        cell.append(cut);
+
+
+        var cell = $(row.insertCell(-1));
+        var spc = $("<input />");
+        spc.attr("type", "text");
+        spc.attr("class", "form-control");
+        spc.attr("name", "new_special[]");
+        spc.attr('readonly', true);
+        spc.val(special);
+        cell.append(spc);
+
+
+
+        var cell = $(row.insertCell(-1));
+        var areas = $("<input />");
+        areas.attr("type", "text");
+        areas.attr("class", "form-control");
+        areas.attr("name", "new_area[]");
+        areas.attr('readonly', true);
+        areas.val(area);
+        cell.append(areas);
+
+        var cell = $(row.insertCell(-1));
+        var rates = $("<input />");
+        rates.attr("type", "text");
+        rates.attr("class", "form-control");
+        rates.attr("name", "new_rate[]");
+        rates.attr('readonly', true);
+        rates.val(rate);
+        cell.append(rates);
+
+        var cell = $(row.insertCell(-1));
+        var amts = $("<input />");
+        amts.attr("type", "text");
+        amts.attr("class", "form-control");
+        amts.attr("name", "new_total[]");
+        amts.attr('readonly', true);
+        amts.val(amt);
+        cell.append(amts);
+
+        cell = $(row.insertCell(-1));
+        var btnRemove = $("<input />");
+        btnRemove.attr("type", "button");
+        btnRemove.attr("onclick", "Remove_sheet(this);");
+        btnRemove.val("Remove");
+        cell.append(btnRemove);
+    };
+    //Remove Charges
+    function Remove_sheet(button) {
+        //Determine the reference of the Row using the Button.
+        var row = $(button).closest("TR");
+        var name = $("TD", row).eq(0).html();
+        if (confirm("Do you want to delete: ")) {
+            //Get the reference of the Table.
+            var table = $("#sampleTabless")[0];
+            //Delete the Table row using it's Index.
+            table.deleteRow(row[0].rowIndex);
+        }
+    };
+
+    function change_new_Actual_height() {
+        var actual_H = document.getElementById('new_Actual_height').value;
+        var chg_H = parseInt(actual_H) + 30;
+        document.getElementById('new_Charge_height').value = chg_H;
+
+        var Charge_H = document.getElementById('new_Charge_height').value;
+        var Charge_W = document.getElementById('new_Charge_width').value;
+
+        var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000 ;
+        var pcs = document.getElementById('new_pics').value;
+        var tot_area = parseFloat(areas) * parseInt(pcs);
+        document.getElementById('new_area').value = parseFloat(tot_area).toFixed(3);;
+        var rate = document.getElementById('new_rate').value;
+        var total = (tot_area * rate);
+        document.getElementById('new_total').value =  parseFloat(total).toFixed(3);
+
+
+        var oldareas =document.getElementsByName("area[]");
+        var sum_oldarea = 0;
+        for (var j = 0, iLen = oldareas.length; j < iLen; j++) {
+            if (oldareas[j].value!==""){
+                val=parseFloat(oldareas[j].value);
+                sum_oldarea +=val;
+            }
+        }
+        var newareas =document.getElementsByName("new_area[]");
+        var sum_newarea = 0;
+        for (var j = 0, iLen = newareas.length; j < iLen; j++) {
+            if (newareas[j].value!==""){
+                val=parseFloat(newareas[j].value);
+                sum_newarea +=val;
+            }
+        }
+
+        var tot_area = parseFloat(sum_oldarea + sum_newarea);
+        document.getElementById('total_area').value = parseFloat(tot_area).toFixed(2);
+
+//            // Grand Total
+        var totals =document.getElementsByName("total[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+
+        var totals1 =document.getElementsByName("new_total[]");
+        var sum_new = 0;
+        for (var j = 0, iLen = totals1.length; j < iLen; j++) {
+            if (totals1[j].value!==""){
+                val=parseFloat(totals1[j].value);
+                sum_new +=val;
+            }
+        }
+        var new_sum = parseFloat(sum + sum_new).toFixed(2) ;
+        document.getElementById('grand_total').value =new_sum;
+        // total pices
+        var pices =document.getElementsByName("pics[]");
+        var sum_pic = 0;
+        for (var j = 0, iLen = pices.length; j < iLen; j++) {
+            if (pices[j].value!==""){
+                val=parseFloat(pices[j].value);
+                sum_pic +=val;
+            }
+        }
+        var new_pices =document.getElementsByName("new_pics[]");
+        var sum_new_pic = 0;
+        for (var j = 0, iLen = new_pices.length; j < iLen; j++) {
+            if (new_pices[j].value!==""){
+                val=parseFloat(new_pices[j].value);
+                sum_new_pic +=val;
+            }
+        }
+
+        var tot_qty = parseInt(sum_pic) + parseInt(sum_new_pic);
+        document.getElementById('total_pic').value = parseInt(tot_qty);
+        var totals =document.getElementsByName("tot_charge_amt[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+        var grant_tot = document.getElementById('grand_total').value;
+        var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
+        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+        var sub_tot =document.getElementById('sub_tot').value;
+
+        var tax = 2.42;
+        var total = parseFloat (sub_tot * tax / 100);
+        document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+        var insurance =parseFloat(total).toFixed(3);
+
+        var igst =document.getElementById('igst').value;
+        if(igst == '')
+        {
+            var gst = document.getElementById('gst').value;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+            document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+            var sgst = document.getElementById('sgst').value;
+            var cgst = document.getElementById('cgst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) + parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        else
+        {
+
+            var gst = 18;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+            var iisgst = document.getElementById('igst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) + parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+
+        }
+        number_to_words();
+
+
+    }
+
+    function change_new_Actual_Width() {
+        var actual_W = document.getElementById('new_Actual_width').value;
+        var chg_W = parseInt(actual_W) + 30;
+        document.getElementById('new_Charge_width').value = chg_W;
+
+        var Charge_H = document.getElementById('new_Charge_height').value;
+        var Charge_W = document.getElementById('new_Charge_width').value;
+
+        var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000 ;
+        var pcs = document.getElementById('new_pics').value;
+        var tot_area = parseFloat(areas) * parseInt(pcs);
+        document.getElementById('new_area').value = parseFloat(tot_area).toFixed(3);
+        var rate = document.getElementById('new_rate').value;
+        var total = (tot_area * rate);
+        document.getElementById('new_total').value =  parseFloat(total).toFixed(3);
+
+        var oldareas =document.getElementsByName("area[]");
+        var sum_oldarea = 0;
+        for (var j = 0, iLen = oldareas.length; j < iLen; j++) {
+            if (oldareas[j].value!==""){
+                val=parseFloat(oldareas[j].value);
+                sum_oldarea +=val;
+            }
+        }
+        var newareas =document.getElementsByName("new_area[]");
+        var sum_newarea = 0;
+        for (var j = 0, iLen = newareas.length; j < iLen; j++) {
+            if (newareas[j].value!==""){
+                val=parseFloat(newareas[j].value);
+                sum_newarea +=val;
+            }
+        }
+
+        var tot_area = parseFloat(sum_oldarea + sum_newarea);
+        document.getElementById('total_area').value = parseFloat(tot_area).toFixed(2);
+
+
+
+
+
+
+//            // Grand Total
+        var totals =document.getElementsByName("total[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+
+        var totals1 =document.getElementsByName("new_total[]");
+        var sum_new = 0;
+        for (var j = 0, iLen = totals1.length; j < iLen; j++) {
+            if (totals1[j].value!==""){
+                val=parseFloat(totals1[j].value);
+                sum_new +=val;
+            }
+        }
+        var new_sum = parseFloat(sum + sum_new).toFixed(2) ;
+        document.getElementById('grand_total').value =new_sum;
+        // total pices
+        var pices =document.getElementsByName("pics[]");
+        var sum_pic = 0;
+        for (var j = 0, iLen = pices.length; j < iLen; j++) {
+            if (pices[j].value!==""){
+                val=parseFloat(pices[j].value);
+                sum_pic +=val;
+            }
+        }
+        var new_pices =document.getElementsByName("new_pics[]");
+        var sum_new_pic = 0;
+        for (var j = 0, iLen = new_pices.length; j < iLen; j++) {
+            if (new_pices[j].value!==""){
+                val=parseFloat(new_pices[j].value);
+                sum_new_pic +=val;
+            }
+        }
+
+        var tot_qty = parseInt(sum_pic) + parseInt(sum_new_pic);
+        document.getElementById('total_pic').value = parseInt(tot_qty);
+        var totals =document.getElementsByName("tot_charge_amt[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+        var grant_tot = document.getElementById('grand_total').value;
+        var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
+        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+        var sub_tot =document.getElementById('sub_tot').value;
+
+        var tax = 2.42;
+        var total = parseFloat (sub_tot * tax / 100);
+        document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+        var insurance =parseFloat(total).toFixed(3);
+
+        var igst =document.getElementById('igst').value;
+        if(igst == '')
+        {
+            var gst = document.getElementById('gst').value;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+            document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+            var sgst = document.getElementById('sgst').value;
+            var cgst = document.getElementById('cgst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) + parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        else
+        {
+
+            var gst = 18;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+            var iisgst = document.getElementById('igst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) + parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+
+        }
+        number_to_words();
+
+    }
+
+    //** Change New Qty //
+    function change_new_pices() {
+
+        var Charge_H = document.getElementById('new_Charge_height').value;
+        var Charge_W = document.getElementById('new_Charge_width').value;
+
+        var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000 ;
+        var pcs = document.getElementById('new_pics').value;
+        var tot_area = parseFloat(areas) * parseInt(pcs);
+        document.getElementById('new_area').value = parseFloat(tot_area).toFixed(3);
+
+        var rate = document.getElementById('new_rate').value;
+        var areas = document.getElementById('new_area').value;
+        var totals = (areas * rate);
+        document.getElementById('new_total').value =  parseFloat(totals).toFixed(2);
+
+
+        var pices =document.getElementsByName("pics[]");
+        var sum_pic = 0;
+        for (var j = 0, iLen = pices.length; j < iLen; j++) {
+            if (pices[j].value!==""){
+                val=parseFloat(pices[j].value);
+                sum_pic +=val;
+            }
+        }
+
+        var new_pices =document.getElementsByName("new_pics[]");
+        var sum_new_pic = 0;
+        for (var j = 0, iLen = new_pices.length; j < iLen; j++) {
+            if (new_pices[j].value!==""){
+                val=parseFloat(new_pices[j].value);
+                sum_new_pic +=val;
+            }
+        }
+
+        var tot_qty = parseInt(sum_pic) + parseInt(sum_new_pic);
+        document.getElementById('total_pic').value = parseInt(tot_qty);
+
+        var oldareas =document.getElementsByName("area[]");
+        var sum_oldarea = 0;
+        for (var j = 0, iLen = oldareas.length; j < iLen; j++) {
+            if (oldareas[j].value!==""){
+                val=parseFloat(oldareas[j].value);
+                sum_oldarea +=val;
+            }
+        }
+        var newareas =document.getElementsByName("new_area[]");
+        var sum_newarea = 0;
+        for (var j = 0, iLen = newareas.length; j < iLen; j++) {
+            if (newareas[j].value!==""){
+                val=parseFloat(newareas[j].value);
+                sum_newarea +=val;
+            }
+        }
+
+        var tot_area = parseFloat(sum_oldarea + sum_newarea);
+        document.getElementById('total_area').value = parseFloat(tot_area).toFixed(2);
+        var totals =document.getElementsByName("total[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+
+        var totals1 =document.getElementsByName("new_total[]");
+        var sum_new = 0;
+        for (var j = 0, iLen = totals1.length; j < iLen; j++) {
+            if (totals1[j].value!==""){
+                val=parseFloat(totals1[j].value);
+                sum_new +=val;
+            }
+        }
+        var new_sum = parseFloat(sum + sum_new).toFixed(2) ;
+        document.getElementById('grand_total').value =new_sum;
+        // total pices
+        var pices =document.getElementsByName("pics[]");
+        var sum_pic = 0;
+        for (var j = 0, iLen = pices.length; j < iLen; j++) {
+            if (pices[j].value!==""){
+                val=parseFloat(pices[j].value);
+                sum_pic +=val;
+            }
+        }
+        var new_pices =document.getElementsByName("new_pics[]");
+        var sum_new_pic = 0;
+        for (var j = 0, iLen = new_pices.length; j < iLen; j++) {
+            if (new_pices[j].value!==""){
+                val=parseFloat(new_pices[j].value);
+                sum_new_pic +=val;
+            }
+        }
+
+        var tot_qty = parseInt(sum_pic) + parseInt(sum_new_pic);
+        document.getElementById('total_pic').value = parseInt(tot_qty);
+        var totals =document.getElementsByName("tot_charge_amt[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+        var grant_tot = document.getElementById('grand_total').value;
+        var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
+        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+        var sub_tot =document.getElementById('sub_tot').value;
+
+        var tax = 2.42;
+        var total = parseFloat (sub_tot * tax / 100);
+        document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+        var insurance =parseFloat(total).toFixed(3);
+
+        var igst =document.getElementById('igst').value;
+        if(igst == '')
+        {
+            var gst = document.getElementById('gst').value;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+            document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+            var sgst = document.getElementById('sgst').value;
+            var cgst = document.getElementById('cgst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) + parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        else
+        {
+
+            var gst = 18;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+            var iisgst = document.getElementById('igst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) + parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+
+        }
+        number_to_words();
+
+    }
+    
+    function change_new_holes() {
+
+        var pices =document.getElementsByName("holes[]");
+        var sum_pic = 0;
+        for (var j = 0, iLen = pices.length; j < iLen; j++) {
+            if (pices[j].value!==""){
+                val=parseFloat(pices[j].value);
+                sum_pic +=val;
+            }
+        }
+        var new_pices =document.getElementsByName("new_holes[]");
+        var sum_new_pic = 0;
+        for (var j = 0, iLen = new_pices.length; j < iLen; j++) {
+            if (new_pices[j].value!==""){
+                val=parseFloat(new_pices[j].value);
+                sum_new_pic +=val;
+            }
+        }
+
+        var tot_qty = parseInt(sum_pic) + parseInt(sum_new_pic);
+        document.getElementById('total_holes').value = parseInt(tot_qty);
+
+    }
+
+    function change_new_cutout() {
+
+        var pices =document.getElementsByName("cutout[]");
+        var sum_pic = 0;
+        for (var j = 0, iLen = pices.length; j < iLen; j++) {
+            if (pices[j].value!==""){
+                val=parseFloat(pices[j].value);
+                sum_pic +=val;
+            }
+        }
+        var new_pices =document.getElementsByName("new_cutout[]");
+        var sum_new_pic = 0;
+        for (var j = 0, iLen = new_pices.length; j < iLen; j++) {
+            if (new_pices[j].value!==""){
+                val=parseFloat(new_pices[j].value);
+                sum_new_pic +=val;
+            }
+        }
+
+        var tot_qty = parseInt(sum_pic) + parseInt(sum_new_pic);
+        document.getElementById('total_cutout').value = parseInt(tot_qty);
+
+    }
+    
+    function change_new_rate() {
+
+        var rate = document.getElementById('new_rate').value;
+        var areas = document.getElementById('new_area').value;
+        var total = (areas * rate);
+        document.getElementById('new_total').value =  parseFloat(total).toFixed(2);
+
+        var oldareas =document.getElementsByName("area[]");
+        var sum_oldarea = 0;
+        for (var j = 0, iLen = oldareas.length; j < iLen; j++) {
+            if (oldareas[j].value!==""){
+                val=parseFloat(oldareas[j].value);
+                sum_oldarea +=val;
+            }
+        }
+        var newareas =document.getElementsByName("new_area[]");
+        var sum_newarea = 0;
+        for (var j = 0, iLen = newareas.length; j < iLen; j++) {
+            if (newareas[j].value!==""){
+                val=parseFloat(newareas[j].value);
+                sum_newarea +=val;
+            }
+        }
+
+        var tot_area = parseFloat(sum_oldarea + sum_newarea);
+        document.getElementById('total_area').value = parseFloat(tot_area).toFixed(2);
+
+
+
+
+
+
+//            // Grand Total
+        var totals =document.getElementsByName("total[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+
+        var totals1 =document.getElementsByName("new_total[]");
+        var sum_new = 0;
+        for (var j = 0, iLen = totals1.length; j < iLen; j++) {
+            if (totals1[j].value!==""){
+                val=parseFloat(totals1[j].value);
+                sum_new +=val;
+            }
+        }
+        var new_sum = parseFloat(sum + sum_new).toFixed(2) ;
+        document.getElementById('grand_total').value =new_sum;
+        // total pices
+        var pices =document.getElementsByName("pics[]");
+        var sum_pic = 0;
+        for (var j = 0, iLen = pices.length; j < iLen; j++) {
+            if (pices[j].value!==""){
+                val=parseFloat(pices[j].value);
+                sum_pic +=val;
+            }
+        }
+        var new_pices =document.getElementsByName("new_pics[]");
+        var sum_new_pic = 0;
+        for (var j = 0, iLen = new_pices.length; j < iLen; j++) {
+            if (new_pices[j].value!==""){
+                val=parseFloat(new_pices[j].value);
+                sum_new_pic +=val;
+            }
+        }
+
+        var tot_qty = parseInt(sum_pic) + parseInt(sum_new_pic);
+        document.getElementById('total_pic').value = parseInt(tot_qty);
+        var totals =document.getElementsByName("tot_charge_amt[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+        var grant_tot = document.getElementById('grand_total').value;
+        var sub_tot = parseFloat(sum) + parseFloat(grant_tot);
+        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+        var sub_tot =document.getElementById('sub_tot').value;
+
+        var tax = 2.42;
+        var total = parseFloat (sub_tot * tax / 100);
+        document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+        var insurance =parseFloat(total).toFixed(3);
+
+        var igst =document.getElementById('igst').value;
+        if(igst == '')
+        {
+            var gst = document.getElementById('gst').value;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+            document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+            var sgst = document.getElementById('sgst').value;
+            var cgst = document.getElementById('cgst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) + parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        else
+        {
+
+            var gst = 18;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+            var iisgst = document.getElementById('igst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) + parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+
+        }
+        number_to_words();
+
+    }
+
+
+
+
+
 
     // Number into words
     function number_to_words() {

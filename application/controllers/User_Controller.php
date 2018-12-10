@@ -1194,6 +1194,38 @@ class User_Controller extends CI_Controller
                 $this->db->update('proforma_invoice_items', $full_data);
             }
 
+            $new_material_id = $this->input->post('new_material');
+            $new_qty = $this->input->post('new_pics');
+            $new_holes = $this->input->post('new_holes');
+            $new_cutout = $this->input->post('new_cutout');
+            $new_cost = $this->input->post('new_total');
+            $new_actual_W = $this->input->post('new_Actual_width');
+            $new_actual_H = $this->input->post('new_Actual_height');
+            $new_Charge_W = $this->input->post('new_Charge_width');
+            $new_Area = $this->input->post('new_area');
+            $new_Charge_H = $this->input->post('new_Charge_height');
+            $new_Rate = $this->input->post('new_rate');
+            $new_special = $this->input->post('new_special');
+            $new_count = sizeof($new_material_id);
+            for($i=0; $i<$new_count; $i++)
+            {
+                $full_data =array( 'Proforma_Icode' => $picode,
+                    'Proforma_Holes' => $new_holes[$i],
+                    'Proforma_Qty' => $new_qty[$i],
+                    'Proforma_Special'=>$new_special[$i],
+                    'Proforma_Cutout' => $new_cutout[$i],
+                    'Proforma_Material_Rate' => $new_Rate[$i],
+                    'Proforma_Material_Cost' => $new_cost[$i],
+                    'Proforma_Material_Icode'=>$new_material_id[$i],
+                    'Proforma_Actual_Size_Width' => $new_actual_W[$i],
+                    'Proforma_Actual_Size_Height' => $new_actual_H[$i],
+                    'Proforma_Chargeable_Size_Width' =>$new_Charge_W[$i],
+                    'Proforma_Chargeable_Size_Height' => $new_Charge_H[$i],
+                    'Proforma_Area_SQMTR' => $new_Area[$i],
+                    'created_by' => $this->session->userdata['userid']);
+                $insert_item = $this->admin_model->Insert_Profoma_Item($full_data);
+            }
+
             $delete_item_id = $this->input->post('Delete_Item_Icode');
             $count_item = sizeof($delete_item_id);
             for($i=0; $i<$count_item; $i++)
