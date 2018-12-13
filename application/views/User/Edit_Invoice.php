@@ -197,7 +197,7 @@
                                 <td></td>
                                 <td>
                                     <div class="form-group">
-                                        <select name="new_material[]" class="form-control" id="new_material"  required >
+                                        <select name="new_material[]" class="form-control" id="new_material"   >
                                             <option value="" ></option>
                                             <?php foreach ($stock as $row):
                                             {
