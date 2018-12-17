@@ -184,6 +184,7 @@
                                 <th>Area</th>
                                 <th>Rate</th>
                                 <th>Amount</th>
+                                <th></th>
 
                                 </thead>
                                 <tbody>
@@ -191,7 +192,7 @@
                                 <tr>
                                     <td><?php echo $i; ?><input type="hidden" name="sheet_icode[]" value="<?php echo $key['pi_sheet_icode']; ?>"></td>
                                     <td>     <div class="form-group">
-                                            <select name="sheet_material[]" class="form-control" id="sheet_material<?php echo $i; ?>"  required >
+                                            <select name="sheet_material[]" class="form-control" id="sheet_material<?php echo $i; ?>"  required onclick="get_select_material('<?php echo $i; ?>')" >
                                                 <option value="<?php echo $key['Proforma_Material_Icode']; ?>" ><?php echo $key['Material_Name']; ?></option>
                                                 <?php foreach ($stock as $row):
                                                 {
@@ -202,7 +203,6 @@
                                         </div>
 
                                     </td>
-
                                     <td><input class="form-control" type="number" name="sheet_pieces[]" id="sheet_pieces<?php echo $i; ?>"  value="<?php echo $key['No_Of_Sheet']; ?>"  onkeyup="change_sheet_qty('<?php echo $i; ?>')" required></td>
                                     <td><input class="form-control" type="number" name="sheet_Act_Size_H[]" id="sheet_Act_Size_H<?php echo $i; ?>"  value="<?php echo $key['Actual_Height']; ?>"  onkeyup="change_sheet_height('<?php echo $i; ?>')" required ></td>
                                     <td><input class="form-control" type="number" name="sheet_Act_Size_W[]" id="sheet_Act_Size_W<?php echo $i; ?>"  value="<?php echo $key['Actual_Width']; ?>" onkeyup="change_sheet_width('<?php echo $i; ?>')" required ></td>
@@ -211,15 +211,42 @@
                                     <td><input class="form-control" type="text" name="sheet_Area[]" id="sheet_Area<?php echo $i; ?>"  value="<?php echo $key['Area']; ?>" required readonly ></td>
                                     <td><input class="form-control" type="number" name="sheet_Rate[]" id="sheet_Rate<?php echo $i; ?>"  value="<?php echo $key['Rate']; ?>"  onkeyup="change_sheet_rate('<?php echo $i; ?>')" required ></td>
                                     <td><input class="form-control" type="text" name="sheet_Rate_Amt[]" id="sheet_Rate_Amt<?php echo $i; ?>"  value="<?php echo $key['Total_Amount']; ?>"  readonly></td>
+                                    <td><a  style="color: red;" href="javascript:;"><i class="fa fa-trash"  onclick="delete_items('<?php echo $i; ?>','<?php echo $key['pi_sheet_icode']; ?>')" aria-hidden="true"></i></a>
+                                    </td>
                                 </tr>
-                                </tbody>
-                                <tfoot>
-
-                                </tfoot>
-                                <?php
-                                $i++;
+                                    <?php
+                                    $i++;
                                 }
                                 ?>
+                                </tbody>
+                               <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td>     <div class="form-group">
+                                            <select name="new_sheet_material[]" class="form-control" id="new_sheet_material"    >
+                                                <option value="" >Select Material</option>
+                                                <?php foreach ($stock as $row):
+                                                {
+                                                    echo '<option value= "'.$row['Material_Icode'].'">' . $row['Material_Name'] . '</option>';
+                                                }
+                                                endforeach; ?>
+                                            </select>
+                                        </div>
+
+                                    </td>
+                                    <td><input class="form-control" type="number" name="new_sheet_pieces[]" id="new_sheet_pieces"   onkeyup="change_new_sheet_qty()" ></td>
+                                    <td><input class="form-control" type="number" name="new_sheet_Act_Size_H[]" id="new_sheet_Act_Size_H"   onkeyup="change_new_sheet_height()"  ></td>
+                                    <td><input class="form-control" type="number" name="new_sheet_Act_Size_W[]" id="new_sheet_Act_Size_W"  onkeyup="change_new_sheet_width()"  ></td>
+                                    <td><input class="form-control" type="number" name="new_sheet_Cha_Size_H[]" id="new_sheet_Cha_Size_H"  readonly  ></td>
+                                    <td><input class="form-control" type="number" name="new_sheet_Cha_Size_W[]" id="new_sheet_Cha_Size_W"   readonly  ></td>
+                                    <td><input class="form-control" type="text" name="new_sheet_Area[]" id="new_sheet_Area"   readonly ></td>
+                                    <td><input class="form-control" type="number" name="new_sheet_Rate[]" id="new_sheet_Rate"    onkeyup="change_new_sheet_rate()"  ></td>
+                                    <td><input class="form-control" type="text" name="new_sheet_Rate_Amt[]" id="new_sheet_Rate_Amt"    readonly></td>
+                                    <td> <input type="button" onclick="Add_new_one()" value="NewAdd" id="NewAdd" /> </td>
+
+                                </tr>
+
+                                </tfoot>
                             </table>
                         </div>
                         <div class="row">
@@ -239,26 +266,20 @@
                                 </thead>
                                 <tbody>
                                 <?php $i=1; foreach ($invoice_item as $key) { ?>
-
-                                    <tr id="row<?php echo $i; ?>">
-
+                                  <tr id="row<?php echo $i; ?>">
                                         <td><?php echo $i; ?>
                                             <input type="hidden" name="item_icode[]" value="<?php echo $key['pi_item_sheet_icode']; ?>" >
-
                                         </td>
                                         <td><select id="material<?php echo $i; ?>" name="material[]" class="form-control">
                                                 <option value="<?php echo $key['Proforma_Material_Icode']; ?>" ><?php echo $key['Material_Name']; ?></option>
-
-
                                             </select>
                                         </td>
-                                        <td><input class="form-control" type="text" name="height[]" id="height<?php echo $i; ?>" value="<?php echo $key['Proforma_Actual_Size_Height']; ?>" onkeyup="change_Charge_Height('<?php echo $i; ?>')"   required></td>
-                                        <td><input class="form-control" type="text" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['Proforma_Actual_Size_Width']; ?>" onkeyup="change_Charge_Width('<?php echo $i; ?>')" required></td>
-                                        <td><input class="form-control" type="text" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['Proforma_Qty']; ?>" onkeyup="change_no_piece('<?php echo $i; ?>')" required></td>
-                                        <td><input class="form-control" type="text" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['Proforma_Holes']; ?>" onkeyup="change_no_holes('<?php echo $i; ?>')" required></td>
-                                        <td><input class="form-control" type="text" name="cutout[]" id="cutout<?php echo $i; ?>" value="<?php echo $key['Proforma_Cutout']; ?>" onkeyup="change_cutout('<?php echo $i; ?>')" required></td>
-                                        <td><input class="form-control" type="text" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['Proforma_Special']; ?>" required></td>
-
+                                        <td><input class="form-control" type="text" name="height[]" id="height<?php echo $i; ?>" value="<?php echo $key['Proforma_Actual_Size_Height']; ?>" onkeyup="change_Charge_Height('<?php echo $i; ?>')"   ></td>
+                                        <td><input class="form-control" type="text" name="width[]" id="width<?php echo $i; ?>" value="<?php echo $key['Proforma_Actual_Size_Width']; ?>" onkeyup="change_Charge_Width('<?php echo $i; ?>')" ></td>
+                                        <td><input class="form-control" type="text" name="pics[]" id="pics<?php echo $i; ?>" value="<?php echo $key['Proforma_Qty']; ?>" onkeyup="change_no_piece('<?php echo $i; ?>')" ></td>
+                                        <td><input class="form-control" type="text" name="holes[]" id="holes<?php echo $i; ?>" value="<?php echo $key['Proforma_Holes']; ?>" onkeyup="change_no_holes('<?php echo $i; ?>')" ></td>
+                                        <td><input class="form-control" type="text" name="cutout[]" id="cutout<?php echo $i; ?>" value="<?php echo $key['Proforma_Cutout']; ?>" onkeyup="change_cutout('<?php echo $i; ?>')" ></td>
+                                        <td><input class="form-control" type="text" name="type[]" id="type<?php echo $i; ?>" value="<?php echo $key['Proforma_Special']; ?>" ></td>
                                         <?php
                                         if($key['Proforma_Area_SQMTR'] > 5)
                                         {
@@ -275,11 +296,34 @@
                                         ?>
                                         <td><input class="form-control" type="text" name="rate[]" value="<?php echo $key['Proforma_Material_Rate']; ?>" id="rate<?php echo $i; ?>" onkeyup="change_rate('<?php echo $i; ?>')" ></td>
                                         <td><input class="form-control" type="text" name="total[]" value="<?php echo $key['Proforma_Material_Cost']; ?>" id="total<?php echo $i; ?>" readonly  ></td>
-
-
-
                                     </tr>
                                     <?php $i++; } ?>
+                                </tbody>
+                                <tfoot>
+
+                                <tr>
+
+                                    <td>
+                                    </td>
+
+                                    <td>
+                                        <select id="new_material" name="new_material[]" class="form-control">
+                                            <option value="">Select Material</option>
+                                            <option value="<?php echo $key['Proforma_Material_Icode']; ?>" ><?php echo $key['Material_Name']; ?></option>
+                                        </select>
+                                    </td>
+                                    <td><input class="form-control" type="text" name="new_height[]" id="new_height"  onkeyup="change_new_Charge_Height()"   ></td>
+                                    <td><input class="form-control" type="text" name="new_width[]" id="new_width"  onkeyup="change_new_Charge_Width()" ></td>
+                                    <td><input class="form-control" type="text" name="new_pics[]" id="new_pics"  onkeyup="change_new_no_piece()" ></td>
+                                    <td><input class="form-control" type="text" name="new_holes[]" id="new_holes"  onkeyup="change_new_no_holes()" ></td>
+                                    <td><input class="form-control" type="text" name="new_cutout[]" id="new_cutout"  onkeyup="change_new_cutout()" ></td>
+                                    <td><input class="form-control" type="text" name="new_type[]" id="new_type"  ></td>
+                                    <td><input class="form-control new_area1 pi_textbox" type="text"  name="new_area[]" id="new_area"  readonly></td>
+
+                                    <td><input class="form-control" type="text" name="new_rate[]"  id="new_rate" onkeyup="change_new_rate()" ></td>
+                                    <td><input class="form-control" type="text" name="new_total[]"  id="new_total" readonly  ></td>
+                                    <td> <input type="button"  value="AddMaterial" id="NewAddMaterial" /> </td>
+                                </tr>
                                 <tr>
                                     <td colspan="4" align="right" style="font-weight: bold;" >Total Summary</td>
                                     <td><input type="text" class="form-control pull-right" id="total_pic" value="<?php echo $invoice_total[0]['qty']; ?>"readonly/></td>
@@ -291,7 +335,7 @@
                                     <td> <input type="text" class="form-control pull-right" id="grand_total" value="<?php echo round($invoice_total[0]['rate'],2); ?>"   readonly/>(INR)</td>
 
                                 </tr>
-                                </tbody>
+                                </tfoot>
                             </table>
 
                         </div>
@@ -1188,8 +1232,9 @@
 
     }
 
-    // get Charges
-    $("#sheet_material").change(function () {
+
+
+    function get_select_material(id) {
         var mater =document.getElementsByName("sheet_material[]");
         var material = [];
         for (var j = 0, iLen = mater.length; j < iLen; j++) {
@@ -1212,8 +1257,51 @@
 
             }
         });
+    }
+
+    // get Charges
+    $("#new_sheet_material").change(function () {
+        var mater =document.getElementsByName("new_sheet_material[]");
+        var materials = [];
+        for (var j = 0, iLen = mater.length; j < iLen; j++) {
+            if (mater[j].value!==""){
+                materials.push(mater[j].value);
+            }
+        }
+
+        var newmater =document.getElementsByName("sheet_material[]");
+        var new_material = [];
+        for (var j = 0, iLen = newmater.length; j < iLen; j++) {
+            if (newmater[j].value!==""){
+                new_material.push(newmater[j].value);
+            }
+        }
+
+        var material = materials.concat(new_material);
+
+        var counts = document.getElementsByName("pics[]");
+
+        $.ajax({
+            url:"<?php echo site_url('User_Controller/get_material'); ?>",
+            data: {Material: material},
+            type: "POST",
+            cache: false,
+            success:function(data){
+
+                for (var j = 0, iLen = counts.length; j <= iLen; j++) {
+                    $("#material"+j).html(data);
+                    $('#new_material').html(data);
+                }
+
+            }
+        });
 
     });
+
+
+
+
+
     //** Delete Charges **//
     function delete_charges(id) {
         if (confirm("Do you Want to Delete This Charges...!")) {
@@ -1832,6 +1920,1178 @@
 
     }
 
+    //**  Change new Sheet QTTY**/
+    function change_new_sheet_qty() {
+
+        var Charge_H = document.getElementById('new_sheet_Cha_Size_H').value;
+        var Charge_W = document.getElementById('new_sheet_Cha_Size_W').value;
+        var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000;
+        var pcs = document.getElementById('new_sheet_pieces').value;
+        var tot_area = parseFloat(areas) * parseInt(pcs);
+        document.getElementById('new_sheet_Area').value = parseFloat(tot_area).toFixed(3);;
+        var rate = document.getElementById('new_sheet_Rate').value;
+        var total = (tot_area * rate);
+        document.getElementById('new_sheet_Rate_Amt').value =  parseFloat(total).toFixed(3);
+        var totals =document.getElementsByName("new_sheet_Rate_Amt[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+        var totals_amt1 =document.getElementsByName("sheet_Rate_Amt[]");
+        var sum_amt1 = 0;
+        for (var j = 0, iLen = totals_amt1.length; j < iLen; j++) {
+            if (totals_amt1[j].value!==""){
+                val=parseFloat(totals_amt1[j].value);
+                sum_amt1 +=val;
+            }
+        }
+        var new_tot_amt = parseFloat(sum_amt1 + sum );
+        var totals_amt =document.getElementsByName("tot_charge_amt[]");
+        var sum_amt = 0;
+        for (var j = 0, iLen = totals_amt.length; j < iLen; j++) {
+            if (totals_amt[j].value!==""){
+                val=parseFloat(totals_amt[j].value);
+                sum_amt +=val;
+            }
+        }
+
+        var grant_tot = document.getElementById('grand_total').value;
+        var sub_tot = parseFloat(new_tot_amt) + parseFloat(grant_tot) + parseFloat(sum_amt) ;
+        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+        var sub_tot =document.getElementById('sub_tot').value;
+
+        var tax = 2.42;
+        var total = parseFloat (sub_tot * tax / 100);
+        document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+        var insurance =parseFloat(total).toFixed(3);
+        var igst =document.getElementById('igst').value;
+        if(igst == '')
+        {
+            var gst = document.getElementById('gst').value;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+            document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+            var sgst = document.getElementById('sgst').value;
+            var cgst = document.getElementById('cgst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) +  parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        else
+        {
+
+            var gst = 18;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+            var iisgst = document.getElementById('igst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) +  parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        number_to_words();
+
+    }
+
+    /** Sheet new Charge Height */
+    function change_new_sheet_height() {
+        var actual_H = document.getElementById('new_sheet_Act_Size_H').value;
+        document.getElementById('new_sheet_Cha_Size_H').value = actual_H;
+        var actual_w = document.getElementById('new_sheet_Act_Size_W').value;
+        document.getElementById('new_sheet_Cha_Size_W').value = actual_w;
+        var Charge_H = document.getElementById('new_sheet_Cha_Size_H').value;
+        var Charge_W = document.getElementById('new_sheet_Cha_Size_W').value;
+        var pcs = document.getElementById('new_sheet_pieces').value;
+        var areas =parseFloat(Charge_W)/1000 * parseFloat(Charge_H)/1000 * parseInt(pcs) ;
+
+        var tot_area = parseFloat(areas);
+        document.getElementById('new_sheet_Area').value = parseFloat(tot_area).toFixed(3);;
+        var rate = document.getElementById('new_sheet_Rate').value;
+        var total = (tot_area * rate);
+        document.getElementById('new_sheet_Rate_Amt').value =  parseFloat(total).toFixed(3);
+        var totals =document.getElementsByName("new_sheet_Rate_Amt[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+
+        var totals_amt1 =document.getElementsByName("sheet_Rate_Amt[]");
+        var sum_amt1 = 0;
+        for (var j = 0, iLen = totals_amt1.length; j < iLen; j++) {
+            if (totals_amt1[j].value!==""){
+                val=parseFloat(totals_amt1[j].value);
+                sum_amt1 +=val;
+            }
+        }
+        var new_tot_amt = parseFloat(sum_amt1 + sum );
+
+        var totals_amt =document.getElementsByName("tot_charge_amt[]");
+        var sum_amt = 0;
+        for (var j = 0, iLen = totals_amt.length; j < iLen; j++) {
+            if (totals_amt[j].value!==""){
+                val=parseFloat(totals_amt[j].value);
+                sum_amt +=val;
+            }
+        }
+
+        var grant_tot = document.getElementById('grand_total').value;
+        var sub_tot = parseFloat(new_tot_amt) + parseFloat(grant_tot) + parseFloat(sum_amt) ;
+        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+        var sub_tot =document.getElementById('sub_tot').value;
+
+        var tax = 2.42;
+        var total = parseFloat (sub_tot * tax / 100);
+        document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+        var insurance =parseFloat(total).toFixed(3);
+        var igst =document.getElementById('igst').value;
+        if(igst == '')
+        {
+            var gst = document.getElementById('gst').value;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+            document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+            var sgst = document.getElementById('sgst').value;
+            var cgst = document.getElementById('cgst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) +  parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        else
+        {
+
+            var gst = 18;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+            var iisgst = document.getElementById('igst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) +  parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        number_to_words();
+    }
+
+    /** Sheet  new Charge Height */
+    function change_new_sheet_width() {
+        var actual_H = document.getElementById('new_sheet_Act_Size_H').value;
+        document.getElementById('new_sheet_Cha_Size_H').value = actual_H;
+        var actual_w = document.getElementById('new_sheet_Act_Size_W').value;
+        document.getElementById('new_sheet_Cha_Size_W').value = actual_w;
+        var Charge_H = document.getElementById('new_sheet_Cha_Size_H').value;
+        var Charge_W = document.getElementById('new_sheet_Cha_Size_W').value;
+        var pcs = document.getElementById('new_sheet_pieces').value;
+        var areas =parseFloat(Charge_W)/1000 * parseFloat(Charge_H)/1000 * parseInt(pcs) ;
+
+        var tot_area = parseFloat(areas);
+        document.getElementById('new_sheet_Area').value = parseFloat(tot_area).toFixed(3);;
+        var rate = document.getElementById('new_sheet_Rate').value;
+        var total = (tot_area * rate);
+        document.getElementById('new_sheet_Rate_Amt').value =  parseFloat(total).toFixed(3);
+        var totals =document.getElementsByName("new_sheet_Rate_Amt[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+
+        var totals_amt1 =document.getElementsByName("sheet_Rate_Amt[]");
+        var sum_amt1 = 0;
+        for (var j = 0, iLen = totals_amt1.length; j < iLen; j++) {
+            if (totals_amt1[j].value!==""){
+                val=parseFloat(totals_amt1[j].value);
+                sum_amt1 +=val;
+            }
+        }
+        var new_tot_amt = parseFloat(sum_amt1 + sum );
+
+        var totals_amt =document.getElementsByName("tot_charge_amt[]");
+        var sum_amt = 0;
+        for (var j = 0, iLen = totals_amt.length; j < iLen; j++) {
+            if (totals_amt[j].value!==""){
+                val=parseFloat(totals_amt[j].value);
+                sum_amt +=val;
+            }
+        }
+
+        var grant_tot = document.getElementById('grand_total').value;
+        var sub_tot = parseFloat(new_tot_amt) + parseFloat(grant_tot) + parseFloat(sum_amt) ;
+        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+        var sub_tot =document.getElementById('sub_tot').value;
+
+        var tax = 2.42;
+        var total = parseFloat (sub_tot * tax / 100);
+        document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+        var insurance =parseFloat(total).toFixed(3);
+        var igst =document.getElementById('igst').value;
+        if(igst == '')
+        {
+            var gst = document.getElementById('gst').value;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+            document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+            var sgst = document.getElementById('sgst').value;
+            var cgst = document.getElementById('cgst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) +  parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        else
+        {
+
+            var gst = 18;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+            var iisgst = document.getElementById('igst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) +  parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        number_to_words();
+
+    }
+
+    //** Sheet rate Chage**/
+    function change_new_sheet_rate() {
+
+        var tot_area = document.getElementById('new_sheet_Area').value;
+        var rate = document.getElementById('new_sheet_Rate').value;
+        var total = parseFloat(parseFloat(tot_area) * parseFloat(rate));
+        document.getElementById('new_sheet_Rate_Amt').value =  parseFloat(total).toFixed(3);
+        var totals =document.getElementsByName("new_sheet_Rate_Amt[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+
+        var totals_amt1 =document.getElementsByName("sheet_Rate_Amt[]");
+        var sum_amt1 = 0;
+        for (var j = 0, iLen = totals_amt1.length; j < iLen; j++) {
+            if (totals_amt1[j].value!==""){
+                val=parseFloat(totals_amt1[j].value);
+                sum_amt1 +=val;
+            }
+        }
+        var new_tot_amt = parseFloat(sum_amt1 + sum );
+
+        var totals_amt =document.getElementsByName("tot_charge_amt[]");
+        var sum_amt = 0;
+        for (var j = 0, iLen = totals_amt.length; j < iLen; j++) {
+            if (totals_amt[j].value!==""){
+                val=parseFloat(totals_amt[j].value);
+                sum_amt +=val;
+            }
+        }
+
+        var grant_tot = document.getElementById('grand_total').value;
+        var sub_tot = parseFloat(new_tot_amt) + parseFloat(grant_tot) + parseFloat(sum_amt) ;
+        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+        var sub_tot =document.getElementById('sub_tot').value;
+
+        var tax = 2.42;
+        var total = parseFloat (sub_tot * tax / 100);
+        document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+        var insurance =parseFloat(total).toFixed(3);
+
+        var igst =document.getElementById('igst').value;
+        if(igst == '')
+        {
+            var gst = document.getElementById('gst').value;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+            document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+            var sgst = document.getElementById('sgst').value;
+            var cgst = document.getElementById('cgst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) +  parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        else
+        {
+
+            var gst = 18;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+            var iisgst = document.getElementById('igst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) +  parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        number_to_words();
+    }
+
+    $("#NewAdd").click(function () {
+        if($('#new_sheet_material').val() == "")
+        {
+            alert("Please Select Material...");
+        }
+        else if($('#new_sheet_pieces').val() == ""){
+            alert("Please enter No.of pieces...");
+        }
+        else if($('#new_sheet_Act_Size_H').val() == '')
+        {
+            alert("Please Enter All Size..")
+        }
+        else if($('#new_sheet_Rate').val() == "")
+        {
+            alert("Please Enter Rate..")
+        }
+        else
+        {
+            var material = $("#new_sheet_material option:selected").text();
+            AddNewRow($('#new_sheet_material').val(), $("#new_sheet_pieces").val(),$("#new_sheet_Act_Size_H").val(),$("#new_sheet_Act_Size_W").val(),$("#new_sheet_Cha_Size_H").val(),
+                $("#new_sheet_Cha_Size_W").val(),$("#new_sheet_Area").val(),$("#new_sheet_Rate").val(),$("#new_sheet_Rate_Amt").val(), material);
+            $("#new_sheet_material").val("");
+            $("#new_sheet_pieces").val("");
+            $("#new_sheet_Act_Size_H").val("");
+            $("#new_sheet_Act_Size_W").val("");
+            $("#new_sheet_Cha_Size_H").val("");
+            $("#new_sheet_Cha_Size_W").val("");
+            $("#new_sheet_Area").val("");
+            $("#new_sheet_Rate").val("");
+            $("#new_sheet_Rate_Amt").val("");
+
+        }
+    });
+
+    //Add AddRow_sheet Row
+    function AddNewRow(materials,pice,act_h,act_w,cha_h,cha_w,area,rate,amt,material) {
+        var tBody = $("#sampleTable2 > TBODY")[0];
+        //Add Row.
+        row = tBody.insertRow(-1);
+        //Add Name cell.
+
+        var cell = $(row.insertCell(-1));
+        var news = $("<input />");
+        news.attr("type", "hidden");
+        news.attr("name", "");
+        news.val();
+        cell.append(news);
+
+
+        var cell = $(row.insertCell(-1));
+        var stock = $("<input />");
+        stock.attr("type", "hidden");
+        stock.attr("name", "new_sheet_material[]");
+        stock.val(materials);
+        cell.append(stock);
+
+        var tech1 = $("<input />");
+        tech1.attr("type", "text");
+        tech1.attr("name", "test");
+        tech1.attr("class", "form-control");
+        tech1.attr('readonly', true);
+        tech1.val(material);
+        cell.append(tech1);
+        var cell = $(row.insertCell(-1));
+        var cty = $("<input />");
+        cty.attr("type", "text");
+        cty.attr("class", "form-control");
+        cty.attr("name", "new_sheet_pieces[]");
+        cty.attr('readonly', true);
+        cty.val(pice);
+        cell.append(cty);
+
+
+
+        var cell = $(row.insertCell(-1));
+        var cty1 = $("<input />");
+        cty1.attr("type", "text");
+        cty1.attr("class", "form-control");
+        cty1.attr("name", "new_sheet_Act_Size_H[]");
+        cty1.attr('readonly', true);
+        cty1.val(act_h);
+        cell.append(cty1);
+
+        var cell = $(row.insertCell(-1));
+        var cty2 = $("<input />");
+        cty2.attr("type", "text");
+        cty2.attr("class", "form-control");
+        cty2.attr("name", "new_sheet_Act_Size_W[]");
+        cty2.attr('readonly', true);
+        cty2.val(act_w);
+        cell.append(cty2);
+
+        var cell = $(row.insertCell(-1));
+        var cha_h1 = $("<input />");
+        cha_h1.attr("type", "text");
+        cha_h1.attr("class", "form-control");
+        cha_h1.attr("name", "new_sheet_Cha_Size_H[]");
+        cha_h1.attr('readonly', true);
+        cha_h1.val(cha_h);
+        cell.append(cha_h1);
+
+        var cell = $(row.insertCell(-1));
+        var cha_w1 = $("<input />");
+        cha_w1.attr("type", "text");
+        cha_w1.attr("class", "form-control");
+        cha_w1.attr("name", "new_sheet_Cha_Size_W[]");
+        cha_w1.attr('readonly', true);
+        cha_w1.val(cha_w);
+        cell.append(cha_w1);
+
+        var cell = $(row.insertCell(-1));
+        var areas = $("<input />");
+        areas.attr("type", "text");
+        areas.attr("class", "form-control");
+        areas.attr("name", "new_sheet_Area[]");
+        areas.attr('readonly', true);
+        areas.val(area);
+        cell.append(areas);
+
+        var cell = $(row.insertCell(-1));
+        var rates = $("<input />");
+        rates.attr("type", "text");
+        rates.attr("class", "form-control");
+        rates.attr("name", "new_sheet_Rate[]");
+        rates.attr('readonly', true);
+        rates.val(rate);
+        cell.append(rates);
+
+        var cell = $(row.insertCell(-1));
+        var amts = $("<input />");
+        amts.attr("type", "text");
+        amts.attr("class", "form-control");
+        amts.attr("name", "new_sheet_Rate_Amt[]");
+        amts.attr('readonly', true);
+        amts.val(amt);
+        cell.append(amts);
+
+        cell = $(row.insertCell(-1));
+        var btnRemove = $("<input />");
+        btnRemove.attr("type", "button");
+        btnRemove.attr("onclick", "Remove_sheet(this);");
+        btnRemove.val("Remove");
+        cell.append(btnRemove);
+    };
+    //Remove Charges
+
+
+    /** Change  New Charge Height */
+    function change_new_Charge_Height() {
+        var Charge_W = document.getElementById('new_width').value;
+        var Charge_H = document.getElementById('new_height').value;
+        var pcs = document.getElementById('new_pics').value;
+
+        var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000;
+        var tot_area =parseInt(pcs) * parseFloat(areas);
+        document.getElementById('new_area').value = parseFloat(tot_area).toFixed(3);
+
+        //Start -  Grand Total
+        var totals =document.getElementsByName("new_total[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+        var totals1 =document.getElementsByName("total[]");
+        var sum1 = 0;
+        for (var j = 0, iLen = totals1.length; j < iLen; j++) {
+            if (totals1[j].value!==""){
+                val=parseFloat(totals1[j].value);
+                sum1 +=val;
+            }
+        }
+        var grant_tot = parseFloat(sum + sum1);
+        document.getElementById('grand_total').value = parseFloat(grant_tot).toFixed(2);
+        //End-Grant Total
+
+        var charge =document.getElementsByName("tot_charge_amt[]");
+        var sum_charge = 0;
+        for (var j = 0, iLen = charge.length; j < iLen; j++) {
+            if (charge[j].value!==""){
+                val=parseFloat(charge[j].value);
+                sum_charge +=val;
+            }
+        }
+
+        var totals =document.getElementsByName("new_sheet_Rate_Amt[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+
+        var totals_amt1 =document.getElementsByName("sheet_Rate_Amt[]");
+        var sum_amt1 = 0;
+        for (var j = 0, iLen = totals_amt1.length; j < iLen; j++) {
+            if (totals_amt1[j].value!==""){
+                val=parseFloat(totals_amt1[j].value);
+                sum_amt1 +=val;
+            }
+        }
+        var new_tot_amt = parseFloat(sum_amt1 + sum );
+        var grant_tot = document.getElementById('grand_total').value;
+        var sub_tot = parseFloat(sum_charge) + parseFloat(grant_tot) + parseFloat(new_tot_amt) ;
+        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+        var sub_tot =document.getElementById('sub_tot').value;
+
+        var tax = 2.42;
+        var total = parseFloat (sub_tot * tax / 100);
+        document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+        var insurance =parseFloat(total).toFixed(3);
+
+        var igst =document.getElementById('igst').value;
+        if(igst == '')
+        {
+            var gst = document.getElementById('gst').value;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+            document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+            var sgst = document.getElementById('sgst').value;
+            var cgst = document.getElementById('cgst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) + parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        else
+        {
+
+            var gst = 18;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+            var iisgst = document.getElementById('igst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) + parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        number_to_words();
+
+    }
+    /** Change Charge Height */
+
+    /** Change  New Charge Width */
+    function change_new_Charge_Width() {
+        var Charge_W = document.getElementById('new_width').value;
+        var Charge_H = document.getElementById('new_height').value;
+        var pcs = document.getElementById('new_pics').value;
+
+        var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000;
+        var tot_area =parseInt(pcs) * parseFloat(areas);
+        document.getElementById('new_area').value = parseFloat(tot_area).toFixed(3);
+
+
+        //Start -  Grand Total
+        var totals =document.getElementsByName("new_total[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+        var totals1 =document.getElementsByName("total[]");
+        var sum1 = 0;
+        for (var j = 0, iLen = totals1.length; j < iLen; j++) {
+            if (totals1[j].value!==""){
+                val=parseFloat(totals1[j].value);
+                sum1 +=val;
+            }
+        }
+        var grant_tot = parseFloat(sum + sum1);
+        document.getElementById('grand_total').value = parseFloat(grant_tot).toFixed(2);
+        //End-Grant Total
+
+        var charge =document.getElementsByName("tot_charge_amt[]");
+        var sum_charge = 0;
+        for (var j = 0, iLen = charge.length; j < iLen; j++) {
+            if (charge[j].value!==""){
+                val=parseFloat(charge[j].value);
+                sum_charge +=val;
+            }
+        }
+
+        var totals =document.getElementsByName("new_sheet_Rate_Amt[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+
+        var totals_amt1 =document.getElementsByName("sheet_Rate_Amt[]");
+        var sum_amt1 = 0;
+        for (var j = 0, iLen = totals_amt1.length; j < iLen; j++) {
+            if (totals_amt1[j].value!==""){
+                val=parseFloat(totals_amt1[j].value);
+                sum_amt1 +=val;
+            }
+        }
+        var new_tot_amt = parseFloat(sum_amt1 + sum );
+        var grant_tot = document.getElementById('grand_total').value;
+        var sub_tot = parseFloat(sum_charge) + parseFloat(grant_tot) + parseFloat(new_tot_amt) ;
+        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+        var sub_tot =document.getElementById('sub_tot').value;
+
+        var tax = 2.42;
+        var total = parseFloat (sub_tot * tax / 100);
+        document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+        var insurance =parseFloat(total).toFixed(3);
+
+        var igst =document.getElementById('igst').value;
+        if(igst == '')
+        {
+            var gst = document.getElementById('gst').value;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+            document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+            var sgst = document.getElementById('sgst').value;
+            var cgst = document.getElementById('cgst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) + parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        else
+        {
+
+            var gst = 18;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+            var iisgst = document.getElementById('igst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) + parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        number_to_words();
+
+    }
+    /** Change New Charge Width */
+
+
+    /** Change  Ndew no of pieces */
+    function change_new_no_piece() {
+        var Charge_W = document.getElementById('new_width').value;
+        var Charge_H = document.getElementById('new_height').value;
+        var pcs = document.getElementById('new_pics').value;
+
+        var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000;
+        var tot_area =parseInt(pcs) * parseFloat(areas);
+        document.getElementById('new_area').value = parseFloat(tot_area).toFixed(3);
+
+        //Start -  Grand Total
+        var totals =document.getElementsByName("new_total[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+        var totals1 =document.getElementsByName("total[]");
+        var sum1 = 0;
+        for (var j = 0, iLen = totals1.length; j < iLen; j++) {
+            if (totals1[j].value!==""){
+                val=parseFloat(totals1[j].value);
+                sum1 +=val;
+            }
+        }
+        var grant_tot = parseFloat(sum + sum1);
+        document.getElementById('grand_total').value = parseFloat(grant_tot).toFixed(2);
+        //End-Grant Total
+
+        var charge =document.getElementsByName("tot_charge_amt[]");
+        var sum_charge = 0;
+        for (var j = 0, iLen = charge.length; j < iLen; j++) {
+            if (charge[j].value!==""){
+                val=parseFloat(charge[j].value);
+                sum_charge +=val;
+            }
+        }
+
+        var totals =document.getElementsByName("new_sheet_Rate_Amt[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+
+        var totals_amt1 =document.getElementsByName("sheet_Rate_Amt[]");
+        var sum_amt1 = 0;
+        for (var j = 0, iLen = totals_amt1.length; j < iLen; j++) {
+            if (totals_amt1[j].value!==""){
+                val=parseFloat(totals_amt1[j].value);
+                sum_amt1 +=val;
+            }
+        }
+        var new_tot_amt = parseFloat(sum_amt1 + sum );
+        var grant_tot = document.getElementById('grand_total').value;
+        var sub_tot = parseFloat(sum_charge) + parseFloat(grant_tot) + parseFloat(new_tot_amt) ;
+        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+        var sub_tot =document.getElementById('sub_tot').value;
+
+        var tax = 2.42;
+        var total = parseFloat (sub_tot * tax / 100);
+        document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+        var insurance =parseFloat(total).toFixed(3);
+
+        var igst =document.getElementById('igst').value;
+        if(igst == '')
+        {
+            var gst = document.getElementById('gst').value;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+            document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+            var sgst = document.getElementById('sgst').value;
+            var cgst = document.getElementById('cgst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) + parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        else
+        {
+
+            var gst = 18;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+            var iisgst = document.getElementById('igst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) + parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        number_to_words();
+    }
+    /** Change  New no of pieces */
+
+
+     // Change New Holes
+    function change_new_no_holes() {
+        var holes =document.getElementsByName("holes[]");
+        var sum_holes = 0;
+        for (var j = 0, iLen = holes.length; j < iLen; j++) {
+            if (holes[j].value!==""){
+                val=parseFloat(holes[j].value);
+                sum_holes +=val;
+            }
+        }
+        var new_holes =document.getElementsByName("new_holes[]");
+        var sum_new_holes = 0;
+        for (var j = 0, iLen = new_holes.length; j < iLen; j++) {
+            if (new_holes[j].value!==""){
+                val=parseFloat(new_holes[j].value);
+                sum_new_holes +=val;
+            }
+        }
+        var tot_holes = parseFloat(sum_holes + sum_new_holes );
+        document.getElementById('total_holes').value = parseInt(tot_holes);
+    }
+
+    //Change New Cutout
+    function change_new_cutout() {
+        var cutout =document.getElementsByName("cutout[]");
+        var sum_cutout = 0;
+        for (var j = 0, iLen = cutout.length; j < iLen; j++) {
+            if (cutout[j].value!==""){
+                val=parseFloat(cutout[j].value);
+                sum_cutout +=val;
+            }
+        }
+
+        var new_cutout =document.getElementsByName("new_cutout[]");
+        var sum_new_cutout = 0;
+        for (var j = 0, iLen = new_cutout.length; j < iLen; j++) {
+            if (new_cutout[j].value!==""){
+                val=parseFloat(new_cutout[j].value);
+                sum_new_cutout +=val;
+            }
+        }
+        var tot_cutout = parseFloat(sum_cutout + sum_new_cutout );
+        document.getElementById('total_cutout').value = parseInt(tot_cutout);
+    }
+    function change_new_rate() {
+        var pcs = document.getElementById('new_pics').value;
+        var area = document.getElementById('new_area').value;
+        var rate = document.getElementById('new_rate').value;
+        var total = parseFloat(pcs * area * rate);
+        document.getElementById('new_total').value = parseFloat(total).toFixed(2);
+
+        //Start -  Grand Total
+        var totals =document.getElementsByName("new_total[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+        var totals1 =document.getElementsByName("total[]");
+        var sum1 = 0;
+        for (var j = 0, iLen = totals1.length; j < iLen; j++) {
+            if (totals1[j].value!==""){
+                val=parseFloat(totals1[j].value);
+                sum1 +=val;
+            }
+        }
+        var grant_tot = parseFloat(sum + sum1);
+        document.getElementById('grand_total').value = parseFloat(grant_tot).toFixed(2);
+        //End-Grant Total
+
+        var charge =document.getElementsByName("tot_charge_amt[]");
+        var sum_charge = 0;
+        for (var j = 0, iLen = charge.length; j < iLen; j++) {
+            if (charge[j].value!==""){
+                val=parseFloat(charge[j].value);
+                sum_charge +=val;
+            }
+        }
+
+        var totals =document.getElementsByName("new_sheet_Rate_Amt[]");
+        var sum = 0;
+        for (var j = 0, iLen = totals.length; j < iLen; j++) {
+            if (totals[j].value!==""){
+                val=parseFloat(totals[j].value);
+                sum +=val;
+            }
+        }
+
+        var totals_amt1 =document.getElementsByName("sheet_Rate_Amt[]");
+        var sum_amt1 = 0;
+        for (var j = 0, iLen = totals_amt1.length; j < iLen; j++) {
+            if (totals_amt1[j].value!==""){
+                val=parseFloat(totals_amt1[j].value);
+                sum_amt1 +=val;
+            }
+        }
+        var new_tot_amt = parseFloat(sum_amt1 + sum );
+        var grant_tot = document.getElementById('grand_total').value;
+        var sub_tot = parseFloat(sum_charge) + parseFloat(grant_tot) + parseFloat(new_tot_amt) ;
+        document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+        var sub_tot =document.getElementById('sub_tot').value;
+
+        var tax = 2.42;
+        var total = parseFloat (sub_tot * tax / 100);
+        document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+        var insurance =parseFloat(total).toFixed(3);
+
+        var igst =document.getElementById('igst').value;
+        if(igst == '')
+        {
+            var gst = document.getElementById('gst').value;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+            document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+            var sgst = document.getElementById('sgst').value;
+            var cgst = document.getElementById('cgst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) + parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        else
+        {
+
+            var gst = 18;
+            var trans =document.getElementById('transport').value;
+            var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+            document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+            var iisgst = document.getElementById('igst').value;
+            var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) + parseFloat(trans));
+            document.getElementById('gross_tot').value = parseInt(grant);
+        }
+        number_to_words();
+
+    }
+
+    $("#NewAddMaterial").click(function () {
+        if($('#new_material').val() == "")
+        {
+            alert("Please Select Material...");
+        }
+        else if($('#new_pics').val() == ""){
+            alert("Please enter No.of pieces...");
+        }
+        else if($('#new_height').val() == '')
+        {
+            alert("Please Enter All Size..")
+        }
+        else if($('#new_rate').val() == "")
+        {
+            alert("Please Enter Rate..")
+        }
+        else
+        {
+            var material = $("#new_material option:selected").text();
+            AddNewMaterialRow($('#new_material').val(),$("#new_height").val(),$("#new_width").val(), $("#new_pics").val(),$("#new_holes").val(),$("#new_cutout").val(),$("#new_type").val(),$("#new_area").val(),$("#new_rate").val(),$("#new_total").val(), material);
+            $("#new_material").val("");
+            $("#new_height").val("");
+            $("#new_width").val("");
+            $("#new_pics").val("");
+            $("#new_holes").val("");
+            $("#new_cutout").val("");
+            $("#new_type").val("");
+            $("#new_area").val("");
+            $("#new_rate").val("");
+            $("#new_total").val("");
+
+        }
+    });
+
+    //Add AddRow_sheet Row
+    function AddNewMaterialRow(materials,act_h,act_w,pice,holes,cutout,type,area,rate,amt,material) {
+        var tBody = $("#sampleTable > TBODY")[0];
+        //Add Row.
+        row = tBody.insertRow(-1);
+        //Add Name cell.
+
+        var cell = $(row.insertCell(-1));
+        var news = $("<input />");
+        news.attr("type", "hidden");
+        news.attr("name", "");
+        news.val();
+        cell.append(news);
+
+
+        var cell = $(row.insertCell(-1));
+        var stock = $("<input />");
+        stock.attr("type", "hidden");
+        stock.attr("name", "new_material[]");
+        stock.val(materials);
+        cell.append(stock);
+
+        var tech1 = $("<input />");
+        tech1.attr("type", "text");
+        tech1.attr("name", "test");
+        tech1.attr("class", "form-control");
+        tech1.attr('readonly', true);
+        tech1.val(material);
+        cell.append(tech1);
+        var cell = $(row.insertCell(-1));
+        var cty1 = $("<input />");
+        cty1.attr("type", "text");
+        cty1.attr("class", "form-control");
+        cty1.attr("name", "new_height[]");
+        cty1.attr('readonly', true);
+        cty1.val(act_h);
+        cell.append(cty1);
+
+        var cell = $(row.insertCell(-1));
+        var cty2 = $("<input />");
+        cty2.attr("type", "text");
+        cty2.attr("class", "form-control");
+        cty2.attr("name", "new_width[]");
+        cty2.attr('readonly', true);
+        cty2.val(act_w);
+        cell.append(cty2);
+
+
+        var cell = $(row.insertCell(-1));
+        var cty = $("<input />");
+        cty.attr("type", "text");
+        cty.attr("class", "form-control");
+        cty.attr("name", "new_pics[]");
+        cty.attr('readonly', true);
+        cty.val(pice);
+        cell.append(cty);
+
+        var cell = $(row.insertCell(-1));
+        var cha_h1 = $("<input />");
+        cha_h1.attr("type", "text");
+        cha_h1.attr("class", "form-control");
+        cha_h1.attr("name", "new_holes[]");
+        cha_h1.attr('readonly', true);
+        cha_h1.val(holes);
+        cell.append(cha_h1);
+
+        var cell = $(row.insertCell(-1));
+        var cha_w1 = $("<input />");
+        cha_w1.attr("type", "text");
+        cha_w1.attr("class", "form-control");
+        cha_w1.attr("name", "new_cutout[]");
+        cha_w1.attr('readonly', true);
+        cha_w1.val(cutout);
+        cell.append(cha_w1);
+
+
+        var cell = $(row.insertCell(-1));
+        var types = $("<input />");
+        types.attr("type", "text");
+        types.attr("class", "form-control");
+        types.attr("name", "new_type[]");
+        types.attr('readonly', true);
+        types.val(type);
+        cell.append(types);
+
+        var cell = $(row.insertCell(-1));
+        var areas = $("<input />");
+        areas.attr("type", "text");
+        areas.attr("class", "form-control");
+        areas.attr("name", "new_area[]");
+        areas.attr('readonly', true);
+        areas.val(area);
+        cell.append(areas);
+
+        var cell = $(row.insertCell(-1));
+        var rates = $("<input />");
+        rates.attr("type", "text");
+        rates.attr("class", "form-control");
+        rates.attr("name", "new_rate[]");
+        rates.attr('readonly', true);
+        rates.val(rate);
+        cell.append(rates);
+
+        var cell = $(row.insertCell(-1));
+        var amts = $("<input />");
+        amts.attr("type", "text");
+        amts.attr("class", "form-control");
+        amts.attr("name", "new_total[]");
+        amts.attr('readonly', true);
+        amts.val(amt);
+        cell.append(amts);
+
+        cell = $(row.insertCell(-1));
+        var btnRemove = $("<input />");
+        btnRemove.attr("type", "button");
+        btnRemove.attr("onclick", "Remove_New_sheet(this);");
+        btnRemove.val("Remove");
+        cell.append(btnRemove);
+    };
+    //Remove Charges
+    function Remove_New_sheet(button) {
+        //Determine the reference of the Row using the Button.
+        var row = $(button).closest("TR");
+        var name = $("TD", row).eq(0).html();
+        if (confirm("Do you want to delete: ")) {
+            //Get the reference of the Table.
+            var table = $("#sampleTable")[0];
+            //Delete the Table row using it's Index.
+            table.deleteRow(row[0].rowIndex);
+
+            var Charge_W = document.getElementById('new_width').value;
+            var Charge_H = document.getElementById('new_height').value;
+            var pcs = document.getElementById('new_pics').value;
+
+            var areas =parseInt(Charge_W)/1000 * parseInt(Charge_H)/1000;
+            var tot_area =parseInt(pcs) * parseFloat(areas);
+            document.getElementById('new_area').value = parseFloat(tot_area).toFixed(3);
+
+
+            //Start - Total Area
+            var totals_area =document.getElementsByName("area[]");
+            var sum_area = 0;
+            for (var j = 0, iLen = totals_area.length; j < iLen; j++) {
+                if (totals_area[j].value!==""){
+                    val=parseFloat(totals_area[j].value);
+                    sum_area +=val;
+                }
+            }
+            var totals_area1 =document.getElementsByName("new_area[]");
+            var sum_area1 = 0;
+            for (var j = 0, iLen = totals_area1.length; j < iLen; j++) {
+                if (totals_area1[j].value!==""){
+                    val=parseFloat(totals_area1[j].value);
+                    sum_area1 +=val;
+                }
+            }
+
+            var tot_areas = parseFloat(sum_area + sum_area1);
+
+            document.getElementById('total_area').value = parseFloat(tot_areas).toFixed(2);
+            // End- Total Area
+
+
+            var rate = document.getElementById('new_rate').value;
+            var total = (tot_area * rate);
+            document.getElementById('new_total').value =  parseFloat(total).toFixed(2);
+
+            //Start -  Grand Total
+            var totals =document.getElementsByName("new_total[]");
+            var sum = 0;
+            for (var j = 0, iLen = totals.length; j < iLen; j++) {
+                if (totals[j].value!==""){
+                    val=parseFloat(totals[j].value);
+                    sum +=val;
+                }
+            }
+            var totals1 =document.getElementsByName("total[]");
+            var sum1 = 0;
+            for (var j = 0, iLen = totals1.length; j < iLen; j++) {
+                if (totals1[j].value!==""){
+                    val=parseFloat(totals1[j].value);
+                    sum1 +=val;
+                }
+            }
+            var grant_tot = parseFloat(sum + sum1);
+            document.getElementById('grand_total').value = parseFloat(grant_tot).toFixed(2);
+            //End-Grant Total
+
+            var charge =document.getElementsByName("tot_charge_amt[]");
+            var sum_charge = 0;
+            for (var j = 0, iLen = charge.length; j < iLen; j++) {
+                if (charge[j].value!==""){
+                    val=parseFloat(charge[j].value);
+                    sum_charge +=val;
+                }
+            }
+
+            var totals =document.getElementsByName("new_sheet_Rate_Amt[]");
+            var sum = 0;
+            for (var j = 0, iLen = totals.length; j < iLen; j++) {
+                if (totals[j].value!==""){
+                    val=parseFloat(totals[j].value);
+                    sum +=val;
+                }
+            }
+
+            var totals_amt1 =document.getElementsByName("sheet_Rate_Amt[]");
+            var sum_amt1 = 0;
+            for (var j = 0, iLen = totals_amt1.length; j < iLen; j++) {
+                if (totals_amt1[j].value!==""){
+                    val=parseFloat(totals_amt1[j].value);
+                    sum_amt1 +=val;
+                }
+            }
+            var new_tot_amt = parseFloat(sum_amt1 + sum );
+            var grant_tot = document.getElementById('grand_total').value;
+            var sub_tot = parseFloat(sum_charge) + parseFloat(grant_tot) + parseFloat(new_tot_amt) ;
+            document.getElementById('sub_tot').value = parseFloat(sub_tot).toFixed(2);
+            var sub_tot =document.getElementById('sub_tot').value;
+
+            var tax = 2.42;
+            var total = parseFloat (sub_tot * tax / 100);
+            document.getElementById('insurance').value = parseFloat(total).toFixed(3);
+            var insurance =parseFloat(total).toFixed(3);
+
+            var igst =document.getElementById('igst').value;
+            if(igst == '')
+            {
+                var gst = document.getElementById('gst').value;
+                var trans =document.getElementById('transport').value;
+                var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+                document.getElementById('sgst').value = parseFloat(sum).toFixed(2);
+                document.getElementById('cgst').value = parseFloat(sum).toFixed(2);
+                var sgst = document.getElementById('sgst').value;
+                var cgst = document.getElementById('cgst').value;
+                var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(sgst) + parseFloat(cgst) + parseFloat(trans));
+                document.getElementById('gross_tot').value = parseInt(grant);
+            }
+            else
+            {
+
+                var gst = 18;
+                var trans =document.getElementById('transport').value;
+                var sum = ((parseFloat(sub_tot) + parseFloat(insurance)+ parseFloat(trans)) * gst / 100 );
+                document.getElementById('igst').value = parseFloat(sum).toFixed(2);
+                var iisgst = document.getElementById('igst').value;
+                var grant = (parseFloat(sub_tot) + parseFloat(insurance) + parseFloat(iisgst) + parseFloat(trans));
+                document.getElementById('gross_tot').value = parseInt(grant);
+            }
+            number_to_words();
+
+        }
+    };
 
 
     // Number into words

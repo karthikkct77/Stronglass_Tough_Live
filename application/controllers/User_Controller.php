@@ -1890,7 +1890,8 @@ class User_Controller extends CI_Controller
             $count_sheet = sizeof($sheet_icode);
             for($i=0; $i<$count_sheet; $i++)
             {
-                $full_data =array( 'Proforma_Icode' => $picode,
+                $full_data =array(
+                    'Proforma_Icode' => $picode,
                     'Proforma_Material_Icode' =>$sheet_material[$i],
                     'No_Of_Sheet' => $sheet_piece[$i],
                     'Actual_Height' => $sheet_act_h[$i],
@@ -1906,6 +1907,32 @@ class User_Controller extends CI_Controller
                 $this->db->update('proforma_invoice_sheet', $full_data);
             }
 
+            $new_sheet_material = $this->input->post('new_sheet_material');
+            $new_sheet_piece = $this->input->post('new_sheet_pieces');
+            $new_sheet_act_h = $this->input->post('new_sheet_Act_Size_H');
+            $new_sheet_act_w = $this->input->post('new_sheet_Act_Size_W');
+            $new_sheet_cha_h = $this->input->post('new_sheet_Cha_Size_H');
+            $new_sheet_cha_w = $this->input->post('new_sheet_Cha_Size_W');
+            $new_sheet_area = $this->input->post('new_sheet_Area');
+            $new_sheet_rate = $this->input->post('new_sheet_Rate');
+            $new_sheet_amt = $this->input->post('new_sheet_Rate_Amt');
+            $count_sheet = sizeof($new_sheet_material);
+            for($i=0; $i<$count_sheet; $i++)
+            {
+                $full_data =array(
+                    'Proforma_Icode' => $picode,
+                    'Proforma_Material_Icode' =>$new_sheet_material[$i],
+                    'No_Of_Sheet' => $new_sheet_piece[$i],
+                    'Actual_Height' => $new_sheet_act_h[$i],
+                    'Actual_Width' => $new_sheet_act_w[$i],
+                    'Chargable_Height' => $new_sheet_cha_h[$i],
+                    'Chargable_Width' => $new_sheet_cha_w[$i],
+                    'Area' => $new_sheet_area[$i],
+                    'Rate' => $new_sheet_rate[$i],
+                    'Total_Amount' =>$new_sheet_amt[$i],
+                    'created_by' => $this->session->userdata['userid']);
+                $insert_sheet = $this->user_model->Insert_Profoma_Sheet($full_data);
+            }
 
             $item_sheet_id = $this->input->post('item_icode');
             $material_id = $this->input->post('material');
@@ -1938,6 +1965,38 @@ class User_Controller extends CI_Controller
                     'Modified_On' => date('Y-m-d H:i:s'));
                 $this->db->where('pi_item_sheet_icode',$item_sheet_id[$i]);
                 $this->db->update('proforma_invoice_item_sheet', $full_data);
+            }
+
+
+
+            $new_material_id = $this->input->post('new_material');
+            $new_qty = $this->input->post('new_pics');
+            $new_holes = $this->input->post('new_holes');
+            $new_cutout = $this->input->post('new_cutout');
+            $new_actual_W = $this->input->post('new_width');
+            $new_actual_H = $this->input->post('new_height');
+            $new_special = $this->input->post('new_type');
+            $new_Area = $this->input->post('new_area');
+            $new_Rate = $this->input->post('new_rate');
+            $new_cost = $this->input->post('new_total');
+            $count = sizeof($new_qty);
+            for($i=0; $i<$count; $i++)
+            {
+                $full_data1 =array( 'Proforma_Icode' => $picode,
+                    'Proforma_Holes' => $new_holes[$i],
+                    'Proforma_Qty' => $new_qty[$i],
+                    'Proforma_Cutout' => $new_cutout[$i],
+                    'Proforma_Material_Icode' => $new_material_id[$i],
+                    'Proforma_Special'=>$new_special[$i],
+                    'Proforma_Actual_Size_Width' => $new_actual_W[$i],
+                    'Proforma_Actual_Size_Height' => $new_actual_H[$i],
+                    'Proforma_Chargeable_Size_Width' =>$new_actual_W[$i],
+                    'Proforma_Chargeable_Size_Height' => $new_actual_H[$i],
+                    'Proforma_Area_SQMTR' => $new_Area[$i],
+                    'Proforma_Material_Rate' => $new_Rate[$i],
+                    'Proforma_Material_Cost' => $new_cost[$i],
+                    'created_by' => $this->session->userdata['userid']);
+                $insert_item = $this->user_model->Insert_Profoma_Item_sheet($full_data1);
             }
 
             $delete_item_id = $this->input->post('Delete_Item_Icode');
